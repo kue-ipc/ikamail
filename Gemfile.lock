@@ -156,6 +156,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    ruby-ldapserver (0.5.3)
     ruby_dep (1.5.0)
     rubyzip (1.2.3)
     sass (3.7.4)
@@ -227,6 +228,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.11)
   rails (~> 6.0.0.rc2)
+  ruby-ldapserver
   sass-rails (~> 5)
   selenium-webdriver
   spring

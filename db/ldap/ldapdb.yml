@@ -1,0 +1,167 @@
+---
+dc=example,dc=jp:
+  dn: dc=example,dc=jp
+  attrs:
+    objectClass:
+    - domain
+    - top
+    dc:
+    - example
+ou=users,dc=example,dc=jp:
+  dn: ou=Users,dc=example,dc=jp
+  attrs:
+    ou:
+    - Users
+    objectClass:
+    - organizationalUnit
+    - top
+ou=groups,dc=example,dc=jp:
+  dn: ou=Groups,dc=example,dc=jp
+  attrs:
+    ou:
+    - Groups
+    objectClass:
+    - organizationalUnit
+    - top
+cn=user,ou=groups,dc=example,dc=jp:
+  dn: cn=user,ou=Groups,dc=example,dc=jp
+  attrs:
+    gidNumber:
+    - '100'
+    cn:
+    - user
+    objectClass:
+    - posixGroup
+    - top
+    description:
+    - !binary |-
+      5LiA6Iis5Lq6
+cn=wheel,ou=groups,dc=example,dc=jp:
+  dn: cn=wheel,ou=Groups,dc=example,dc=jp
+  attrs:
+    gidNumber:
+    - '10'
+    cn:
+    - wheel
+    objectClass:
+    - posixGroup
+    - top
+    memberUid:
+    - user03
+    description:
+    - !binary |-
+      566h55CG6ICF
+uid=user01,ou=users,dc=example,dc=jp:
+  dn: uid=user01,ou=Users,dc=example,dc=jp
+  attrs:
+    uid:
+    - user01
+    uidNumber:
+    - '1001'
+    homeDirectory:
+    - "/home/user01"
+    gidNumber:
+    - '100'
+    cn:
+    - user01
+    objectClass:
+    - posixAccount
+    - top
+    - inetOrgPerson
+    - organizationalPerson
+    - person
+    userPassword:
+    - pass0001
+    sn:
+    - Yuza
+    givenName:
+    - Taro
+    displayName:
+    - Yuza Taro
+    sn;lang-ja:
+    - !binary |-
+      5rmv5bqn
+    givenName;lang-ja:
+    - !binary |-
+      5aSq6YOO
+    displayName;lang-ja:
+    - !binary |-
+      5rmv5bqn44CA5aSq6YOO
+    mail:
+    - user01@example.jp
+uid=user02,ou=users,dc=example,dc=jp:
+  dn: uid=user02,ou=Users,dc=example,dc=jp
+  attrs:
+    uid:
+    - user02
+    uidNumber:
+    - '1002'
+    homeDirectory:
+    - "/home/user02"
+    gidNumber:
+    - '10'
+    cn:
+    - user02
+    objectClass:
+    - posixAccount
+    - top
+    - inetOrgPerson
+    - organizationalPerson
+    - person
+    userPassword:
+    - pass0002
+    sn:
+    - Yuza
+    givenName:
+    - Taro
+    displayName:
+    - Yuza Jiro
+    sn;lang-ja:
+    - !binary |-
+      5rmv5bqn
+    givenName;lang-ja:
+    - !binary |-
+      5qyh6YOO
+    displayName;lang-ja:
+    - !binary |-
+      5rmv5bqn44CA5qyh6YOO
+    mail:
+    - user02@example.jp
+uid=user03,ou=users,dc=example,dc=jp:
+  dn: uid=user03,ou=Users,dc=example,dc=jp
+  attrs:
+    uid:
+    - user03
+    uidNumber:
+    - '1003'
+    homeDirectory:
+    - "/home/user03"
+    gidNumber:
+    - '100'
+    cn:
+    - user03
+    objectClass:
+    - posixAccount
+    - top
+    - inetOrgPerson
+    - organizationalPerson
+    - person
+    userPassword:
+    - pass0003
+    sn:
+    - Yuza
+    givenName:
+    - Hanako
+    displayName:
+    - Yuza Hanako
+    sn;lang-ja:
+    - !binary |-
+      5rmv5bqn
+    givenName;lang-ja:
+    - !binary |-
+      6Iqx5a2Q
+    displayName;lang-ja:
+    - !binary |-
+      5rmv5bqn44CA6Iqx5a2Q
+    mail:
+    - user03@example.jp
