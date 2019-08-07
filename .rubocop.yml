@@ -1,4 +1,30 @@
-inherit_from: .rubocop_todo.yml
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'bin/**/*'
+    - 'node_modules/**/*'
 
 Rails:
   Enabled: true
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Exclude:
+    - 'db/migrate/*.rb'
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/SymbolArray:
+  EnforcedStyle: brackets

@@ -169,6 +169,7 @@ s = LDAP::Server.new(
   # ssl_cert_file: File.expand_path('cert.pem', __dir__),
   # ssl_on_connect: true,
   operation_class: HashOperation,
-  operation_args: [directory])
+  operation_args: [directory]
+)
 s.run_tcpserver
 s.join
