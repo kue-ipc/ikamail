@@ -119,6 +119,23 @@ class HashOperation < LDAP::Server::Operation
       entry.delete(attr) if entry[attr] == []
     end
   end
+
+  def simple_bind(version, dn, password)
+    if version != 3
+      raise LDAP::ResultError::ProtocolError, 'version 3 only'
+    end
+
+    if dn
+      ldn = dn.downcase
+      unless @hash.has_key?(ldn)
+        raise LDAP::ResultError::InappropriateAuthentication, 'invalid dn or password'
+      end
+
+      if password != @hash[ldn]['attrs']['userPassword'].first
+        raise LDAP::ResultError::InappropriateAuthentication, 'invalid dn or password'
+      end
+    end
+  end
 end
 
 # This is the shared object which carries our actual directory entries.
@@ -135,11 +152,11 @@ rescue Errno::ENOENT
 end
 
 # if you save, remove comment out.
-at_exit do
-  new_data_yaml = File.expand_path('ldapdb.new', __dir__)
-  File.open(new_data_yaml, 'w') { |f| f.write(YAML.dump(directory)) }
-  File.rename(new_data_yaml, data_yaml)
-end
+# at_exit do
+#   new_data_yaml = File.expand_path('ldapdb.new', __dir__)
+#   File.open(new_data_yaml, 'w') { |f| f.write(YAML.dump(directory)) }
+#   File.rename(new_data_yaml, data_yaml)
+# end
 
 # Listen for incoming LDAP connections. For each one, create a Connection
 # object, which will invoke a HashOperation object for each request.
