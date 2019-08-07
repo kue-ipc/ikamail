@@ -138,7 +138,7 @@ end
 at_exit do
   new_data_yaml = File.expand_path('ldapdb.new', __dir__)
   File.open(new_data_yaml, 'w') { |f| f.write(YAML.dump(directory)) }
-  File.rename('ldapdb.new', data_yaml)
+  File.rename(new_data_yaml, data_yaml)
 end
 
 # Listen for incoming LDAP connections. For each one, create a Connection

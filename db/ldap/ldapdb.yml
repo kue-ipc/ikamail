@@ -35,7 +35,7 @@ cn=user,ou=groups,dc=example,dc=jp:
     - top
     description:
     - !binary |-
-      5LiA6Iis5Lq6
+      5LiA6Iis44Om44O844K244O8
 cn=wheel,ou=groups,dc=example,dc=jp:
   dn: cn=wheel,ou=Groups,dc=example,dc=jp
   attrs:
@@ -50,7 +50,7 @@ cn=wheel,ou=groups,dc=example,dc=jp:
     - user03
     description:
     - !binary |-
-      566h55CG6ICF
+      566h55CG44Om44O844K244O8
 uid=user01,ou=users,dc=example,dc=jp:
   dn: uid=user01,ou=Users,dc=example,dc=jp
   attrs:
@@ -165,3 +165,54 @@ uid=user03,ou=users,dc=example,dc=jp:
       5rmv5bqn44CA6Iqx5a2Q
     mail:
     - user03@example.jp
+cn=admin,ou=groups,dc=example,dc=jp:
+  dn: cn=admin,ou=Groups,dc=example,dc=jp
+  attrs:
+    gidNumber:
+    - '1'
+    cn:
+    - admin
+    objectClass:
+    - posixGroup
+    - top
+    description:
+    - !binary |-
+      566h55CG6ICF
+uid=admin,ou=users,dc=example,dc=jp:
+  dn: uid=admin,ou=Users,dc=example,dc=jp
+  attrs:
+    mail:
+    - admin@example.jp
+    gidNumber:
+    - '1'
+    cn:
+    - admin
+    givenName;lang-ja:
+    - !binary |-
+      5LiA6YOO
+    objectClass:
+    - posixAccount
+    - top
+    - inetOrgPerson
+    - organizationalPerson
+    - person
+    userPassword:
+    - password
+    uid:
+    - admin
+    uidNumber:
+    - '1'
+    homeDirectory:
+    - "/home/admin"
+    givenName:
+    - Ichiro
+    displayName:
+    - Kanri Ichiro
+    sn;lang-ja:
+    - !binary |-
+      566h55CG
+    sn:
+    - Kanri
+    displayName;lang-ja:
+    - !binary |-
+      566h55CG44CA5LiA6YOO
