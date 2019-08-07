@@ -134,12 +134,12 @@ begin
 rescue Errno::ENOENT
 end
 
-# no save
-# at_exit do
-#   new_data_yaml = File.expand_path('ldapdb.new', __dir__)
-#   File.open(new_data_yaml, 'w') { |f| f.write(YAML.dump(directory)) }
-#   File.rename('ldapdb.new', data_yaml)
-# end
+# if you save, remove comment out.
+at_exit do
+  new_data_yaml = File.expand_path('ldapdb.new', __dir__)
+  File.open(new_data_yaml, 'w') { |f| f.write(YAML.dump(directory)) }
+  File.rename('ldapdb.new', data_yaml)
+end
 
 # Listen for incoming LDAP connections. For each one, create a Connection
 # object, which will invoke a HashOperation object for each request.
