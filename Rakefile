@@ -16,6 +16,11 @@ namespace :ldap do
     sh "ruby #{Rails.root.join('db', 'ldap', 'server.rb')} stop"
   end
 
+  desc 'Restart LDAP server'
+  task :restart do
+    sh "ruby #{Rails.root.join('db', 'ldap', 'server.rb')} restart"
+  end
+
   desc 'Show satuts of LDAP server'
   task :status do
     sh "ruby #{Rails.root.join('db', 'ldap', 'server.rb')} status"

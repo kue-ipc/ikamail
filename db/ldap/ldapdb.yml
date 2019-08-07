@@ -7,6 +7,18 @@ dc=example,dc=jp:
     - top
     dc:
     - example
+cn=bind,dc=example,dc=jp:
+  dn: cn=bind,dc=example,dc=jp
+  attrs:
+    objectClass:
+    - organizationalPerson
+    - top
+    cn:
+    - bind
+    sn:
+    - bind
+    userPassword:
+    - bind_password
 ou=users,dc=example,dc=jp:
   dn: ou=Users,dc=example,dc=jp
   attrs:
