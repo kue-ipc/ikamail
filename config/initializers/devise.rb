@@ -10,7 +10,38 @@ Devise.setup do |config|
   config.ldap_logger = true
   config.ldap_create_user = true
   config.ldap_update_password = false
-  config.ldap_config = "#{Rails.root}/config/ldap.yml"
+  config.ldap_config = proc do
+    ldap_config = YAML.safe_loda(IO.read("#{Rails.root}/config/ldap.yml"))
+    config = {
+      'host' => ldap_config['host'],
+      'port' => ldap_config['port'],
+      'ssl' => ldap_config['encryption']&.to_s || false,
+      'base' => ldap_config['user_base'] + ',' + ldap_config['base'],
+      'attribute' => ldap_config['user_dn'],
+      'group_base' => ldap_config['group_base'] + ',' + ldap_config['base'],
+    }
+    if ldap_config['ldap']['auth'] == :annonymouse
+      config['allow_unauthenticated_bind'] = true
+    else
+      config['allow_unauthenticated_bind'] = false
+      config['admin_user'] = ldap_config['ldap']['auth']['username']
+      config['admin_password'] = ldap_config['ldap']['auth']['password']
+    end
+    config.merge!(ldap_config['authorizations'])
+    if !config.has_key?('required_attributes')
+      config['required_attributes'] = {
+        'objectClass' => ldap_config['user_classes']
+      }
+    elsif !config['required_attributes'].has_key?('objectClass')
+      config['required_attributes']['objectClass'] = ldap_config['user_classes']
+    else
+      config['required_attributes']['objectClass'] =
+        ([config['required_attributes']['objectClass']] +
+          [ldap_config['user_classes']])
+        .flatten.uniq
+    end
+    config
+  end
   config.ldap_check_group_membership = true
   config.ldap_check_group_membership_without_admin = false
   config.ldap_check_attributes = true

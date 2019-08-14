@@ -36,6 +36,10 @@ gem 'devise'
 gem 'devise_ldap_authenticatable'
 gem 'pundit'
 
+# LDAP
+gem 'activeldap', require: 'active_ldap/railtie'
+gem 'net-ldap'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
