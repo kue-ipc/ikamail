@@ -31,6 +31,8 @@
 # ==============
 
 require 'ldap/server'
+require 'ldap/server/schema'
+require 'yaml'
 
 # We subclass the Operation class, overriding the methods to do what we need
 
@@ -145,7 +147,6 @@ directory = {}
 data_yaml = File.expand_path('ldapdb.yml', __dir__)
 # Let's put some backing store on it
 
-require 'yaml'
 begin
   File.open(data_yaml) { |f| directory = YAML.load(f.read) }
 rescue Errno::ENOENT
@@ -158,6 +159,15 @@ end
 #   File.rename(new_data_yaml, data_yaml)
 # end
 
+schema = LDAP::Server::Schema.new
+schema.load_system
+schema.load_file(File.expand_path('schema/core.schema', __dir__))
+schema.load_file(File.expand_path('schema/cosine.schema', __dir__))
+schema.load_file(File.expand_path('schema/inetorgperson.schema', __dir__))
+schema.load_file(File.expand_path('schema/nis.schema', __dir__))
+schema.load_file(File.expand_path('schema/misc.schema', __dir__))
+schema.resolve_oids
+
 # Listen for incoming LDAP connections. For each one, create a Connection
 # object, which will invoke a HashOperation object for each request.
 
@@ -169,7 +179,9 @@ s = LDAP::Server.new(
   # ssl_cert_file: File.expand_path('cert.pem', __dir__),
   # ssl_on_connect: true,
   operation_class: HashOperation,
-  operation_args: [directory]
+  operation_args: [directory],
+  schema: schema,
+  namingContexts: ['dc=examle,dc=jp']
 )
 s.run_tcpserver
 s.join
