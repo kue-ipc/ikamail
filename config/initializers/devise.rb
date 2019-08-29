@@ -11,36 +11,30 @@ Devise.setup do |config|
   config.ldap_create_user = true
   config.ldap_update_password = false
   config.ldap_config = proc do
-    ldap_config = YAML.safe_loda(IO.read("#{Rails.root}/config/ldap.yml"))
-    config = {
-      'host' => ldap_config['host'],
-      'port' => ldap_config['port'],
-      'ssl' => ldap_config['encryption']&.to_s || false,
-      'base' => ldap_config['user_base'] + ',' + ldap_config['base'],
-      'attribute' => ldap_config['user_dn'],
-      'group_base' => ldap_config['group_base'] + ',' + ldap_config['base'],
+    yaml_config = YAML.safe_load(IO.read("#{Rails.root}/config/ldap.yml"),
+                                 [Symbol], [], true)
+    ldap_config = {
+      'host' => yaml_config.dig('ldap', 'host'),
+      'port' => yaml_config.dig('ldap', 'port'),
+      'ssl' => yaml_config.dig('ldap', 'encryption')&.to_s || false,
+      'base' => yaml_config.dig('ldap', 'user_base') + ',' +
+                yaml_config.dig('ldap', 'base'),
+      'attribute' => yaml_config.dig('ldap', 'user_dn'),
+      'group_base' => yaml_config.dig('ldap', 'group_base') + ',' +
+                      yaml_config.dig('ldap', 'base'),
     }
-    if ldap_config['ldap']['auth'] == :annonymouse
-      config['allow_unauthenticated_bind'] = true
+    if yaml_config.dig('ldap', 'auth') == :annonymouse
+      ldap_config['allow_unauthenticated_bind'] = true
     else
-      config['allow_unauthenticated_bind'] = false
-      config['admin_user'] = ldap_config['ldap']['auth']['username']
-      config['admin_password'] = ldap_config['ldap']['auth']['password']
+      ldap_config['allow_unauthenticated_bind'] = false
+      ldap_config['admin_user'] = yaml_config.dig('ldap', 'auth', 'username')
+      ldap_config['admin_password'] = yaml_config.dig('ldap', 'auth', 'password')
     end
-    config.merge!(ldap_config['authorizations'])
-    if !config.has_key?('required_attributes')
-      config['required_attributes'] = {
-        'objectClass' => ldap_config['user_classes']
-      }
-    elsif !config['required_attributes'].has_key?('objectClass')
-      config['required_attributes']['objectClass'] = ldap_config['user_classes']
-    else
-      config['required_attributes']['objectClass'] =
-        ([config['required_attributes']['objectClass']] +
-          [ldap_config['user_classes']])
-        .flatten.uniq
-    end
-    config
+    ldap_config['require_attribute'] = {
+      'objectClass' => yaml_config.dig('ldap', :user_classes)
+    }
+    ldap_config.merge!(yaml_config['authorizations'])
+    ldap_config
   end
   config.ldap_check_group_membership = true
   config.ldap_check_group_membership_without_admin = false
