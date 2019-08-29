@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 # RFC 2307 LDAP as a NIS
-# setting: config.ldap_check_gorup_nis
+# setting: config.ldap_nis_group_check
 
 require 'devise'
 require 'devise_ldap_authenticatable'
 
 module Devise
-  mattr_accessor :ldap_check_gorup_nis
-  @@ldap_check_gorup_nis = false
+  mattr_accessor :ldap_nis_group_check
+  @@ldap_nis_group_check = false
 
   module LDAP
     DEFAULT_GID_NUMBER_KEY = 'gidNumber'
@@ -53,7 +53,7 @@ module Devise
       # overwrite in_group?
       alias _in_group? in_group?
       def in_group?(group_name, group_attribute = LDAP::DEFAULT_GROUP_UNIQUE_MEMBER_LIST_KEY)
-        if ::Devise.ldap_check_gorup_nis
+        if ::Devise.ldap_nis_group_check
           return in_group_nis?(group_name)
         else
           return _in_group?(group_name, group_attribute)

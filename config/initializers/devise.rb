@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'devise_ldap_authenticatable_check_group_policy'
-require 'devise_ldap_authenticatable_check_group_nis'
+require 'devise_ldap_authenticatable_nis_group_check'
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -49,7 +49,7 @@ Devise.setup do |config|
   config.ldap_use_admin_to_bind = true
   # config.ldap_ad_group_check = false
   config.ldap_check_group_policy = :or
-  config.ldap_check_gorup_nis = true
+  config.ldap_nis_group_check = true
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
