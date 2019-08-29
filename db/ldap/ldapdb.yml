@@ -85,18 +85,12 @@ uid=user01,ou=users,dc=example,dc=jp:
     userPassword:
     - pass0001
     sn:
-    - Yuza
-    givenName:
-    - Taro
-    displayName:
-    - Yuza Taro
-    sn;lang-ja:
     - !binary |-
       5rmv5bqn
-    givenName;lang-ja:
+    givenName:
     - !binary |-
       5aSq6YOO
-    displayName;lang-ja:
+    displayName:
     - !binary |-
       5rmv5bqn44CA5aSq6YOO
     mail:
@@ -123,18 +117,12 @@ uid=user02,ou=users,dc=example,dc=jp:
     userPassword:
     - pass0002
     sn:
-    - Yuza
-    givenName:
-    - Taro
-    displayName:
-    - Yuza Jiro
-    sn;lang-ja:
     - !binary |-
       5rmv5bqn
-    givenName;lang-ja:
+    givenName:
     - !binary |-
       5qyh6YOO
-    displayName;lang-ja:
+    displayName:
     - !binary |-
       5rmv5bqn44CA5qyh6YOO
     mail:
@@ -161,18 +149,12 @@ uid=user03,ou=users,dc=example,dc=jp:
     userPassword:
     - pass0003
     sn:
-    - Yuza
-    givenName:
-    - Hanako
-    displayName:
-    - Yuza Hanako
-    sn;lang-ja:
     - !binary |-
       5rmv5bqn
-    givenName;lang-ja:
+    givenName:
     - !binary |-
       6Iqx5a2Q
-    displayName;lang-ja:
+    displayName:
     - !binary |-
       5rmv5bqn44CA6Iqx5a2Q
     mail:
@@ -199,7 +181,7 @@ uid=admin,ou=users,dc=example,dc=jp:
     - '1'
     cn:
     - admin
-    givenName;lang-ja:
+    givenName:
     - !binary |-
       5LiA6YOO
     objectClass:
@@ -216,15 +198,9 @@ uid=admin,ou=users,dc=example,dc=jp:
     - '1'
     homeDirectory:
     - "/home/admin"
-    givenName:
-    - Ichiro
-    displayName:
-    - Kanri Ichiro
-    sn;lang-ja:
+    sn:
     - !binary |-
       566h55CG
-    sn:
-    - Kanri
-    displayName;lang-ja:
+    displayName:
     - !binary |-
       566h55CG44CA5LiA6YOO
