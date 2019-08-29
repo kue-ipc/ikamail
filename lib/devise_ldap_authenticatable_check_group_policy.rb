@@ -17,7 +17,8 @@ module Devise
   module LDAP
     class Connection
       def in_required_groups_or?
-        return true unless @check_group_membership || @check_group_membership_without_admin
+        return true unless @check_group_membership ||
+                           @check_group_membership_without_admin
 
         ## FIXME set errors here, the ldap.yml isn't set properly.
         return false if @required_groups.nil?
@@ -35,7 +36,8 @@ module Devise
       # overwrite in_required_groups?
       alias in_required_groups_and? in_required_groups?
       def in_required_groups?
-        return true unless @check_group_membership || @check_group_membership_without_admin
+        return true unless @check_group_membership ||
+                           @check_group_membership_without_admin
 
         case Devise.ldap_check_group_policy
         when :and, /\Aand\z/i, "&", "&&"
@@ -43,7 +45,8 @@ module Devise
         when :or, /\Aor\z/i, "|", "||"
           return in_required_groups_or?
         else
-          DeviseLdapAuthenticatable::Logger.send("Invalid check policy: #{Devise.ldap_check_group_policy}")
+          DeviseLdapAuthenticatable::Logger.send(
+            "Invalid check policy: #{Devise.ldap_check_group_policy}")
           return false
         end
       end

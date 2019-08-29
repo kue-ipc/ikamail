@@ -33,7 +33,8 @@ module Devise
           group_checking_ldap = Connection.admin
         end
 
-        group_checking_ldap.search(base: group_name, scope: Net::LDAP::SearchScope_BaseObject) do |entry|
+        group_checking_ldap.search(base: group_name,
+            scope: Net::LDAP::SearchScope_BaseObject) do |entry|
           if entry[LDAP::DEFAULT_GID_NUMBER_KEY][0].to_i == gid_number
             in_group = true
             DeviseLdapAuthenticatable::Logger.send("User #{dn} IS included in nis primary group: #{group_name}")
@@ -52,7 +53,8 @@ module Devise
 
       # overwrite in_group?
       alias _in_group? in_group?
-      def in_group?(group_name, group_attribute = LDAP::DEFAULT_GROUP_UNIQUE_MEMBER_LIST_KEY)
+      def in_group?(group_name,
+          group_attribute = LDAP::DEFAULT_GROUP_UNIQUE_MEMBER_LIST_KEY)
         if ::Devise.ldap_nis_group_check
           return in_group_nis?(group_name)
         else
