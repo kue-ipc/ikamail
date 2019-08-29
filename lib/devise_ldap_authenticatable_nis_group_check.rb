@@ -37,10 +37,10 @@ module Devise
             scope: Net::LDAP::SearchScope_BaseObject) do |entry|
           if entry[LDAP::DEFAULT_GID_NUMBER_KEY][0].to_i == gid_number
             in_group = true
-            DeviseLdapAuthenticatable::Logger.send("User #{dn} IS included in nis primary group: #{group_name}")
+            DeviseLdapAuthenticatable::Logger.send("User #{dn} is included in nis primary group: #{group_name}")
           elsif entry[LDAP::DEFAULT_MEMBER_UID_KEY].include?(uid)
             in_group = true
-            DeviseLdapAuthenticatable::Logger.send("User #{dn} IS included in nis group: #{group_name}")
+            DeviseLdapAuthenticatable::Logger.send("User #{dn} is included in nis group: #{group_name}")
           end
         end
 
