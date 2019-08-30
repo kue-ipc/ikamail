@@ -16,13 +16,11 @@ ldap: &LDAP
   # user
   user_dn: uid
   user_base: ou=Users
-  user_classes:
-    - posixAccount
+  user_class: posixAccount
   # group
   group_dn: cn
   group_base: ou=Groups
-  group_classes:
-    - posixGroup
+  group_class: posixGroup
 
 ## ActiveLdap
 active_ldap: &ACTIVE_LDAP

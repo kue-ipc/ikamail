@@ -31,7 +31,7 @@ Devise.setup do |config|
       ldap_config['admin_password'] = yaml_config.dig('ldap', 'auth', 'password')
     end
     ldap_config['require_attribute'] = {
-      'objectClass' => yaml_config.dig('ldap', :user_classes)
+      'objectClass' => yaml_config.dig('ldap', 'user_class')
     }
     ldap_config.merge!(yaml_config['authorizations'])
     ldap_config
