@@ -49,7 +49,7 @@ test:
 #
 production:
   <<: *default
-  database: ikamail_production
+  database: ikamail
   username: ikamail
   password: <%= ENV['IKAMAIL_DATABASE_PASSWORD'] %>
 # SQLite3
