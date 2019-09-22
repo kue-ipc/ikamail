@@ -52,6 +52,7 @@ production:
   database: ikamail
   username: ikamail
   password: <%= ENV['IKAMAIL_DATABASE_PASSWORD'] %>
+
 # SQLite3
 # # SQLite. Versions 3.8.0 and up are supported.
 # #   gem install sqlite3
