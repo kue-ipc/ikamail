@@ -11,4 +11,11 @@ class LdapGroup < ActiveLdap::Base
                    primary_key: 'uid',
                    wrap: 'memberUid'
 
+  def name
+    self[dn_attribute]
+  end
+
+  def self.find_by_name(name)
+    find(:first, filter: {dn_attribute => name})
+  end
 end

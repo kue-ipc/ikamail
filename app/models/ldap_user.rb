@@ -10,4 +10,12 @@ class LdapUser < ActiveLdap::Base
   belongs_to :groups, class_name: 'LdapGroup',
                       primary_key: 'uid',
                       many: 'memberUid'
+
+  def name
+    self[dn_attribute]
+  end
+
+  def self.find_by_name(name)
+    find(:first, filter: {dn_attribute => name})
+  end
 end
