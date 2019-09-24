@@ -16,6 +16,8 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 * データベース
     * MariaDB 10.1 以上、10.2.2 以上推奨
 
+Redisが必要。
+
 * Configuration
 
 * データベース設定(MraiaDB)

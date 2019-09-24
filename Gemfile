@@ -44,6 +44,9 @@ gem 'pundit'
 gem 'activeldap', require: 'active_ldap/railtie'
 gem 'net-ldap'
 
+# キュー
+gem 'resque'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
