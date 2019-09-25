@@ -44,8 +44,8 @@ gem 'pundit'
 gem 'activeldap', require: 'active_ldap/railtie'
 gem 'net-ldap'
 
-# キュー
-gem 'resque'
+# Queue backend
+gem 'sucker_punch'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
