@@ -16,7 +16,7 @@ class LdapAlignJob < ApplicationJob
     LdapGroup.all.each do |group|
       name = group.name
       mail_group_remains.delete(name)
-      MailGroup.find_and_create_by(name: name)
+      MailGroup.find_or_create_by(name: name)
         .update(display_name: group.display_name)
     end
 
@@ -32,7 +32,7 @@ class LdapAlignJob < ApplicationJob
     LdapUser.all.each do |user|
       name = user.name
       mail_user_remains.delete(name)
-      MailUser.find_and_create_by(name: name)
+      MailUser.find_or_create_by(name: name)
         .update(display_name: user.display_name)
     end
 
@@ -43,19 +43,12 @@ class LdapAlignJob < ApplicationJob
   end
 
   private def align_memberships
-    # MailGroup.find_each do |group|
-    #   group_users = Set.new(group.users.map(&:name))
-    #   ldap_group = LdapGroup.find_by_name(group.name)
-    #   ldap_users = Set.new(ldap_group.primary_users.map(&:name) +
-    #                 ldap_group.users.map(&:name))
-    #
-    #   (ldap_users - group_users).each do |username|
-    #     group.users.add(MailUser.find_by(name: username))
-    #   end
-    #
-    #   (group_users - ldap_users).each do |username|
-    #     group.usels.delete()
-    #
-    # end
+    MailGroup.find_each do |group|
+      ldap_group = LdapGroup.find_by_name(group.name)
+      group.mail_users = MailUser.where(
+        name: ldap_group.primary_users.map(&:name) |
+              ldap_group.users.map(&:name)
+      ).all
+    end
   end
 end

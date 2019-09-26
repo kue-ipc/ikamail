@@ -10,16 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_24_055948) do
+ActiveRecord::Schema.define(version: 2019_09_26_060851) do
 
-  create_table "mail_addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "address"
+  create_table "mail_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
     t.string "display_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["address"], name: "index_mail_addresses_on_address", unique: true
-    t.index ["name"], name: "index_mail_addresses_on_name"
+    t.index ["name"], name: "index_mail_groups_on_name", unique: true
+  end
+
+  create_table "mail_groups_mail_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "mail_group_id"
+    t.bigint "mail_user_id"
+    t.index ["mail_group_id"], name: "index_mail_groups_mail_users_on_mail_group_id"
+    t.index ["mail_user_id"], name: "index_mail_groups_mail_users_on_mail_user_id"
+  end
+
+  create_table "mail_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "mail"
+    t.string "name"
+    t.string "display_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mail"], name: "index_mail_users_on_mail", unique: true
+    t.index ["name"], name: "index_mail_users_on_name", unique: true
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
