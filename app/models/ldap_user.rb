@@ -15,7 +15,12 @@ class LdapUser < ActiveLdap::Base
     self[dn_attribute]
   end
 
+  def display_name
+    self['displayName;lang-ja'] || self['displayName']
+  end
+
   def self.find_by_name(name)
     find(:first, filter: {dn_attribute => name})
   end
+
 end

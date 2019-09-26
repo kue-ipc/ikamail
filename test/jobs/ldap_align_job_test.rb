@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MailAddressAlignJobTest < ActiveJob::TestCase
+class LdapAlignJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MailAddressTest < ActiveSupport::TestCase
+class MailGroupTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
