@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(version: 2019_09_26_060851) do
     t.index ["name"], name: "index_mail_groups_on_name", unique: true
   end
 
-  create_table "mail_groups_mail_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "mail_groups_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "mail_group_id"
     t.bigint "mail_user_id"
-    t.index ["mail_group_id"], name: "index_mail_groups_mail_users_on_mail_group_id"
-    t.index ["mail_user_id"], name: "index_mail_groups_mail_users_on_mail_user_id"
+    t.index ["mail_group_id"], name: "index_mail_groups_users_on_mail_group_id"
+    t.index ["mail_user_id"], name: "index_mail_groups_users_on_mail_user_id"
   end
 
   create_table "mail_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
