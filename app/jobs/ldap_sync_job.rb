@@ -1,16 +1,15 @@
-
 require 'set'
 
 class LdapAlignJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    align_groups
-    align_users
-    align_memberships
+    sync_groups
+    sync_users
+    sync_memberships
   end
 
-  private def align_groups
+  private def sync_groups
     mail_group_remains = Set.new(MailGroup.all.map(&:name))
 
     LdapGroup.all.each do |group|
@@ -26,7 +25,7 @@ class LdapAlignJob < ApplicationJob
     end
   end
 
-  private def align_users
+  private def sync_users
     mail_user_remains = Set.new(MailUser.all.map(&:name))
 
     LdapUser.all.each do |user|
@@ -42,7 +41,7 @@ class LdapAlignJob < ApplicationJob
     end
   end
 
-  private def align_memberships
+  private def sync_memberships
     MailGroup.find_each do |group|
       ldap_group = LdapGroup.find_by_name(group.name)
       group.mail_users = MailUser.where(

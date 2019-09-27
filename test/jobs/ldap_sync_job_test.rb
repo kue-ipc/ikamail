@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LdapAlignJobTest < ActiveJob::TestCase
+class LdapSyncJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end
