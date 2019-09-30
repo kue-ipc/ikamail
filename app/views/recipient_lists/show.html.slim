@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @recipient_list.name
+p
+  strong Display name:
+  = @recipient_list.display_name
+p
+  strong Description:
+  = @recipient_list.description
+
+=> link_to 'Edit', edit_recipient_list_path(@recipient_list)
+'|
+=< link_to 'Back', recipient_lists_path

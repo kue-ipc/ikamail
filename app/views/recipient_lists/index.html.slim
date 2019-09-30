@@ -1,0 +1,25 @@
+h1 Listing recipient_lists
+
+table
+  thead
+    tr
+      th Name
+      th Display name
+      th Description
+      th
+      th
+      th
+
+  tbody
+    - @recipient_lists.each do |recipient_list|
+      tr
+        td = recipient_list.name
+        td = recipient_list.display_name
+        td = recipient_list.description
+        td = link_to 'Show', recipient_list
+        td = link_to 'Edit', edit_recipient_list_path(recipient_list)
+        td = link_to 'Destroy', recipient_list, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Recipient list', new_recipient_list_path

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_060851) do
+ActiveRecord::Schema.define(version: 2019_09_30_051109) do
 
   create_table "mail_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
@@ -35,6 +35,32 @@ ActiveRecord::Schema.define(version: 2019_09_26_060851) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["mail"], name: "index_mail_users_on_mail", unique: true
     t.index ["name"], name: "index_mail_users_on_name", unique: true
+  end
+
+  create_table "manual_group_recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "mail_group_id"
+    t.bigint "recipient_list_id"
+    t.index ["mail_group_id"], name: "index_manual_group_recipient_lists_on_mail_group_id"
+    t.index ["recipient_list_id"], name: "index_manual_group_recipient_lists_on_recipient_list_id"
+  end
+
+  create_table "manual_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "recipient_list_id"
+    t.bigint "mail_user_id"
+    t.boolean "included"
+    t.boolean "excluded"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mail_user_id"], name: "index_manual_lists_on_mail_user_id"
+    t.index ["recipient_list_id"], name: "index_manual_lists_on_recipient_list_id"
+  end
+
+  create_table "recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "name"
+    t.string "display_name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|

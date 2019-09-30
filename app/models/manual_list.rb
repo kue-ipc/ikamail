@@ -1,0 +1,2 @@
+class ManualList < ApplicationRecord
+end
