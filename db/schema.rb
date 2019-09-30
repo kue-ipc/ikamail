@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_051109) do
+ActiveRecord::Schema.define(version: 2019_09_30_063414) do
 
   create_table "mail_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,13 @@ ActiveRecord::Schema.define(version: 2019_09_30_051109) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_mail_groups_on_name", unique: true
+  end
+
+  create_table "mail_groups_recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "mail_group_id"
+    t.bigint "recipient_list_id"
+    t.index ["mail_group_id"], name: "index_mail_groups_recipient_lists_on_mail_group_id"
+    t.index ["recipient_list_id"], name: "index_mail_groups_recipient_lists_on_recipient_list_id"
   end
 
   create_table "mail_groups_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|

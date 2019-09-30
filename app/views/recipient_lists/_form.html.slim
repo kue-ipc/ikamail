@@ -15,4 +15,11 @@
   .field
     = f.label :description
     = f.text_area :description
+  .field
+    = f.label :mail_gorups
+    = f.collection_select :mail_groups, MailGroup.all.map, :id, :display_name
+    / { selected: @recipient_list.mail_groups },
+    / { multiple: true, size: 10}
+
+
   .actions = f.submit
