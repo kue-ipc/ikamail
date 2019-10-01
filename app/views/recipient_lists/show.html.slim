@@ -30,10 +30,19 @@ p
     .modal-content
       .modal-header
         h5#mailGroupModalLabel.modal-title メールグループ選択
-        button.close type="button" data-dismis="modal" aria-label="Close"
+        button.close type="button" data-dismiss="modal" aria-label="Close"
           span aria-hidden="true"
             | &times;
       .modal-body
+        ul
+          - MailGroup.all.each do |group|
+            li
+              = group.display_name
+              | (
+              = group.name
+              | )
+              = link_to '追加', recipient_list_mail_group_path(@recipient_list, group), method: :put
+
         | テスト
       .modal-footer
         button.btn.btn-secondary data-dismiss="modal" Close
