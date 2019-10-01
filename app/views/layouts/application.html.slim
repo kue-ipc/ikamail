@@ -1,11 +1,20 @@
 doctype html
 html
   head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
     title
-      | Ikamail
+      | 一括メールシステム
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    nav.navbar.navbar-light.bg-light
+      = link_to '一括メールシステム', '/', class: 'navbar-brand'
+
+    nav
+      .menu-item
+        = link_to '宛先一覧', recipient_lists_path
+    .container
+      = yield

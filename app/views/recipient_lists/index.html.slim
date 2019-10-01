@@ -1,6 +1,6 @@
 h1 Listing recipient_lists
 
-table
+table.table
   thead
     tr
       th Name
@@ -16,10 +16,10 @@ table
         td = recipient_list.name
         td = recipient_list.display_name
         td = recipient_list.description
-        td = link_to 'Show', recipient_list
-        td = link_to 'Edit', edit_recipient_list_path(recipient_list)
-        td = link_to 'Destroy', recipient_list, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Show', recipient_list, class: 'btn btn-primary'
+        td = link_to 'Edit', edit_recipient_list_path(recipient_list), class: 'btn btn-secondary'
+        td = link_to 'Destroy', recipient_list, data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-danger'
 
 br
 
-= link_to 'New Recipient list', new_recipient_list_path
+= link_to 'New Recipient list', new_recipient_list_path, class: 'btn btn-primary'

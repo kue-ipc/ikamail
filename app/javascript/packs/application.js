@@ -15,5 +15,4 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-import bsn from 'bootstrap.native/dist/bootstrap-native-v4'
+import './bootstrap-native.coffee'
