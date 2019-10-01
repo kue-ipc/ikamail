@@ -47,6 +47,9 @@ gem 'net-ldap'
 # Queue backend
 gem 'sucker_punch'
 
+# bootstrap
+gem 'bootstrap', '~> 4.3.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
