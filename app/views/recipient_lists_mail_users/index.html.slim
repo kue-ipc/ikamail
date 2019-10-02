@@ -1,0 +1,8 @@
+h1 RecipientListsMailUsers#index
+p Find me in app/views/recipient_lists_mail_users/index.html.slim
+table.table
+  - @mail_users.each do |user|
+    tr
+      td = user.name
+      td = user.display_name
+      td = user.mail
