@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Mail template:
+  = @bulk_mail.mail_template
+p
+  strong Subject:
+  = @bulk_mail.subject
+p
+  strong Body:
+  = @bulk_mail.body
+p
+  strong User:
+  = @bulk_mail.user
+p
+  strong Delivery datetime:
+  = @bulk_mail.delivery_datetime
+p
+  strong Number:
+  = @bulk_mail.number
+p
+  strong Mail status:
+  = @bulk_mail.mail_status
+
+=> link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
+'|
+=< link_to 'Back', bulk_mails_path

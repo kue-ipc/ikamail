@@ -1,0 +1,2 @@
+class MailStatus < ApplicationRecord
+end

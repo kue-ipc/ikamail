@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :bulk_mails
   resources :mail_templates
   resources :recipient_lists do
     resources :mail_users, only: [:index],

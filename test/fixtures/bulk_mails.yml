@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mail_template: one
+  subject: MyString
+  body: MyText
+  user: one
+  delivery_datetime: 2019-10-02 16:20:02
+  number: 1
+  mail_status: one
+
+two:
+  mail_template: two
+  subject: MyString
+  body: MyText
+  user: two
+  delivery_datetime: 2019-10-02 16:20:02
+  number: 1
+  mail_status: two

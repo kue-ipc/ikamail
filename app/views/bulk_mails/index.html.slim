@@ -1,0 +1,33 @@
+h1 Listing bulk_mails
+
+table
+  thead
+    tr
+      th Mail template
+      th Subject
+      th Body
+      th User
+      th Delivery datetime
+      th Number
+      th Mail status
+      th
+      th
+      th
+
+  tbody
+    - @bulk_mails.each do |bulk_mail|
+      tr
+        td = bulk_mail.mail_template
+        td = bulk_mail.subject
+        td = bulk_mail.body
+        td = bulk_mail.user
+        td = bulk_mail.delivery_datetime
+        td = bulk_mail.number
+        td = bulk_mail.mail_status
+        td = link_to 'Show', bulk_mail
+        td = link_to 'Edit', edit_bulk_mail_path(bulk_mail)
+        td = link_to 'Destroy', bulk_mail, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Bulk mail', new_bulk_mail_path
