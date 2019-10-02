@@ -1,6 +1,6 @@
 require 'set'
 
-class LdapAlignJob < ApplicationJob
+class LdapSyncJob < ApplicationJob
   queue_as :default
 
   def perform(*args)

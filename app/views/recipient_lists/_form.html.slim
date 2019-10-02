@@ -6,13 +6,29 @@
         - @recipient_list.errors.full_messages.each do |message|
           li = message
 
-  .field
+  .field.form-group
     = f.label :name
-    = f.text_field :name
-  .field
+    = f.text_field :name, class: 'form-control'
+  .field.form-group
     = f.label :display_name
-    = f.text_field :display_name
-  .field
+    = f.text_field :display_name, class: 'form-control'
+  .field.form-group
     = f.label :description
-    = f.text_area :description
-  .actions = f.submit
+    = f.text_area :description, class: 'form-control', rows: 3
+  .field.form-group
+    = f.label :mail_group_ids
+    = f.collection_select :mail_group_ids, MailGroup.all, :id, :display_name,
+      {selected: @recipient_list.mail_group_ids},
+      {multiple: true, size: 10, class: 'form-control'}
+  .field.form-group
+    = f.label :included_mail_user_name_list
+    = f.text_field :included_mail_user_name_list,
+      value: @recipient_list.included_mail_users.map(&:name).join(','),
+      class: 'form-control'
+  .field.form-group
+    = f.label :excluded_mail_user_name_list
+    = f.text_field :excluded_mail_user_name_list,
+      value: @recipient_list.excluded_mail_users.map(&:name).join(','),
+      class: 'form-control'
+  .actions
+    = f.submit class: 'btn btn-primary'
