@@ -4,7 +4,6 @@ table.table
   thead
     tr
       th Name
-      th Display name
       th Description
       th
       th
@@ -14,7 +13,6 @@ table.table
     - @recipient_lists.each do |recipient_list|
       tr
         td = recipient_list.name
-        td = recipient_list.display_name
         td = recipient_list.description
         td = link_to 'Show', recipient_list, class: 'btn btn-primary'
         td = link_to 'Edit', edit_recipient_list_path(recipient_list), class: 'btn btn-secondary'
