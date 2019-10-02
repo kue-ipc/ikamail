@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  recipient_list: 
+  from_name: MyString
+  from_mail_address: MyString
+  subject_pre: MyString
+  subject_post: MyString
+  body_header: MyText
+  body_footer: MyText
+  count: 1
+  reservation_time: 2019-10-02 14:06:55
+  description: MyText
+
+two:
+  name: MyString
+  recipient_list: 
+  from_name: MyString
+  from_mail_address: MyString
+  subject_pre: MyString
+  subject_post: MyString
+  body_header: MyText
+  body_footer: MyText
+  count: 1
+  reservation_time: 2019-10-02 14:06:55
+  description: MyText

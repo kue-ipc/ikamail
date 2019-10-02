@@ -1,0 +1,39 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @mail_template.name
+p
+  strong Recipient list:
+  = @mail_template.recipient_list
+p
+  strong From name:
+  = @mail_template.from_name
+p
+  strong From mail address:
+  = @mail_template.from_mail_address
+p
+  strong Subject pre:
+  = @mail_template.subject_pre
+p
+  strong Subject post:
+  = @mail_template.subject_post
+p
+  strong Body header:
+  = @mail_template.body_header
+p
+  strong Body footer:
+  = @mail_template.body_footer
+p
+  strong Count:
+  = @mail_template.count
+p
+  strong Reservation time:
+  = @mail_template.reservation_time
+p
+  strong Description:
+  = @mail_template.description
+
+=> link_to 'Edit', edit_mail_template_path(@mail_template)
+'|
+=< link_to 'Back', mail_templates_path

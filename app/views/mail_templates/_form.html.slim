@@ -1,0 +1,42 @@
+= form_for @mail_template do |f|
+  - if @mail_template.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@mail_template.errors.count, "error")} prohibited this mail_template from being saved:"
+      ul
+        - @mail_template.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :recipient_list
+    = f.text_field :recipient_list
+  .field
+    = f.label :from_name
+    = f.text_field :from_name
+  .field
+    = f.label :from_mail_address
+    = f.text_field :from_mail_address
+  .field
+    = f.label :subject_pre
+    = f.text_field :subject_pre
+  .field
+    = f.label :subject_post
+    = f.text_field :subject_post
+  .field
+    = f.label :body_header
+    = f.text_area :body_header
+  .field
+    = f.label :body_footer
+    = f.text_area :body_footer
+  .field
+    = f.label :count
+    = f.number_field :count
+  .field
+    = f.label :reservation_time
+    = f.time_select :reservation_time
+  .field
+    = f.label :description
+    = f.text_area :description
+  .actions = f.submit
