@@ -25,6 +25,8 @@ class BulkMailsController < ApplicationController
   # POST /bulk_mails.json
   def create
     @bulk_mail = BulkMail.new(bulk_mail_params)
+    @bulk_mail.mail_status = MailStatus.find_by(name: 'draft')
+    @bulk_mail.user = current_user
 
     respond_to do |format|
       if @bulk_mail.save
@@ -69,6 +71,6 @@ class BulkMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_mail_params
-      params.require(:bulk_mail).permit(:mail_template_id, :subject, :body, :user_id, :delivery_datetime, :number, :mail_status_id)
+      params.require(:bulk_mail).permit(:mail_template_id, :immediate_delivery, :subject, :body)
     end
 end

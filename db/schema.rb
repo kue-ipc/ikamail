@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_072002) do
+ActiveRecord::Schema.define(version: 2019_10_03_023137) do
 
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "mail_template_id", null: false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.bigint "mail_status_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "immediate_delivery", null: false
     t.index ["mail_status_id"], name: "index_bulk_mails_on_mail_status_id"
     t.index ["mail_template_id"], name: "index_bulk_mails_on_mail_template_id"
     t.index ["user_id"], name: "index_bulk_mails_on_user_id"

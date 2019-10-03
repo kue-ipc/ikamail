@@ -7,24 +7,16 @@
           li = message
 
   .field
-    = f.label :mail_template
-    = f.text_field :mail_template
+    = f.label :mail_template_id
+    = f.collection_select :mail_template_id, MailTemplate.all, :id, :name,
+      {selected: @bulk_mail.mail_template_id}
+  .field
+    = f.label :immediate_delivery
+    = f.check_box :immediate_delivery
   .field
     = f.label :subject
     = f.text_field :subject
   .field
     = f.label :body
     = f.text_area :body
-  .field
-    = f.label :user
-    = f.text_field :user
-  .field
-    = f.label :delivery_datetime
-    = f.datetime_select :delivery_datetime
-  .field
-    = f.label :number
-    = f.number_field :number
-  .field
-    = f.label :mail_status
-    = f.text_field :mail_status
   .actions = f.submit
