@@ -10,21 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_03_023137) do
+ActiveRecord::Schema.define(version: 2019_10_02_072002) do
+
+  create_table "bulk_mail_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "recipient_list_id", null: false
+    t.string "from_name"
+    t.string "from_mail_address", null: false
+    t.string "subject_prefix"
+    t.string "subject_postfix"
+    t.text "body_header"
+    t.text "body_footer"
+    t.integer "count"
+    t.time "reservation_time"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_bulk_mail_templates_on_name", unique: true
+    t.index ["recipient_list_id"], name: "index_bulk_mail_templates_on_recipient_list_id"
+  end
 
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.bigint "mail_template_id", null: false
+    t.bigint "bulk_mail_template_id", null: false
+    t.boolean "immediate_delivery", null: false
     t.string "subject"
     t.text "body"
     t.bigint "user_id", null: false
     t.datetime "delivery_datetime"
     t.integer "number"
-    t.bigint "mail_status_id", null: false
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "immediate_delivery", null: false
-    t.index ["mail_status_id"], name: "index_bulk_mails_on_mail_status_id"
-    t.index ["mail_template_id"], name: "index_bulk_mails_on_mail_template_id"
+    t.index ["bulk_mail_template_id"], name: "index_bulk_mails_on_bulk_mail_template_id"
     t.index ["user_id"], name: "index_bulk_mails_on_user_id"
   end
 
@@ -64,29 +81,6 @@ ActiveRecord::Schema.define(version: 2019_10_03_023137) do
     t.index ["mail_user_id"], name: "index_mail_groups_users_on_mail_user_id"
   end
 
-  create_table "mail_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "mail_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "name"
-    t.bigint "recipient_list_id"
-    t.string "from_name"
-    t.string "from_mail_address"
-    t.string "subject_prefix"
-    t.string "subject_postfix"
-    t.text "body_header"
-    t.text "body_footer"
-    t.integer "count"
-    t.time "reservation_time"
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["recipient_list_id"], name: "index_mail_templates_on_recipient_list_id"
-  end
-
   create_table "mail_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "mail"
     t.string "name"
@@ -99,7 +93,6 @@ ActiveRecord::Schema.define(version: 2019_10_03_023137) do
 
   create_table "recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
-    t.string "display_name"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -120,7 +113,6 @@ ActiveRecord::Schema.define(version: 2019_10_03_023137) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "bulk_mails", "mail_statuses"
-  add_foreign_key "bulk_mails", "mail_templates"
+  add_foreign_key "bulk_mails", "bulk_mail_templates"
   add_foreign_key "bulk_mails", "users"
 end
