@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MailStatusTest < ActiveSupport::TestCase
+class BulkMailTemplateTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -7,7 +7,3 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-%w[draft pending reserved delivery derivered failure].each do |name|
-  MailStatus.create(name: name)
-end

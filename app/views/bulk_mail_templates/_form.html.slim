@@ -1,9 +1,9 @@
-= form_for @mail_template do |f|
-  - if @mail_template.errors.any?
+= form_for @bulk_mail_template do |f|
+  - if @bulk_mail_template.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@mail_template.errors.count, "error")} prohibited this mail_template from being saved:"
+      h2 = "#{pluralize(@bulk_mail_template.errors.count, "error")} prohibited this bulk_mail_template from being saved:"
       ul
-        - @mail_template.errors.full_messages.each do |message|
+        - @bulk_mail_template.errors.full_messages.each do |message|
           li = message
 
   .field
@@ -12,7 +12,7 @@
   .field
     = f.label :recipient_list_id
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
-      {selected: @mail_template.recipient_list_id}
+      {selected: @bulk_mail_template.recipient_list_id}
   .field
     = f.label :from_name
     = f.text_field :from_name
@@ -20,11 +20,11 @@
     = f.label :from_mail_address
     = f.text_field :from_mail_address
   .field
-    = f.label :subject_pre
-    = f.text_field :subject_pre
+    = f.label :subject_prefix
+    = f.text_field :subject_prefix
   .field
-    = f.label :subject_post
-    = f.text_field :subject_post
+    = f.label :subject_postfix
+    = f.text_field :subject_postfix
   .field
     = f.label :body_header
     = f.text_area :body_header

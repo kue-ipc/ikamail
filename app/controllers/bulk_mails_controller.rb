@@ -1,5 +1,6 @@
 class BulkMailsController < ApplicationController
-  before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy]
+  before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
+    :apply, :withdraw, :approve, :dismiss, :cancel]
 
   # GET /bulk_mails
   # GET /bulk_mails.json
@@ -60,6 +61,37 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to bulk_mails_url, notice: 'Bulk mail was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /bulk_mails/1/apply
+  def apply
+    if @bulk_mail.mail_status.name == 'draft'
+      @bulk_mail.update(mail_satus: MailStatus.find_by(name: 'pending'))
+    else
+    end
+  end
+
+    action = params.permit(:action)
+    notice = ''
+    error = nil
+    case action
+    when 'apply'
+    when 'approve'
+    when 'dismiss'
+    when 'withdraw'
+    when 'cancel'
+    else
+    end
+    respond_to do |format|
+      if error
+      format.html { redirect_to @bulk_mail, notice: '' }
+      format.json { render :show, status: :ok, location: @bulk_mail }
+
+      else
+        format.html { render :edit }
+        format.json { render json: errors, status: :unprocessable_entity }
+      end
     end
   end
 

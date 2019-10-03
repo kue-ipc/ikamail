@@ -1,13 +1,23 @@
+# frozen_string_literal: true
+
 class BulkMail < ApplicationRecord
-  belongs_to :mail_template
-  belongs_to :user
-  belongs_to :mail_status
+  module Status
+    DRAFT = 'draft'
+    PENDING = 'pending'
+    RESERVED = 'reserved'
+    DELIVERY = 'delivery'
+    DELIVERED = 'derivered'
+    FAILURE = 'failure'
+  end
+
+  belongs_to :bulk_mail_template
+  belongs_to :owner, class_name: 'User'
 
   def mail_subject
     str = String.new
-    str << mail_template.subject_pre % individual_values
+    str << mail_template.subject_prefix % individual_values
     str << subject
-    str << mail_template.subject_post % individual_values
+    str << mail_template.subject_postfix % individual_values
     str
   end
 

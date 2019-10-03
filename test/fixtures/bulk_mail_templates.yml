@@ -5,12 +5,12 @@ one:
   recipient_list: 
   from_name: MyString
   from_mail_address: MyString
-  subject_pre: MyString
-  subject_post: MyString
+  subject_prefix: MyString
+  subject_postfix: MyString
   body_header: MyText
   body_footer: MyText
   count: 1
-  reservation_time: 2019-10-02 14:06:55
+  reservation_time: 2019-10-03 15:17:19
   description: MyText
 
 two:
@@ -18,10 +18,10 @@ two:
   recipient_list: 
   from_name: MyString
   from_mail_address: MyString
-  subject_pre: MyString
-  subject_post: MyString
+  subject_prefix: MyString
+  subject_postfix: MyString
   body_header: MyText
   body_footer: MyText
   count: 1
-  reservation_time: 2019-10-02 14:06:55
+  reservation_time: 2019-10-03 15:17:19
   description: MyText
