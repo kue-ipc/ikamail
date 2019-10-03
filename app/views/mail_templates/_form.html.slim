@@ -10,8 +10,9 @@
     = f.label :name
     = f.text_field :name
   .field
-    = f.label :recipient_list
-    = f.text_field :recipient_list
+    = f.label :recipient_list_id
+    = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
+      {selected: @mail_template.recipient_list_id}
   .field
     = f.label :from_name
     = f.text_field :from_name
