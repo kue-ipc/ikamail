@@ -13,8 +13,24 @@ html
     nav.navbar.navbar-light.bg-light
       = link_to '一括メールシステム', '/', class: 'navbar-brand'
 
-    nav
-      .menu-item
-        = link_to '宛先一覧', recipient_lists_path
-    .container
-      = yield
+    .container-fluid
+      - if user_signed_in?
+        .row
+          .col-12.col-md-3.col-xl-2
+            nav
+              ul
+                li
+                  = link_to t('new_bulk_mail'), new_bulk_mail_path
+                li
+                  = link_to t('bulk_mails'), bulk_mails_path
+                li
+                  = link_to t('recipient_lists'), recipient_lists_path
+                li
+                  = link_to t('bulk_mail_templates'), bulk_mail_templates_path
+
+          .col-12.col-md-9.col-xl-10
+            main
+              = yield
+      - else
+        main
+          = yield

@@ -30,4 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
-  hello: "Hello world"
+  hello: "こんにちは世界"
+  new_bulk_mail: 一括メール作成
+  bulk_mails: 一括メール一覧
+  bulk_mail_templates: 一括メールテンプレート一覧
+  recipient_lists: 宛先リスト一覧

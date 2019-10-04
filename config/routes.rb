@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root to: 'pages#top'
   resources :bulk_mail_templates
   resources :bulk_mails
   resources :recipient_lists do
