@@ -9,7 +9,7 @@ class User < ApplicationRecord
   devise :ldap_authenticatable, :lockable, :timeoutable, :trackable
 
   def ldap_before_save
-    entry = Devise::LDAP::Adapter.get_ldap_params(self.username)
+    entry = Devise::LDAP::Adapter.get_ldap_entry(self.username)
     self.email = entry['mail'].first
     self.fullname = entry["display_name;lang-#{I18n.default_locale}"]&.first ||
                     entry['display_name']&.first
