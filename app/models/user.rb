@@ -11,8 +11,7 @@ class User < ApplicationRecord
   def ldap_before_save
     entry = Devise::LDAP::Adapter.get_ldap_params(self.username)
     self.email = entry['mail'].first
-    self.fullname = entry['display_name;lang-ja']&.first ||
-                    entry['display_name']&.first ||
-                    self.self.username
+    self.fullname = entry["display_name;lang-#{I18n.default_locale}"]&.first ||
+                    entry['display_name']&.first
   end
 end

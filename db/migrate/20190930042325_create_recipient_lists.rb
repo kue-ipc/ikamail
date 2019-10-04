@@ -6,5 +6,6 @@ class CreateRecipientLists < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+    add_index :recipient_lists, :name, unique: true
   end
 end
