@@ -3,7 +3,7 @@ class CreateBulkMails < ActiveRecord::Migration[6.0]
     create_table :bulk_mails do |t|
       t.belongs_to :owner, null: false, foreign_key: {to_table: :users}
       t.belongs_to :bulk_mail_template, null: false, foreign_key: true
-      t.boolean :immediate_delivery, null: false
+      t.boolean :immediate_delivery, null: false, default: false
       t.string :subject, null: false
       t.text :body, null: false
       t.datetime :delivery_datetime
@@ -12,5 +12,6 @@ class CreateBulkMails < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+    add_index :bulk_mails, :status
   end
 end
