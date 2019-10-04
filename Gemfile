@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-# 認証とロールと権限
+# auth
 gem 'devise'
 gem 'devise_ldap_authenticatable'
 gem 'pundit'
@@ -49,6 +49,10 @@ gem 'sucker_punch'
 
 # bootstrap
 gem 'bootstrap', '~> 4.3.1'
+
+# i18n
+gem 'rails-i18n', '~> 6.0.0'
+gem 'devise-i18n'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
