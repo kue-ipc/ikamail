@@ -16,7 +16,7 @@ class LdapUser < ActiveLdap::Base
   end
 
   def display_name
-    self['displayName;lang-ja'] || self['displayName']
+    self["displayName;lang-#{I18n.default_locale}"] || self['displayName']
   end
 
   def self.find_by_name(name)

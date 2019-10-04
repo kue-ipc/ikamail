@@ -1,6 +1,7 @@
 class CreateBulkMailTemplates < ActiveRecord::Migration[6.0]
   def change
     create_table :bulk_mail_templates do |t|
+      t.integer :number, null: false, default: 0
       t.string :name, null: false
       t.belongs_to :recipient_list, null: false
       t.string :from_name

@@ -16,7 +16,7 @@ class LdapGroup < ActiveLdap::Base
   end
 
   def display_name
-    self['description;lang-ja'] || self['description']
+    self["description;lang-#{I18n.default_locale}"] || self['description']
   end
 
   def self.find_by_name(name)
