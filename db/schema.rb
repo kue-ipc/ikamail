@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.text "body_header"
     t.text "body_footer"
     t.integer "count", default: 0, null: false
-    t.integer "reservation_hour"
-    t.integer "reservation_minute"
+    t.integer "reservation_hour", default: 0, null: false
+    t.integer "reservation_minute", default: 0, null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
   end
 
   create_table "recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
