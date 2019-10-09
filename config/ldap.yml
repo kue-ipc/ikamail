@@ -3,12 +3,12 @@
 # compitable Net::LDAP
 ldap: &LDAP
   host: &HOST localhost
-  port: &PORT 1389
+  port: &PORT 3389
   # auth: :anonymous
   auth:
     method: :sipmle
-    username: &AUTH_USRERNAME cn=bind,dc=example,dc=jp
-    password: &AUTH_PASSOWRD bind_password
+    username: &AUTH_USRERNAME cn=admin,dc=example,dc=jp
+    password: &AUTH_PASSOWRD secret
   base: &BASE dc=example,dc=jp
   encryption: null
   # encryption: :simple_tls

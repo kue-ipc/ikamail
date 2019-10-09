@@ -62,7 +62,7 @@ TLSCertificateKeyFile <%= File.expand_path('server.pem', @conf_root) %>
 # TLSCertificateFile server.pem
 # TLSCertificateKeyFile server.pem
 <% end %>
-# 
+#
 # TLSVerifyClient demand
 
 # Sample security restrictions
@@ -100,8 +100,7 @@ access to *
 
 database	ldif
 
-suffix          "dc=test,dc=com"
+suffix          "<%= @dn %>"
 directory       openldap-data
-rootdn          "cn=admin,dc=test,dc=com"
-## rootpw = secret
-rootpw          {SSHA}fFjKcZb4cfOAcwSjJer8nCGOEVRUnwCC
+rootdn          "<%= @admin_dn %>"
+rootpw          <%= @secret %>
