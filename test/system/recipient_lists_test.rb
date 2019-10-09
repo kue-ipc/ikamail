@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecipientListsTest < ApplicationSystemTestCase
   setup do
-    @recipient_list = recipient_lists(:one)
+    @recipient_list = recipient_lists(:all)
   end
 
   test "visiting the index" do

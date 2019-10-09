@@ -63,3 +63,6 @@ apt install libmariadbclient-dev-compat
 
 テスト用LDAPサーバーは"test/ldap"にあります。slapdとldap-utilsを入れておいてください。
 `./test/ldap/run-server`でサーバーが起動します。初期データはbase.ldifを投げてください。
+
+テストにはヘッドレスなChromiumとWebDriverが必要です。
+chromium-chromedriver
