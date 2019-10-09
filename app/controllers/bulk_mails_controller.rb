@@ -70,7 +70,6 @@ class BulkMailsController < ApplicationController
       @bulk_mail.update(mail_satus: MailStatus.find_by(name: 'pending'))
     else
     end
-  end
 
     action = params.permit(:action)
     notice = ''
