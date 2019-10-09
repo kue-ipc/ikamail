@@ -13,9 +13,9 @@
 ActiveRecord::Schema.define(version: 2019_10_02_072002) do
 
   create_table "bulk_mail_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.integer "number", default: 0, null: false
-    t.boolean "enabled", default: true, null: false
     t.string "name", null: false
+    t.boolean "enabled", default: true, null: false
+    t.bigint "user_id", null: false
     t.bigint "recipient_list_id", null: false
     t.string "from_name"
     t.string "from_mail_address", null: false
@@ -24,16 +24,18 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.text "body_header"
     t.text "body_footer"
     t.integer "count", default: 0, null: false
-    t.time "reservation_time"
+    t.integer "reservation_hour"
+    t.integer "reservation_minute"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_bulk_mail_templates_on_name", unique: true
     t.index ["recipient_list_id"], name: "index_bulk_mail_templates_on_recipient_list_id"
+    t.index ["user_id"], name: "index_bulk_mail_templates_on_user_id"
   end
 
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.bigint "owner_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "bulk_mail_template_id", null: false
     t.boolean "immediate_delivery", default: false, null: false
     t.string "subject", null: false
@@ -44,8 +46,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["bulk_mail_template_id"], name: "index_bulk_mails_on_bulk_mail_template_id"
-    t.index ["owner_id"], name: "index_bulk_mails_on_owner_id"
     t.index ["status"], name: "index_bulk_mails_on_status"
+    t.index ["user_id"], name: "index_bulk_mails_on_user_id"
   end
 
   create_table "excluded_mail_users_recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -88,7 +90,6 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.string "mail", null: false
     t.string "name", null: false
     t.string "display_name"
-    t.boolean "admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["mail"], name: "index_mail_users_on_mail", unique: true
@@ -107,23 +108,19 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.string "username", null: false
     t.string "email", null: false
     t.string "fullname"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
-    t.integer "failed_attempts", default: 0, null: false
-    t.string "unlock_token"
-    t.datetime "locked_at"
+    t.boolean "admin", default: false, null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "bulk_mail_templates", "recipient_lists"
+  add_foreign_key "bulk_mail_templates", "users"
   add_foreign_key "bulk_mails", "bulk_mail_templates"
-  add_foreign_key "bulk_mails", "users", column: "owner_id"
+  add_foreign_key "bulk_mails", "users"
   add_foreign_key "excluded_mail_users_recipient_lists", "mail_users"
   add_foreign_key "excluded_mail_users_recipient_lists", "recipient_lists"
   add_foreign_key "included_mail_users_recipient_lists", "mail_users"

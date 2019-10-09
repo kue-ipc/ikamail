@@ -4,9 +4,12 @@ class User < ApplicationRecord
   # Include default devise modules.
   # :database_authenticatable or :ldap_authenticatable
   # Others available are:
-  # :confirmable, :registerable, :recoverable, :rememberable, :validatable
-  # and :omniauthable
-  devise :ldap_authenticatable, :lockable, :timeoutable, :trackable
+  # :confirmable, :registerable, :recoverable, :validatable
+  # and :omniauthable, :lockable, :timeoutable, :trackable
+  devise :ldap_authenticatable, :rememberable
+
+  has_many :bulk_mail_templates
+  has_many :bulk_mails
 
   def ldap_before_save
     entry = Devise::LDAP::Adapter.get_ldap_entry(self.username)

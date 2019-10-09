@@ -4,7 +4,6 @@ class CreateMailUsers < ActiveRecord::Migration[6.0]
       t.string :mail, null: false
       t.string :name, null: false
       t.string :display_name
-      t.boolean :admin, null: false, default: false
 
       t.timestamps
     end

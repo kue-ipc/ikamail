@@ -11,7 +11,7 @@ class BulkMail < ApplicationRecord
   end
 
   belongs_to :bulk_mail_template
-  belongs_to :owner, class_name: 'User'
+  belongs_to :user
 
   def mail_subject
     str = String.new

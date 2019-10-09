@@ -1,19 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  mail_template: one
-  subject: MyString
-  body: MyText
-  user: one
-  delivery_datetime: 2019-10-02 16:20:02
+  user: user01
+  bulk_mail_template: all
+  immediate_delivery: true
+  subject: "テスト1"
+  body: "テスト"
+  delivery_datetime: 2019-01-01 00:00:00
   number: 1
-  mail_status: one
+  status: draft
 
 two:
-  mail_template: two
-  subject: MyString
-  body: MyText
-  user: two
-  delivery_datetime: 2019-10-02 16:20:02
-  number: 1
-  mail_status: two
+  user: user01
+  bulk_mail_template: users
+  immediate_delivery: false
+  subject: "テスト2"
+  body: "テスト"
+  delivery_datetime: 2019-01-01 00:00:00
+  number: 2
+  status: draft
