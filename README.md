@@ -58,3 +58,8 @@ Ubuntu 18.04 LTS
 
 apt install mariadb-server
 apt install libmariadbclient-dev-compat
+
+## 開発とテスト
+
+テスト用LDAPサーバーは"test/ldap"にあります。slapdとldap-utilsを入れておいてください。
+`./test/ldap/run-server`でサーバーが起動します。初期データはbase.ldifを投げてください。
