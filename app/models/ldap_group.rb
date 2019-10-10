@@ -16,7 +16,26 @@ class LdapGroup < ActiveLdap::Base
   end
 
   def display_name
-    self["description;lang-#{I18n.default_locale}"] || self['description']
+    case self['description']
+    when nil
+      name
+    when String
+      self['description']
+    when Array
+      lang = "lang-#{I18n.default_locale}"
+      lang_desc = name
+      self['description'].each do |desc|
+        if desc.is_a?(String)
+          lang_desc = desc
+        elsif desc[lang]
+          lang_desc = desc[lang]
+          break
+        end
+      end
+      lang_desc
+    else
+      self['description']
+    end
   end
 
   def self.find_by_name(name)
