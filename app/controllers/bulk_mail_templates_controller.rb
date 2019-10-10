@@ -25,6 +25,7 @@ class BulkMailTemplatesController < ApplicationController
   # POST /bulk_mail_templates.json
   def create
     @bulk_mail_template = BulkMailTemplate.new(bulk_mail_template_params)
+    @bulk_mail_template.user = current_user
 
     respond_to do |format|
       if @bulk_mail_template.save
