@@ -66,7 +66,7 @@ class BulkMailsController < ApplicationController
 
   # GET /bulk_mails/1/apply
   def apply
-    if @bulk_mail.mail_status.name == 'draft'
+    if @bulk_mail.status == 'draft'
       @bulk_mail.update(satus: 'pending')
     else
     end

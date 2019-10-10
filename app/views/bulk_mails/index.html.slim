@@ -9,7 +9,7 @@ table
       th User
       th Delivery datetime
       th Number
-      th Mail status
+      th Status
       th
       th
       th
@@ -23,7 +23,7 @@ table
         td = bulk_mail.user
         td = bulk_mail.delivery_datetime
         td = bulk_mail.number
-        td = bulk_mail.mail_status
+        td = bulk_mail.status
         td = link_to 'Show', bulk_mail
         td = link_to 'Edit', edit_bulk_mail_path(bulk_mail)
         td = link_to 'Destroy', bulk_mail, data: { confirm: 'Are you sure?' }, method: :delete
