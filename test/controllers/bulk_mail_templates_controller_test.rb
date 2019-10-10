@@ -70,12 +70,12 @@ class BulkMailTemplatesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to bulk_mail_template_url(@bulk_mail_template)
   end
 
-  test "should destroy bulk_mail_template" do
-    sign_in users(:admin)
-    assert_difference('BulkMailTemplate.count', -1) do
-      delete bulk_mail_template_url(@bulk_mail_template)
-    end
-
-    assert_redirected_to bulk_mail_templates_url
-  end
+  # test "should destroy bulk_mail_template" do
+  #   sign_in users(:admin)
+  #   assert_difference('BulkMailTemplate.count', -1) do
+  #     delete bulk_mail_template_url(@bulk_mail_template)
+  #   end
+  #
+  #   assert_redirected_to bulk_mail_templates_url
+  # end
 end

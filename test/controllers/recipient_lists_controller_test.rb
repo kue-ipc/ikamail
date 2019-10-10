@@ -54,14 +54,14 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to recipient_list_url(@recipient_list)
   end
 
-  test "should destroy recipient_list" do
-    sign_in users(:admin)
-    assert_difference('RecipientList.count', -1) do
-      delete recipient_list_url(@recipient_list)
-    end
-
-    assert_redirected_to recipient_lists_url
-  end
+  # test "should destroy recipient_list" do
+  #   sign_in users(:admin)
+  #   assert_difference('RecipientList.count', -1) do
+  #     delete recipient_list_url(@recipient_list)
+  #   end
+  #
+  #   assert_redirected_to recipient_lists_url
+  # end
 
   test "user should get index" do
     sign_in users(:user01)
@@ -73,8 +73,4 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     get recipient_lists_url
     assert_redirected_to new_user_session_path
   end
-
-
-
-
 end
