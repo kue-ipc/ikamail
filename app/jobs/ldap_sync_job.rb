@@ -31,7 +31,7 @@ class LdapSyncJob < ApplicationJob
     LdapUser.all.each do |user|
       name = user.name
       mail_user_remains.delete(name)
-      MailUser.find_or_create_by(name: name)
+      MailUser.find_or_create_by(name: name, mail: user.mail)
         .update(display_name: user.display_name)
     end
 

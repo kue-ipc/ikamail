@@ -2,6 +2,11 @@
 
 Rails.application.routes.draw do
   root to: 'pages#top'
+  namespace :admin do
+    root to: '/admin#top'
+    put 'ldap_sync'
+    post 'statistics'
+  end
   resources :bulk_mail_templates
   resources :bulk_mails
   resources :recipient_lists do

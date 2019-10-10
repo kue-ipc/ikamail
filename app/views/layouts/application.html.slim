@@ -10,7 +10,7 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    header
+    header.mb-2
       nav.navbar.navbar-light.bg-light
         = link_to '一括メールシステム', '/', class: 'navbar-brand'
         - if user_signed_in?
@@ -32,16 +32,15 @@ html
       - if user_signed_in?
         .row
           .col-12.col-md-3.col-xl-2
-            nav
-              ul
-                li
-                  = link_to t('new_bulk_mail'), new_bulk_mail_path
-                li
-                  = link_to t('bulk_mails'), bulk_mails_path
-                li
-                  = link_to t('recipient_lists'), recipient_lists_path
-                li
-                  = link_to t('bulk_mail_templates'), bulk_mail_templates_path
+            ul.nav
+              li.nav-item
+                = link_to t('new_bulk_mail'), new_bulk_mail_path
+              li
+                = link_to t('bulk_mails'), bulk_mails_path
+              li
+                = link_to t('recipient_lists'), recipient_lists_path
+              li
+                = link_to t('bulk_mail_templates'), bulk_mail_templates_path
 
           .col-12.col-md-9.col-xl-10
             main
@@ -49,7 +48,7 @@ html
       - else
         main
           = yield
-    footer
+    footer.mt-2
       hr
       p.text-center
         | 一括メールシステム
