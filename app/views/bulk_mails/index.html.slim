@@ -17,7 +17,7 @@ table
   tbody
     - @bulk_mails.each do |bulk_mail|
       tr
-        td = bulk_mail.mail_template
+        td = bulk_mail.bulk_mail_template
         td = bulk_mail.subject
         td = bulk_mail.body
         td = bulk_mail.user

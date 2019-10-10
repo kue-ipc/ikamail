@@ -7,9 +7,9 @@
           li = message
 
   .field
-    = f.label :mail_template_id
-    = f.collection_select :mail_template_id, MailTemplate.all, :id, :name,
-      {selected: @bulk_mail.mail_template_id}
+    = f.label :bulk_mail_template_id
+    = f.collection_select :bulk_mail_template_id, BulkMailTemplate.all, :id, :name,
+      {selected: @bulk_mail.bulk_mail_template_id}
   .field
     = f.label :immediate_delivery
     = f.check_box :immediate_delivery

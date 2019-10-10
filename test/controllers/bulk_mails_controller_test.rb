@@ -23,13 +23,9 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     assert_difference('BulkMail.count') do
       post bulk_mails_url, params: { bulk_mail: {
-        body: @bulk_mail.body,
-        delivery_datetime: @bulk_mail.delivery_datetime,
-        mail_status_id: @bulk_mail.mail_status_id,
-        mail_template_id: @bulk_mail.mail_template_id,
-        number: @bulk_mail.number,
+        bulk_mail_template_id: @bulk_mail.bulk_mail_template_id,
         subject: @bulk_mail.subject,
-        user_id: @bulk_mail.user_id
+        body: @bulk_mail.body,
       } }
     end
 
@@ -51,13 +47,10 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
   test "should update bulk_mail" do
     sign_in users(:admin)
     patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
-      body: @bulk_mail.body,
-      delivery_datetime: @bulk_mail.delivery_datetime,
-      mail_status_id: @bulk_mail.mail_status_id,
-      mail_template_id: @bulk_mail.mail_template_id,
-      number: @bulk_mail.number,
+      bulk_mail_template_id: @bulk_mail.bulk_mail_template_id,
       subject: @bulk_mail.subject,
-      user_id: @bulk_mail.user_id } }
+      body: @bulk_mail.body,
+    } }
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 

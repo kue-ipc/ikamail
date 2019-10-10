@@ -25,6 +25,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
       post recipient_lists_url, params: { recipient_list: {
         name: @recipient_list.name + "2",
         description: @recipient_list.description,
+        mail_group_ids: @recipient_list.mail_group_ids,
       } }
     end
 
@@ -48,6 +49,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     patch recipient_list_url(@recipient_list), params: { recipient_list: {
       name: @recipient_list.name + "2",
       description: @recipient_list.description,
+      mail_group_ids: @recipient_list.mail_group_ids,
     } }
     assert_redirected_to recipient_list_url(@recipient_list)
   end

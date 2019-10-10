@@ -15,17 +15,17 @@ class BulkMail < ApplicationRecord
 
   def mail_subject
     str = String.new
-    str << mail_template.subject_prefix % individual_values
+    str << bulk_mail_template.subject_prefix % individual_values
     str << subject
-    str << mail_template.subject_postfix % individual_values
+    str << bulk_mail_template.subject_postfix % individual_values
     str
   end
 
   def mail_body
     str = String.new
-    str << mail_template.body_header % individual_values
+    str << bulk_mail_template.body_header % individual_values
     str << body
-    str << mail_template.body_fotter % individual_values
+    str << bulk_mail_template.body_fotter % individual_values
     str
   end
 
@@ -35,7 +35,7 @@ class BulkMail < ApplicationRecord
       num: number_str,
       num_zen: number_str.tr('0-9', '０-９'),
       num_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
-      name: mail_template.name,
+      name: bulk_mail_template.name,
       date: delivery_datetime.date.to_s,
     }
   end

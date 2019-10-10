@@ -17,7 +17,7 @@ class BulkMailsTest < ApplicationSystemTestCase
   #   fill_in "Body", with: @bulk_mail.body
   #   fill_in "Delivery datetime", with: @bulk_mail.delivery_datetime
   #   fill_in "Mail status", with: @bulk_mail.mail_status_id
-  #   fill_in "Mail template", with: @bulk_mail.mail_template_id
+  #   fill_in "Mail template", with: @bulk_mail.bulk_mail_template_id
   #   fill_in "Number", with: @bulk_mail.number
   #   fill_in "Subject", with: @bulk_mail.subject
   #   fill_in "User", with: @bulk_mail.user_id
@@ -34,7 +34,7 @@ class BulkMailsTest < ApplicationSystemTestCase
   #   fill_in "Body", with: @bulk_mail.body
   #   fill_in "Delivery datetime", with: @bulk_mail.delivery_datetime
   #   fill_in "Mail status", with: @bulk_mail.mail_status_id
-  #   fill_in "Mail template", with: @bulk_mail.mail_template_id
+  #   fill_in "Mail template", with: @bulk_mail.bulk_mail_template_id
   #   fill_in "Number", with: @bulk_mail.number
   #   fill_in "Subject", with: @bulk_mail.subject
   #   fill_in "User", with: @bulk_mail.user_id
