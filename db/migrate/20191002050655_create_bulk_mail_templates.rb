@@ -17,8 +17,7 @@ class CreateBulkMailTemplates < ActiveRecord::Migration[6.0]
       t.integer :count, null: false, default: 0
 
       # reservation
-      t.integer :reservation_hour, null: false, default: 0
-      t.integer :reservation_minute, null: false, default: 0
+      t.time :reservation_time, null: false
 
       t.text :description
 

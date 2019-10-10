@@ -6,7 +6,7 @@ one:
   immediate_delivery: true
   subject: "テスト1"
   body: "テスト"
-  delivery_datetime: 2019-01-01 00:00:00
+  delivery_datetime: 2019-01-02 09:00:00 +09:00
   number: 1
   status: draft
 
@@ -16,6 +16,6 @@ two:
   immediate_delivery: false
   subject: "テスト2"
   body: "テスト"
-  delivery_datetime: 2019-01-01 00:00:00
+  delivery_datetime: 2019-01-02 21:30:00 +09:00
   number: 2
   status: draft

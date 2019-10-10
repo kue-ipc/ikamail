@@ -75,7 +75,7 @@ class BulkMailTemplatesController < ApplicationController
         :subject_prefix, :subject_postfix,
         :body_header, :body_footer,
         :count,
-        :reservation_hour, :reservation_minute,
+        :reservation_time,
         :description)
     end
 end

@@ -12,8 +12,7 @@ all:
   body_header: ""
   body_footer: ""
   count: 0
-  reservation_hour: 22
-  reservation_minute: 0
+  reservation_time:  2019-01-01 21:00:00 +09:00
   description: "すべてのユーザーに送ります。"
 
 users:
@@ -28,6 +27,5 @@ users:
   body_header: ""
   body_footer: ""
   count: 0
-  reservation_hour: 21
-  reservation_minute: 0
+  reservation_time:  2019-01-01 21:30:00 +09:00
   description: "すべての一般ユーザーに送ります。"

@@ -24,8 +24,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.text "body_header"
     t.text "body_footer"
     t.integer "count", default: 0, null: false
-    t.integer "reservation_hour", default: 0, null: false
-    t.integer "reservation_minute", default: 0, null: false
+    t.time "reservation_time", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

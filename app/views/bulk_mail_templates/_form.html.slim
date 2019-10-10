@@ -35,11 +35,8 @@
     = f.label :count
     = f.number_field :count
   .field
-    = f.label :reservation_hour
-    = f.number_field :reservation_hour
-  .field
-    = f.label :reservation_minute
-    = f.number_field :reservation_minute
+    = f.label :reservation_time
+    = f.time_select :reservation_time
   .field
     = f.label :description
     = f.text_area :description
