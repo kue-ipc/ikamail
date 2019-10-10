@@ -50,6 +50,9 @@ gem 'sucker_punch'
 # bootstrap
 gem 'bootstrap', '~> 4.3.1'
 
+# FontAwesome
+gem 'font-awesome-rails'
+
 # i18n
 gem 'rails-i18n', '~> 6.0.0'
 gem 'devise-i18n'

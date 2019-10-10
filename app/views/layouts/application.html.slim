@@ -10,8 +10,23 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    nav.navbar.navbar-light.bg-light
-      = link_to '一括メールシステム', '/', class: 'navbar-brand'
+    header
+      nav.navbar.navbar-light.bg-light
+        = link_to '一括メールシステム', '/', class: 'navbar-brand'
+        - if user_signed_in?
+          ul.navbar-nav.flex-row.mr-auto
+            li.nav-item.px-1
+              = link_to t('new_bulk_mail'), new_bulk_mail_path, class: 'nav-link'
+            li.nav-item.px-1
+              = link_to t('bulk_mails'), bulk_mails_path, class: 'nav-link'
+            li.nav-item.px-1
+              = link_to t('recipient_lists'), recipient_lists_path, class: 'nav-link'
+            li.nav-item.px-1
+              = link_to t('bulk_mail_templates'), bulk_mail_templates_path, class: 'nav-link'
+          ul.navbar-nav
+            li.nav-item
+              = link_to destroy_user_session_path, method: :delete, class: 'nav-link', title: 'ログアウト', 'data-toggle': 'tooltip' do
+                = fa_icon 'sign-out'
 
     .container-fluid
       - if user_signed_in?
@@ -34,3 +49,7 @@ html
       - else
         main
           = yield
+    footer
+      hr
+      p.text-center
+        | 一括メールシステム

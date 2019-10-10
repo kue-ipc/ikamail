@@ -104,6 +104,8 @@ GEM
     execjs (2.7.0)
     fast_gettext (2.0.1)
     ffi (1.11.1)
+    font-awesome-rails (4.7.0.5)
+      railties (>= 3.2, < 6.1)
     formatador (0.2.5)
     gettext (3.2.9)
       locale (>= 2.0.5)
@@ -295,7 +297,7 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.1.10)
+    zeitwerk (2.2.0)
 
 PLATFORMS
   ruby
@@ -309,6 +311,7 @@ DEPENDENCIES
   devise
   devise-i18n
   devise_ldap_authenticatable
+  font-awesome-rails
   guard
   guard-minitest
   jbuilder (~> 2.7)

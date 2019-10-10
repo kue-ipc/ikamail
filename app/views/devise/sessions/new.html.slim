@@ -8,7 +8,7 @@ h2
     = f.label :password
     = f.password_field :password, autocomplete: 'current-password', class: 'form-control'
   - if devise_mapping.rememberable?
-    .field.form-group
+    .field.form-group.form-check
       = f.check_box :remember_me, class: 'form-check-input'
       = f.label :remember_me, class: 'form-check-label'
   .actions
