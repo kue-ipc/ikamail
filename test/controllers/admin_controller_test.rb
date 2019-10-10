@@ -1,18 +1,23 @@
 require 'test_helper'
 
 class AdminControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   test "should get top" do
-    get admin_top_url
+    sign_in users(:admin)
+    get admin_root_url
     assert_response :success
   end
 
   test "should get ldap_sync" do
-    get admin_ldap_sync_url
-    assert_response :success
+    sign_in users(:admin)
+    put admin_ldap_sync_url
+    assert_redirected_to admin_root_path
   end
 
   test "should get statistics" do
-    get admin_statistics_url
+    sign_in users(:admin)
+    post admin_statistics_url
     assert_response :success
   end
 
