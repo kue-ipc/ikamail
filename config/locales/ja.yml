@@ -31,7 +31,19 @@
 
 ja:
   hello: "こんにちは世界"
-  new_bulk_mail: 一括メール作成
-  bulk_mails: 一括メール一覧
-  bulk_mail_templates: 一括メールテンプレート一覧
-  recipient_lists: 宛先リスト一覧
+  menu:
+    actions:
+      index: "%{model}一覧"
+      new: "%{model}作成"
+  activerecord:
+    models:
+      mail_user: メールユーザー
+      mail_group: メールグループ
+      bulk_mail: メール
+      bulk_mail_template: テンプレート
+    attributes:
+      bulk_mail:
+        bulk_mail_template: テンプレート
+        immediate_delivery: 即時配信
+        subject: 題名
+        body: 本文

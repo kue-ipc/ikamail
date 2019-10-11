@@ -6,17 +6,17 @@
         - @bulk_mail.errors.full_messages.each do |message|
           li = message
 
-  .field
+  .field.form_group
     = f.label :bulk_mail_template_id
     = f.collection_select :bulk_mail_template_id, BulkMailTemplate.all, :id, :name,
       {selected: @bulk_mail.bulk_mail_template_id}
-  .field
-    = f.label :immediate_delivery
-    = f.check_box :immediate_delivery
-  .field
+  .field.custom-control.custom-switch
+    = f.check_box :immediate_delivery, class: 'custom-control-input'
+    = f.label :immediate_delivery, class: 'custom-control-label'
+  .field.form_group
     = f.label :subject
-    = f.text_field :subject
-  .field
+    = f.text_field :subject, class: 'form-control'
+  .field.form_group
     = f.label :body
-    = f.text_area :body
+    = f.text_area :body, class: 'form-control', rows: 20
   .actions = f.submit

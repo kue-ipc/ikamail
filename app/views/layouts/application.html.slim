@@ -34,7 +34,7 @@ html
           .col-12.col-md-3.col-xl-2
             ul.nav
               li.nav-item
-                = link_to t('new_bulk_mail'), new_bulk_mail_path
+                = link_to t('menu.actions.new', model: t('activerecord.models.bulk_mail')), new_bulk_mail_path
               li
                 = link_to t('bulk_mails'), bulk_mails_path
               li
