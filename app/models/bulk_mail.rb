@@ -21,11 +21,6 @@ class BulkMail < ApplicationRecord
   validates :status, inclusion: {in: STATUS_LIST}
   validates :delivery_timing, inclusion: {in: TIMING_LIST}
 
-
-
-
-
-
   belongs_to :bulk_mail_template
   belongs_to :user
 

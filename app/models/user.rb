@@ -16,5 +16,8 @@ class User < ApplicationRecord
     self.email = entry['mail'].first
     self.fullname = entry["display_name;lang-#{I18n.default_locale}"]&.first ||
                     entry['display_name']&.first
+
+    # first user is admin
+    self.admin = true if User.count.zero?
   end
 end

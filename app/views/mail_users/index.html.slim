@@ -1,0 +1,19 @@
+h1 Listing mail_users
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @mail_users.each do |mail_user|
+      tr
+        td = link_to 'Show', mail_user
+        td = link_to 'Edit', edit_mail_user_path(mail_user)
+        td = link_to 'Destroy', mail_user, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Mail user', new_mail_user_path

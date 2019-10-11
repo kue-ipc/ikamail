@@ -41,6 +41,7 @@ ja:
       mail_group: メールグループ
       bulk_mail: メール
       bulk_mail_template: テンプレート
+      recipient_list: 宛先リスト
     attributes:
       bulk_mail:
         bulk_mail_template: テンプレート

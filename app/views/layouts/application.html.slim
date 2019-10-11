@@ -15,14 +15,9 @@ html
         = link_to '一括メールシステム', '/', class: 'navbar-brand'
         - if user_signed_in?
           ul.navbar-nav.flex-row.mr-auto
-            li.nav-item.px-1
-              = link_to t('new_bulk_mail'), new_bulk_mail_path, class: 'nav-link'
-            li.nav-item.px-1
-              = link_to t('bulk_mails'), bulk_mails_path, class: 'nav-link'
-            li.nav-item.px-1
-              = link_to t('recipient_lists'), recipient_lists_path, class: 'nav-link'
-            li.nav-item.px-1
-              = link_to t('bulk_mail_templates'), bulk_mail_templates_path, class: 'nav-link'
+            - menu_list.each do |item|
+              li.nav-item.px-1 class=(current_page?(item[:path]) ? 'active' : nil)
+                = link_to item[:label], item[:path], class: 'nav-link'
           ul.navbar-nav
             li.nav-item
               = link_to destroy_user_session_path, method: :delete, class: 'nav-link', title: 'ログアウト', 'data-toggle': 'tooltip' do
@@ -32,16 +27,10 @@ html
       - if user_signed_in?
         .row
           .col-12.col-md-3.col-xl-2
-            ul.nav
-              li.nav-item
-                = link_to t('menu.actions.new', model: t('activerecord.models.bulk_mail')), new_bulk_mail_path
-              li
-                = link_to t('bulk_mails'), bulk_mails_path
-              li
-                = link_to t('recipient_lists'), recipient_lists_path
-              li
-                = link_to t('bulk_mail_templates'), bulk_mail_templates_path
-
+            ul.nav.flex-column
+              - menu_list.each do |item|
+                li.nav-item
+                  = link_to item[:label], item[:path], class: ['nav-link', current_page?(item[:path]) ? 'active' : nil]
           .col-12.col-md-9.col-xl-10
             main
               = yield
