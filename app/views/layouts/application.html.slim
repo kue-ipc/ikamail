@@ -22,15 +22,15 @@ html
             li.nav-item
               = link_to destroy_user_session_path, method: :delete, class: 'nav-link', title: 'ログアウト', 'data-toggle': 'tooltip' do
                 = fa_icon 'sign-out'
-
     .container-fluid
       - if user_signed_in?
         .row
           .col-12.col-md-3.col-xl-2
-            ul.nav.flex-column
-              - menu_list.each do |item|
-                li.nav-item
-                  = link_to item[:label], item[:path], class: ['nav-link', current_page?(item[:path]) ? 'active' : nil]
+            aside.sidebar
+              ul.nav.flex-column
+                - menu_list.each do |item|
+                  li.nav-item
+                    = link_to item[:label], item[:path], class: ['nav-link', current_page?(item[:path]) ? 'active' : nil]
           .col-12.col-md-9.col-xl-10
             main
               = yield

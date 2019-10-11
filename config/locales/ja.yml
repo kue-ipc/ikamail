@@ -30,11 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
-  hello: "こんにちは世界"
-  menu:
-    actions:
-      index: "%{model}一覧"
-      new: "%{model}作成"
+  path:
+    admin_root: 管理トップ
+    root: トップ
+  actions:
+    index: "%{model}一覧"
+    new: "%{model}作成"
   activerecord:
     models:
       mail_user: メールユーザー
