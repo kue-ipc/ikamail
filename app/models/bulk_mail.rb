@@ -1,14 +1,30 @@
 # frozen_string_literal: true
 
 class BulkMail < ApplicationRecord
-  module Status
-    DRAFT = 'draft'
-    PENDING = 'pending'
-    RESERVED = 'reserved'
-    DELIVERY = 'delivery'
-    DELIVERED = 'derivered'
-    FAILURE = 'failure'
-  end
+  STATUS_LIST = %w[
+    draft
+    pending
+    reserved
+    ready
+    waiting
+    delivery
+    derivered
+    failure
+  ]
+
+  TIMING_LIST = %w[
+    immediate
+    reservation
+    manual
+  ]
+
+  validates :status, inclusion: {in: STATUS_LIST}
+  validates :delivery_timing, inclusion: {in: TIMING_LIST}
+
+
+
+
+
 
   belongs_to :bulk_mail_template
   belongs_to :user
