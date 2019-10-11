@@ -30,12 +30,27 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
-  path:
-    admin_root: 管理トップ
-    root: トップ
-  actions:
-    index: "%{model}一覧"
-    new: "%{model}作成"
+  title:
+    listing: "%{name}の一覧"
+    editing: "%{name}の編集"
+    new: "%{name}の新規作成"
+    showing: "%{name}の情報"
+  menu:
+    path:
+      admin_root: 管理トップ
+      root: トップ
+    action:
+      index: "%{name}一覧"
+      new: "%{name}作成"
+      show: "%{name}閲覧"
+      edit: "%{name}編集"
+      destroy: "%{name}削除"
+  action:
+    index: 一覧
+    new: 新規作成
+    show: 閲覧
+    edit: 編集
+    destroy: 削除
   activerecord:
     models:
       mail_user: メールユーザー
@@ -44,8 +59,16 @@ ja:
       bulk_mail_template: テンプレート
       recipient_list: 宛先リスト
     attributes:
+      recipient_list:
+        name: リスト名
+        description: 説明
+        mail_groups: 対象グループ
+        included_mail_users: 含めるユーザー
+        excluded_mail_users: 除外するユーザー
       bulk_mail:
         bulk_mail_template: テンプレート
         delivery_timing: 配信タイミング
         subject: 題名
         body: 本文
+  messages:
+    corfirm_destroy: '本当に削除してもよろしいですか？'

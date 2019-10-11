@@ -13,17 +13,17 @@
     = f.label :description
     = f.text_area :description, class: 'form-control', rows: 3
   .field.form-group
-    = f.label :mail_group_ids
+    = f.label :mail_group_ids, t('activerecord.attributes.recipient_list.mail_groups')
     = f.collection_select :mail_group_ids, MailGroup.all, :id, :display_name,
       {selected: @recipient_list.mail_group_ids},
       {multiple: true, size: 10, class: 'form-control'}
   .field.form-group
-    = f.label :included_mail_user_name_list
+    = f.label :included_mail_user_name_list, t('activerecord.attributes.recipient_list.included_mail_users')
     = f.text_field :included_mail_user_name_list,
       value: @recipient_list.included_mail_users.map(&:name).join(','),
       class: 'form-control'
   .field.form-group
-    = f.label :excluded_mail_user_name_list
+    = f.label :excluded_mail_user_name_list, t('activerecord.attributes.recipient_list.excluded_mail_users')
     = f.text_field :excluded_mail_user_name_list,
       value: @recipient_list.excluded_mail_users.map(&:name).join(','),
       class: 'form-control'

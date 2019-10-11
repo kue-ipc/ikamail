@@ -1,31 +1,46 @@
+h1 = t('title.showing', name: t('activerecord.models.recipient_list'))
+
 p#notice = notice
 
 p
-  strong Name:
+  strong>
+    = t('activerecord.attributes.recipient_list.name')
+    | :
   = @recipient_list.name
 p
-  strong Description:
+  strong>
+    = t('activerecord.attributes.recipient_list.description')
+    | :
   = @recipient_list.description
 
-p リストに含めるグループ
+p
+  strong
+    = t('activerecord.attributes.recipient_list.mail_groups')
+    | :
 ul
   - @recipient_list.mail_groups.each do |group|
     li
       = "#{group.display_name} (#{group.name})"
 
-p 包含ユーザー
+p
+  strong
+    = t('activerecord.attributes.recipient_list.included_mail_users')
+    | :
 ul
   - @recipient_list.included_mail_users.each do |user|
     li
       = "#{user.display_name} (#{user.name})"
 
-p 除外ユーザー
+p
+  strong
+    = t('activerecord.attributes.recipient_list.excluded_mail_users')
+    | :
 ul
   - @recipient_list.excluded_mail_users.each do |user|
     li
       = "#{user.display_name} (#{user.name})"
 
 p
-  => link_to 'Edit', edit_recipient_list_path(@recipient_list), class: 'btn btn-secondary'
+  => link_to t('action.edit'), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
   '|
-  =< link_to 'Back', recipient_lists_path, class: 'btn btn-info'
+  =< link_to t('action.index'), recipient_lists_path, class: 'btn btn-secondary'
