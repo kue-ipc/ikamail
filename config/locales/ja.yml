@@ -44,6 +44,6 @@ ja:
     attributes:
       bulk_mail:
         bulk_mail_template: テンプレート
-        immediate_delivery: 即時配信
+        delivery_timing: 配信タイミング
         subject: 題名
         body: 本文

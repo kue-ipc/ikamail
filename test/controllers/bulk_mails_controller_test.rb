@@ -26,6 +26,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
         bulk_mail_template_id: @bulk_mail.bulk_mail_template_id,
         subject: @bulk_mail.subject,
         body: @bulk_mail.body,
+        delivery_timing: @bulk_mail.delivery_timing,
       } }
     end
 

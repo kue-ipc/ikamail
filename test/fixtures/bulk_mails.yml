@@ -3,17 +3,17 @@
 one:
   user: user01
   bulk_mail_template: all
-  immediate_delivery: true
+  delivery_timing: immediate
   subject: "テスト1"
   body: "テスト"
-  delivery_datetime: 2019-01-02 09:00:00 +09:00
+  delivery_datetime: immeditate
   number: 1
   status: draft
 
 two:
   user: user01
   bulk_mail_template: users
-  immediate_delivery: false
+  delivery_timing: reservation
   subject: "テスト2"
   body: "テスト"
   delivery_datetime: 2019-01-02 21:30:00 +09:00

@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "bulk_mail_template_id", null: false
-    t.boolean "immediate_delivery", default: false, null: false
+    t.string "delivery_timing", null: false
     t.string "subject", null: false
     t.text "body", null: false
     t.datetime "delivery_datetime"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["bulk_mail_template_id"], name: "index_bulk_mails_on_bulk_mail_template_id"
+    t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
     t.index ["status"], name: "index_bulk_mails_on_status"
     t.index ["user_id"], name: "index_bulk_mails_on_user_id"
   end

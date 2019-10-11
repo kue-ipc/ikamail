@@ -10,9 +10,9 @@
     = f.label :bulk_mail_template_id
     = f.collection_select :bulk_mail_template_id, BulkMailTemplate.all, :id, :name,
       {selected: @bulk_mail.bulk_mail_template_id}
-  .field.custom-control.custom-switch
-    = f.check_box :immediate_delivery, class: 'custom-control-input'
-    = f.label :immediate_delivery, class: 'custom-control-label'
+  / .field.custom-control.custom-switch
+  /   = f.check_box :delivery_timing, class: 'custom-control-input'
+  /   = f.label :delivery_timing, class: 'custom-control-label'
   .field.form_group
     = f.label :subject
     = f.text_field :subject, class: 'form-control'
