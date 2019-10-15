@@ -11,7 +11,7 @@ admin:
   admin: true
   deleted: false
 
-user01:
+user:
   username: user01
   email: user01@example.jp
   fullname: "湯座　太郎"

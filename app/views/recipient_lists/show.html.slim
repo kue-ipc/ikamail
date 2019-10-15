@@ -1,5 +1,15 @@
 h1 = t('title.showing', name: t('activerecord.models.recipient_list'))
 
+- if @recipient_list.errors.any?
+  #error_explanation.alert.alert-danger role="alert"
+    strong
+      = t "messages.error_prohibited_action", count: @recipient_list.errors.count,
+        model: t('activerecord.models.recipient_list'), action: t('action.destroy')
+    hr
+    ul.list-group.list-group.flush
+      - @recipient_list.errors.full_messages.each do |message|
+        li.list-group-item.list-group-item-danger = message
+
 p#notice = notice
 
 p
@@ -12,6 +22,13 @@ p
     = t('activerecord.attributes.recipient_list.description')
     | :
   = @recipient_list.description
+
+p
+  strong>
+    | 対象ユーザー数:
+  = @recipient_list.mail_users.size
+  = link_to '対象ユーザー一覧', recipient_list_mail_users_path(@recipient_list)
+
 
 p
   strong
@@ -39,8 +56,16 @@ ul
   - @recipient_list.excluded_mail_users.each do |user|
     li
       = "#{user.display_name} (#{user.name})"
+p
+
+
 
 p
   => link_to t('action.edit'), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
   '|
+  =< link_to t('action.destroy'), @recipient_list,
+    data: { confirm: t('messages.corfirm_destroy') }, method: :delete, class: 'btn btn-danger'
+
+hr
+p
   =< link_to t('action.index'), recipient_lists_path, class: 'btn btn-secondary'

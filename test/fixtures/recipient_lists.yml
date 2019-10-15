@@ -13,3 +13,10 @@ users:
   mail_groups: user
   included_mail_users: []
   excluded_mail_users: []
+
+alone:
+  name: "使われていない"
+  description: "他から使われていません。"
+  mail_groups: admin
+  included_mail_users: []
+  excluded_mail_users: []

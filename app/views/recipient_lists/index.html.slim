@@ -1,24 +1,21 @@
 h1 = t('title.listing', name: t('activerecord.models.recipient_list', count: 2))
 
+p#notice = notice
+
+p 宛先リストの詳細を確認するにはリスト名をクリックしてください。
+
 table.table
   thead.thead-light
     tr
       th scope="col" = t('activerecord.attributes.recipient_list.name')
       th scope="col" = t('activerecord.attributes.recipient_list.description')
-      th scope="col"
-      th scope="col"
-      th scope="col"
-
   tbody
     - @recipient_lists.each do |recipient_list|
       tr
-        td = recipient_list.name
-        td = recipient_list.description
-        td = link_to t('action.show'), recipient_list, class: 'btn btn-secondary'
-        td = link_to t('action.edit'), edit_recipient_list_path(recipient_list), class: 'btn btn-primary'
         td
-          = link_to t('action.destroy'), recipient_list,
-            data: { confirm: t('messages.corfirm_destroy') }, method: :delete, class: 'btn btn-danger'
+          = link_to recipient_list do
+            = recipient_list.name
+        td = recipient_list.description
 
 br
 

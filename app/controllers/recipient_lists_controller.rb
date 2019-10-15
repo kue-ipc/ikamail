@@ -54,10 +54,14 @@ class RecipientListsController < ApplicationController
   # DELETE /recipient_lists/1
   # DELETE /recipient_lists/1.json
   def destroy
-    @recipient_list.destroy
     respond_to do |format|
-      format.html { redirect_to recipient_lists_url, notice: 'Recipient list was successfully destroyed.' }
-      format.json { head :no_content }
+      if @recipient_list.destroy
+        format.html { redirect_to recipient_lists_url, notice: 'Recipient list was successfully destroyed.' }
+        format.json { head :no_content }
+      else
+        format.html { render :show }
+        format.json { render json: @recipient_list.errors, status: :unprocessable_entity }
+      end
     end
   end
 

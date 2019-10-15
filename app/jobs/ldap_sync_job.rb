@@ -31,13 +31,12 @@ class LdapSyncJob < ApplicationJob
     LdapUser.all.each do |user|
       name = user.name
       mail_user_remains.delete(name)
-      user = MailUser.find_by(name: name)
-      if user
-        user.update(
-          display_name: user.display_name,
-          mail: user.mail
+      mail_user = MailUser.find_by(name: name)
+      if mail_user
+        mail_user.update(
+          mail: user.mail,
+          display_name: user.display_name
         )
-
       else
         MailUser.create(
           name: name,
@@ -45,9 +44,6 @@ class LdapSyncJob < ApplicationJob
           display_name: user.display_name
         )
       end
-
-      MailUser.find_or_create_by(name: name, mail: user.mail)
-        .update(display_name: user.display_name)
     end
 
     # delete user out of LDAP
@@ -67,6 +63,22 @@ class LdapSyncJob < ApplicationJob
   end
 
   private def sync_users
+    User.where(deleted: false).each do |user|
+      entry = Devise::LDAP::Adapter.get_ldap_entry(user.username)
+      if entry
+        user.update(
+          email: entry['mail'].first,
+          fullname: entry["display_name;lang-#{I18n.default_locale}"]&.first || entry['display_name']&.first
+        )
+      else
+        user.update(
+          name: '#' + delete_user.id + '#' + name,
+          deleted: true
+        )
+      end
+    end
+
+
     user_remains = Set.new(User.all.map(&:username))
 
     LdapUser.all.each do |user|
@@ -78,11 +90,6 @@ class LdapSyncJob < ApplicationJob
 
     # put deleted flag to user out of LDAP
     user_remains.each do |name|
-      delete_user = User.find_by(name: name)
-      delete_user.update(
-        name: '#' + delete_user.id + '#' + name,
-        deleted: true
-      )
     end
   end
 end

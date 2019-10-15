@@ -71,4 +71,8 @@ ja:
         subject: 題名
         body: 本文
   messages:
-    corfirm_destroy: '本当に削除してもよろしいですか？'
+    corfirm_destroy: "本当に削除してもよろしいですか？"
+    error_prohibited_action:
+      zero: "%{model}を%{action}することができません。"
+      one: "エラーにより%{model}を%{action}することができません。"
+      other: "%{count}個のエラーにより%{model}を%{action}することができません。"
