@@ -1,5 +1,7 @@
 class RecipientListsController < ApplicationController
   before_action :set_recipient_list, only: [:show, :edit, :update, :destroy]
+  before_action :authrize_recipient_list, only: [:index, :new, :create]
+  after_action :verify_authorized
 
   # GET /recipient_lists
   # GET /recipient_lists.json
@@ -69,6 +71,11 @@ class RecipientListsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_recipient_list
       @recipient_list = RecipientList.find(params[:id])
+      authorize @recipient_list
+    end
+
+    def authrize_recipient_list
+      authorize RecipientList
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

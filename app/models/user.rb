@@ -20,4 +20,8 @@ class User < ApplicationRecord
     # first user is admin
     self.admin = true if User.count.zero?
   end
+
+  def admin?
+    admin
+  end
 end
