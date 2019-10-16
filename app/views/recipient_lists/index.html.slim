@@ -19,4 +19,5 @@ table.table
 
 br
 
-= link_to t('action.new'), new_recipient_list_path, class: 'btn btn-primary'
+- if current_user.admin?
+  = link_to t('action.new'), new_recipient_list_path, class: 'btn btn-primary'

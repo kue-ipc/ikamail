@@ -6,6 +6,8 @@ class RecipientList < ApplicationRecord
   has_and_belongs_to_many :excluded_mail_users, class_name: 'MailUser',
     join_table: 'excluded_mail_users_recipient_lists'
 
+  # TODO:
+  # 1 + N 問題がある。
   def mail_users
     @mail_users ||= (
       mail_groups.map(&:mail_users).sum +

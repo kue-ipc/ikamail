@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_admin_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_recipient_list, only: [:show, :edit, :update, :destroy]
+  before_action :authrize_admin_user, only: [:index, :new, :create]
+
 
   # GET /admin/users
   # GET /admin/users.json
@@ -63,8 +65,13 @@ class Admin::UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_admin_user
-      @admin_user = Admin::User.find(params[:id])
+    def set_user
+      @user = User.find(params[:id])
+      authorize @admin_user
+    end
+
+    def authorize_user
+      authorize User
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

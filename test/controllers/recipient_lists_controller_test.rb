@@ -60,7 +60,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('RecipientList.count') do
       delete recipient_list_url(@recipient_list)
     end
-    assert_redirected_to recipient_lists_url
+    assert_response :success
   end
 
   test "admin should destroy ALONE recipient_list" do
@@ -81,20 +81,24 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
   test "user should NOT get new" do
     sign_in users(:user)
-    get new_recipient_list_url
-    assert_response :forbidden
+    assert_raises(Pundit::NotAuthorizedError) do
+      get new_recipient_list_url
+    end
+    # assert_response :forbidden
   end
 
   test "user should NOT create recipient_list" do
     sign_in users(:user)
     assert_no_difference('RecipientList.count') do
-      post recipient_lists_url, params: { recipient_list: {
-        name: @recipient_list.name + "2",
-        description: @recipient_list.description,
-        mail_group_ids: @recipient_list.mail_group_ids,
-      } }
+      assert_raises(Pundit::NotAuthorizedError) do
+        post recipient_lists_url, params: { recipient_list: {
+          name: @recipient_list.name + "2",
+          description: @recipient_list.description,
+          mail_group_ids: @recipient_list.mail_group_ids,
+        } }
+      end
     end
-    assert_response :forbidden
+    # assert_response :forbidden
   end
 
   test "user should show recipient_list" do
@@ -105,27 +109,33 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
   test "user should NOT get edit" do
     sign_in users(:user)
-    get edit_recipient_list_url(@recipient_list)
-    assert_response :forbidden
+    assert_raises(Pundit::NotAuthorizedError) do
+      get edit_recipient_list_url(@recipient_list)
+    end
+    # assert_response :forbidden
   end
 
   test "user should NOT update recipient_list" do
     sign_in users(:user)
-    patch recipient_list_url(@recipient_list), params: { recipient_list: {
-      name: @recipient_list.name + "2",
-      description: @recipient_list.description,
-      mail_group_ids: @recipient_list.mail_group_ids,
-    } }
-    assert_response :forbidden
+    assert_raises(Pundit::NotAuthorizedError) do
+      patch recipient_list_url(@recipient_list), params: { recipient_list: {
+        name: @recipient_list.name + "2",
+        description: @recipient_list.description,
+        mail_group_ids: @recipient_list.mail_group_ids,
+      } }
+    end
+    # assert_response :forbidden
   end
 
   test "user should NOT destroy ALONE recipient_list" do
     sign_in users(:user)
     recipient_list = recipient_lists(:alone)
     assert_no_difference('RecipientList.count') do
-      delete recipient_list_url(recipient_list)
+      assert_raises(Pundit::NotAuthorizedError) do
+        delete recipient_list_url(recipient_list)
+      end
     end
-    assert_response :forbidden
+    # assert_response :forbidden
   end
 
   ## anonymouse

@@ -18,6 +18,19 @@ class BulkMail < ApplicationRecord
     manual
   ]
 
+  ACTION_LIST = %w[
+    create
+    edit
+    delete
+    apply
+    withdraw
+    approve
+    reject
+    reserve
+    deliver
+    finish
+  ]
+
   validates :status, inclusion: {in: STATUS_LIST}
   validates :delivery_timing, inclusion: {in: TIMING_LIST}
 
