@@ -19,6 +19,10 @@ module Ikamail
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # 日本限定
+    conifg.time_zone = 'Osaka'
+    config.active_record.default_timezone = :local
+
     # NotAuthorizedErrorは403にする。
     # initializersではだめっぽい。
     config.action_dispatch.rescue_responses['Pundit::NotAuthorizedError'] = :forbidden
