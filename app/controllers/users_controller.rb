@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
-  before_action :authrize_user, only: [:index]
+  before_action :authorize_user, only: [:index]
 
   # GET /users
   # GET /users.json
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       authorize @user
     end
 
-    def authrize_user
+    def authorize_user
       authorize User
     end
 

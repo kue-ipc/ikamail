@@ -1,10 +1,12 @@
 class BulkMailTemplatesController < ApplicationController
   before_action :set_bulk_mail_template, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_bulk_mail_template, only: [:index, :new, :create]
+
 
   # GET /bulk_mail_templates
   # GET /bulk_mail_templates.json
   def index
-    @bulk_mail_templates = BulkMailTemplate.all
+    @bulk_mail_templates = policy_scope(BulkMailTemplate)
   end
 
   # GET /bulk_mail_templates/1
@@ -66,6 +68,11 @@ class BulkMailTemplatesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bulk_mail_template
       @bulk_mail_template = BulkMailTemplate.find(params[:id])
+      authorize @bulk_mail_template
+    end
+
+    def authorize_bulk_mail_template
+      authorize BulkMailTemplate
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

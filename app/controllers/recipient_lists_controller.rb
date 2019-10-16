@@ -1,6 +1,6 @@
 class RecipientListsController < ApplicationController
   before_action :set_recipient_list, only: [:show, :edit, :update, :destroy]
-  before_action :authrize_recipient_list, only: [:index, :new, :create]
+  before_action :authorize_recipient_list, only: [:index, :new, :create]
 
   # GET /recipient_lists
   # GET /recipient_lists.json
@@ -73,7 +73,7 @@ class RecipientListsController < ApplicationController
       authorize @recipient_list
     end
 
-    def authrize_recipient_list
+    def authorize_recipient_list
       authorize RecipientList
     end
 
