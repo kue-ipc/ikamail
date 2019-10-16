@@ -33,9 +33,13 @@ html
                     = link_to item[:label], item[:path], class: ['nav-link', current_page?(item[:path]) ? 'active' : nil]
           .col-12.col-md-9.col-xl-10
             main
+              = yield :heading
+              = render 'layouts/alert'
               = yield
       - else
         main
+          = yield :heading
+          = render 'alert'
           = yield
     footer.mt-2
       hr

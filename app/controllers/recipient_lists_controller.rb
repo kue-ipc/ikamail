@@ -60,6 +60,7 @@ class RecipientListsController < ApplicationController
         format.html { redirect_to recipient_lists_url, notice: 'Recipient list was successfully destroyed.' }
         format.json { head :no_content }
       else
+        flash.alert = '削除できませんでした。'
         format.html { render :show }
         format.json { render json: @recipient_list.errors, status: :unprocessable_entity }
       end
