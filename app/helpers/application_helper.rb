@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def attr_scope
+    @attr_scope ||= [:activerecord, :attributes, controller_name.singularize.intern]
+  end
+
   def menu_list
     list = []
     return list unless user_signed_in?

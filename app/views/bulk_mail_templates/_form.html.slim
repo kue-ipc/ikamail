@@ -6,38 +6,39 @@
         - @bulk_mail_template.errors.full_messages.each do |message|
           li = message
 
-  .field
+  .field.form_group
     = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :recipient_list_id
+    = f.text_field :name, class: 'form-control'
+  .field.form-group
+    = f.label :recipient_list_id, t(:recipient_list, scope: attr_scope)
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
-      {selected: @bulk_mail_template.recipient_list_id}
-  .field
+      {prompt: true}, {class: 'form-control'}
+  .field.form-group
     = f.label :from_name
-    = f.text_field :from_name
-  .field
+    = f.text_field :from_name, class: 'form-control'
+  .field.form-group
     = f.label :from_mail_address
-    = f.text_field :from_mail_address
-  .field
+    = f.email_field :from_mail_address, class: 'form-control'
+  .field.form-group
     = f.label :subject_prefix
-    = f.text_field :subject_prefix
-  .field
+    = f.text_field :subject_prefix, class: 'form-control'
+  .field.form-group
     = f.label :subject_postfix
-    = f.text_field :subject_postfix
-  .field
+    = f.text_field :subject_postfix, class: 'form-control'
+  .field.form-group
     = f.label :body_header
-    = f.text_area :body_header
-  .field
+    = f.text_area :body_header, class: 'form-control'
+  .field.form-group
     = f.label :body_footer
-    = f.text_area :body_footer
-  .field
+    = f.text_area :body_footer, class: 'form-control'
+  .field.form-group
     = f.label :count
-    = f.number_field :count
-  .field
-    = f.label :reservation_time
-    = f.time_select :reservation_time
-  .field
+    = f.number_field :count, class: 'form-control'
+  .form-inline
+    .field.form-group
+      = f.label :reservation_time
+      = f.time_select :reservation_time, {}, class: 'form-control mx-2'
+  .field.form-group
     = f.label :description
-    = f.text_area :description
-  .actions = f.submit
+    = f.text_area :description, class: 'form-control'
+  .actions = f.submit class: 'btn btn-primary'

@@ -70,6 +70,12 @@ ja:
         delivery_timing: 配信タイミング
         subject: 題名
         body: 本文
+      bulk_mail_template:
+        name: テンプレート名
+        recipient_list: 宛先
+        count: カウント
+        reservation_time: 予約時刻
+
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"
     error_prohibited_action:
