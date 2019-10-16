@@ -1,0 +1,25 @@
+h1 Listing users
+
+table
+  thead
+    tr
+      th ユーザー名
+      th メールアドレス
+      th フルネーム
+      th 管理者？
+
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.username
+        td = user.email
+        td = user.fullname
+        td = user.admin?
+        td = link_to 'Show', admin_user_path(user)
+        td
+          - if user != current_user
+            - if user.admin?
+              = link_to '管理者権限剥奪', admin_user_path(user, params: {user: {admin: false}}), method: :patch, class: 'btn btn-primary'
+            - else
+              = link_to '管理者権限付与', admin_user_path(user, params: {user: {admin: true}}), method: :patch, class: 'btn btn-warning'
+br

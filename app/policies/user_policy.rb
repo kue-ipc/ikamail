@@ -10,7 +10,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def admin?
-    user? && user.admin?
+    user.admin?
   end
 
   def user?
