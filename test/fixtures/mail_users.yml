@@ -25,16 +25,19 @@ user04:
   mail: user04@example.jp
   display_name: "名無し　権兵衛"
 
+# mailが間違っている
 user05:
   name: user05
-  mail: user05@example.jp
+  mail: none05@example.jp
   display_name: "鈴木　剛"
 
+# 名前が間違っている
 user06:
   name: user06
   mail: user06@example.jp
   display_name: "佐藤　陽子"
 
+# 存在しないユーザー
 unknown:
   name: unknown
   mail: unknown@example.jp

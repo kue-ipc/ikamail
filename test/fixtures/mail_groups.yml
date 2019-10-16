@@ -5,11 +5,15 @@ admin:
   display_name: "管理者"
   mail_users: admin
 
+# LDAPではuser02はなく、user06がある。
 user:
   name: user
   display_name: "一般ユーザー"
   mail_users: user01, usre02, user03, user04, user05, unknown
 
+# LDAPでは他にstaffが存在する。
+
+# 存在しないグループ
 unknown:
   name: unknown
   display_name: "不明なユーザー"

@@ -3,26 +3,26 @@
 version: 1
 
 dn: dc=example,dc=jp
-objectClass: top
 objectClass: domain
+objectClass: top
 dc: example
 
 dn: ou=Groups,dc=example,dc=jp
-objectClass: top
 objectClass: organizationalUnit
+objectClass: top
 ou: Groups
 
 dn: cn=admin,ou=Groups,dc=example,dc=jp
-objectClass: top
 objectClass: posixGroup
+objectClass: top
 cn: admin
 gidNumber: 1
 description: administrator
 description;lang-ja:: 566h55CG6ICF
 
 dn: cn=staff,ou=Groups,dc=example,dc=jp
-objectClass: top
 objectClass: posixGroup
+objectClass: top
 cn: staff
 gidNumber: 10
 description: staff
@@ -30,24 +30,24 @@ description;lang-ja:: 44K544K/44OD44OV
 memberUid: user01
 
 dn: cn=user,ou=Groups,dc=example,dc=jp
-objectClass: top
 objectClass: posixGroup
+objectClass: top
 cn: user
 gidNumber: 100
 description: general user
 description;lang-ja:: 5LiA6Iis44Om44O844K244O8
 
 dn: ou=Users,dc=example,dc=jp
-objectClass: top
 objectClass: organizationalUnit
+objectClass: top
 ou: Users
 
 dn: uid=admin,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: admin
 gidNumber: 1
 homeDirectory: /home/admin
@@ -63,11 +63,11 @@ mail: admin@example.jp
 userPassword: password
 
 dn: uid=user01,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: user01
 gidNumber: 100
 homeDirectory: /home/user01
@@ -83,11 +83,11 @@ mail: user01@example.jp
 userPassword: pass0001
 
 dn: uid=user02,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: user02
 gidNumber: 10
 homeDirectory: /home/user02
@@ -103,11 +103,11 @@ mail: user02@example.jp
 userPassword: pass0002
 
 dn: uid=user03,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: user03
 gidNumber: 100
 homeDirectory: /home/user03
@@ -123,61 +123,61 @@ mail: user03@example.jp
 userPassword: pass0003
 
 dn: uid=user04,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: user04
 gidNumber: 100
 homeDirectory: /home/user04
-sn: Yuza
-sn;lang-ja:: 5rmv5bqn
+sn: Nanashi
+sn;lang-ja:: 5ZCN54Sh44GX
 uid: user04
 uidNumber: 1004
-displayName: Yuza Hanako
-displayName;lang-ja:: 5rmv5bqn44CA6Iqx5a2Q
-givenName: Hanako
-givenName;lang-ja:: 6Iqx5a2Q
+displayName: Nanashi Gonbee
+displayName;lang-ja:: 5ZCN54Sh44GX44CA5qip5YW16KGb
+givenName: Gonbee
+givenName;lang-ja:: 5qip5YW16KGb
 mail: user04@example.jp
 userPassword: pass0004
 
 dn: uid=user05,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: user05
 gidNumber: 100
 homeDirectory: /home/user05
-sn: Yuza
-sn;lang-ja:: 5rmv5bqn
+sn: Suzuki
+sn;lang-ja:: 6Yi05pyo
 uid: user05
 uidNumber: 1005
-displayName: Yuza Hanako
-displayName;lang-ja:: 5rmv5bqn44CA6Iqx5a2Q
-givenName: Hanako
-givenName;lang-ja:: 6Iqx5a2Q
+displayName: Suzuki Tsuyoshi
+displayName;lang-ja:: 6Yi05pyo44CA5Ymb
+givenName: Tsuyoshi
+givenName;lang-ja:: 5Ymb
 mail: user05@example.jp
 userPassword: pass0005
 
 dn: uid=user06,ou=Users,dc=example,dc=jp
-objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
-objectClass: top
 objectClass: posixAccount
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
 cn: user06
 gidNumber: 100
 homeDirectory: /home/user06
-sn: Yuza
-sn;lang-ja:: 5rmv5bqn
+sn: Szuki
+sn;lang-ja:: 6Yi05pyo
 uid: user06
 uidNumber: 1006
-displayName: Yuza Hanako
-displayName;lang-ja:: 5rmv5bqn44CA6Iqx5a2Q
-givenName: Hanako
-givenName;lang-ja:: 6Iqx5a2Q
+displayName: Suzuki Yoko
+displayName;lang-ja:: 6Yi05pyo44CA6Zm95a2Q
+givenName: Yoko
+givenName;lang-ja:: 6Zm95a2Q
 mail: user06@example.jp
 userPassword: pass0006
