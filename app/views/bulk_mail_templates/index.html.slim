@@ -18,7 +18,7 @@ table.table
         td = bulk_mail_template.name
         td = bulk_mail_template.recipient_list.name
         td = bulk_mail_template.count
-        td = l(bulk_mail_template.reservation_time.localtime)
+        td = l bulk_mail_template.reservation_time, format: :short
         td = link_to 'Show', bulk_mail_template
         td = link_to 'Edit', edit_bulk_mail_template_path(bulk_mail_template)
         td = link_to 'Destroy', bulk_mail_template, data: { confirm: 'Are you sure?' }, method: :delete
