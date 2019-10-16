@@ -27,7 +27,7 @@ cn: staff
 gidNumber: 10
 description: staff
 description;lang-ja:: 44K544K/44OD44OV
-memberUid: user03
+memberUid: user01
 
 dn: cn=user,ou=Groups,dc=example,dc=jp
 objectClass: top
@@ -121,3 +121,63 @@ givenName: Hanako
 givenName;lang-ja:: 6Iqx5a2Q
 mail: user03@example.jp
 userPassword: pass0003
+
+dn: uid=user04,ou=Users,dc=example,dc=jp
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: user04
+gidNumber: 100
+homeDirectory: /home/user04
+sn: Yuza
+sn;lang-ja:: 5rmv5bqn
+uid: user04
+uidNumber: 1004
+displayName: Yuza Hanako
+displayName;lang-ja:: 5rmv5bqn44CA6Iqx5a2Q
+givenName: Hanako
+givenName;lang-ja:: 6Iqx5a2Q
+mail: user04@example.jp
+userPassword: pass0004
+
+dn: uid=user05,ou=Users,dc=example,dc=jp
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: user05
+gidNumber: 100
+homeDirectory: /home/user05
+sn: Yuza
+sn;lang-ja:: 5rmv5bqn
+uid: user05
+uidNumber: 1005
+displayName: Yuza Hanako
+displayName;lang-ja:: 5rmv5bqn44CA6Iqx5a2Q
+givenName: Hanako
+givenName;lang-ja:: 6Iqx5a2Q
+mail: user05@example.jp
+userPassword: pass0005
+
+dn: uid=user06,ou=Users,dc=example,dc=jp
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: user06
+gidNumber: 100
+homeDirectory: /home/user06
+sn: Yuza
+sn;lang-ja:: 5rmv5bqn
+uid: user06
+uidNumber: 1006
+displayName: Yuza Hanako
+displayName;lang-ja:: 5rmv5bqn44CA6Iqx5a2Q
+givenName: Hanako
+givenName;lang-ja:: 6Iqx5a2Q
+mail: user06@example.jp
+userPassword: pass0006

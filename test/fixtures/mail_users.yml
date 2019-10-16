@@ -9,3 +9,33 @@ user01:
   name: user01
   mail: user01@example.jp
   display_name: "湯座　太郎"
+
+user02:
+  name: user02
+  mail: user02@example.jp
+  display_name: "湯座　次郎"
+
+user03:
+  name: user03
+  mail: user03@example.jp
+  display_name: "湯座　花子"
+
+user04:
+  name: user04
+  mail: user04@example.jp
+  display_name: "名無し　権兵衛"
+
+user05:
+  name: user05
+  mail: user05@example.jp
+  display_name: "鈴木　剛"
+
+user06:
+  name: user06
+  mail: user06@example.jp
+  display_name: "佐藤　陽子"
+
+unknown:
+  name: unknown
+  mail: unknown@example.jp
+  display_name: "アン　ノウン"

@@ -4,6 +4,8 @@ class AdminController < ApplicationController
   end
 
   def ldap_sync
+    authorize MailUser, :update?
+
     respond_to do |format|
       if LdapSyncJob.perform_later
         format.html { redirect_to admin_root_path, notice: '同期処理開始ジョブを登録しました。'}

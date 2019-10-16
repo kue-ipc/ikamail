@@ -8,4 +8,9 @@ admin:
 user:
   name: user
   display_name: "一般ユーザー"
-  mail_users: user01
+  mail_users: user01, usre02, user03, user04, user05, unknown
+
+unknown:
+  name: unknown
+  display_name: "不明なユーザー"
+  mail_users: user06
