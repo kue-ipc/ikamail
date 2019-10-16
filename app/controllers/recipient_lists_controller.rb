@@ -1,7 +1,6 @@
 class RecipientListsController < ApplicationController
   before_action :set_recipient_list, only: [:show, :edit, :update, :destroy]
   before_action :authrize_recipient_list, only: [:index, :new, :create]
-  after_action :verify_authorized
 
   # GET /recipient_lists
   # GET /recipient_lists.json

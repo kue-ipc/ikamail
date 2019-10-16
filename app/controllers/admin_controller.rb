@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   def top
+    authorize current_user, :admin?
   end
 
   def ldap_sync
