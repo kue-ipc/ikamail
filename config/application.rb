@@ -20,7 +20,7 @@ module Ikamail
     # the framework and any gems in your application.
 
     # 日本限定
-    conifg.time_zone = 'Osaka'
+    config.time_zone = 'Osaka'
     config.active_record.default_timezone = :local
 
     # NotAuthorizedErrorは403にする。
