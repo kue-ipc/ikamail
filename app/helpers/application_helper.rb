@@ -37,7 +37,7 @@ module ApplicationHelper
     if current_user.admin
       list << {
         path: admin_root_path,
-        label: t(:admin_root, [:menu, :paths]),
+        label: t(:admin_root, scope: [:menu, :paths]),
       }
     end
     list << {

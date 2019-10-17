@@ -15,7 +15,12 @@ p
   strong
     = t_attr(:body)
   pre
-    = @bulk_mail.body
+    span.text-muted
+      = @bulk_mail.body_header
+    span.text-primary
+      = @bulk_mail.body
+    span.text-muted
+      = @bulk_mail.body_footer
 p
   strong
     = t_attr(:user)
