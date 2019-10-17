@@ -21,7 +21,8 @@ class BulkMail < ApplicationRecord
   ACTION_LIST = %w[
     create
     edit
-    delete
+    update
+    destroy
     apply
     withdraw
     approve

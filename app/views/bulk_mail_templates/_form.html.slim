@@ -10,7 +10,7 @@
     = f.label :name
     = f.text_field :name, class: 'form-control'
   .field.form-group
-    = f.label :recipient_list_id, t(:recipient_list, scope: attr_scope)
+    = f.label :recipient_list_id, t_attr(:recipient_list)
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
       {prompt: true}, {class: 'form-control'}
   .field.form-group

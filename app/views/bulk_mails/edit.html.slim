@@ -1,8 +1,8 @@
-h1 Editing bulk_mail
+- content_for :heading
+  h1 = t_title(:editing, count: 1)
 
 == render 'form'
 
 => link_to 'Show', @bulk_mail
 '|
 =< link_to 'Back', bulk_mails_path
-

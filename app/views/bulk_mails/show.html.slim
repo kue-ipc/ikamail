@@ -1,31 +1,53 @@
-p#notice = notice
+- content_for :heading
+  h1 = t_title(:showing, count: 1)
 
 p
-  strong Mail template:
-  = @bulk_mail.bulk_mail_template
+  strong
+    = t_attr(:bulk_mail_template)
+    | :
+  = @bulk_mail.bulk_mail_template.name
 p
-  strong Subject:
+  strong
+    = t_attr(:subject)
+    | :
   = @bulk_mail.subject
 p
-  strong Body:
-  = @bulk_mail.body
+  strong
+    = t_attr(:body)
+  pre
+    = @bulk_mail.body
 p
-  strong User:
-  = @bulk_mail.user
+  strong
+    = t_attr(:user)
+    | :
+  = @bulk_mail.user.name
 p
-  strong Delivery datetime:
-  = @bulk_mail.delivery_datetime
+  strong
+    = t_attr(:delivery_datetime)
+    | :
+  - if @bulk_mail.delivery_datetime
+    = t(@bulk_mail.delivery_datetime)
+  - else
+    | (未予約または未配送)
 p
-  strong Number:
-  = @bulk_mail.number
+  strong
+    = t_attr(:number)
+    | :
+  - if @bulk_mail.number
+    = @bulk_mail.number
+  - else
+    | (未割り当て)
 p
-  strong Mail status:
-  = @bulk_mail.status
+  strong
+    = t_attr(:status)
+    | :
+  = t(@bulk_mail.status, scope: [:mail, :statuses])
 
 - bulk_mail_policy = policy(@bulk_mail)
 
 - if bulk_mail_policy.edit?
-  => link_to t(:apply, scope: [:actions]), edit_bulk_mail_path(@bulk_mail)
+  => link_to t(:edit, scope: [:actions]), edit_bulk_mail_path(@bulk_mail),
+    class: 'btn btn-primary'
 - else
   p 下書き時しか編集できません。
 

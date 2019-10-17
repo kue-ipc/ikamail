@@ -7,7 +7,7 @@
           li = message
 
   .field.form_group
-    = f.label :bulk_mail_template_id, t(:bulk_mail_template, scope: attr_scope)
+    = f.label :bulk_mail_template_id, t_attr(:bulk_mail_template)
     = f.collection_select :bulk_mail_template_id, BulkMailTemplate.all, :id, :name,
       {prompt: true},
       {class: 'form-control'}
@@ -17,7 +17,7 @@
       - BulkMail::TIMING_LIST.each do |timing|
         label class=['btn', 'btn-primary', @bulk_mail.delivery_timing == timing ? 'active' : '']
           = f.radio_button :delivery_timing, timing
-          = t timing.intern, scope: [:mail, :timing]
+          = t timing.intern, scope: [:mail, :timings]
   .field.form_group
     = f.label :subject
     = f.text_field :subject, class: 'form-control'

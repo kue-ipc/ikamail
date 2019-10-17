@@ -31,20 +31,20 @@
 
 ja:
   titles:
-    listing: "%{name}の一覧"
-    editing: "%{name}の編集"
-    new: "%{name}の新規作成"
-    showing: "%{name}の情報"
+    listing: "%{model}の一覧"
+    editing: "%{model}の編集"
+    new: "%{model}の新規作成"
+    showing: "%{model}の情報"
   menu:
     paths:
       admin_root: 管理トップ
       root: トップ
     actions:
-      index: "%{name}一覧"
-      new: "%{name}作成"
-      show: "%{name}閲覧"
-      edit: "%{name}編集"
-      destroy: "%{name}削除"
+      index: "%{model}一覧"
+      new: "%{model}作成"
+      show: "%{model}閲覧"
+      edit: "%{model}編集"
+      destroy: "%{model}削除"
   actions:
     index: 一覧
     new: 新規作成
@@ -53,9 +53,29 @@ ja:
     destroy: 削除
   mail:
     actions:
-      create: 作成
+      create: 新規作成
+      edit: 編集
+      update: 更新
+      destroy: 破棄
+      apply: 申請
+      withdrow: 取り下げ
+      approve: 承認
+      reject: 却下
+      cancel: 中止
+      deliver: 配信
+      finish: 終了
+      fail: 失敗
+      error: エラー
     statuses:
       draft: 下書き
+      pending: 保留中
+      reserved: 予約済み
+      ready: 準備完了
+      waiting: 配送待ち
+      delivery: 配送中
+      delivered: 配送済み
+      failure: 失敗
+      error: エラー
     timings:
       immediate: 即時
       reservation: 予約
@@ -81,7 +101,8 @@ ja:
         body: 本文
         user: 所有者
         status: 状態
-        delivery_datatime: 配信日時
+        delivery_datetime: 配信日時
+        number: 番号
       bulk_mail_template:
         name: テンプレート名
         recipient_list: 宛先
