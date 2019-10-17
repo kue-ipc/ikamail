@@ -7,16 +7,21 @@
           li = message
 
   .field.form_group
-    = f.label :bulk_mail_template_id
+    = f.label :bulk_mail_template_id, t(:bulk_mail_template, scope: attr_scope)
     = f.collection_select :bulk_mail_template_id, BulkMailTemplate.all, :id, :name,
-      {selected: @bulk_mail.bulk_mail_template_id}
-  / .field.custom-control.custom-switch
-  /   = f.check_box :delivery_timing, class: 'custom-control-input'
-  /   = f.label :delivery_timing, class: 'custom-control-label'
+      {prompt: true},
+      {class: 'form-control'}
+  .field.form_group
+    = f.label :delivery_timing
+    .btn-group.btn-group-toggle data-toggle="buttons"
+      - BulkMail::TIMING_LIST.each do |timing|
+        label class=['btn', 'btn-primary', @bulk_mail.delivery_timing == timing ? 'active' : '']
+          = f.radio_button :delivery_timing, timing
+          = t timing.intern, scope: [:mail, :timing]
   .field.form_group
     = f.label :subject
     = f.text_field :subject, class: 'form-control'
   .field.form_group
     = f.label :body
     = f.text_area :body, class: 'form-control', rows: 20
-  .actions = f.submit
+  .actions = f.submit class: 'btn btn-primary'

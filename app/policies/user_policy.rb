@@ -4,7 +4,7 @@ class UserPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.where(id: current_user.id)
+        scope.where(id: user.id)
       end
     end
   end

@@ -1,11 +1,14 @@
 class BulkMailsController < ApplicationController
   before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
     :apply, :withdraw, :approve, :dismiss, :cancel]
+  before_action :authorize_bulk_mail, only: [:index, :new, :create]
+
+
 
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
-    @bulk_mails = BulkMail.all
+    @bulk_mails = policy_scope(BulkMail)
   end
 
   # GET /bulk_mails/1
@@ -64,40 +67,48 @@ class BulkMailsController < ApplicationController
     end
   end
 
-  # GET /bulk_mails/1/apply
-  def apply
-    if @bulk_mail.status == 'draft'
-      @bulk_mail.update(satus: 'pending')
-    else
-    end
+  # Acions
+  # PATCH /bulk_mails/1/{action}
 
-    action = params.permit(:action)
-    notice = ''
-    error = nil
-    case action
-    when 'apply'
-    when 'approve'
-    when 'dismiss'
-    when 'withdraw'
-    when 'cancel'
-    else
-    end
-    respond_to do |format|
-      if error
-      format.html { redirect_to @bulk_mail, notice: '' }
-      format.json { render :show, status: :ok, location: @bulk_mail }
-
-      else
-        format.html { render :edit }
-        format.json { render json: errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # # GET /bulk_mails/1/apply
+  # def apply
+  #   if @bulk_mail.status == 'draft'
+  #     @bulk_mail.update(satus: 'pending')
+  #   else
+  #   end
+  #
+  #   action = params.permit(:action)
+  #   notice = ''
+  #   error = nil
+  #   case action
+  #   when 'apply'
+  #   when 'approve'
+  #   when 'dismiss'
+  #   when 'withdraw'
+  #   when 'cancel'
+  #   else
+  #   end
+  #   respond_to do |format|
+  #     if error
+  #     format.html { redirect_to @bulk_mail, notice: '' }
+  #     format.json { render :show, status: :ok, location: @bulk_mail }
+  #
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bulk_mail
       @bulk_mail = BulkMail.find(params[:id])
+      authorize @bulk_mail
+    end
+
+    def authorize_bulk_mail
+      authorize BulkMail
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

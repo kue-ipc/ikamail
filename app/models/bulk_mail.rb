@@ -10,13 +10,13 @@ class BulkMail < ApplicationRecord
     delivery
     derivered
     failure
-  ]
+  ].freeze
 
   TIMING_LIST = %w[
     immediate
     reservation
     manual
-  ]
+  ].freeze
 
   ACTION_LIST = %w[
     create
@@ -29,7 +29,7 @@ class BulkMail < ApplicationRecord
     reserve
     deliver
     finish
-  ]
+  ].freeze
 
   validates :status, inclusion: {in: STATUS_LIST}
   validates :delivery_timing, inclusion: {in: TIMING_LIST}

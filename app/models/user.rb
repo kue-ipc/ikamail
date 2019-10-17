@@ -24,4 +24,12 @@ class User < ApplicationRecord
   def admin?
     admin
   end
+
+  def name
+    if fullname&.present?
+      fullname
+    else
+      username
+    end
+  end
 end

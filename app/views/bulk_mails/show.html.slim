@@ -22,6 +22,32 @@ p
   strong Mail status:
   = @bulk_mail.status
 
-=> link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
-'|
-=< link_to 'Back', bulk_mails_path
+- bulk_mail_policy = policy(@bulk_mail)
+
+- if bulk_mail_policy.edit?
+  => link_to t(:apply, scope: [:actions]), edit_bulk_mail_path(@bulk_mail)
+- else
+  p 下書き時しか編集できません。
+
+p
+  - if bulk_mail_policy.apply?
+    button.btn-btn-primary type="button" data-toggle="modal" data-target="#action-apply"
+      = t(:apply, scope: [:mail, :actions])
+
+#action-apply.collapse
+
+
+
+/ - if bulk_mail_policy.edit?
+/   = link_to t(:edit, , scope: [:action]), edit_bulk_mail_path(@bulk_mail)
+/ - BulkMail::ACTION_LIST.each do |action|
+/   - if policy(:bulk_mail).__send__("#{action}?".intern)
+/     = link_to t(action, scope: [:action]), [action, @bulk_mail]
+
+/ => link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
+/ '|
+/ =< link_to 'Back', bulk_mails_path
+/
+/ = link_to 'Show', bulk_mail
+/ = link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
+/ = link_to 'Destroy', @bulk_mail, data: { confirm: 'Are you sure?' }, method: :delete

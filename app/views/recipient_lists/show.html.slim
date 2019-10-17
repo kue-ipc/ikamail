@@ -5,7 +5,7 @@
   #error_explanation.alert.alert-danger role="alert"
     strong
       = t "messages.error_prohibited_action", count: @recipient_list.errors.count,
-        model: t('activerecord.models.recipient_list'), action: t('action.destroy')
+        model: t('activerecord.models.recipient_list'), action: t(:destroy, scope: :actions)
     hr
     ul.list-group.list-group.flush
       - @recipient_list.errors.full_messages.each do |message|

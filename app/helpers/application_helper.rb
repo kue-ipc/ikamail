@@ -16,7 +16,7 @@ module ApplicationHelper
     end
     list << {
       path: new_bulk_mail_path,
-      label: t('menu.action.new', name: t('activerecord.models.bulk_mail')),
+      label: t(:new, scope: [:menu, :actions], name: t('activerecord.models.bulk_mail')),
     }
     list << {
       path: bulk_mails_path,
