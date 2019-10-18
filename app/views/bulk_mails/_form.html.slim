@@ -13,6 +13,7 @@
       {class: 'form-control'}
   .field.form_group
     = f.label :delivery_timing
+    br
     .btn-group.btn-group-toggle data-toggle="buttons"
       - BulkMail::TIMING_LIST.each do |timing|
         label class=['btn', 'btn-primary', @bulk_mail.delivery_timing == timing ? 'active' : '']
@@ -23,5 +24,5 @@
     = f.text_field :subject, class: 'form-control'
   .field.form_group
     = f.label :body
-    = f.text_area :body, class: 'form-control', rows: 20
+    = f.text_area :body, class: 'form-control text-monospace line80', rows: 20
   .actions = f.submit class: 'btn btn-primary'

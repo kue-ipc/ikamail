@@ -10,17 +10,26 @@ p
   strong
     = t_attr(:subject)
     | :
-  = @bulk_mail.subject
+  span.text-muted
+    = @bulk_mail.subject_prefix
+  span.text-body
+    = @bulk_mail.subject
+  span.text-muted
+    = @bulk_mail.subject_postfix
 p
   strong
     = t_attr(:body)
-  pre
+    | :
+  pre.border.rounded.line80
     span.text-muted
       = @bulk_mail.body_header
-    span.text-primary
+    span.text-body
       = @bulk_mail.body
     span.text-muted
       = @bulk_mail.body_footer
+  small
+    | 番号が未割り当ての場合は0で表示されます。
+
 p
   strong
     = t_attr(:user)

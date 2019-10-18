@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'mustache'
+require 'nkf'
 
 class BulkMail < ApplicationRecord
   STATUS_LIST = %w[
@@ -34,14 +35,35 @@ class BulkMail < ApplicationRecord
     finish
   ].freeze
 
-  validates :status, inclusion: {in: STATUS_LIST}
-  validates :delivery_timing, inclusion: {in: TIMING_LIST}
-
   belongs_to :bulk_mail_template
   belongs_to :user
 
+  validates :user, presence: true
+  validates :bulk_mail_template, presence: true
+
+  validates :delivery_timing, inclusion: {in: TIMING_LIST}
+  validates :subject, presence: true, length: {maximum: 255}
+  validates :body, presence: true, length: {maximum: 65536}
+
+  # validates :delivery_datetime
+  validates :number, numericality: {only_integer: true, greater_than: 0},
+                     allow_nil: true
+  validates :status, inclusion: {in: STATUS_LIST}
+
+  validate :subject_can_contert_to_jis, :body_can_contert_to_jis
+
+  def subject_prefix
+    Mustache.render(bulk_mail_template.subject_prefix || '', individual_values)
+  end
+
+  def subject_postfix
+    Mustache.render(bulk_mail_template.subject_postfix || '', individual_values)
+  end
+
+
   def body_header
-    text = Mustache.render(bulk_mail_template.body_header, individual_values)
+    text = Mustache.render(bulk_mail_template.body_header || '',
+                           individual_values)
     if text&.present? && !text.end_with?("\n")
       text + "\n"
     else
@@ -50,7 +72,8 @@ class BulkMail < ApplicationRecord
   end
 
   def body_footer
-    text = bulk_mail_template.body_footer
+    text = Mustache.render(bulk_mail_template.body_footer || '',
+                           individual_values)
     if text&.present? && !text.end_with?("\n")
       text + "\n"
     else
@@ -58,34 +81,38 @@ class BulkMail < ApplicationRecord
     end
   end
 
-  def mail_subject
-    str = String.new
-    str << bulk_mail_template.subject_prefix % individual_values
-    str << subject
-    str << bulk_mail_template.subject_postfix % individual_values
-    str
-  end
-
-  def mail_body
-    str = String.new
-    str << bulk_mail_template.body_header % individual_values
-    str << body
-    str << bulk_mail_template.body_fotter % individual_values
-    str
-  end
-
   private def individual_values
-    number_str = number&.to_s || "42"
+    number_str = number&.to_s || "0"
     datetime = delivery_datetime || DateTime.now
-    {
+    @individual_values ||= {
       number: number_str,
       number_zen: number_str.tr('0-9', '０-９'),
       number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
       name: bulk_mail_template.name,
       datetime: I18n.t(datetime),
-      # date: I18n.t(datetime.date),
-      # time: I18n.(datetime.time),
+      date: I18n.t(datetime, format: :data),
+      time: I18n.t(datetime, format: :time),
     }
   end
 
+  private def subject_can_contert_to_jis
+    invalid_chars = invalid_jis(subject)
+    unless invalid_chars.empty?
+      errors.add(:subject, "に使用できない文字が含まれています:#{invalid_chars.join(',')}")
+    end
+  end
+
+  private def body_can_contert_to_jis
+    invalid_chars = invalid_jis(body)
+    unless invalid_chars.empty?
+      errors.add(:body, "に使用できない文字が含まれています:#{invalid_chars.join(',')}")
+    end
+  end
+
+  private def invalid_jis(str)
+    no_amp_str = str.gsub('&', '&amp;')
+    conv_str = NKF.nkf('-J -w', NKF.nkf('-W -j --fb-xml', no_amp_str))
+    pp conv_str
+    conv_str.scan(/&\#x(\h{1,6});/i).map { |m| m.first.to_i(16).chr }
+  end
 end
