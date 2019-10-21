@@ -3,8 +3,6 @@ class BulkMailsController < ApplicationController
     :apply, :withdraw, :approve, :dismiss, :cancel]
   before_action :authorize_bulk_mail, only: [:index, :new, :create]
 
-
-
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
@@ -34,7 +32,13 @@ class BulkMailsController < ApplicationController
 
     respond_to do |format|
       if @bulk_mail.save
-        format.html { redirect_to @bulk_mail, notice: 'Bulk mail was successfully created.' }
+        format.html do
+          redirect_to @bulk_mail,
+                      notice: t(:success_action,
+                                scope: [:messages],
+                                model: t(:bulk_mail, scope: [:activerecord, :models]),
+                                action: t(:create, scope: :actions))
+        end
         format.json { render :show, status: :created, location: @bulk_mail }
       else
         format.html { render :new }
@@ -48,7 +52,13 @@ class BulkMailsController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_mail.update(bulk_mail_params)
-        format.html { redirect_to @bulk_mail, notice: 'Bulk mail was successfully updated.' }
+        format.html {
+          redirect_to @bulk_mail,
+                      notice: t(:success_action,
+                                scope: [:messages],
+                                model: t(:bulk_mail, scope: [:activerecord, :models]),
+                                action: t(:update, scope: :actions))
+         }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { render :edit }
@@ -62,7 +72,13 @@ class BulkMailsController < ApplicationController
   def destroy
     @bulk_mail.destroy
     respond_to do |format|
-      format.html { redirect_to bulk_mails_url, notice: 'Bulk mail was successfully destroyed.' }
+      format.html {
+        redirect_to bulk_mails_url,
+                    notice: t(:success_action,
+                              scope: [:messages],
+                              model: t(:bulk_mail, scope: [:activerecord, :models]),
+                              action: t(:destroy, scope: :actions))
+      }
       format.json { head :no_content }
     end
   end

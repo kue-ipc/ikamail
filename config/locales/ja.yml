@@ -51,6 +51,8 @@ ja:
     show: 閲覧
     edit: 編集
     destroy: 削除
+    save: 保存
+    create: 作成
   mail:
     actions:
       create: 新規作成
@@ -103,6 +105,7 @@ ja:
         status: 状態
         delivery_datetime: 配信日時
         number: 番号
+        updated_at: 更新日時
       bulk_mail_template:
         name: テンプレート名
         recipient_list: 宛先
@@ -115,3 +118,4 @@ ja:
       zero: "%{model}を%{action}することができません。"
       one: "エラーにより%{model}を%{action}することができません。"
       other: "%{count}個のエラーにより%{model}を%{action}することができません。"
+    success_action: "%{model}を%{action}しました。"

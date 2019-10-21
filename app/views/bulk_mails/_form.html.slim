@@ -1,11 +1,13 @@
-= form_for @bulk_mail do |f|
-  - if @bulk_mail.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@bulk_mail.errors.count, "error")} prohibited this bulk_mail from being saved:"
-      ul
-        - @bulk_mail.errors.full_messages.each do |message|
-          li = message
+- if @bulk_mail.errors.any?
+  #error_explanation.card.border-danger
+    .card-header
+      = t 'messages.error_prohibited_action', count: @bulk_mail.errors.count,
+        model: t('activerecord.models.bulk_mail'), action: t(:save, scope: :actions)
+    ul.list-group.list-group-flush.text-danger
+      - @bulk_mail.errors.full_messages.each do |message|
+        li.list-group-item = message
 
+= form_for @bulk_mail do |f|
   .field.form_group
     = f.label :bulk_mail_template_id, t_attr(:bulk_mail_template)
     = f.collection_select :bulk_mail_template_id, BulkMailTemplate.all, :id, :name,

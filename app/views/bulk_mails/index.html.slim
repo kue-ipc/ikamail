@@ -9,10 +9,11 @@ table.table
   thead
     tr
       th scope="col" = t_attr(:subject)
-      th scope="col" = t_attr(:bulk_mail_template)
-      th scope="col" = t_attr(:user)
       th scope="col" = t_attr(:status)
-      th scope="col" = t_attr(:delivery_datatime)
+      th scope="col" = t_attr(:user)
+      th scope="col" = t_attr(:bulk_mail_template)
+      th scope="col" = t_attr(:updated_at)
+      th scope="col" = t_attr(:delivery_datetime)
       th
       th
       th
@@ -20,10 +21,11 @@ table.table
   tbody
     - @bulk_mails.each do |bulk_mail|
       tr
-        td
-          = link_to bulk_mail
+        td.position-relative
+          = link_to bulk_mail, class: 'stretched-link'
             = bulk_mail.subject
-        td = bulk_mail.bulk_mail_template.name
-        td = bulk_mail.user.username
         td = t(bulk_mail.status.intern, scope: [:mail, :statuses])
+        td = bulk_mail.user.username
+        td = bulk_mail.bulk_mail_template.name
+        td = l(bulk_mail.updated_at, format: :short)
         td = bulk_mail.delivery_datetime&.then { |time| l(time, format: :short) }
