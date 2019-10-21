@@ -52,6 +52,8 @@ class BulkMail < ApplicationRecord
 
   validate :subject_can_contert_to_jis, :body_can_contert_to_jis
 
+  before_save :adjust_chars
+
   def subject_prefix
     Mustache.render(bulk_mail_template.subject_prefix || '', individual_values)
   end
@@ -81,38 +83,47 @@ class BulkMail < ApplicationRecord
     end
   end
 
-  private def individual_values
-    number_str = number&.to_s || "0"
-    datetime = delivery_datetime || DateTime.now
-    @individual_values ||= {
-      number: number_str,
-      number_zen: number_str.tr('0-9', '０-９'),
-      number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
-      name: bulk_mail_template.name,
-      datetime: I18n.t(datetime),
-      date: I18n.t(datetime, format: :data),
-      time: I18n.t(datetime, format: :time),
-    }
-  end
-
-  private def subject_can_contert_to_jis
-    invalid_chars = invalid_jis(subject)
-    unless invalid_chars.empty?
-      errors.add(:subject, "に使用できない文字が含まれています:#{invalid_chars.join(',')}")
+  private
+    def individual_values
+      number_str = number&.to_s || "0"
+      datetime = delivery_datetime || DateTime.now
+      @individual_values ||= {
+        number: number_str,
+        number_zen: number_str.tr('0-9', '０-９'),
+        number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
+        name: bulk_mail_template.name,
+        datetime: I18n.t(datetime),
+        date: I18n.t(datetime, format: :data),
+        time: I18n.t(datetime, format: :time),
+      }
     end
-  end
 
-  private def body_can_contert_to_jis
-    invalid_chars = invalid_jis(body)
-    unless invalid_chars.empty?
-      errors.add(:body, "に使用できない文字が含まれています:#{invalid_chars.join(',')}")
+    def subject_can_contert_to_jis
+      invalid_chars = invalid_jis(subject)
+      unless invalid_chars.empty?
+        errors.add(:subject, "に使用できない文字が含まれています:#{invalid_chars.join(',')}")
+      end
     end
-  end
 
-  private def invalid_jis(str)
-    no_amp_str = str.gsub('&', '&amp;')
-    conv_str = NKF.nkf('-J -w', NKF.nkf('-W -j --fb-xml', no_amp_str))
-    pp conv_str
-    conv_str.scan(/&\#x(\h{1,6});/i).map { |m| m.first.to_i(16).chr }
-  end
+    def body_can_contert_to_jis
+      invalid_chars = invalid_jis(body)
+      unless invalid_chars.empty?
+        errors.add(:body, "に使用できない文字が含まれています:#{invalid_chars.join(',')}")
+      end
+    end
+
+    def invalid_jis(str)
+      no_amp_str = str.gsub('&', '&amp;')
+      conv_str = double_conv_jis(no_amp_str)
+      conv_str.scan(/&\#x(\h{1,6});/i).map { |m| m.first.to_i(16).chr }
+    end
+
+    def adjust_chars
+      self.subject = double_conv_jis(subject)
+      self.body = double_conv_jis(body)
+    end
+
+    def double_conv_jis(str)
+      NKF.nkf('-J -w', NKF.nkf('-W -j --fb-xml', str))
+    end
 end

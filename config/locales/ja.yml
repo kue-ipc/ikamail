@@ -53,6 +53,7 @@ ja:
     destroy: 削除
     save: 保存
     create: 作成
+    update: 更新
   mail:
     actions:
       create: 新規作成
