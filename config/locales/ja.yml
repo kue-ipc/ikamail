@@ -61,7 +61,7 @@ ja:
       update: 更新
       destroy: 破棄
       apply: 申請
-      withdrow: 取り下げ
+      withdraw: 取り下げ
       approve: 承認
       reject: 却下
       cancel: 中止
@@ -69,6 +69,14 @@ ja:
       finish: 終了
       fail: 失敗
       error: エラー
+    action_messages:
+      apply: メールを申請します。メールが配送されるには申請後に承認される必要があります。承認待ちになると、管理者以外はメールを編集できなくなります。
+      withdraw: 申請を取り下げます。編集や削除・廃棄を行う場合は申請を取り下げて下書き状態にする必要があります。
+      approve: メールを承認します。承認後、設定された配信タイミングにメールが配送されます。配信タイミングが「即時」の場合は即座に配信され、その後に中止することができません。
+      reject: 申請を却下します。メールは下書き状態に戻されます。
+      cancel: 承認を取り消し、配送待ちを中止します。メールは承認待ち状態に戻されます。
+      deliver: 配信を開始します。開始後に中止することはできません。
+      discard: メールを廃棄します。一度廃棄したメールは元に戻せません。
     statuses:
       draft: 下書き
       pending: 保留中
@@ -112,6 +120,8 @@ ja:
         recipient_list: 宛先
         count: カウント
         reserved_time: 予約時刻
+      bulk_mail_action:
+        comment: コメント
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"

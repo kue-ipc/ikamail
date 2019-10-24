@@ -26,12 +26,12 @@ class BulkMailActionsController < ApplicationController
       act_apply
     when 'withdraw'
       act_withdraw
-    when 'accept'
-      act_accept
+    when 'approve'
+      act_approve
     when 'reject'
       act_reject
     when 'cancel'
-      act_acncel
+      act_cancel
     when 'deliver'
       act_deliver
     when 'discard'
@@ -81,13 +81,13 @@ class BulkMailActionsController < ApplicationController
       @bulk_mail.update_columns(status: 'draft')
     end
 
-    def act_accept
+    def act_approve
       unless policy(@bulk_mail).manageable?
         @bulk_mail_action.errors.add(:user, :not_allow, message: '承認する権限がありません。')
         return
       end
 
-      if @bulk_mail.status == 'pending'
+      if @bulk_mail.status != 'pending'
         @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '承認待ちではないため、承認することはできません。')
         return
       end
@@ -110,7 +110,7 @@ class BulkMailActionsController < ApplicationController
         return
       end
 
-      if @bulk_mail.status == 'pending'
+      if @bulk_mail.status != 'pending'
         @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '承認待ちではないため、却下することはできません。')
         return
       end

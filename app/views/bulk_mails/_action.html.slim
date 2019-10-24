@@ -1,0 +1,21 @@
+button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target="#action-#{action}-modal"
+  = t(action, scope: [:mail, :actions])
+
+.modal.fade id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label" aria-hidden="true"
+  .modal-dialog role="document"
+    .modal-content
+      = form_for BulkMailAction.new, url: bulk_mail_bulk_mail_actions_path(@bulk_mail) do |f|
+        = f.hidden_field :action, value: action
+        .modal-header
+          h5.modal-title id="action-#{action}-modal-label"
+            | 一括メールの
+            = t(action, scope: [:mail, :actions])
+          button.close type="button" data-dismiss="modal" aria-label="閉じる"
+            span aria-hidden="true" &times;
+        .modal-body
+          p = t(action, scope: [:mail, :action_messages])
+          = f.label :comment
+          = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
+        .modal-footer
+          = f.submit "#{t(action, scope: [:mail, :actions])}する", class: "btn btn-#{level}"
+          button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
