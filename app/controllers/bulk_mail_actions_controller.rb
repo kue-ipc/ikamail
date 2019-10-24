@@ -15,8 +15,6 @@ class BulkMailActionsController < ApplicationController
   # POST /bulk_mail_actions.json
   def create
     @bulk_mail = BulkMail.find(params[:bulk_mail_id])
-    authorize @bulk_mail, :writable?
-
     @bulk_mail_action = BulkMailAction.new(bulk_mail_action_params)
     @bulk_mail_action.bulk_mail = @bulk_mail
     @bulk_mail_action.user = current_user
@@ -66,11 +64,13 @@ class BulkMailActionsController < ApplicationController
     end
 
     def act_apply
-      if @bulk_mail.status != 'draft'
-        @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '下書きではないため、申請することはできません。')
-        return
-      end
+      authorize @bulk_mail, :apply?
       @bulk_mail.update_columns(status: 'pending')
+      NotificationMailer.with(
+        user: @bulk_mail.bulk_mail_template.user,
+        bulk_mail: @bulk_mail,
+        comment: @bulk_mail_action.comment
+      ).apply.deliver_later
     end
 
     def act_withdraw

@@ -33,6 +33,7 @@ class BulkMail < ApplicationRecord
     reserve
     deliver
     finish
+    discard
   ].freeze
 
   belongs_to :bulk_mail_template

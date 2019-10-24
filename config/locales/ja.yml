@@ -136,3 +136,9 @@ ja:
     formats:
       date: "%Y年%m月%d日"
       time: "%H:%M"
+
+  notification_mailer:
+    apply:
+      subject: 一括メール申請
+    withdraw:
+      subject: 一括メール取り下げ
