@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class BulkMailsController < ApplicationController
-  before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
-    :apply, :withdraw, :approve, :dismiss, :cancel]
+  before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy]
   before_action :authorize_bulk_mail, only: [:index, :new, :create]
 
   # GET /bulk_mails
@@ -32,7 +31,7 @@ class BulkMailsController < ApplicationController
 
     respond_to do |format|
       if @bulk_mail.save
-        BulkMailLog.create(bulk_mail: @bulk_mail, user: current_user,
+        BulkMailAction.create(bulk_mail: @bulk_mail, user: current_user,
                            action: 'create')
         format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :create) }
         format.json { render :show, status: :created, location: @bulk_mail }
@@ -48,7 +47,7 @@ class BulkMailsController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_mail.update(bulk_mail_params)
-        BulkMailLog.create(bulk_mail: @bulk_mail, user: current_user,
+        BulkMailAction.create(bulk_mail: @bulk_mail, user: current_user,
                            action: 'update')
         format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :update) }
         format.json { render :show, status: :ok, location: @bulk_mail }

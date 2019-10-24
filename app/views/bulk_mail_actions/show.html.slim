@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Bulk mail:
+  = @bulk_mail_action.bulk_mail
+p
+  strong Action:
+  = @bulk_mail_action.action
+p
+  strong User:
+  = @bulk_mail_action.user
+p
+  strong Comment:
+  = @bulk_mail_action.comment
+
+=> link_to 'Edit', edit_bulk_mail_action_path(@bulk_mail_action)
+'|
+=< link_to 'Back', bulk_mail_actions_path

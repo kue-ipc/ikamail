@@ -10,12 +10,7 @@ Rails.application.routes.draw do
   end
   resources :bulk_mail_templates
   resources :bulk_mails do
-    member do
-      patch 'apply'
-      patch 'withdraw'
-      patch 'aprove'
-      patch 'reject'
-    end
+    resources :bulk_mail_actions, path: 'actions', only: [:index, :create]
   end
   resources :recipient_lists do
     resources :mail_users, only: [:index], controller: 'recipient_lists_mail_users'

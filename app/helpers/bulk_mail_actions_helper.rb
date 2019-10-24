@@ -1,0 +1,2 @@
+module BulkMailActionsHelper
+end

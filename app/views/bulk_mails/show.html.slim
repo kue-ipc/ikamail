@@ -70,13 +70,13 @@ p
 / p
 /   - if bulk_mail_policy.apply?
 
-button.btn-btn-primary type="button" data-toggle="modal" data-target="#apply-modal"
+button.btn.btn-primary type="button" data-toggle="modal" data-target="#apply-modal"
   = t(:apply, scope: [:mail, :actions])
 
 #apply-modal.modal.fade tabindex="-1" role="dialog" aria-labelledby="apply-modal-label" aria-hidden="true"
   .modal-dialog role="document"
     .modal-content
-      = form_for @bulk_mail, url: apply_bulk_mail_path(@bulk_mail), method: :patch do |f|
+      = form_for BulkMailAction.new, url: bulk_mail_bulk_mail_actions_path(@bulk_mail) do |f|
         .modal-header
           h5#apply-modal-label.modal-title = t(:apply, scope: [:actions])
           button.close type="button" data-dismiss="modal" aria-label="閉じる"
@@ -86,6 +86,7 @@ button.btn-btn-primary type="button" data-toggle="modal" data-target="#apply-mod
           = f.label :comment
           = f.text_area :comment, class: 'form-control', rows: 10
         .moda-footer
+          = f.hidden_field :action, value: 'apply'
           = f.submit '申請', class: 'btn btn-primary'
           button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
 
@@ -109,7 +110,7 @@ button.btn-btn-primary type="button" data-toggle="modal" data-target="#apply-mod
 h2 履歴
 
 table.table
-  - @bulk_mail.bulk_mail_logs.each do |log|
+  - @bulk_mail.bulk_mail_actions.each do |log|
     tr
       td = l(log.created_at, format: :short)
       td = log.user&.name || '(system)'

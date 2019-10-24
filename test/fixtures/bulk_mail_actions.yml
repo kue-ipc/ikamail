@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bulk_mail: one
+  action: MyString
+  user: one
+  comment: MyText
+
+two:
+  bulk_mail: two
+  action: MyString
+  user: two
+  comment: MyText

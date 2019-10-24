@@ -37,7 +37,7 @@ class BulkMail < ApplicationRecord
 
   belongs_to :bulk_mail_template
   belongs_to :user
-  has_many :bulk_mail_logs, dependent: :destroy
+  has_many :bulk_mail_actions, dependent: :destroy
 
   validates :user, presence: true
   validates :bulk_mail_template, presence: true
