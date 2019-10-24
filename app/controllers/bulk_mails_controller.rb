@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BulkMailsController < ApplicationController
   before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
     :apply, :withdraw, :approve, :dismiss, :cancel]
@@ -11,8 +13,7 @@ class BulkMailsController < ApplicationController
 
   # GET /bulk_mails/1
   # GET /bulk_mails/1.json
-  def show
-  end
+  def show; end
 
   # GET /bulk_mails/new
   def new
@@ -20,8 +21,7 @@ class BulkMailsController < ApplicationController
   end
 
   # GET /bulk_mails/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /bulk_mails
   # POST /bulk_mails.json
@@ -34,13 +34,7 @@ class BulkMailsController < ApplicationController
       if @bulk_mail.save
         BulkMailLog.create(bulk_mail: @bulk_mail, user: current_user,
                            action: 'create')
-        format.html do
-          redirect_to @bulk_mail,
-                      notice: t(:success_action,
-                                scope: [:messages],
-                                model: t(:bulk_mail, scope: [:activerecord, :models]),
-                                action: t(:create, scope: :actions))
-        end
+        format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :create) }
         format.json { render :show, status: :created, location: @bulk_mail }
       else
         format.html { render :new }
@@ -56,13 +50,7 @@ class BulkMailsController < ApplicationController
       if @bulk_mail.update(bulk_mail_params)
         BulkMailLog.create(bulk_mail: @bulk_mail, user: current_user,
                            action: 'update')
-        format.html {
-          redirect_to @bulk_mail,
-                      notice: t(:success_action,
-                                scope: [:messages],
-                                model: t(:bulk_mail, scope: [:activerecord, :models]),
-                                action: t(:update, scope: :actions))
-         }
+        format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :update) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { render :edit }

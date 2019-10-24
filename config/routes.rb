@@ -11,10 +11,10 @@ Rails.application.routes.draw do
   resources :bulk_mail_templates
   resources :bulk_mails do
     member do
-      put 'apply'
-      put 'withdraw'
-      put 'aprove'
-      put 'reject'
+      patch 'apply'
+      patch 'withdraw'
+      patch 'aprove'
+      patch 'reject'
     end
   end
   resources :recipient_lists do

@@ -16,4 +16,13 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   after_action :verify_authorized, unless: :devise_controller?
+
+  def t_success_action(model, action)
+    t(:success_action,
+      scope: [:messages],
+      model: t(model, scope: [:activerecord, :models]),
+      action: t(action, scope: :actions))
+  end
+
+
 end

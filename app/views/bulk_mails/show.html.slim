@@ -62,15 +62,32 @@ p
 - if bulk_mail_policy.edit?
   => link_to t(:edit, scope: [:actions]), edit_bulk_mail_path(@bulk_mail),
     class: 'btn btn-primary'
+  => link_to t(:destroy, scope: [:actions]), @bulk_mail,
+    class: 'btn btn-danger', data: { confirm: t(:corfirm_destroy, scope: [:messages]) }, method: :delete
 - else
   p 下書き時しか編集できません。
 
-p
-  - if bulk_mail_policy.apply?
-    button.btn-btn-primary type="button" data-toggle="modal" data-target="#action-apply"
-      = t(:apply, scope: [:mail, :actions])
+/ p
+/   - if bulk_mail_policy.apply?
 
-#action-apply.collapse
+button.btn-btn-primary type="button" data-toggle="modal" data-target="#apply-modal"
+  = t(:apply, scope: [:mail, :actions])
+
+#apply-modal.modal.fade tabindex="-1" role="dialog" aria-labelledby="apply-modal-label" aria-hidden="true"
+  .modal-dialog role="document"
+    .modal-content
+      = form_for @bulk_mail, url: apply_bulk_mail_path(@bulk_mail), method: :patch do |f|
+        .modal-header
+          h5#apply-modal-label.modal-title = t(:apply, scope: [:actions])
+          button.close type="button" data-dismiss="modal" aria-label="閉じる"
+            span aria-hidden="true" &times;
+        .modal-body
+          p 一括メールを申請します。よろしいですか？
+          = f.label :comment
+          = f.text_area :comment, class: 'form-control', rows: 10
+        .moda-footer
+          = f.submit '申請', class: 'btn btn-primary'
+          button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
 
 
 
