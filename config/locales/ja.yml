@@ -81,7 +81,7 @@ ja:
       error: エラー
     timings:
       immediate: 即時
-      reservation: 予約
+      reserved: 予約
       manual: 手動
   activerecord:
     models:
@@ -111,7 +111,7 @@ ja:
         name: テンプレート名
         recipient_list: 宛先
         count: カウント
-        reservation_time: 予約時刻
+        reserved_time: 予約時刻
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"

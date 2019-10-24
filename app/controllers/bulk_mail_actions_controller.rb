@@ -7,7 +7,7 @@ class BulkMailActionsController < ApplicationController
   # GET /bulk_mail_actions.json
   def index
     @bulk_mail = BulkMail.find(params[:bulk_mail_id])
-    autholize @bulk_mail, :show?
+    authorize @bulk_mail, :readable?
     @bulk_mail_actions = @bulk_mail.bulk_mail_actions
   end
 
@@ -15,22 +15,40 @@ class BulkMailActionsController < ApplicationController
   # POST /bulk_mail_actions.json
   def create
     @bulk_mail = BulkMail.find(params[:bulk_mail_id])
-    autholize @bulk_mail, :update?
+    authorize @bulk_mail, :writable?
+
     @bulk_mail_action = BulkMailAction.new(bulk_mail_action_params)
+    @bulk_mail_action.bulk_mail = @bulk_mail
+    @bulk_mail_action.user = current_user
 
     case @bulk_mail_action.action
     when 'apply'
-      apply
-    when ''
+      act_apply
+    when 'withdraw'
+      act_withdraw
+    when 'accept'
+      act_accept
+    when 'reject'
+      act_reject
+    when 'cancel'
+      act_acncel
+    when 'deliver'
+      act_deliver
+    when 'discard'
+      act_discard
+    else
+      @bulk_mail_action.errors.add(:actino, :invalid, message: 'は不正なアクションです。')
     end
 
 
     respond_to do |format|
-      if @bulk_mail_action.save
-        format.html { redirect_to @bulk_mail_action, notice: 'Bulk mail action was successfully created.' }
+      if @bulk_mail_action.errors.empty? && @bulk_mail_action.save
+        format.html { redirect_to @bulk_mail,
+                                  notice: "#{t(@bulk_mail_action.action, scope: [:mail, :action])}しました" }
         format.json { render :show, status: :created, location: @bulk_mail_action }
       else
-        format.html { render :new }
+        format.html { redirect_to @bulk_mail,
+                                  alert: @bulk_mail_action.errors.full_messages }
         format.json { render json: @bulk_mail_action.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +65,56 @@ class BulkMailActionsController < ApplicationController
       params.require(:bulk_mail_action).permit(:action, :comment)
     end
 
-    def apply
-      @bulk_mail.column_update(column_update(status: 'pending'))
+    def act_apply
+      if @bulk_mail.status != 'draft'
+        @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '下書きではないため、申請することはできません。')
+        return
+      end
+      @bulk_mail.update_columns(status: 'pending')
     end
+
+    def act_withdraw
+      if @bulk_mail.status != 'pending'
+        @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '承認待ちではないため、取り下げすることはできません。')
+        return
+      end
+      @bulk_mail.update_columns(status: 'draft')
+    end
+
+    def act_accept
+      unless policy(@bulk_mail).manageable?
+        @bulk_mail_action.errors.add(:user, :not_allow, message: '承認する権限がありません。')
+        return
+      end
+
+      if @bulk_mail.status == 'pending'
+        @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '承認待ちではないため、承認することはできません。')
+        return
+      end
+      @bulk_mail.update_columns(status: 'waiting')
+      # タイミングによって配送処理
+      case @bulk_mail.delivery_timing
+      when 'immediate'
+      when 'reserved'
+        #
+      when 'manual'
+        # 何もしない。
+      else
+        flash.alert = '不明な配送タイミングです。'
+      end
+    end
+
+    def act_reject
+      unless policy(@bulk_mail).manageable?
+        @bulk_mail_action.errors.add(:user, :not_allow, message: '却下する権限がありません。')
+        return
+      end
+
+      if @bulk_mail.status == 'pending'
+        @bulk_mail_action.errors.add(:bulk_mail, :not_allow, message: '承認待ちではないため、却下することはできません。')
+        return
+      end
+      @bulk_mail.update_columns(status: 'draft')
+    end
+
 end

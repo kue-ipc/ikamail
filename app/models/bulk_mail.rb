@@ -17,7 +17,7 @@ class BulkMail < ApplicationRecord
 
   TIMING_LIST = %w[
     immediate
-    reservation
+    reserved
     manual
   ].freeze
 

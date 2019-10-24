@@ -22,7 +22,7 @@ class BulkMailTemplatesTest < ApplicationSystemTestCase
     fill_in "From name", with: @bulk_mail_template.from_name
     fill_in "Name", with: @bulk_mail_template.name
     fill_in "Recipient list", with: @bulk_mail_template.recipient_list
-    fill_in "Reservation time", with: @bulk_mail_template.reservation_time
+    fill_in "Reservation time", with: @bulk_mail_template.reserved_time
     fill_in "Subject post", with: @bulk_mail_template.subject_postfix
     fill_in "Subject pre", with: @bulk_mail_template.subject_prefix
     click_on "Create Bulk mail template"
@@ -43,7 +43,7 @@ class BulkMailTemplatesTest < ApplicationSystemTestCase
     fill_in "From name", with: @bulk_mail_template.from_name
     fill_in "Name", with: @bulk_mail_template.name
     fill_in "Recipient list", with: @bulk_mail_template.recipient_list
-    fill_in "Reservation time", with: @bulk_mail_template.reservation_time
+    fill_in "Reservation time", with: @bulk_mail_template.reserved_time
     fill_in "Subject post", with: @bulk_mail_template.subject_postfix
     fill_in "Subject pre", with: @bulk_mail_template.subject_prefix
     click_on "Update Bulk mail template"

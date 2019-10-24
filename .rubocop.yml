@@ -40,3 +40,6 @@ Style/NumericLiterals:
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+
+Metrics/LineLength:
+  Max: 120

@@ -48,7 +48,7 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(bulk_mail_params)
         BulkMailAction.create(bulk_mail: @bulk_mail, user: current_user,
-                           action: 'update')
+                              action: 'update')
         format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :update) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else

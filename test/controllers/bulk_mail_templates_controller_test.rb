@@ -31,7 +31,7 @@ class BulkMailTemplatesControllerTest < ActionDispatch::IntegrationTest
         from_name: @bulk_mail_template.from_name,
         name: @bulk_mail_template.name,
         recipient_list: @bulk_mail_template.recipient_list,
-        reservation_time: @bulk_mail_template.reservation_time,
+        reserved_time: @bulk_mail_template.reserved_time,
         subject_postfix: @bulk_mail_template.subject_postfix,
         subject_prefix: @bulk_mail_template.subject_prefix,
       } }
@@ -63,7 +63,7 @@ class BulkMailTemplatesControllerTest < ActionDispatch::IntegrationTest
         from_name: @bulk_mail_template.from_name,
         name: @bulk_mail_template.name,
         recipient_list: @bulk_mail_template.recipient_list,
-        reservation_time: @bulk_mail_template.reservation_time,
+        reserved_time: @bulk_mail_template.reserved_time,
         subject_postfix: @bulk_mail_template.subject_postfix,
         subject_prefix: @bulk_mail_template.subject_prefix
       } }

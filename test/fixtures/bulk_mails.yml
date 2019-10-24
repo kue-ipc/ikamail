@@ -13,7 +13,7 @@ one:
 two:
   user: user01
   bulk_mail_template: users
-  delivery_timing: reservation
+  delivery_timing: reserved
   subject: "テスト2"
   body: "テスト"
   delivery_datetime: 2019-01-02 21:30:00 +09:00

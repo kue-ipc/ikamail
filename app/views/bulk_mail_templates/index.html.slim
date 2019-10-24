@@ -7,7 +7,7 @@ table.table
       th scope="col" = t_attr :name
       th scope="col" = t_attr :recipient_list
       th scope="col" = t_attr :count
-      th scope="col" = t_attr :reservation_time
+      th scope="col" = t_attr :reserved_time
       th scope="col"
       th scope="col"
       th scope="col"
@@ -18,7 +18,7 @@ table.table
         td = bulk_mail_template.name
         td = bulk_mail_template.recipient_list.name
         td = bulk_mail_template.count
-        td = bulk_mail_template.reservation_time.strftime('%H:%M')
+        td = bulk_mail_template.reserved_time.strftime('%H:%M')
         td = link_to 'Show', bulk_mail_template
         td = link_to 'Edit', edit_bulk_mail_template_path(bulk_mail_template)
         td = link_to 'Destroy', bulk_mail_template, data: { confirm: 'Are you sure?' }, method: :delete
