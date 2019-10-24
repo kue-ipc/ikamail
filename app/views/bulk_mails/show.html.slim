@@ -87,3 +87,14 @@ p
 / = link_to 'Show', bulk_mail
 / = link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
 / = link_to 'Destroy', @bulk_mail, data: { confirm: 'Are you sure?' }, method: :delete
+
+
+h2 履歴
+
+table.table
+  - @bulk_mail.bulk_mail_logs.each do |log|
+    tr
+      td = l(log.created_at, format: :short)
+      td = log.user&.name || '(system)'
+      td = log.action
+      td = log.comment

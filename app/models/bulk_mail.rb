@@ -37,6 +37,7 @@ class BulkMail < ApplicationRecord
 
   belongs_to :bulk_mail_template
   belongs_to :user
+  has_many :bulk_mail_logs, dependent: :destroy
 
   validates :user, presence: true
   validates :bulk_mail_template, presence: true
@@ -93,8 +94,8 @@ class BulkMail < ApplicationRecord
         number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
         name: bulk_mail_template.name,
         datetime: I18n.t(datetime),
-        date: I18n.t(datetime, format: :data),
-        time: I18n.t(datetime, format: :time),
+        date: I18n.l(datetime, format: :date),
+        time: I18n.l(datetime, format: :time),
       }
     end
 

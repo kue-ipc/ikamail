@@ -32,6 +32,8 @@ class BulkMailsController < ApplicationController
 
     respond_to do |format|
       if @bulk_mail.save
+        BulkMailLog.create(bulk_mail: @bulk_mail, user: current_user,
+                           action: 'create')
         format.html do
           redirect_to @bulk_mail,
                       notice: t(:success_action,
@@ -52,6 +54,8 @@ class BulkMailsController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_mail.update(bulk_mail_params)
+        BulkMailLog.create(bulk_mail: @bulk_mail, user: current_user,
+                           action: 'update')
         format.html {
           redirect_to @bulk_mail,
                       notice: t(:success_action,
@@ -71,6 +75,7 @@ class BulkMailsController < ApplicationController
   # DELETE /bulk_mails/1.json
   def destroy
     @bulk_mail.destroy
+    # 削除時にログも削除される。
     respond_to do |format|
       format.html {
         redirect_to bulk_mails_url,

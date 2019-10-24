@@ -120,3 +120,8 @@ ja:
       one: "エラーにより%{model}を%{action}することができません。"
       other: "%{count}個のエラーにより%{model}を%{action}することができません。"
     success_action: "%{model}を%{action}しました。"
+
+  time:
+    formats:
+      date: "%Y年%m月%d日"
+      time: "%H:%M"

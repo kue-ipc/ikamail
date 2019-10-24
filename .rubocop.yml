@@ -31,3 +31,6 @@ Style/SymbolArray:
 
 Layout/EndOfLine:
   EnforcedStyle: lf
+
+Layout/IndentationConsistency:
+  EnforcedSytle: indented_internal_methods

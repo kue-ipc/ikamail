@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_072002) do
+ActiveRecord::Schema.define(version: 2019_10_24_000850) do
+
+  create_table "bulk_mail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "bulk_mail_id", null: false
+    t.bigint "user_id"
+    t.string "action", null: false
+    t.text "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["action"], name: "index_bulk_mail_logs_on_action"
+    t.index ["bulk_mail_id"], name: "index_bulk_mail_logs_on_bulk_mail_id"
+    t.index ["user_id"], name: "index_bulk_mail_logs_on_user_id"
+  end
 
   create_table "bulk_mail_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
@@ -117,6 +129,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_072002) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "bulk_mail_logs", "bulk_mails"
+  add_foreign_key "bulk_mail_logs", "users"
   add_foreign_key "bulk_mail_templates", "recipient_lists"
   add_foreign_key "bulk_mail_templates", "users"
   add_foreign_key "bulk_mails", "bulk_mail_templates"
