@@ -37,3 +37,6 @@ Layout/IndentationConsistency:
 
 Style/NumericLiterals:
   Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
