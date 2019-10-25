@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   resources :mail_users, only: [:index, :show]
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  authenticated :user, ->(user) { user.admin? } do
+    mount DelayedJobWeb, at: '/admin/delayed_job'
+  end
 end

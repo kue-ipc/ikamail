@@ -45,7 +45,9 @@ gem 'activeldap', require: 'active_ldap/railtie'
 gem 'net-ldap'
 
 # Queue backend
-gem 'sucker_punch'
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
+gem 'daemons'
 
 # bootstrap
 gem 'bootstrap', '~> 4.3.1'
@@ -59,6 +61,9 @@ gem 'devise-i18n'
 
 # Mustache
 gem 'mustache', '~> 1.0'
+
+# mail
+gem 'mail-iso-2022-jp'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
