@@ -6,7 +6,7 @@
 テンプレート: <%= @bulk_mail.bulk_mail_template.name %>
 配信タイミング: <%= t(@bulk_mail.delivery_timing, scope: [:mail, :timings]) %>
 題名: <%= @bulk_mail.subject %>
-作成者: <%= @act_user.name %>
+作成者: <%= @bulk_mail.user.name %>
 <% if @comment.present? %>
 申請時のコメント:
 <%= @comment %>
@@ -14,4 +14,4 @@
 
 --------------------------------------------------------
 一括メールシステム
-<%= root_url %>
+<%= root_url(only_path: true) %>

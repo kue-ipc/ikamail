@@ -41,8 +41,7 @@ class BulkMailActionsController < ApplicationController
 
     respond_to do |format|
       if @bulk_mail_action.errors.empty? && @bulk_mail_action.save
-        format.html { redirect_to @bulk_mail,
-                                  notice: "#{t(@bulk_mail_action.action, scope: [:mail, :action])}しました" }
+        format.html { redirect_to @bulk_mail }
         format.json { render :show, status: :created, location: @bulk_mail_action }
       else
         format.html { redirect_to @bulk_mail,
@@ -71,6 +70,7 @@ class BulkMailActionsController < ApplicationController
         bulk_mail: @bulk_mail,
         comment: @bulk_mail_action.comment
       ).apply.deliver_later
+      flash.notice = 'メールを申請し、管理者に通知しました。メールは承認後に配信されます。保留中の状態では変更や削除はできません。変更が必要な場合は、「取り下げ」を行い、下書きに戻してください。'
     end
 
     def act_withdraw
