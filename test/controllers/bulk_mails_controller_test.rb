@@ -23,7 +23,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     assert_difference('BulkMail.count') do
       post bulk_mails_url, params: { bulk_mail: {
-        bulk_mail_template_id: @bulk_mail.bulk_mail_template_id,
+        template_id: @bulk_mail.template_id,
         subject: @bulk_mail.subject,
         body: @bulk_mail.body,
         delivery_timing: @bulk_mail.delivery_timing,
@@ -48,7 +48,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
   test "should update bulk_mail" do
     sign_in users(:admin)
     patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
-      bulk_mail_template_id: @bulk_mail.bulk_mail_template_id,
+      template_id: @bulk_mail.template_id,
       subject: @bulk_mail.subject,
       body: @bulk_mail.body,
     } }

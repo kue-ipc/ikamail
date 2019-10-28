@@ -66,7 +66,7 @@ class BulkMailActionsController < ApplicationController
       authorize @bulk_mail, :apply?
       @bulk_mail.update_columns(status: 'pending')
       NotificationMailer.with(
-        user: @bulk_mail.bulk_mail_template.user,
+        user: @bulk_mail.template.user,
         bulk_mail: @bulk_mail,
         comment: @bulk_mail_action.comment
       ).apply.deliver_later

@@ -8,7 +8,7 @@ class User < ApplicationRecord
   # and :omniauthable, :lockable, :timeoutable, :trackable
   devise :ldap_authenticatable, :rememberable
 
-  has_many :bulk_mail_templates
+  has_many :templates
   has_many :bulk_mails
 
   def ldap_before_save

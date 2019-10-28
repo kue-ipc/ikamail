@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class BulkMailTemplatePolicyTest < ActiveSupport::TestCase
+class TemplatePolicyTest < ActiveSupport::TestCase
   def test_scope
   end
 

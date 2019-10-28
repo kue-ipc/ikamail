@@ -1,0 +1,40 @@
+- content_for :heading
+  h1 = t_title(:showing, count: 1)
+
+p
+  strong Name:
+  = @template.name
+p
+  strong Recipient list:
+  = @template.recipient_list
+p
+  strong From name:
+  = @template.from_name
+p
+  strong From mail address:
+  = @template.from_mail_address
+p
+  strong Subject pre:
+  = @template.subject_prefix
+p
+  strong Subject post:
+  = @template.subject_postfix
+p
+  strong Body header:
+  = @template.body_header
+p
+  strong Body footer:
+  = @template.body_footer
+p
+  strong Count:
+  = @template.count
+p
+  strong Reservation time:
+  = @template.reserved_time
+p
+  strong Description:
+  = @template.description
+
+=> link_to 'Edit', edit_template_path(@template)
+'|
+=< link_to 'Back', templates_path

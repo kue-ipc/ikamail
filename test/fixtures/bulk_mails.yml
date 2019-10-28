@@ -2,7 +2,7 @@
 
 one:
   user: admin
-  bulk_mail_template: all
+  template: all
   delivery_timing: immediate
   subject: "テスト1"
   body: "テスト"
@@ -12,7 +12,7 @@ one:
 
 two:
   user: user01
-  bulk_mail_template: users
+  template: users
   delivery_timing: reserved
   subject: "テスト2"
   body: "テスト"

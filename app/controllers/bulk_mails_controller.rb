@@ -7,7 +7,7 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
-    @bulk_mails = policy_scope(BulkMail).includes(:user, :bulk_mail_template).order(updated_at: :desc)
+    @bulk_mails = policy_scope(BulkMail).includes(:user, :template).order(updated_at: :desc)
   end
 
   # GET /bulk_mails/1
@@ -129,6 +129,6 @@ class BulkMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_mail_params
-      params.require(:bulk_mail).permit(:bulk_mail_template_id, :delivery_timing, :subject, :body)
+      params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body)
     end
 end

@@ -49,8 +49,8 @@ module ApplicationHelper
       label: t_menu_action(:index, model: :bulk_mail, count: 2),
     }
     list << {
-      path: bulk_mail_templates_path,
-      label: t_menu_action(:index, model: :bulk_mail_template, count: 2),
+      path: templates_path,
+      label: t_menu_action(:index, model: :template, count: 2),
     }
     list << {
       path: recipient_lists_path,

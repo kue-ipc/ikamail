@@ -1,9 +1,9 @@
-= form_for @bulk_mail_template do |f|
-  - if @bulk_mail_template.errors.any?
+= form_for @template do |f|
+  - if @template.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@bulk_mail_template.errors.count, "error")} prohibited this bulk_mail_template from being saved:"
+      h2 = "#{pluralize(@template.errors.count, "error")} prohibited this template from being saved:"
       ul
-        - @bulk_mail_template.errors.full_messages.each do |message|
+        - @template.errors.full_messages.each do |message|
           li = message
 
   .field.form_group

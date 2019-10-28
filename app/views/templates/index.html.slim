@@ -1,0 +1,28 @@
+- content_for :heading do
+  h1 = t('title.listing', name: t('activerecord.models.template', count: 2))
+
+table.table
+  thead
+    tr
+      th scope="col" = t_attr :name
+      th scope="col" = t_attr :recipient_list
+      th scope="col" = t_attr :count
+      th scope="col" = t_attr :reserved_time
+      th scope="col"
+      th scope="col"
+      th scope="col"
+
+  tbody
+    - @templates.each do |template|
+      tr
+        td = template.name
+        td = template.recipient_list.name
+        td = template.count
+        td = template.reserved_time.strftime('%H:%M')
+        td = link_to 'Show', template
+        td = link_to 'Edit', edit_template_path(template)
+        td = link_to 'Destroy', template, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Bulk mail template', new_template_path

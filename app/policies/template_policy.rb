@@ -1,4 +1,4 @@
-class BulkMailTemplatePolicy < ApplicationPolicy
+class TemplatePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all

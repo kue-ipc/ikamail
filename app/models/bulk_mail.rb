@@ -37,12 +37,12 @@ class BulkMail < ApplicationRecord
     discard
   ].freeze
 
-  belongs_to :bulk_mail_template
+  belongs_to :template
   belongs_to :user
   has_many :bulk_mail_actions, dependent: :destroy
 
   validates :user, presence: true
-  validates :bulk_mail_template, presence: true
+  validates :template, presence: true
 
   validates :delivery_timing, inclusion: {in: TIMING_LIST}
   validates :subject, presence: true, length: {maximum: 255}
@@ -66,20 +66,19 @@ class BulkMail < ApplicationRecord
   end
 
   def subject_prefix
-    Mustache.render(bulk_mail_template.subject_prefix || '', individual_values)
+    Mustache.render(template.subject_prefix || '', individual_values)
   end
 
   def subject_postfix
-    Mustache.render(bulk_mail_template.subject_postfix || '', individual_values)
+    Mustache.render(template.subject_postfix || '', individual_values)
   end
 
-
   def body_header
-    Mustache.render(bulk_mail_template.body_header || '', individual_values)
+    Mustache.render(template.body_header || '', individual_values)
   end
 
   def body_footer
-    Mustache.render(bulk_mail_template.body_footer || '', individual_values)
+    Mustache.render(template.body_footer || '', individual_values)
   end
 
   private
@@ -90,7 +89,7 @@ class BulkMail < ApplicationRecord
         number: number_str,
         number_zen: number_str.tr('0-9', '０-９'),
         number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
-        name: bulk_mail_template.name,
+        name: template.name,
         datetime: I18n.t(datetime),
         date: I18n.l(datetime, format: :date),
         time: I18n.l(datetime, format: :time),

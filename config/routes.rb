@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     post 'statistics'
     resources :users, only: [:index, :show, :update], controller: '/users'
   end
-  resources :bulk_mail_templates
+  resources :templates
   resources :bulk_mails do
     resources :bulk_mail_actions, path: 'actions', only: [:index, :create]
   end

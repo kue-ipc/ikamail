@@ -96,7 +96,7 @@ ja:
       mail_user: メールユーザー
       mail_group: メールグループ
       bulk_mail: メール
-      bulk_mail_template: テンプレート
+      template: テンプレート
       recipient_list: 宛先リスト
     attributes:
       recipient_list:
@@ -106,7 +106,7 @@ ja:
         included_mail_users: 含めるユーザー
         excluded_mail_users: 除外するユーザー
       bulk_mail:
-        bulk_mail_template: テンプレート
+        template: テンプレート
         delivery_timing: 配信タイミング
         subject: 題名
         body: 本文
@@ -115,7 +115,7 @@ ja:
         delivery_datetime: 配信日時
         number: 番号
         updated_at: 更新日時
-      bulk_mail_template:
+      template:
         name: テンプレート名
         recipient_list: 宛先
         count: カウント

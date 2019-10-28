@@ -1,5 +1,5 @@
 class RecipientList < ApplicationRecord
-  has_many :bulk_mail_templates, dependent: :restrict_with_error
+  has_many :templates, dependent: :restrict_with_error
   has_and_belongs_to_many :mail_groups
   has_and_belongs_to_many :included_mail_users, class_name: 'MailUser',
     join_table: 'included_mail_users_recipient_lists'

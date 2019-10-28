@@ -1,0 +1,8 @@
+- content_for :heading
+  h1 = t_title(:editing, count: 1)
+
+== render 'form'
+
+=> link_to 'Show', @template
+'|
+=< link_to 'Back', templates_path

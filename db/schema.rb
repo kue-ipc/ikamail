@@ -24,30 +24,9 @@ ActiveRecord::Schema.define(version: 2019_10_25_005026) do
     t.index ["user_id"], name: "index_bulk_mail_actions_on_user_id"
   end
 
-  create_table "bulk_mail_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "name", null: false
-    t.boolean "enabled", default: true, null: false
-    t.bigint "user_id", null: false
-    t.bigint "recipient_list_id", null: false
-    t.string "from_name"
-    t.string "from_mail_address", null: false
-    t.string "subject_prefix"
-    t.string "subject_postfix"
-    t.text "body_header"
-    t.text "body_footer"
-    t.integer "count", default: 0, null: false
-    t.time "reserved_time", null: false
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_bulk_mail_templates_on_name", unique: true
-    t.index ["recipient_list_id"], name: "index_bulk_mail_templates_on_recipient_list_id"
-    t.index ["user_id"], name: "index_bulk_mail_templates_on_user_id"
-  end
-
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "bulk_mail_template_id", null: false
+    t.bigint "template_id", null: false
     t.string "delivery_timing", null: false
     t.string "subject", null: false
     t.text "body", null: false
@@ -56,9 +35,9 @@ ActiveRecord::Schema.define(version: 2019_10_25_005026) do
     t.string "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["bulk_mail_template_id"], name: "index_bulk_mails_on_bulk_mail_template_id"
     t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
     t.index ["status"], name: "index_bulk_mails_on_status"
+    t.index ["template_id"], name: "index_bulk_mails_on_template_id"
     t.index ["user_id"], name: "index_bulk_mails_on_user_id"
   end
 
@@ -131,6 +110,27 @@ ActiveRecord::Schema.define(version: 2019_10_25_005026) do
     t.index ["name"], name: "index_recipient_lists_on_name", unique: true
   end
 
+  create_table "templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "enabled", default: true, null: false
+    t.bigint "user_id", null: false
+    t.bigint "recipient_list_id", null: false
+    t.string "from_name"
+    t.string "from_mail_address", null: false
+    t.string "subject_prefix"
+    t.string "subject_postfix"
+    t.text "body_header"
+    t.text "body_footer"
+    t.integer "count", default: 0, null: false
+    t.time "reserved_time", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_templates_on_name", unique: true
+    t.index ["recipient_list_id"], name: "index_templates_on_recipient_list_id"
+    t.index ["user_id"], name: "index_templates_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "username", null: false
     t.string "email", null: false
@@ -146,9 +146,7 @@ ActiveRecord::Schema.define(version: 2019_10_25_005026) do
 
   add_foreign_key "bulk_mail_actions", "bulk_mails"
   add_foreign_key "bulk_mail_actions", "users"
-  add_foreign_key "bulk_mail_templates", "recipient_lists"
-  add_foreign_key "bulk_mail_templates", "users"
-  add_foreign_key "bulk_mails", "bulk_mail_templates"
+  add_foreign_key "bulk_mails", "templates"
   add_foreign_key "bulk_mails", "users"
   add_foreign_key "excluded_mail_users_recipient_lists", "mail_users"
   add_foreign_key "excluded_mail_users_recipient_lists", "recipient_lists"
@@ -158,4 +156,6 @@ ActiveRecord::Schema.define(version: 2019_10_25_005026) do
   add_foreign_key "mail_groups_recipient_lists", "recipient_lists"
   add_foreign_key "mail_groups_users", "mail_groups"
   add_foreign_key "mail_groups_users", "mail_users"
+  add_foreign_key "templates", "recipient_lists"
+  add_foreign_key "templates", "users"
 end
