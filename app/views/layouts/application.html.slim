@@ -18,10 +18,10 @@ html
             - menu_list.each do |item|
               li.nav-item.px-1 class=(current_page?(item[:path]) ? 'active' : nil)
                 = link_to item[:label], item[:path], class: 'nav-link'
-          span.navbar-text.px-1
-            = current_user.name
           ul.navbar-nav.flex-row
-            li.nav-item
+            li.nav-item.px-1
+              = link_to current_user.name, user_path, class: 'nav-link'
+            li.nav-item.px-1
               = link_to destroy_user_session_path, method: :delete, class: 'nav-link', title: 'ログアウト',
                         'data-toggle': 'tooltip' do
                 = fa_icon 'sign-out'

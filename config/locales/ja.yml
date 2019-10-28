@@ -128,7 +128,7 @@ ja:
         comment: コメント
       user:
         fullname: フルネーム
-        admin: 管理権
+        admin: 管理者権限
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"
