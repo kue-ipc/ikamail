@@ -2,12 +2,7 @@
   h1 = t_title(:showing, count: 1)
 
 p
-  strong
-    = t_attr(:bulk_mail_template)
-    | :
-  = @bulk_mail.bulk_mail_template.name
-p
-  strong
+  strong>
     = t_attr(:subject)
     | :
   span.text-muted
@@ -17,7 +12,12 @@ p
   span.text-muted
     = @bulk_mail.subject_postfix
 p
-  strong
+  strong>
+    = t_attr(:bulk_mail_template)
+    | :
+  = @bulk_mail.bulk_mail_template.name
+p
+  strong>
     = t_attr(:body)
     | :
   pre.border.rounded.line80
@@ -31,12 +31,18 @@ p
     | 番号が未割り当ての場合は0で表示されます。
 
 p
-  strong
+  strong>
     = t_attr(:user)
     | :
   = @bulk_mail.user.name
+
 p
-  strong
+  strong>
+    = t_attr(:delivery_timing)
+    | :
+  = t(@bulk_mail.delivery_timing, scope: [:mail, :timings])
+p
+  strong>
     = t_attr(:delivery_datetime)
     | :
   - if @bulk_mail.delivery_datetime
@@ -44,7 +50,7 @@ p
   - else
     | (未予約または未配送)
 p
-  strong
+  strong>
     = t_attr(:number)
     | :
   - if @bulk_mail.number
@@ -52,7 +58,7 @@ p
   - else
     | (未割り当て)
 p
-  strong
+  strong>
     = t_attr(:status)
     | :
   = t(@bulk_mail.status, scope: [:mail, :statuses])
@@ -88,48 +94,10 @@ p
   =<> link_to t(:destroy, scope: [:actions]), @bulk_mail,
     class: 'btn btn-danger', data: { confirm: t(:corfirm_destroy, scope: [:messages]) }, method: :delete
 
-
-/ button.btn.btn-primary type="button" data-toggle="modal" data-target="#apply-modal"
-/   = t(:apply, scope: [:mail, :actions])
-/
-/ #apply-modal.modal.fade tabindex="-1" role="dialog" aria-labelledby="apply-modal-label" aria-hidden="true"
-/   .modal-dialog role="document"
-/     .modal-content
-/       = form_for BulkMailAction.new, url: bulk_mail_bulk_mail_actions_path(@bulk_mail) do |f|
-/         .modal-header
-/           h5#apply-modal-label.modal-title = t(:apply, scope: [:actions])
-/           button.close type="button" data-dismiss="modal" aria-label="閉じる"
-/             span aria-hidden="true" &times;
-/         .modal-body
-/           p 一括メールを申請します。よろしいですか？
-/           = f.label :comment
-/           = f.text_area :comment, class: 'form-control', rows: 10
-/         .moda-footer
-/           = f.hidden_field :action, value: 'apply'
-/           = f.submit '申請', class: 'btn btn-primary'
-/           button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
-/
-
-
-/ - if bulk_mail_policy.edit?
-/   = link_to t(:edit, , scope: [:action]), edit_bulk_mail_path(@bulk_mail)
-/ - BulkMail::ACTION_LIST.each do |action|
-/   - if policy(:bulk_mail).__send__("#{action}?".intern)
-/     = link_to t(action, scope: [:action]), [action, @bulk_mail]
-
-/ => link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
-/ '|
-/ =< link_to 'Back', bulk_mails_path
-/
-/ = link_to 'Show', bulk_mail
-/ = link_to 'Edit', edit_bulk_mail_path(@bulk_mail)
-/ = link_to 'Destroy', @bulk_mail, data: { confirm: 'Are you sure?' }, method: :delete
-
-
 h2 履歴
 
 table.table
-  - @bulk_mail.bulk_mail_actions.each do |log|
+  - @bulk_mail.bulk_mail_actions.includes(:user).order(created_at: :desc).each do |log|
     tr
       td = l(log.created_at, format: :short)
       td = log.user&.name || '(system)'

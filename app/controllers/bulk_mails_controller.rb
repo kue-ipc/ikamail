@@ -7,7 +7,7 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
-    @bulk_mails = policy_scope(BulkMail)
+    @bulk_mails = policy_scope(BulkMail).order(updated_at: :desc)
   end
 
   # GET /bulk_mails/1
@@ -17,10 +17,13 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails/new
   def new
     @bulk_mail = BulkMail.new
+    @comment = nil
   end
 
   # GET /bulk_mails/1/edit
-  def edit; end
+  def edit
+    @comment = nil
+  end
 
   # POST /bulk_mails
   # POST /bulk_mails.json
@@ -28,11 +31,13 @@ class BulkMailsController < ApplicationController
     @bulk_mail = BulkMail.new(bulk_mail_params)
     @bulk_mail.status = 'draft'
     @bulk_mail.user = current_user
+    @comment = params[:comment]
+    @comment = nil if @comment.blank?
 
     respond_to do |format|
       if @bulk_mail.save
         BulkMailAction.create(bulk_mail: @bulk_mail, user: current_user,
-                           action: 'create')
+                              action: 'create', comment: @comment)
         format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :create) }
         format.json { render :show, status: :created, location: @bulk_mail }
       else
@@ -45,10 +50,13 @@ class BulkMailsController < ApplicationController
   # PATCH/PUT /bulk_mails/1
   # PATCH/PUT /bulk_mails/1.json
   def update
+    @comment = params[:comment]
+    @comment = nil if @comment.blank?
+
     respond_to do |format|
       if @bulk_mail.update(bulk_mail_params)
         BulkMailAction.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'update')
+                              action: 'update', comment: @comment)
         format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :update) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else

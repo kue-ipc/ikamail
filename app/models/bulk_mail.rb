@@ -10,9 +10,10 @@ class BulkMail < ApplicationRecord
     reserved
     ready
     waiting
-    delivery
-    derivered
-    failure
+    delivering
+    delivered
+    failed
+    discarded
   ].freeze
 
   TIMING_LIST = %w[
