@@ -35,6 +35,7 @@ ja:
     editing: "%{model}の編集"
     new: "%{model}の新規作成"
     showing: "%{model}の情報"
+
   menu:
     paths:
       admin_root: 管理トップ
@@ -45,6 +46,7 @@ ja:
       show: "%{model}閲覧"
       edit: "%{model}編集"
       destroy: "%{model}削除"
+
   actions:
     index: 一覧
     new: 新規作成
@@ -54,6 +56,7 @@ ja:
     save: 保存
     create: 作成
     update: 更新
+
   mail:
     actions:
       create: 新規作成
@@ -91,6 +94,7 @@ ja:
       immediate: 即時
       reserved: 予約
       manual: 手動
+
   activerecord:
     models:
       mail_user: メールユーザー
@@ -142,3 +146,7 @@ ja:
       subject: 一括メール申請
     withdraw:
       subject: 一括メール取り下げ
+
+  devise:
+    failure:
+      unauthenticated: ログインしてください。

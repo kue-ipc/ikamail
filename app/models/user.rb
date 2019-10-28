@@ -8,11 +8,13 @@ class User < ApplicationRecord
   # and :omniauthable, :lockable, :timeoutable, :trackable
   devise :ldap_authenticatable, :rememberable
 
-  has_many :templates
-  has_many :bulk_mails
+  validates :username, presence: true, uniqueness: true
+
+  has_many :templates, dependent: :restrict_with_exception
+  has_many :bulk_mails, dependent: :restrict_with_exception
 
   def ldap_before_save
-    entry = Devise::LDAP::Adapter.get_ldap_entry(self.username)
+    entry = Devise::LDAP::Adapter.get_ldap_entry(username)
     self.email = entry['mail'].first
     self.fullname = entry["display_name;lang-#{I18n.default_locale}"]&.first ||
                     entry['display_name']&.first
@@ -32,4 +34,8 @@ class User < ApplicationRecord
       username
     end
   end
+
+  # def authenticatable_salt
+  #   Digest::
+  # end
 end
