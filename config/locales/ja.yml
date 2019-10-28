@@ -126,6 +126,9 @@ ja:
         reserved_time: 予約時刻
       action_log:
         comment: コメント
+      user:
+        fullname: フルネーム
+        admin: 管理権
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"

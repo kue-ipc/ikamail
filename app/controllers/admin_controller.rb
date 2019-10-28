@@ -7,7 +7,7 @@ class AdminController < ApplicationController
     authorize MailUser, :update?
 
     respond_to do |format|
-      if LdapSyncJob.perform_later
+      if LdapUserSyncJob.perform_later && LdapMailSyncJob.perform_later
         format.html { redirect_to admin_root_path, notice: '同期処理開始ジョブを登録しました。'}
         format.json { render json: {notice: '同期処理開始ジョブを登録しました。'}, status: :ok }
       else

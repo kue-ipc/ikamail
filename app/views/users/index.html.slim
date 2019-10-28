@@ -1,6 +1,7 @@
-h1 = t('title.listing', name: t('activerecord.models.user', count: 2))
+- content_for :heading
+  h1 = t_title(:listing, count: 2)
 
-table
+table.table
   thead
     tr
       th ユーザー名

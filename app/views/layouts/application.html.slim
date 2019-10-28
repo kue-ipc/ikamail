@@ -18,16 +18,19 @@ html
             - menu_list.each do |item|
               li.nav-item.px-1 class=(current_page?(item[:path]) ? 'active' : nil)
                 = link_to item[:label], item[:path], class: 'nav-link'
-          ul.navbar-nav
+          span.navbar-text.px-1
+            = current_user.name
+          ul.navbar-nav.flex-row
             li.nav-item
-              = link_to destroy_user_session_path, method: :delete, class: 'nav-link', title: 'ログアウト', 'data-toggle': 'tooltip' do
+              = link_to destroy_user_session_path, method: :delete, class: 'nav-link', title: 'ログアウト',
+                        'data-toggle': 'tooltip' do
                 = fa_icon 'sign-out'
     .container-fluid
       .row
         .col-12.col-md-3.col-xl-2
           - if user_signed_in?
             = render 'menu'
-          else
+          - else
             p ログインしてください。
         .col-12.col-md-9.col-xl-10
           main

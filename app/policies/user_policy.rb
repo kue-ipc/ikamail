@@ -9,6 +9,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    admin? || user?
+  end
+
   def admin?
     user.admin?
   end

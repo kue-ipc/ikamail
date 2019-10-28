@@ -1,7 +1,11 @@
-h1 管理
+- content_for :heading
+  h1 管理メニュー
 
 p
   = link_to 'LDAP同期', admin_ldap_sync_path, method: :put
 
 p
   = link_to 'ジョブ状態', '/admin/delayed_job'
+
+p
+  = link_to 'ログインユーザー一覧', admin_users_path
