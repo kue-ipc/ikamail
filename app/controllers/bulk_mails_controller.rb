@@ -7,7 +7,7 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
-    @bulk_mails = policy_scope(BulkMail).order(updated_at: :desc)
+    @bulk_mails = policy_scope(BulkMail).includes(:user, :bulk_mail_template).order(updated_at: :desc)
   end
 
   # GET /bulk_mails/1

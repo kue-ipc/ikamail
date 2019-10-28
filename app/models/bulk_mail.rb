@@ -57,6 +57,14 @@ class BulkMail < ApplicationRecord
 
   before_save :adjust_chars
 
+  def subject_all
+    subject_prefix + subject + subject_postfix
+  end
+
+  def body_all
+    body_header + body + body_footer
+  end
+
   def subject_prefix
     Mustache.render(bulk_mail_template.subject_prefix || '', individual_values)
   end
@@ -67,23 +75,11 @@ class BulkMail < ApplicationRecord
 
 
   def body_header
-    text = Mustache.render(bulk_mail_template.body_header || '',
-                           individual_values)
-    if text&.present? && !text.end_with?("\n")
-      text + "\n"
-    else
-      text
-    end
+    Mustache.render(bulk_mail_template.body_header || '', individual_values)
   end
 
   def body_footer
-    text = Mustache.render(bulk_mail_template.body_footer || '',
-                           individual_values)
-    if text&.present? && !text.end_with?("\n")
-      text + "\n"
-    else
-      text
-    end
+    Mustache.render(bulk_mail_template.body_footer || '', individual_values)
   end
 
   private
