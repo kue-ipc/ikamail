@@ -120,7 +120,7 @@ ja:
         recipient_list: 宛先
         count: カウント
         reserved_time: 予約時刻
-      bulk_mail_action:
+      action_log:
         comment: コメント
 
   messages:

@@ -1,6 +1,6 @@
-class CreateBulkMailActions < ActiveRecord::Migration[6.0]
+class CreateActionLogs < ActiveRecord::Migration[6.0]
   def change
-    create_table :bulk_mail_actions do |t|
+    create_table :action_logs do |t|
       t.belongs_to :bulk_mail, null: false, foreign_key: true
       t.belongs_to :user, foreign_key: true
       t.string :action, null: false
@@ -8,6 +8,6 @@ class CreateBulkMailActions < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :bulk_mail_actions, :action
+    add_index :action_logs, :action
   end
 end

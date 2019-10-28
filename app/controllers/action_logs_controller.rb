@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-class BulkMailActionsController < ApplicationController
-  before_action :set_bulk_mail_action, only: [:show, :edit, :update, :destroy]
+class ActionLogsController < ApplicationController
+  before_action :set_action_log, only: [:show, :edit, :update, :destroy]
 
-  # GET /bulk_mail_actions
-  # GET /bulk_mail_actions.json
+  # GET /action_logs
+  # GET /action_logs.json
   def index
     @bulk_mail = BulkMail.find(params[:bulk_mail_id])
     authorize @bulk_mail, :readable?
-    @bulk_mail_actions = @bulk_mail.bulk_mail_actions
+    @action_logs = @bulk_mail.action_logs
   end
 
-  # POST /bulk_mail_actions
-  # POST /bulk_mail_actions.json
+  # POST /action_logs
+  # POST /action_logs.json
   def create
     @bulk_mail = BulkMail.find(params[:bulk_mail_id])
-    @bulk_mail_action = BulkMailAction.new(bulk_mail_action_params)
-    @bulk_mail_action.bulk_mail = @bulk_mail
-    @bulk_mail_action.user = current_user
+    @action_log = ActionLog.new(action_log_params)
+    @action_log.bulk_mail = @bulk_mail
+    @action_log.user = current_user
 
-    case @bulk_mail_action.action
+    case @action_log.action
     when 'apply'
       act_apply
     when 'withdraw'
@@ -35,31 +35,31 @@ class BulkMailActionsController < ApplicationController
     when 'discard'
       act_discard
     else
-      @bulk_mail_action.errors.add(:actino, :invalid, message: 'は不正なアクションです。')
+      @action_log.errors.add(:actino, :invalid, message: 'は不正なアクションです。')
     end
 
 
     respond_to do |format|
-      if @bulk_mail_action.errors.empty? && @bulk_mail_action.save
+      if @action_log.errors.empty? && @action_log.save
         format.html { redirect_to @bulk_mail }
-        format.json { render :show, status: :created, location: @bulk_mail_action }
+        format.json { render :show, status: :created, location: @action_log }
       else
         format.html { redirect_to @bulk_mail,
-                                  alert: @bulk_mail_action.errors.full_messages }
-        format.json { render json: @bulk_mail_action.errors, status: :unprocessable_entity }
+                                  alert: @action_log.errors.full_messages }
+        format.json { render json: @action_log.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_bulk_mail_action
-      @bulk_mail_action = BulkMailAction.find(params[:id])
+    def set_action_log
+      @action_log = ActionLog.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def bulk_mail_action_params
-      params.require(:bulk_mail_action).permit(:action, :comment)
+    def action_log_params
+      params.require(:action_log).permit(:action, :comment)
     end
 
     def act_apply
@@ -68,7 +68,7 @@ class BulkMailActionsController < ApplicationController
       NotificationMailer.with(
         user: @bulk_mail.template.user,
         bulk_mail: @bulk_mail,
-        comment: @bulk_mail_action.comment
+        comment: @action_log.comment
       ).apply.deliver_later
       flash.notice = 'メールを申請し、管理者に通知しました。メールは承認後に配信されます。保留中の状態では変更や削除はできません。変更が必要な場合は、「取り下げ」を行い、下書きに戻してください。'
     end

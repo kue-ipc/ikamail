@@ -12,16 +12,16 @@
 
 ActiveRecord::Schema.define(version: 2019_10_25_005026) do
 
-  create_table "bulk_mail_actions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "action_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
     t.bigint "user_id"
     t.string "action", null: false
     t.text "comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["action"], name: "index_bulk_mail_actions_on_action"
-    t.index ["bulk_mail_id"], name: "index_bulk_mail_actions_on_bulk_mail_id"
-    t.index ["user_id"], name: "index_bulk_mail_actions_on_user_id"
+    t.index ["action"], name: "index_action_logs_on_action"
+    t.index ["bulk_mail_id"], name: "index_action_logs_on_bulk_mail_id"
+    t.index ["user_id"], name: "index_action_logs_on_user_id"
   end
 
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -144,8 +144,8 @@ ActiveRecord::Schema.define(version: 2019_10_25_005026) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "bulk_mail_actions", "bulk_mails"
-  add_foreign_key "bulk_mail_actions", "users"
+  add_foreign_key "action_logs", "bulk_mails"
+  add_foreign_key "action_logs", "users"
   add_foreign_key "bulk_mails", "templates"
   add_foreign_key "bulk_mails", "users"
   add_foreign_key "excluded_mail_users_recipient_lists", "mail_users"

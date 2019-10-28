@@ -1,0 +1,27 @@
+h1 Listing action_logs
+
+table
+  thead
+    tr
+      th Bulk mail
+      th Action
+      th User
+      th Comment
+      th
+      th
+      th
+
+  tbody
+    - @action_logs.each do |action_log|
+      tr
+        td = action_log.bulk_mail
+        td = action_log.action
+        td = action_log.user
+        td = action_log.comment
+        td = link_to 'Show', action_log
+        td = link_to 'Edit', edit_action_log_path(action_log)
+        td = link_to 'Destroy', action_log, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Bulk mail action', new_action_log_path

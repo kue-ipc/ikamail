@@ -4,7 +4,7 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
 .modal.fade id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label" aria-hidden="true"
   .modal-dialog role="document"
     .modal-content
-      = form_for BulkMailAction.new, url: bulk_mail_bulk_mail_actions_path(@bulk_mail) do |f|
+      = form_for ActionLog.new, url: bulk_mail_action_logs_path(@bulk_mail) do |f|
         = f.hidden_field :action, value: action
         .modal-header
           h5.modal-title id="action-#{action}-modal-label"

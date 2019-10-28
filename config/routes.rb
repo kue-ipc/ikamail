@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
   resources :templates
   resources :bulk_mails do
-    resources :bulk_mail_actions, path: 'actions', only: [:index, :create]
+    resources :action_logs, path: 'actions', only: [:index, :create]
   end
   resources :recipient_lists do
     resources :mail_users, only: [:index], controller: 'recipient_lists_mail_users'

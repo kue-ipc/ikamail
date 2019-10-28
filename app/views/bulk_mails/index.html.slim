@@ -28,4 +28,4 @@ table.table
         td = bulk_mail.user.username
         td = bulk_mail.template.name
         td = l(bulk_mail.updated_at, format: :short)
-        td = bulk_mail.delivery_datetime&.then { |time| l(time, format: :short) }
+        td = bulk_mail.delivery_datetime&.yield_self { |time| l(time, format: :short) }

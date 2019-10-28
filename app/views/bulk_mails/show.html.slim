@@ -97,7 +97,7 @@ p
 h2 履歴
 
 table.table
-  - @bulk_mail.bulk_mail_actions.includes(:user).order(created_at: :desc).each do |log|
+  - @bulk_mail.action_logs.includes(:user).order(created_at: :desc).each do |log|
     tr
       td = l(log.created_at, format: :short)
       td = log.user&.name || '(system)'
