@@ -133,9 +133,11 @@ ja:
         name: ユーザー名
         display_name: 名前
         mail: メールアドレス
+        mail_groups: グループ
       mail_group:
         name: グループ名
         display_name: 名前
+        mail_users: ユーザー
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"

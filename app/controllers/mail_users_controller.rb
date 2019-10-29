@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MailUsersController < ApplicationController
   before_action :set_mail_user, only: [:show]
   before_action :authorize_mail_user, only: [:index]
@@ -5,7 +7,15 @@ class MailUsersController < ApplicationController
   # GET /mail_users
   # GET /mail_users.json
   def index
-    @mail_users = policy_scope(MailUser).order(:name).page(params[:page])
+    all_mail_users =
+      if params[:mail_group_id].present?
+        MailGroup.find(params[:mail_group_id]).mail_users
+      elsif params[:recipient_list_id].present?
+        RecipientList.find(params[:recipient_list_id]).mail_users
+      else
+        MailUser
+      end
+    @mail_users = policy_scope(all_mail_users).order(:name).page(params[:page]).per(2)
   end
 
   # GET /mail_users/1
@@ -22,10 +32,5 @@ class MailUsersController < ApplicationController
 
     def authorize_mail_user
       authorize MailUser
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def mail_user_params
-      params.fetch(:mail_user, {})
     end
 end
