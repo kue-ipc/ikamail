@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_052033) do
+ActiveRecord::Schema.define(version: 2019_10_29_024123) do
 
   create_table "action_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
@@ -110,6 +110,17 @@ ActiveRecord::Schema.define(version: 2019_10_28_052033) do
     t.index ["name"], name: "index_recipient_lists_on_name", unique: true
   end
 
+  create_table "recipients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "recipient_list_id", null: false
+    t.bigint "mail_user_id", null: false
+    t.boolean "included", default: false, null: false
+    t.boolean "excluded", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mail_user_id"], name: "index_recipients_on_mail_user_id"
+    t.index ["recipient_list_id"], name: "index_recipients_on_recipient_list_id"
+  end
+
   create_table "templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "enabled", default: true, null: false
@@ -158,6 +169,8 @@ ActiveRecord::Schema.define(version: 2019_10_28_052033) do
   add_foreign_key "mail_groups_recipient_lists", "recipient_lists"
   add_foreign_key "mail_groups_users", "mail_groups"
   add_foreign_key "mail_groups_users", "mail_users"
+  add_foreign_key "recipients", "mail_users"
+  add_foreign_key "recipients", "recipient_lists"
   add_foreign_key "templates", "recipient_lists"
   add_foreign_key "templates", "users"
 end

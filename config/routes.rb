@@ -2,6 +2,8 @@
 
 Rails.application.routes.draw do
   root to: 'pages#top'
+  post '/search/mail_users', to: 'mail_users#search'
+  get '/search/mail_users', to: 'mail_users#search'
 
   namespace :admin do
     root to: '/admin#top'
@@ -20,9 +22,8 @@ Rails.application.routes.draw do
     resources :mail_users, only: [:index]
   end
 
-  resources :mail_users, only: [:index, :show] do
-    # get 'query/:name'
-  end
+  resources :mail_users, only: [:index, :show]
+
   resources :mail_groups, only: [:index, :show] do
     resources :mail_users, only: [:index]
   end

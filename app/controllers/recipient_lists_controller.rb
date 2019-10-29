@@ -25,8 +25,6 @@ class RecipientListsController < ApplicationController
   # POST /recipient_lists
   # POST /recipient_lists.json
   def create
-    @recipient_list = RecipientList.new(recipient_list_params)
-
     respond_to do |format|
       if @recipient_list.save
         format.html { redirect_to @recipient_list, notice: 'Recipient list was successfully created.' }
@@ -80,26 +78,6 @@ class RecipientListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recipient_list_params
-      permitted_params = params.require(:recipient_list)
-        .permit(:name, :description,
-                :included_mail_user_name_list,
-                :excluded_mail_user_name_list,
-                mail_group_ids: [])
-
-      if permitted_params[:included_mail_user_name_list].present?
-        permitted_params[:included_mail_users] = MailUser.where(
-          name: permitted_params[:included_mail_user_name_list].split(','))
-      end
-      permitted_params.delete(:included_mail_user_name_list)
-
-      if permitted_params[:excluded_mail_user_name_list].present?
-        permitted_params[:excluded_mail_users] = MailUser.where(
-          name: permitted_params[:excluded_mail_user_name_list].split(','))
-      end
-      permitted_params.delete(:excluded_mail_user_name_list)
-
-
-
-      permitted_params
+      params.require(:recipient_list).permit(:name, :description, mail_group_ids: [])
     end
 end

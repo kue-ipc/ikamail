@@ -18,20 +18,6 @@
       {},
       {multiple: true, size: [10, MailGroup.count].min, class: 'form-control'}
     small.form-text.text-muted
-      | 複数選択することができます。対象となるグループをすべて選択してください。
-  .field.form-group
-    = f.label :included_mail_user_name_list, t('activerecord.attributes.recipient_list.included_mail_users')
-    = f.text_field :included_mail_user_name_list,
-      value: @recipient_list.included_mail_users.map(&:name).join(','),
-      class: 'form-control'
-    small.form-text.text-muted
-      | 複数のユーザーを指定する場合は、カンマ区切りで入力してください。
-  .field.form-group
-    = f.label :excluded_mail_user_name_list, t('activerecord.attributes.recipient_list.excluded_mail_users')
-    = f.text_field :excluded_mail_user_name_list,
-      value: @recipient_list.excluded_mail_users.map(&:name).join(','),
-      class: 'form-control'
-    small.form-text.text-muted
-      | 複数のユーザーを指定する場合は、カンマ区切りで入力してください。含めるユーザーよりも優先されます。
+      | Ctrlキーを押しながら、複数選択することができます。対象となるグループをすべて選択してください。
   .actions
     = f.submit class: 'btn btn-primary'

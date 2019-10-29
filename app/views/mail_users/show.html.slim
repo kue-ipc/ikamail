@@ -1,6 +1,17 @@
-p#notice = notice
+- content_for :heading
+  h1 = t_title(:showing, count: 1)
 
+- dt_class = 'col-sm-6 col-md-4 col-xl-2'
+- dd_class = 'col-sm-6 col-md-8 col-xl-10'
 
-=> link_to 'Edit', edit_mail_user_path(@mail_user)
-'|
-=< link_to 'Back', mail_users_path
+dl.row
+  dt class=dt_class = t_attr(:name)
+  dd class=dd_class = @mail_user.name
+
+  dt class=dt_class = t_attr(:display_name)
+  dd class=dd_class = @mail_user.display_name
+
+  dt class=dt_class = t_attr(:mail)
+  dd class=dd_class = @mail_user.mail
+
+=< link_to '一覧に戻る', mail_groups_path
