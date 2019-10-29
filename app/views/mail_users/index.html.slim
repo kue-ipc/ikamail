@@ -17,3 +17,7 @@ table.table.table-sm
           = link_to mail_user.name, mail_user, class: 'stretched-link'
         td = mail_user.display_name
         td = mail_user.mail
+
+= paginate @mail_users
+p
+  = page_entries_info @mail_users

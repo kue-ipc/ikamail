@@ -5,7 +5,7 @@ class MailUsersController < ApplicationController
   # GET /mail_users
   # GET /mail_users.json
   def index
-    @mail_users = policy_scope(MailUser)
+    @mail_users = policy_scope(MailUser).order(:name).page(params[:page]).per(5)
   end
 
   # GET /mail_users/1

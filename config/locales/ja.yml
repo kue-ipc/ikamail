@@ -129,6 +129,13 @@ ja:
       user:
         fullname: フルネーム
         admin: 管理者権限
+      mail_user:
+        name: ユーザー名
+        display_name: 名前
+        mail: メールアドレス
+      mail_group:
+        name: グループ名
+        display_name: 名前
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"
@@ -153,3 +160,20 @@ ja:
   devise:
     failure:
       unauthenticated: ログインしてください。
+
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "%{entry_name} 無し"
+          one: "<b>1</b> 個の%{entry_name}を表示"
+          other: "<b>全 %{count}</b> 個の%{entry_name}を表示"
+      more_pages:
+        display_entries: "全 <b>%{total}</b> 個の%{entry_name}のうち、<b>%{first}&nbsp;-&nbsp;%{last}</b> 個目を表示"

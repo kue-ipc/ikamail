@@ -65,6 +65,9 @@ gem 'mustache', '~> 1.0'
 # mail
 gem 'mail-iso-2022-jp'
 
+# pagination
+gem 'kaminari'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
