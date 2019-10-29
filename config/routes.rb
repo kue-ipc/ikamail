@@ -17,9 +17,15 @@ Rails.application.routes.draw do
     resources :action_logs, path: 'actions', only: [:index, :create]
   end
   resources :recipient_lists do
-    resources :mail_users, only: [:index], controller: 'recipient_lists_mail_users'
+    resources :mail_users, only: [:index]
   end
-  resources :mail_users, only: [:index, :show]
+
+  resources :mail_users, only: [:index, :show] do
+    # get 'query/:name'
+  end
+  resources :mail_groups, only: [:index, :show] do
+    resources :mail_users, only: [:index]
+  end
 
 
   devise_for :users

@@ -1,11 +1,19 @@
 - content_for :heading
-  h1 = t_title(:listing, count: 2)
+  h1 宛先リストのメールユーザー
 
-h1 RecipientListsMailUsers#index
-p Find me in app/views/recipient_lists_mail_users/index.html.slim
+p
+  | 宛先リスト:
+  =< @recipient_list.name
+
 table.table
-  - @mail_users.each do |user|
+  thead
     tr
-      td = user.name
-      td = user.display_name
-      td = user.mail
+      th アカウント
+      th 名前
+      th メールアドレス
+  tbody
+    - @mail_users.each do |user|
+      tr
+        td = user.name
+        td = user.display_name
+        td = user.mail

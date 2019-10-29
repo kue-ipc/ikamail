@@ -1,22 +1,29 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-table.table
+table.table.table-sm
   thead
     tr
-      th ユーザー名
-      th メールアドレス
-      th フルネーム
-      th 管理者？
+      th = t_attr(:username)
+      th = t_attr(:email)
+      th = t_attr(:fullname)
+      th = t_attr(:admin)
+      th
 
   tbody
     - @users.each do |user|
       tr
-        td = user.username
+        td.position-relative
+          = link_to user.username, admin_user_path(user), class: 'stretched-link'
         td = user.email
         td = user.fullname
-        td = user.admin?
-        td = link_to 'Show', admin_user_path(user)
+        td
+          .custom-control.custom-switch
+            = check_box_tag :admin, '1', user.admin, disabled: true, class: 'custom-control-input'
+            label class="custom-control-label" for="admin"
+              = user.admin ? 'あり' : 'なし'
+
+
         td
           - if user != current_user
             - if user.admin?

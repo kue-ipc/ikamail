@@ -18,10 +18,10 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if current_user == @user
-        format.html { redirect_to admin_users_path }
+        format.html { redirect_to admin_users_path, alert: '自分自身の情報は変更できません。'}
         format.json { render json: {erros: '自分自身は変更できません。'}, status: :unprocessable_entity }
       elsif @user.update(user_params)
-        format.html { redirect_to admin_users_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to admin_users_path, notice: 'ユーザー情報を更新しました。' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { redirect_to admin_users_path }

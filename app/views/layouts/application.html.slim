@@ -14,10 +14,10 @@ html
       nav.navbar.navbar-light.bg-light
         = link_to '一括メールシステム', '/', class: 'navbar-brand'
         - if user_signed_in?
-          ul.navbar-nav.flex-row.mr-auto
-            - menu_list.each do |item|
-              li.nav-item.px-1 class=(current_page?(item[:path]) ? 'active' : nil)
-                = link_to item[:label], item[:path], class: 'nav-link'
+          / ul.navbar-nav.flex-row.mr-auto
+          /   - menu_list.each do |item|
+          /     li.nav-item.px-1 class=(current_page?(item[:path]) ? 'active' : nil)
+          /       = link_to item[:label], item[:path], class: 'nav-link'
           ul.navbar-nav.flex-row
             li.nav-item.px-1
               = link_to current_user.name, user_path, class: 'nav-link'

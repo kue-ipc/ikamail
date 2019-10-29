@@ -1,20 +1,19 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-table
+p 詳細を確認する場合はユーザー名をクリックしてください。
+
+table.table.table-sm
   thead
     tr
-      th
-      th
-      th
+      th = t_attr(:name)
+      th = t_attr(:display_name)
+      th = t_attr(:mail)
 
   tbody
     - @mail_users.each do |mail_user|
       tr
-        td = link_to 'Show', mail_user
-        td = link_to 'Edit', edit_mail_user_path(mail_user)
-        td = link_to 'Destroy', mail_user, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Mail user', new_mail_user_path
+        td.position-relative
+          = link_to mail_user.name, mail_user, class: 'stretched-link'
+        td = mail_user.display_name
+        td = mail_user.mail
