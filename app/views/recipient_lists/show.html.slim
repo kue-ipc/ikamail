@@ -21,10 +21,12 @@ dl.row
   dt class=dt_class = t_attr(:description)
   dd class=dd_class = @recipient_list.description
 
-  dt class=dt_class = t_attr(:description)
+  dt class=dt_class
+    = t_attr(:applicable_mail_users)
+    | 数
   dd class=dd_class
     span.badge.badge-primary
-      = @recipient_list.applicable_mail_users.count
+      = @recipient_list.applicable_mail_users.size
     - if current_user.admin?
       =< link_to '一覧表示', recipient_list_applicable_mail_users_path(@recipient_list), class: 'btn btn-link btn-sm'
 

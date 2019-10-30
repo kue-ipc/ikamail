@@ -27,6 +27,7 @@ class RecipientListsController < ApplicationController
   def create
     respond_to do |format|
       if @recipient_list.save
+        CollectRecipientJob.perform_later(@recipient_list.id)
         format.html { redirect_to @recipient_list, notice: 'Recipient list was successfully created.' }
         format.json { render :show, status: :created, location: @recipient_list }
       else
@@ -41,6 +42,7 @@ class RecipientListsController < ApplicationController
   def update
     respond_to do |format|
       if @recipient_list.update(recipient_list_params)
+        CollectRecipientJob.perform_later(@recipient_list.id)
         format.html { redirect_to @recipient_list, notice: 'Recipient list was successfully updated.' }
         format.json { render :show, status: :ok, location: @recipient_list }
       else

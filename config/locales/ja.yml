@@ -107,6 +107,7 @@ ja:
         name: リスト名
         description: 説明
         mail_groups: 対象グループ
+        applicable_mail_users: 対象ユーザー
         included_mail_users: 含めるユーザー
         excluded_mail_users: 除外するユーザー
       bulk_mail:
