@@ -1,6 +1,10 @@
 class LdapMailSyncJob < ApplicationJob
   queue_as :default
 
+  after_perform do
+    CollectRecipientAllJob.perform_later
+  end
+
   def perform(*_args)
     sync_mail_groups
     sync_mail_users
@@ -15,8 +19,7 @@ class LdapMailSyncJob < ApplicationJob
       LdapGroup.all.each do |group|
         name = group.name
         mail_group_remains.delete(name)
-        MailGroup.find_or_create_by(name: name)
-          .update(display_name: group.display_name)
+        MailGroup.find_or_create_by(name: name).update(display_name: group.display_name)
       end
 
       # delete group out of LDAP
@@ -31,19 +34,10 @@ class LdapMailSyncJob < ApplicationJob
       LdapUser.all.each do |user|
         name = user.name
         mail_user_remains.delete(name)
-        mail_user = MailUser.find_by(name: name)
-        if mail_user
-          mail_user.update(
-            mail: user.mail,
-            display_name: user.display_name
-          )
-        else
-          MailUser.create(
-            name: name,
-            mail: user.mail,
-            display_name: user.display_name
-          )
-        end
+        mail_user = MailUser.find_or_initialize_by(name: name)
+        mail_user.mail = user.mail
+        mail_user.display_name = user.display_name
+        mail_user.save
       end
 
       # delete user out of LDAP
