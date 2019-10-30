@@ -1,70 +1,81 @@
-- content_for :heading do
-  h1 = t('title.showing', name: t('activerecord.models.recipient_list'))
+- content_for :heading
+  h1 = t_title(:showing, count: 1)
 
-- if @recipient_list.errors.any?
-  #error_explanation.alert.alert-danger role="alert"
-    strong
-      = t "messages.error_prohibited_action", count: @recipient_list.errors.count,
-        model: t('activerecord.models.recipient_list'), action: t(:destroy, scope: :actions)
-    hr
-    ul.list-group.list-group.flush
-      - @recipient_list.errors.full_messages.each do |message|
-        li.list-group-item.list-group-item-danger = message
+  - if @recipient_list.errors.any?
+    #error_explanation.alert.alert-danger role="alert"
+      strong
+        = t "messages.error_prohibited_action", count: @recipient_list.errors.count,
+          model: t('activerecord.models.recipient_list'), action: t(:destroy, scope: :actions)
+      hr
+      ul.list-group.list-group.flush
+        - @recipient_list.errors.full_messages.each do |message|
+          li.list-group-item.list-group-item-danger = message
 
-p#notice = notice
+- dt_class = 'col-sm-6 col-md-4 col-xl-2'
+- dd_class = 'col-sm-6 col-md-8 col-xl-10'
 
-p
-  strong>
-    = t('activerecord.attributes.recipient_list.name')
-    | :
-  = @recipient_list.name
-p
-  strong>
-    = t('activerecord.attributes.recipient_list.description')
-    | :
-  = @recipient_list.description
+dl.row
+  dt class=dt_class = t_attr(:name)
+  dd class=dd_class = @recipient_list.name
 
-p
-  strong>
-    | 対象ユーザー数:
-  = @recipient_list.mail_users.size
-  - if current_user.admin?
-    = link_to '対象ユーザー一覧', recipient_list_mail_users_path(@recipient_list)
+  dt class=dt_class = t_attr(:description)
+  dd class=dd_class = @recipient_list.description
 
-p
-  strong
-    = t('activerecord.attributes.recipient_list.mail_groups')
-    | :
-ul
-  - @recipient_list.mail_groups.each do |group|
-    li
-      = "#{group.display_name} (#{group.name})"
+  dt class=dt_class = t_attr(:description)
+  dd class=dd_class
+    span.badge.badge-primary
+      = @recipient_list.applicable_mail_users.count
+    - if current_user.admin?
+      =< link_to '一覧表示', recipient_list_applicable_mail_users_path(@recipient_list), class: 'btn btn-link btn-sm'
 
-p
-  strong
-    = t('activerecord.attributes.recipient_list.included_mail_users')
-    | :
-ul
-  - @recipient_list.included_mail_users.each do |user|
-    li
-      = "#{user.display_name} (#{user.name})"
+  dt class=dt_class = t_attr(:mail_groups)
+  dd class=dd_class
+    ul.list-inline
+      - @recipient_list.mail_groups.each do |mail_group|
+        li.list-inline-item.border.border-primary.rounded.px-1.mb-1
+          = "#{mail_group.display_name} (#{mail_group.name})"
 
-p
-  strong
-    = t('activerecord.attributes.recipient_list.excluded_mail_users')
-    | :
-ul
-  - @recipient_list.excluded_mail_users.each do |user|
-    li
-      = "#{user.display_name} (#{user.name})"
+  dt class=dt_class = t_attr(:included_mail_users)
+  dd class=dd_class
+    - if current_user.admin?
+      = form_tag recipient_list_included_mail_users_path(@recipient_list), method: :post, class: 'form-inline'
+        .form-group.mb-2
+          .form-group.mr-2
+            = label_tag :name, 'ユーザ名', class: 'sr-only'
+            = text_field_tag :name, nil, class: 'form-control form-control-sm', placeholder: 'ユーザ名'
+          = submit_tag '追加', name: nil, class: 'btn btn-primary btn-sm'
+    ul.list-inline
+      - @recipient_list.included_mail_users.each do |mail_user|
+        li.list-inline-item.border.border-success.rounded.px-1.mb-1
+          = "#{mail_user.display_name} (#{mail_user.name})"
+          - if current_user.admin?
+            = link_to '×', recipient_list_included_mail_user_path(@recipient_list, mail_user),
+              data: { confirm: t('messages.corfirm_destroy') }, method: :delete, class: 'badge badge-secondary'
+
+  dt class=dt_class = t_attr(:excluded_mail_users)
+  dd class=dd_class
+    - if current_user.admin?
+      = form_tag recipient_list_excluded_mail_users_path(@recipient_list), method: :post, class: 'form-inline'
+        .form-group.mb-2
+          .form-group.mr-2
+            = label_tag :name, 'ユーザ名', class: 'sr-only'
+            = text_field_tag :name, nil, class: 'form-control form-control-sm', placeholder: 'ユーザ名'
+          = submit_tag '追加', name: nil, class: 'btn btn-primary btn-sm'
+    ul.list-inline
+      - @recipient_list.excluded_mail_users.each do |mail_user|
+        li.list-inline-item.border.border-warning.rounded.px-1.mb-1
+          = "#{mail_user.display_name} (#{mail_user.name})"
+          - if current_user.admin?
+            = link_to '×', recipient_list_excluded_mail_user_path(@recipient_list, mail_user),
+              data: { confirm: t('messages.corfirm_destroy') }, method: :delete, class: 'badge badge-secondary'
 
 - if current_user.admin?
   p
-    => link_to t('action.edit'), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
+    => link_to t(:edit, scope: :actions), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
     '|
-    =< link_to t('action.destroy'), @recipient_list,
-      data: { confirm: t('messages.corfirm_destroy') }, method: :delete, class: 'btn btn-danger'
+    =< link_to t(:destroy, scope: :actions), @recipient_list,
+      data: { confirm: t(:corfirm_destroy, scope: :messages) }, method: :delete, class: 'btn btn-danger'
 
 hr
 p
-  =< link_to t('action.index'), recipient_lists_path, class: 'btn btn-secondary'
+  =< link_to t(:index, scope: :actions), recipient_lists_path, class: 'btn btn-secondary'

@@ -1,0 +1,19 @@
+h1 Listing recipient_mail_users
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @recipient_mail_users.each do |recipient_mail_user|
+      tr
+        td = link_to 'Show', recipient_mail_user
+        td = link_to 'Edit', edit_recipient_mail_user_path(recipient_mail_user)
+        td = link_to 'Destroy', recipient_mail_user, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Recipient mail user', new_recipient_mail_user_path

@@ -1,0 +1,2 @@
+module RecipientMailUsersHelper
+end
