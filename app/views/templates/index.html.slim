@@ -1,7 +1,7 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p テンプレートの詳細を確認するにはテンプレート名をクリックしてください。
+p = t(:dispaly_detail, scope: :messages, name: t_attr(:name))
 
 - if current_user.admin?
   p
@@ -18,9 +18,13 @@ table.table
   tbody
     - @templates.each do |template|
       tr
-        td
-          = link_to template do
-            = template.name
-        td = template.recipient_list.name
+        td.position-relative
+          = link_to template.name, template, class: 'stretched-link'
+        td.position-relative
+          = link_to template.recipient_list.name, template.recipient_list, class: 'stretched-link'
         td = template.count
         td = template.reserved_time.strftime('%H:%M')
+
+= paginate @templates
+p
+  = page_entries_info @templates

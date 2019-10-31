@@ -1,15 +1,16 @@
 - content_for :heading
   h1 = t_title(:showing, count: 1)
 
-  - if @recipient_list.errors.any?
-    #error_explanation.alert.alert-danger role="alert"
-      strong
-        = t "messages.error_prohibited_action", count: @recipient_list.errors.count,
-          model: t('activerecord.models.recipient_list'), action: t(:destroy, scope: :actions)
-      hr
-      ul.list-group.list-group.flush
-        - @recipient_list.errors.full_messages.each do |message|
-          li.list-group-item.list-group-item-danger = message
+- if @recipient_list.errors.any?
+  #error_explanation.card.border-danger.mb-2
+    .card-header
+      = t :error_prohibited_action, scope: :messages, count: @recipient_list.errors.count,
+          model: t(:recipient_list, scope: [:activerecord, :models]), action: t(:destroy, scope: :actions)
+    ul.list-group.list-group-flush.text-danger
+      - @recipient_list.errors.full_messages.each do |message|
+        li.list-group-item = message
+
+
 
 dl
   = dt_dd_tag t_attr(:name)

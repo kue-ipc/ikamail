@@ -1,7 +1,7 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p 詳細を確認するにはリスト名をクリックしてください。
+p = t(:dispaly_detail, scope: :messages, name: t_attr(:name))
 
 - if current_user.admin?
   p
@@ -10,9 +10,9 @@ p 詳細を確認するにはリスト名をクリックしてください。
 table.table
   thead
     tr
-      th scope="col" = t_attr(:name)
+      th scope="col" = t_attr :name
       th scope="col" = "#{t_attr(:applicable_mail_users)}数"
-      th scope="col" = t_attr(:description)
+      th scope="col" = t_attr :description
   tbody
     - @recipient_lists.each do |recipient_list|
       tr

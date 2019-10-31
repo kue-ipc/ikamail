@@ -6,9 +6,9 @@ p 詳細を確認する場合はユーザー名をクリックしてください
 table.table.table-sm
   thead
     tr
-      th = t_attr(:name)
-      th = t_attr(:display_name)
-      th = t_attr(:mail)
+      th scope="col" = t_attr(:name)
+      th scope="col" = t_attr(:display_name)
+      th scope="col" = t_attr(:mail)
 
   tbody
     - @mail_users.each do |mail_user|
