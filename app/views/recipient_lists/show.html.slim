@@ -11,40 +11,32 @@
         - @recipient_list.errors.full_messages.each do |message|
           li.list-group-item.list-group-item-danger = message
 
-- dt_class = 'col-sm-6 col-md-4 col-xl-2'
-- dd_class = 'col-sm-6 col-md-8 col-xl-10'
+dl
+  = dt_dd_tag t_attr(:name)
+    = @recipient_list.name
 
-dl.row
-  dt class=dt_class = t_attr(:name)
-  dd class=dd_class = @recipient_list.name
+  = dt_dd_tag t_attr(:description)
+    = @recipient_list.description
 
-  dt class=dt_class = t_attr(:description)
-  dd class=dd_class = @recipient_list.description
-
-  dt class=dt_class
-    = t_attr(:applicable_mail_users)
-    | 数
-  dd class=dd_class
+  = dt_dd_tag "#{t_attr(:applicable_mail_users)}数"
     span.badge.badge-primary
       = @recipient_list.applicable_mail_users.size
     - if current_user.admin?
       =< link_to '一覧表示', recipient_list_applicable_mail_users_path(@recipient_list), class: 'btn btn-link btn-sm'
 
-  dt class=dt_class = t_attr(:mail_groups)
-  dd class=dd_class
+  = dt_dd_tag t_attr(:mail_groups)
     ul.list-inline
       - @recipient_list.mail_groups.each do |mail_group|
         li.list-inline-item.border.border-primary.rounded.px-1.mb-1
           = "#{mail_group.display_name} (#{mail_group.name})"
 
-  dt class=dt_class = t_attr(:included_mail_users)
-  dd class=dd_class
+  = dt_dd_tag t_attr(:included_mail_users)
     - if current_user.admin?
       = form_tag recipient_list_included_mail_users_path(@recipient_list), method: :post, class: 'form-inline'
         .form-group.mb-2
           .form-group.mr-2
-            = label_tag :name, 'ユーザ名', class: 'sr-only'
-            = text_field_tag :name, nil, class: 'form-control form-control-sm', placeholder: 'ユーザ名'
+            = label_tag :name, 'ユーザー名', class: 'sr-only'
+            = text_field_tag :name, nil, class: 'form-control form-control-sm', placeholder: 'ユーザー名', required: true
           = submit_tag '追加', name: nil, class: 'btn btn-primary btn-sm'
     ul.list-inline
       - @recipient_list.included_mail_users.each do |mail_user|
@@ -54,14 +46,13 @@ dl.row
             = link_to '×', recipient_list_included_mail_user_path(@recipient_list, mail_user),
               data: { confirm: t('messages.corfirm_destroy') }, method: :delete, class: 'badge badge-secondary'
 
-  dt class=dt_class = t_attr(:excluded_mail_users)
-  dd class=dd_class
+  = dt_dd_tag t_attr(:excluded_mail_users)
     - if current_user.admin?
       = form_tag recipient_list_excluded_mail_users_path(@recipient_list), method: :post, class: 'form-inline'
         .form-group.mb-2
           .form-group.mr-2
-            = label_tag :name, 'ユーザ名', class: 'sr-only'
-            = text_field_tag :name, nil, class: 'form-control form-control-sm', placeholder: 'ユーザ名'
+            = label_tag :name, 'ユーザー名', class: 'sr-only'
+            = text_field_tag :name, nil, class: 'form-control form-control-sm', placeholder: 'ユーザー名', required: true
           = submit_tag '追加', name: nil, class: 'btn btn-primary btn-sm'
     ul.list-inline
       - @recipient_list.excluded_mail_users.each do |mail_user|
@@ -80,4 +71,5 @@ dl.row
 
 hr
 p
-  =< link_to t(:index, scope: :actions), recipient_lists_path, class: 'btn btn-secondary'
+  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), recipient_lists_path,
+            class: 'btn btn-secondary'

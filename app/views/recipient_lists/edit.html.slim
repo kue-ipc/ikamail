@@ -5,5 +5,5 @@
 
 hr
 p
-  => link_to t(:show, scope: :actions), @recipient_list, class: 'btn btn-primary'
-  =< link_to t(:index, scope: :actions), recipient_lists_path, class: 'btn btn-secondary'
+  = link_to t(:back_to, scope: :links, name: t(:show, scope: :actions)), @recipient_list,
+            class: 'btn btn-secondary'

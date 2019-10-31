@@ -8,9 +8,9 @@ class RecipientMailUsersController < ApplicationController
   def index
     @mail_users =
       if @attribute == :inclruded
-        @recipient_list.included_mail_users
+        @recipient_list.included_mail_users.order(:name).page(params[:page])
       elsif @attribute == :excluded
-        @recipient_list.exludede_mail_users
+        @recipient_list.exludede_mail_users.order(:name).page(params[:page])
       end
   end
 

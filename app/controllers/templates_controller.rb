@@ -6,7 +6,7 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = policy_scope(Template)
+    @templates = policy_scope(Template).order(:name).page(params[:page])
   end
 
   # GET /templates/1

@@ -3,4 +3,7 @@
 
 == render 'form'
 
-= link_to 'Back', bulk_mails_path
+hr
+p
+  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), bulk_mails_path,
+            class: 'btn btn-secondary'

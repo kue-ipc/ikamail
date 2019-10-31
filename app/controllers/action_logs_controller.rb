@@ -8,7 +8,7 @@ class ActionLogsController < ApplicationController
   def index
     @bulk_mail = BulkMail.find(params[:bulk_mail_id])
     authorize @bulk_mail, :readable?
-    @action_logs = @bulk_mail.action_logs
+    @action_logs = @bulk_mail.action_logs.order(created_at: :desc).page(params[:page])
   end
 
   # POST /action_logs

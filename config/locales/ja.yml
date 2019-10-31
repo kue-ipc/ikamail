@@ -57,6 +57,10 @@ ja:
     create: 作成
     update: 更新
 
+  links:
+    back_to: "%{name}に戻る"
+    go_to: "%{name}に進む"
+
   mail:
     actions:
       create: 新規作成
@@ -125,6 +129,13 @@ ja:
         recipient_list: 宛先
         count: カウント
         reserved_time: 予約時刻
+        from_name: 送信元の名前(省略可)
+        from_mail_address: 送信元のメールアドレス
+        subject_prefix: 題名の接頭辞
+        subject_postfix: 題名の接尾辞
+        body_header: 本文の前文(ヘッダー)
+        body_footer: 本文の後文(フッター)
+        description: 説明
       action_log:
         comment: コメント
       user:

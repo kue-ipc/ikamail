@@ -1,21 +1,26 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p 宛先リストの詳細を確認するにはリスト名をクリックしてください。
+p 詳細を確認するにはリスト名をクリックしてください。
 
 - if current_user.admin?
-p
-  = link_to t(:new, scope: :actions), new_recipient_list_path, class: 'btn btn-primary'
+  p
+    = link_to t(:new, scope: :actions), new_recipient_list_path, class: 'btn btn-primary'
 
 table.table
   thead
     tr
-      th scope="col" = t('activerecord.attributes.recipient_list.name')
-      th scope="col" = t('activerecord.attributes.recipient_list.description')
+      th scope="col" = t_attr(:name)
+      th scope="col" = "#{t_attr(:applicable_mail_users)}数"
+      th scope="col" = t_attr(:description)
   tbody
     - @recipient_lists.each do |recipient_list|
       tr
-        td
-          = link_to recipient_list do
-            = recipient_list.name
+        td.position-relative
+          = link_to recipient_list.name, recipient_list, class: 'stretched-link'
+        td = recipient_list.applicable_mail_users.size
         td = recipient_list.description
+
+= paginate @recipient_lists
+p
+  = page_entries_info @recipient_lists

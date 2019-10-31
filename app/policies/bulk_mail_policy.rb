@@ -12,7 +12,7 @@ class BulkMailPolicy < ApplicationPolicy
     end
   end
 
-  def readbale?
+  def readable?
     user.admin? ||
     record.template.user == user ||
     record.user == user
@@ -34,7 +34,7 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def show?
-    readbale?
+    readable?
   end
 
   def create?

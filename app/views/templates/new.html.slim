@@ -3,4 +3,7 @@
 
 == render 'form'
 
-= link_to 'Back', templates_path
+hr
+p
+  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), templates_path,
+            class: 'btn btn-secondary'

@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  # def attr_scope
-  #   @attr_scope ||= [:activerecord, :attributes, controller_name.singularize.intern]
-  # end
-
   def controller_sym
     @controller_sym ||= controller_name.singularize.intern
   end
@@ -29,7 +25,6 @@ module ApplicationHelper
   def t_attr(attr, model: controller_sym)
     t(attr, scope: [:activerecord, :attributes, model])
   end
-
 
   def menu_list
     list = []
@@ -56,5 +51,12 @@ module ApplicationHelper
       path: recipient_lists_path,
       label: t_menu_action(:index, model: :recipient_list, count: 2),
     }
+  end
+
+  def dt_dd_tag(term, &block)
+    content_tag('div', class: 'row') do
+      content_tag('dt', term, class: 'col-sm-6 col-md-4 col-xl-2 mb-2') +
+      content_tag('dd', class: 'col-sm-6 col-md-8 col-xl-10 mb-2', &block)
+    end
   end
 end

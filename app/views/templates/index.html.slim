@@ -1,6 +1,12 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
+p テンプレートの詳細を確認するにはテンプレート名をクリックしてください。
+
+- if current_user.admin?
+  p
+    = link_to t(:new, scope: :actions), new_template_path, class: 'btn btn-primary'
+
 table.table
   thead
     tr
@@ -8,21 +14,13 @@ table.table
       th scope="col" = t_attr :recipient_list
       th scope="col" = t_attr :count
       th scope="col" = t_attr :reserved_time
-      th scope="col"
-      th scope="col"
-      th scope="col"
 
   tbody
     - @templates.each do |template|
       tr
-        td = template.name
+        td
+          = link_to template do
+            = template.name
         td = template.recipient_list.name
         td = template.count
         td = template.reserved_time.strftime('%H:%M')
-        td = link_to 'Show', template
-        td = link_to 'Edit', edit_template_path(template)
-        td = link_to 'Destroy', template, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Bulk mail template', new_template_path
