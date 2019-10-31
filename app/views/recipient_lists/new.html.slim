@@ -1,5 +1,8 @@
-h1 = t('title.new', name: t('activerecord.models.recipient_list'))
+- content_for :heading
+  h1 = t_title(:new, count: 1)
 
 == render 'form'
 
-= link_to 'Back', recipient_lists_path
+hr
+p
+  =< link_to t(:index, scope: :actions), recipient_lists_path, class: 'btn btn-secondary'

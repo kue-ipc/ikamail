@@ -13,4 +13,8 @@ class RecipientList < ApplicationRecord
   has_many :applicable_mail_users, through: :applicable_recipients, source: :mail_user
   has_many :included_mail_users, through: :included_recipients, source: :mail_user
   has_many :excluded_mail_users, through: :excluded_recipients, source: :mail_user
+
+  validates :name, presence: true, uniqueness: true, length: {maximum: 255}
+  validates :description, length: {maximum: 65536}
+
 end

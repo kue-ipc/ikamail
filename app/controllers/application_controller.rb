@@ -24,5 +24,10 @@ class ApplicationController < ActionController::Base
       action: t(action, scope: :actions))
   end
 
-
+  def t_failure_action(model, action)
+    t(:failure_action,
+      scope: [:messages],
+      model: t(model, scope: [:activerecord, :models]),
+      action: t(action, scope: :actions))
+  end
 end

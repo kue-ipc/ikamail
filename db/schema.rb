@@ -56,20 +56,6 @@ ActiveRecord::Schema.define(version: 2019_10_29_024123) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "excluded_mail_users_recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.bigint "mail_user_id", null: false
-    t.bigint "recipient_list_id", null: false
-    t.index ["mail_user_id"], name: "index_excluded_mail_users_recipient_lists_on_mail_user_id"
-    t.index ["recipient_list_id"], name: "index_excluded_mail_users_recipient_lists_on_recipient_list_id"
-  end
-
-  create_table "included_mail_users_recipient_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.bigint "mail_user_id", null: false
-    t.bigint "recipient_list_id", null: false
-    t.index ["mail_user_id"], name: "index_included_mail_users_recipient_lists_on_mail_user_id"
-    t.index ["recipient_list_id"], name: "index_included_mail_users_recipient_lists_on_recipient_list_id"
-  end
-
   create_table "mail_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "display_name"
@@ -161,10 +147,6 @@ ActiveRecord::Schema.define(version: 2019_10_29_024123) do
   add_foreign_key "action_logs", "users"
   add_foreign_key "bulk_mails", "templates"
   add_foreign_key "bulk_mails", "users"
-  add_foreign_key "excluded_mail_users_recipient_lists", "mail_users"
-  add_foreign_key "excluded_mail_users_recipient_lists", "recipient_lists"
-  add_foreign_key "included_mail_users_recipient_lists", "mail_users"
-  add_foreign_key "included_mail_users_recipient_lists", "recipient_lists"
   add_foreign_key "mail_groups_recipient_lists", "mail_groups"
   add_foreign_key "mail_groups_recipient_lists", "recipient_lists"
   add_foreign_key "mail_groups_users", "mail_groups"

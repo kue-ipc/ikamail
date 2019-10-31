@@ -1,7 +1,9 @@
-h1 = t('title.editing', name: t('activerecord.models.recipient_list'))
+- content_for :heading
+  h1 = t_title(:editing, count: 1)
 
 == render 'form'
 
-=> link_to 'Show', @recipient_list
-'|
-=< link_to 'Back', recipient_lists_path
+hr
+p
+  => link_to t(:show, scope: :actions), @recipient_list, class: 'btn btn-primary'
+  =< link_to t(:index, scope: :actions), recipient_lists_path, class: 'btn btn-secondary'

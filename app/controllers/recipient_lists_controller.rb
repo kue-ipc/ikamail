@@ -25,10 +25,11 @@ class RecipientListsController < ApplicationController
   # POST /recipient_lists
   # POST /recipient_lists.json
   def create
+    @recipient_list = RecipientList.new(recipient_list_params)
     respond_to do |format|
       if @recipient_list.save
         CollectRecipientJob.perform_later(@recipient_list.id)
-        format.html { redirect_to @recipient_list, notice: 'Recipient list was successfully created.' }
+        format.html { redirect_to @recipient_list, notice: t_success_action(:recipient_list, :create) }
         format.json { render :show, status: :created, location: @recipient_list }
       else
         format.html { render :new }
@@ -42,8 +43,7 @@ class RecipientListsController < ApplicationController
   def update
     respond_to do |format|
       if @recipient_list.update(recipient_list_params)
-        CollectRecipientJob.perform_later(@recipient_list.id)
-        format.html { redirect_to @recipient_list, notice: 'Recipient list was successfully updated.' }
+        format.html { redirect_to @recipient_list, notice: t_success_action(:recipient_list, :update) }
         format.json { render :show, status: :ok, location: @recipient_list }
       else
         format.html { render :edit }

@@ -8,11 +8,11 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       if LdapUserSyncJob.perform_later && LdapMailSyncJob.perform_later
-        format.html { redirect_to admin_root_path, notice: '同期処理開始ジョブを登録しました。'}
-        format.json { render json: {notice: '同期処理開始ジョブを登録しました。'}, status: :ok }
+        format.html { redirect_to admin_root_path, notice: 'LDAP同期を開始しました。'}
+        format.json { render json: {notice: 'LDAP同期を開始しました。'}, status: :ok }
       else
-        format.html { redirect_to admin_root_path, error: '同期処理開始ジョブ登録に失敗しました。'}
-        format.json { render json: {error: '同期処理開始ジョブ登録に失敗しました。'}, status: :unprocessable_entity }
+        format.html { redirect_to admin_root_path, alert: 'LDAP同期を開始できませんでした。'}
+        format.json { render json: {alert: 'LDAP同期を開始できませんんでした。'}, status: :unprocessable_entity }
       end
     end
   end
