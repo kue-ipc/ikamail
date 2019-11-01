@@ -1,8 +1,18 @@
+/ - if @recipient_list.errors.any?
+/   #error_explanation.card.border-danger.mb-2
+/     .card-header
+/       = t :error_prohibited_action, scope: :messages, count: @recipient_list.errors.count,
+/           model: t(:recipient_list, scope: [:activerecord, :models]), action: t(:save, scope: :actions)
+/     ul.list-group.list-group-flush.text-danger
+/       - @recipient_list.errors.full_messages.each do |message|
+/         li.list-group-item = message
+/
+
 - if @recipient_list.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t :error_prohibited_action, scope: :messages, count: @recipient_list.errors.count,
-          model: t(:recipient_list, scope: [:activerecord, :models]), action: t(:save, scope: :actions)
+      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
+          count: @recipient_list.errors.count, model: @recipient_list.model_name.human
     ul.list-group.list-group-flush.text-danger
       - @recipient_list.errors.full_messages.each do |message|
         li.list-group-item = message

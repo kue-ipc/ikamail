@@ -13,4 +13,8 @@ class Template < ApplicationRecord
       from_mail_address
     end
   end
+
+  def to_s
+    name
+  end
 end

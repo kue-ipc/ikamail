@@ -54,9 +54,43 @@ module ApplicationHelper
   end
 
   def dt_dd_tag(term, &block)
-    content_tag('div', class: 'row') do
-      content_tag('dt', term, class: 'col-sm-6 col-md-4 col-xl-2 mb-2') +
-      content_tag('dd', class: 'col-sm-6 col-md-8 col-xl-10 mb-2', &block)
+    content_tag('div', class: 'row border-bottom mb-2 pb-2') do
+      content_tag('dt', term, class: 'col-sm-6 col-md-4 col-xl-2') +
+        content_tag('dd', class: 'col-sm-6 col-md-8 col-xl-10 mb-0', &block)
+    end
+  end
+
+  def dt_dd_for(recored, attr, format: nil, **opts)
+    value = recored.__send__(attr)
+    dt_dd_tag recored.class.human_attribute_name(attr) do
+      case value
+      when nil
+        content_tag('span', t(:none, scope: :values), class: 'font-italic text-muted')
+      when '', [], {}
+        content_tag('span', t(:empty, scope: :values), class: 'font-italic text-muted')
+      when String
+        if value.blank?
+        else
+          case format
+          when :mail_body
+            mail_body_tag(value, **opts)
+          else
+            content_tag('span', value)
+          end
+        end
+      when Time, Date, DateTime, ActiveSupport::TimeWithZone
+        content_tag('span', l(value, format: format))
+      else
+        content_tag('span', value.to_s)
+      end
+    end
+  end
+
+  def mail_body_tag(value, prefix: nil, postfix: nil)
+    content_tag('pre', value, class: 'border rounded mb-0 mail-body line-76-80') do
+      content_tag('span', prefix, class: 'text-muted') +
+        content_tag('span', value) +
+        content_tag('span', postfix, class: 'text-muted')
     end
   end
 end

@@ -56,6 +56,9 @@ ja:
     save: 保存
     create: 作成
     update: 更新
+    add: 追加
+    delete: 削除
+    insert: 挿入
 
   links:
     back_to: "%{name}に戻る"
@@ -129,13 +132,14 @@ ja:
         recipient_list: 宛先
         count: カウント
         reserved_time: 予約時刻
-        from_name: 送信元の名前(省略可)
-        from_mail_address: 送信元のメールアドレス
+        from_name: 送信元の名前
+        from_mail_address: 送信元のアドレス
         subject_prefix: 題名の接頭辞
         subject_postfix: 題名の接尾辞
-        body_header: 本文の前文(ヘッダー)
-        body_footer: 本文の後文(フッター)
+        body_header: 本文の前文
+        body_footer: 本文の後文
         description: 説明
+        user: 所有者
       action_log:
         comment: コメント
       user:
@@ -164,7 +168,7 @@ ja:
   time:
     formats:
       date: "%Y年%m月%d日"
-      time: "%H:%M"
+      time: "%H時%M分"
 
   notification_mailer:
     apply:
@@ -183,6 +187,11 @@ ja:
       previous: "&lsaquo; 前"
       next: "次 &rsaquo;"
       truncate: "&hellip;"
+
+  values:
+    none: "(無)"
+    empty: "(空)"
+
   helpers:
     page_entries_info:
       one_page:

@@ -17,4 +17,7 @@ class RecipientList < ApplicationRecord
   validates :name, presence: true, uniqueness: true, length: {maximum: 255}
   validates :description, length: {maximum: 65536}
 
+  def to_s
+    name
+  end
 end

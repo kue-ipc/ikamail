@@ -49,13 +49,13 @@ class User < ApplicationRecord
 
   def name
     if fullname&.present?
-      "#{fullname}(#{username})"
+      "#{fullname} (#{username})"
     else
       username
     end
   end
 
-  # def authenticatable_salt
-  #   Digest::
-  # end
+  def to_s
+    name
+  end
 end
