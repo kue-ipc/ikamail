@@ -60,23 +60,20 @@ module ApplicationHelper
     end
   end
 
-  def dt_dd_for(recored, attr, format: nil, **opts)
+  def dt_dd_for(recored, attr, format: nil, blank_alt: nil, **opts)
     value = recored.__send__(attr)
     dt_dd_tag recored.class.human_attribute_name(attr) do
       case value
       when nil
-        content_tag('span', t(:none, scope: :values), class: 'font-italic text-muted')
+        content_tag('span', blank_alt || t(:none, scope: :values), class: 'font-italic text-muted')
       when '', [], {}
-        content_tag('span', t(:empty, scope: :values), class: 'font-italic text-muted')
+        content_tag('span', blank_alt || t(:empty, scope: :values), class: 'font-italic text-muted')
       when String
-        if value.blank?
+        case format
+        when :mail_body
+          mail_body_tag(value, **opts)
         else
-          case format
-          when :mail_body
-            mail_body_tag(value, **opts)
-          else
-            content_tag('span', value)
-          end
+          span_text_tag(value, **opts)
         end
       when Time, Date, DateTime, ActiveSupport::TimeWithZone
         content_tag('span', l(value, format: format))
@@ -86,11 +83,19 @@ module ApplicationHelper
     end
   end
 
-  def mail_body_tag(value, prefix: nil, postfix: nil)
+  def mail_body_tag(value, **opts)
     content_tag('pre', value, class: 'border rounded mb-0 mail-body line-76-80') do
-      content_tag('span', prefix, class: 'text-muted') +
+      span_text_tag(value, **opts)
+    end
+  end
+
+  def span_text_tag(value, around: nil, **_)
+    if around.present?
+      content_tag('span', around[0], class: 'text-muted') +
         content_tag('span', value) +
-        content_tag('span', postfix, class: 'text-muted')
+        content_tag('span', around[1], class: 'text-muted')
+    else
+      content_tag('span', value)
     end
   end
 end

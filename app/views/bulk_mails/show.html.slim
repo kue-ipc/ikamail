@@ -1,67 +1,25 @@
 - content_for :heading
   h1 = t_title(:showing, count: 1)
 
-p
-  strong>
-    = t_attr(:subject)
-    | :
-  span.text-muted
-    = @bulk_mail.subject_prefix
-  span.text-body
-    = @bulk_mail.subject
-  span.text-muted
-    = @bulk_mail.subject_postfix
-p
-  strong>
-    = t_attr(:template)
-    | :
-  = @bulk_mail.template.name
-p
-  strong>
-    = t_attr(:body)
-    | :
-  pre.border.rounded.line80
-    span.text-muted
-      = @bulk_mail.body_header
-    span.text-body
-      = @bulk_mail.body
-    span.text-muted
-      = @bulk_mail.body_footer
-  small
-    | 番号が未割り当ての場合は0で表示されます。
+- if @bulk_mail.errors.any?
+  #error_explanation.card.border-danger.mb-2
+    .card-header
+      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
+          count: @bulk_mail.errors.count, model: @bulk_mail.model_name.human
+    ul.list-group.list-group-flush.text-danger
+      - @bulk_mail.errors.full_messages.each do |message|
+        li.list-group-item = message
 
-p
-  strong>
-    = t_attr(:user)
-    | :
-  = @bulk_mail.user.name
-
-p
-  strong>
-    = t_attr(:delivery_timing)
-    | :
-  = t(@bulk_mail.delivery_timing, scope: [:mail, :timings])
-p
-  strong>
-    = t_attr(:delivery_datetime)
-    | :
-  - if @bulk_mail.delivery_datetime
-    = t(@bulk_mail.delivery_datetime)
-  - else
-    | (未予約または未配送)
-p
-  strong>
-    = t_attr(:number)
-    | :
-  - if @bulk_mail.number
-    = @bulk_mail.number
-  - else
-    | (未割り当て)
-p
-  strong>
-    = t_attr(:status)
-    | :
-  = t(@bulk_mail.status, scope: [:mail, :statuses])
+dl
+  = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_postfix]
+  = dt_dd_for @bulk_mail, :template
+  = dt_dd_for @bulk_mail, :body, format: :mail_body,
+                          around: [@bulk_mail.body_header, @bulk_mail.body_footer]
+  = dt_dd_for @bulk_mail, :user
+  = dt_dd_for @bulk_mail, :delivery_timing
+  = dt_dd_for @bulk_mail, :delivery_datetime, blakn_alt: '(未配送)'
+  = dt_dd_for @bulk_mail, :number, blank_alt: '(未割り当て)'
+  = dt_dd_for @bulk_mail, :status
 
 - bulk_mail_policy = policy(@bulk_mail)
 
@@ -94,7 +52,9 @@ p
   =<> link_to t(:destroy, scope: [:actions]), @bulk_mail,
     class: 'btn btn-danger', data: { confirm: t(:corfirm_destroy, scope: [:messages]) }, method: :delete
 
-h2 履歴
+hr
+
+h4 履歴
 
 table.table
   - @bulk_mail.action_logs.includes(:user).order(created_at: :desc).each do |log|
