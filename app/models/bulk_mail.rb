@@ -4,7 +4,7 @@ require 'mustache'
 require 'nkf'
 
 class BulkMail < ApplicationRecord
-  STATUS_LIST = %w[
+  enum status: %i[
     draft
     pending
     reserved
@@ -14,28 +14,13 @@ class BulkMail < ApplicationRecord
     delivered
     failed
     discarded
-  ].freeze
+  ], _prefix: true
 
-  TIMING_LIST = %w[
+  enum delivery_timing: %i[
     immediate
     reserved
     manual
-  ].freeze
-
-  ACTION_LIST = %w[
-    create
-    edit
-    update
-    destroy
-    apply
-    withdraw
-    approve
-    reject
-    reserve
-    deliver
-    finish
-    discard
-  ].freeze
+  ], _prefix: true
 
   belongs_to :template
   belongs_to :user
@@ -44,14 +29,14 @@ class BulkMail < ApplicationRecord
   validates :user, presence: true
   validates :template, presence: true
 
-  validates :delivery_timing, inclusion: {in: TIMING_LIST}
+  validates :delivery_timing, presence: true
   validates :subject, presence: true, length: {maximum: 255}
   validates :body, presence: true, length: {maximum: 65536}
 
   # validates :delivery_datetime
   validates :number, numericality: {only_integer: true, greater_than: 0},
                      allow_nil: true
-  validates :status, inclusion: {in: STATUS_LIST}
+  validates :status, presence: true
 
   validate :subject_can_contert_to_jis, :body_can_contert_to_jis
 

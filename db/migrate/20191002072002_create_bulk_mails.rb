@@ -4,12 +4,12 @@ class CreateBulkMails < ActiveRecord::Migration[6.0]
       t.belongs_to :user, null: false, foreign_key: true
       t.belongs_to :template, null: false, foreign_key: true
 
-      t.string :delivery_timing, null: false
+      t.integer :delivery_timing, null: false
       t.string :subject, null: false
       t.text :body, null: false
-      t.datetime :delivery_datetime
+      t.datetime :delivered_at
       t.integer :number
-      t.string :status, null: false
+      t.integer :status, null: false
 
       t.timestamps
     end

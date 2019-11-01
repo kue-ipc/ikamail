@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2019_10_29_024123) do
   create_table "action_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
     t.bigint "user_id"
-    t.string "action", null: false
+    t.integer "action", null: false
     t.text "comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -27,12 +27,12 @@ ActiveRecord::Schema.define(version: 2019_10_29_024123) do
   create_table "bulk_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "template_id", null: false
-    t.string "delivery_timing", null: false
+    t.integer "delivery_timing", null: false
     t.string "subject", null: false
     t.text "body", null: false
-    t.datetime "delivery_datetime"
+    t.datetime "delivered_at"
     t.integer "number"
-    t.string "status", null: false
+    t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
@@ -132,14 +132,14 @@ ActiveRecord::Schema.define(version: 2019_10_29_024123) do
     t.string "username", null: false
     t.string "email", null: false
     t.string "fullname"
-    t.boolean "admin", default: false, null: false
+    t.integer "role", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "remember_created_at"
+    t.string "remember_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "remember_token"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["remember_token"], name: "index_users_on_remember_token"
+    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

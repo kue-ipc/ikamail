@@ -1,8 +1,8 @@
 - if @bulk_mail.errors.any?
-  #error_explanation.card.border-danger
+  #error_explanation.card.border-danger.mb-2
     .card-header
-      = t 'messages.error_prohibited_action', count: @bulk_mail.errors.count,
-        model: t('activerecord.models.bulk_mail'), action: t(:save, scope: :actions)
+      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
+          count: @bulk_mail.errors.count, model: @bulk_mail.model_name.human
     ul.list-group.list-group-flush.text-danger
       - @bulk_mail.errors.full_messages.each do |message|
         li.list-group-item = message
@@ -17,10 +17,10 @@
     = f.label :delivery_timing
     br
     .btn-group.btn-group-toggle data-toggle="buttons"
-      - BulkMail::TIMING_LIST.each do |timing|
-        label class=['btn', 'btn-primary', @bulk_mail.delivery_timing == timing ? 'active' : '']
-          = f.radio_button :delivery_timing, timing
-          = t timing.intern, scope: [:mail, :timings]
+      - BulkMail::delivery_timings.each do |key, value|
+        = f.label '', class: ['btn', 'btn-primary', @bulk_mail.delivery_timing == value ? 'active' : '']
+          = f.radio_button :delivery_timing, value
+          = t key, scope: [:mail, :timings]
   .field.form-group
     = f.label :subject
     = f.text_field :subject, class: 'form-control'

@@ -144,7 +144,7 @@ ja:
         comment: コメント
       user:
         fullname: フルネーム
-        admin: 管理者権限
+        admin?: 管理者権限
       mail_user:
         name: ユーザー名
         display_name: 名前

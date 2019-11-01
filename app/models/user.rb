@@ -8,6 +8,8 @@ class User < ApplicationRecord
   # and :omniauthable, :lockable, :timeoutable, :trackable
   devise :ldap_authenticatable, :rememberable
 
+  enum role: [:user, :admin]
+
   validates :username, presence: true, uniqueness: true, length: {maximum: 255}
   validates :email, presence: true
   validates :fullname, allow_blank: true, length: {maximum: 255}
@@ -17,8 +19,8 @@ class User < ApplicationRecord
 
   def ldap_before_save
     sync_ldap!
-    # first user is admin
-    self.admin = true if User.count.zero?
+    # The first user is admin
+    admin! if User.count.zero?
   end
 
   def ldap_entry
@@ -43,12 +45,8 @@ class User < ApplicationRecord
     self.fullname = ldap_display_name
   end
 
-  def admin?
-    admin
-  end
-
   def name
-    if fullname&.present?
+    if fullname.present?
       "#{fullname} (#{username})"
     else
       username

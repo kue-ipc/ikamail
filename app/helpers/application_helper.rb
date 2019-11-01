@@ -30,7 +30,7 @@ module ApplicationHelper
     list = []
     return list unless user_signed_in?
 
-    if current_user.admin
+    if current_user.admin?
       list << {
         path: admin_root_path,
         label: t(:admin_root, scope: [:menu, :paths]),
@@ -78,6 +78,11 @@ module ApplicationHelper
         end
       when Time, Date, DateTime, ActiveSupport::TimeWithZone
         content_tag('span', l(value, format: format))
+      when true, false
+        content_tag('div', class: 'custom-control custom-switch') do
+          check_box_tag(:admin?, '1', value, disabled: true, class: 'custom-control-input') +
+            label_tag(:admin?, '', class: 'custom-control-label')
+        end
       else
         content_tag('span', value.to_s)
       end

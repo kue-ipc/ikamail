@@ -4,30 +4,29 @@
 table.table.table-sm
   thead
     tr
-      th = t_attr(:username)
-      th = t_attr(:email)
-      th = t_attr(:fullname)
-      th = t_attr(:admin)
-      th
+      th scope="col" = User.human_attribute_name(:username)
+      th scope="col" = User.human_attribute_name(:fullname)
+      th scope="col" = User.human_attribute_name(:email)
+      th scope="col" = User.human_attribute_name(:admin?)
 
   tbody
     - @users.each do |user|
       tr
         td.position-relative
           = link_to user.username, admin_user_path(user), class: 'stretched-link'
-        td = user.email
         td = user.fullname
+        td = user.email
         td
-          .custom-control.custom-switch
-            = check_box_tag :admin, '1', user.admin, disabled: true, class: 'custom-control-input'
-            label class="custom-control-label" for="admin"
-              = user.admin ? 'あり' : 'なし'
+          - if current_user == user
+            .custom-control.custom-switch data-toggle="tooltip" data-placement="left" title="自分自身は変更不可"
+              = check_box_tag "admin_#{user.id}", '1', user.admin?, disabled: true, class: 'custom-control-input'
+              = label_tag "admin_#{user.id}", '', class: 'custom-control-label'
+          - else
+            = link_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}), method: :patch
+              .custom-control.custom-switch data-toggle="tooltip" data-placement="left" title="クリックして変更"
+                = check_box_tag "admin_#{user.id}", '1', user.admin?, class: 'custom-control-input'
+                = label_tag "admin_#{user.id}", '', class: 'custom-control-label'
 
-
-        td
-          - if user != current_user
-            - if user.admin?
-              = link_to '管理者権限剥奪', admin_user_path(user, params: {user: {admin: false}}), method: :patch, class: 'btn btn-primary'
-            - else
-              = link_to '管理者権限付与', admin_user_path(user, params: {user: {admin: true}}), method: :patch, class: 'btn btn-warning'
-br
+= paginate @users
+p
+  = page_entries_info @users
