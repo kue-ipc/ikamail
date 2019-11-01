@@ -2,11 +2,11 @@
 
 module ApplicationHelper
   def controller_sym
-    @controller_sym ||= controller_name.singularize.intern
+    controller_name.singularize.intern
   end
 
   def action_sym
-    @action_sym ||= action_name.intern
+    action_name.intern
   end
 
   # 翻訳系
@@ -29,6 +29,7 @@ module ApplicationHelper
   def menu_list
     list = []
     return list unless user_signed_in?
+
     if current_user.admin
       list << {
         path: admin_root_path,
