@@ -76,27 +76,49 @@ class ActionLogsController < ApplicationController
     def act_withdraw
       authorize @bulk_mail, :withdraw?
       @bulk_mail.update_columns(status: 'draft')
+      flash.notice = 'メールを取り下げました。'
     end
 
     def act_approve
       authorize @bulk_mail, :approve?
-      @bulk_mail.update_columns(status: 'waiting')
-      # タイミングによって配送処理
+      # タイミングによって配信処理
       case @bulk_mail.delivery_timing
       when 'immediate'
+        @bulk_mail.update_columns(status: 'waiting')
         BulkMailer.with(bulk_mail: @bulk_mail).all.deliver_later
+        flash.notice = 'メールを承認し、配信ジョブを登録しました。メールはまもなく配信されます。'
       when 'reserved'
-        #
+        @bulk_mail.update_columns(status: 'reserved')
+        reserved_datetime = @bulk_mail.template.next_reserved_datetime
+        ReservedDeliveryJob.set(wait_util: reserved_datetime).perform_later(@bulk_mail.id)
+        flash.notice = "メールを承認し、#{l(reserved_datetime)}に配信を予約しました。予約時刻になるとメールが自動で配信されます。メール予約の取り消したい場合は「取り消し」を行ってください。"
       when 'manual'
-        # 何もしない。
+        @bulk_mail.update_columns(status: 'ready')
+        flash.notice = 'メールを承認しました。メールは自動で配信はされません。配信する場合は手動で「配信」を行ってください。'
       else
-        flash.alert = '不明な配送タイミングです。'
+        flash.alert = '不明な配信タイミングです。'
       end
     end
 
     def act_reject
       authorize @bulk_mail, :reject?
       @bulk_mail.update_columns(status: 'draft')
+      flash.notice = 'メールの申請を却下しました。'
     end
+
+    def act_cancel
+      authorize @bulk_mail, :cancel?
+      @bulk_mail.update_columns(status: 'pending')
+      flash.notice = 'メールの承認を取り消しました。'
+    end
+
+    def act_deliver
+      authorize @bulk_mail, :deliver?
+      @bulk_mail.update_columns(status: 'waiting')
+      BulkMailer.with(bulk_mail: @bulk_mail).all.deliver_later
+      flash.notice = '配信ジョブを登録しました。メールはまもなく配信されます。'
+    end
+
+
 
 end

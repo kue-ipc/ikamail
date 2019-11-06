@@ -17,4 +17,14 @@ class Template < ApplicationRecord
   def to_s
     name
   end
+
+  def next_reserved_datetime
+    now_datetime = Time.zone.now
+    hm_datetime = now_datetime.change(hour: reserved_time.hour, min: reserved_time.min, zone: reserved_time.zone)
+    if hm_datetime < now_datetime
+      hm_datetime.tomorrow
+    else
+      hm_datetime
+    end
+  end
 end

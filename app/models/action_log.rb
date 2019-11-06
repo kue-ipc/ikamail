@@ -8,6 +8,7 @@ class ActionLog < ApplicationRecord
     withdraw
     approve
     reject
+    cancel
     reserve
     deliver
     finish

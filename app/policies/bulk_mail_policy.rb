@@ -74,11 +74,11 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def deliver?
-    record.status == 'waiting' && record.delivery_timing == 'manual' && writable?
+    record.status == 'ready' && record.delivery_timing == 'manual' && writable?
   end
 
   def cancel?
-    record.status == 'waiting' && manageable?
+    (record.status == 'reserved' || record.status == 'ready') && manageable?
   end
 
   def discard?
