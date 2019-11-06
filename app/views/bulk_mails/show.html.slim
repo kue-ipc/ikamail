@@ -12,15 +12,14 @@
 
 dl
   = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_postfix]
+  = dt_dd_for @bulk_mail, :status, format: :translate, scope: [:mail, :statuses]
   = dt_dd_for @bulk_mail, :template
   = dt_dd_for @bulk_mail, :body, format: :mail_body,
                           around: [@bulk_mail.body_header, @bulk_mail.body_footer]
-  = dt_dd_for @bulk_mail, :user
-  = dt_dd_for @bulk_mail, :delivery_timing
-  = dt_dd_for @bulk_mail, :delivery_datetime, blakn_alt: '(未配送)'
+  = dt_dd_for @bulk_mail, :delivery_timing, format: :translate, scope: [:mail, :timings]
+  = dt_dd_for @bulk_mail, :delivered_at, blank_alt: '(未配送)'
   = dt_dd_for @bulk_mail, :number, blank_alt: '(未割り当て)'
-  = dt_dd_for @bulk_mail, :status
-
+  = dt_dd_for @bulk_mail, :user
 - bulk_mail_policy = policy(@bulk_mail)
 
 - if bulk_mail_policy.apply?
@@ -56,10 +55,12 @@ hr
 
 h4 履歴
 
-table.table
+table.table.table-sm
   - @bulk_mail.action_logs.includes(:user).order(created_at: :desc).each do |log|
     tr
       td = l(log.created_at, format: :short)
       td = log.user&.name || '(system)'
-      td = log.action
-      td = log.comment
+      td = t(log.action, scope: [:mail, :actions])
+      td
+        pre
+          = log.comment

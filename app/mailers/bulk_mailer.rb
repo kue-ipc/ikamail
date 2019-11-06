@@ -18,12 +18,12 @@ class BulkMailer < ApplicationMailer
   end
 
   private
+
     def before_deliver_bulk_mail
       @bulk_mail = params[:bulk_mail]
-      @bulk_mail.update_columns(status: 'delivering', delivery_datetime: Time.current)
     end
 
     def after_deliver_bulk_mail
-      @bulk_mail.update_columns(status: 'delivered', delivery_datetime: Time.current)
+      @bulk_mail.update_columns(status: 'delivered', delivered_at: Time.current)
     end
 end

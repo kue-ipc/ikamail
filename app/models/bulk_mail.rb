@@ -67,9 +67,10 @@ class BulkMail < ApplicationRecord
   end
 
   private
+
     def individual_values
-      number_str = number&.to_s || "0"
-      datetime = delivery_datetime || DateTime.now
+      number_str = (number || 0).to_s
+      datetime = delivered_at || Time.current
       @individual_values ||= {
         number: number_str,
         number_zen: number_str.tr('0-9', '０-９'),

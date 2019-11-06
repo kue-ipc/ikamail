@@ -6,7 +6,7 @@ one:
   delivery_timing: immediate
   subject: "テスト1"
   body: "テスト"
-  delivery_datetime: immeditate
+  delivered_at: null
   number: 1
   status: draft
 
@@ -16,6 +16,6 @@ two:
   delivery_timing: reserved
   subject: "テスト2"
   body: "テスト"
-  delivery_datetime: 2019-01-02 21:30:00 +09:00
+  delivered_at: 2019-01-02 21:30:00 +09:00
   number: 2
-  status: draft
+  status: derivered

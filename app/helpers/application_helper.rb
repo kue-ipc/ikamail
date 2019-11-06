@@ -61,7 +61,7 @@ module ApplicationHelper
     end
   end
 
-  def dt_dd_for(recored, attr, format: nil, blank_alt: nil, **opts)
+  def dt_dd_for(recored, attr, format: nil, blank_alt: nil, scope: nil, **opts)
     value = recored.__send__(attr)
     dt_dd_tag recored.class.human_attribute_name(attr) do
       case value
@@ -73,6 +73,8 @@ module ApplicationHelper
         case format
         when :mail_body
           mail_body_tag(value, **opts)
+        when :translate
+          span_text_tag(t(value, scope: scope), **opts)
         else
           span_text_tag(value, **opts)
         end

@@ -13,7 +13,7 @@ table.table
       th scope="col" = t_attr(:user)
       th scope="col" = t_attr(:template)
       th scope="col" = t_attr(:updated_at)
-      th scope="col" = t_attr(:delivery_datetime)
+      th scope="col" = t_attr(:delivered_at)
       th
       th
       th
@@ -28,4 +28,4 @@ table.table
         td = bulk_mail.user.username
         td = bulk_mail.template.name
         td = l(bulk_mail.updated_at, format: :short)
-        td = bulk_mail.delivery_datetime&.yield_self { |time| l(time, format: :short) }
+        td = bulk_mail.delivered_at&.yield_self { |time| l(time, format: :short) }

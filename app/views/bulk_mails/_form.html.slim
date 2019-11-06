@@ -12,15 +12,15 @@
     = f.label :template_id, t_attr(:template)
     = f.collection_select :template_id, ::Template.all, :id, :name,
       {prompt: true},
-      {class: 'form-control'}
+      {class: 'form-control', required: true}
   .field.form-group
     = f.label :delivery_timing
     br
     .btn-group.btn-group-toggle data-toggle="buttons"
-      - BulkMail::delivery_timings.each do |key, value|
-        = f.label '', class: ['btn', 'btn-primary', @bulk_mail.delivery_timing == value ? 'active' : '']
-          = f.radio_button :delivery_timing, value
-          = t key, scope: [:mail, :timings]
+      - BulkMail::delivery_timings.each_key do |timing|
+        = f.label '', class: ['btn', 'btn-primary', @bulk_mail.delivery_timing == timing ? 'active' : '']
+          = f.radio_button :delivery_timing, timing, required: true
+          = t timing, scope: [:mail, :timings]
   .field.form-group
     = f.label :subject
     = f.text_field :subject, class: 'form-control'

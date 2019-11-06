@@ -12,7 +12,7 @@ class ActionLog < ApplicationRecord
     deliver
     finish
     discard
-  ]
+  ], _prefix: true
 
   belongs_to :bulk_mail
   belongs_to :user
