@@ -3,7 +3,7 @@
 all:
   name: "全ユーザー一括送信"
   enabled: true
-  user: admin
+  user: user03
   recipient_list: all
   from_name: "一括送信"
   from_mail_address: "no-reply@example.jp"
@@ -16,9 +16,9 @@ all:
   description: "すべてのユーザーに送ります。"
 
 users:
-  name: "全一般ユーザー一括送信"
+  name: "一般ユーザー一括送信"
   enabled: true
-  user: user01
+  user: user03
   recipient_list: users
   from_name: "一括送信"
   from_mail_address: "no-reply@example.jp"
@@ -26,6 +26,6 @@ users:
   subject_postfix: ""
   body_header: ""
   body_footer: ""
-  count: 0
+  count: 2
   reserved_time:  2019-01-01 21:30:00 +09:00
   description: "すべての一般ユーザーに送ります。"

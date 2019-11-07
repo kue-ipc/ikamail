@@ -2,12 +2,12 @@
 
 one:
   bulk_mail: one
-  action: MyString
-  user: one
+  action: create
+  user: admin
   comment: MyText
 
 two:
   bulk_mail: two
-  action: MyString
-  user: two
+  action: create
+  user: user
   comment: MyText

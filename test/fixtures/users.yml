@@ -8,12 +8,59 @@ admin:
   username: admin
   email: admin@example.jp
   fullname: "管理　一郎"
-  admin: true
+  role: admin
   deleted: false
 
-user:
+user01:
   username: user01
   email: user01@example.jp
   fullname: "湯座　太郎"
-  admin: false
+  role: user
   deleted: false
+
+user02:
+  username: user02
+  email: user02@example.jp
+  fullname: "湯座　次郎"
+  role: user
+  deleted: false
+  role: user
+  deleted: false
+
+user03:
+  username: user03
+  email: user03@example.jp
+  fullname: "湯座　花子"
+  role: user
+  deleted: false
+
+# emailが間違っている
+user05:
+  username: user05
+  email: none05@example.jp
+  fullname: "鈴木　剛"
+  role: user
+  deleted: false
+
+# 名前が間違っている
+user06:
+  username: user06
+  email: user06@example.jp
+  fullname: "佐藤　陽子"
+  role: user
+  deleted: false
+
+# 存在しないユーザー
+unknown:
+  username: unknown
+  email: unknown@example.jp
+  fullname: "アン　ノウン"
+  role: user
+  deleted: false
+
+deleted:
+  username: del
+  email: del@example.jp
+  fullname: "削除　された"
+  role: user
+  deleted: true

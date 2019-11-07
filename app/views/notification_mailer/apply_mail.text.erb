@@ -1,17 +1,16 @@
-<%= @user.name %> 様
-
 一括メールシステムで下記メールが申請されました。
-システムにログインし、内容の確認および承認を実施してください。
+メール内容を確認し、承認または却下を実施してください。
 
 テンプレート: <%= @bulk_mail.template.name %>
 配信タイミング: <%= t(@bulk_mail.delivery_timing, scope: [:mail, :timings]) %>
 題名: <%= @bulk_mail.subject %>
 作成者: <%= @bulk_mail.user.name %>
 <% if @comment.present? %>
+
 申請時のコメント:
 <%= @comment %>
 <% end %>
 
 --------------------------------------------------------
 一括メールシステム
-<%= root_url(only_path: true) %>
+<%= root_url(only_path: false) %>

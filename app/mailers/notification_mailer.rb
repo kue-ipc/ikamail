@@ -6,7 +6,7 @@ class NotificationMailer < ApplicationMailer
   #
   #   en.notification_mailer.apply.subject
   #
-  def apply
+  def apply_mail
     @user = params[:user]
     @bulk_mail = params[:bulk_mail]
     @comment = params[:comment]

@@ -1,21 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: admin
+  user: user01
   template: all
   delivery_timing: immediate
-  subject: "テスト1"
-  body: "テスト"
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
   delivered_at: null
-  number: 1
+  number: null
   status: draft
 
 two:
-  user: user01
+  user: user03
   template: users
   delivery_timing: reserved
-  subject: "テスト2"
-  body: "テスト"
+  subject: "テスト一般ユーザー"
+  body: |+
+    テスト
+    一般ユーザー宛
   delivered_at: 2019-01-02 21:30:00 +09:00
   number: 2
-  status: derivered
+  status: delivered
