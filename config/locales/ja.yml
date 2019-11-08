@@ -171,10 +171,20 @@ ja:
       time: "%H時%M分"
 
   notification_mailer:
-    apply_mail:
+    mail_apply:
       subject: 【一括メールシステム通知】申請
-    withdraw_mail:
-      subject: 【一括メール】取り下げ
+    mail_approve:
+      subject: 【一括メールシステム通知】承認
+    mail_reject:
+      subject: 【一括メールシステム通知】却下
+    mail_cancel:
+      subject: 【一括メールシステム通知】取消
+    mail_finish:
+      subject: 【一括メールシステム通知】配信完了
+    mail_fail:
+      subject: 【一括メールシステム通知】失敗
+    mail_error:
+      subject: 【一括メールシステム通知】エラー
 
   devise:
     failure:

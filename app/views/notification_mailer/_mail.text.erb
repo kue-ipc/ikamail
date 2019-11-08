@@ -1,0 +1,9 @@
+題名: <%= @bulk_mail.subject %>
+テンプレート: <%= @bulk_mail.template.name %>
+配信タイミング: <%= t(@bulk_mail.delivery_timing, scope: [:mail, :timings]) %>
+作成者: <%= @bulk_mail.user.name %>
+<% if @comment.present? %>
+
+<%= comment_name || 'コメント' %>:
+<%= @comment %>
+<% end %>

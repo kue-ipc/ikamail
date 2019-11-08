@@ -1,104 +1,41 @@
 class NotificationMailer < ApplicationMailer
   default charset: 'ISO-2022-JP'
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.apply.subject
-  #
-  def apply_mail
-    @user = params[:user]
-    @bulk_mail = params[:bulk_mail]
-    @comment = params[:comment]
+  before_action :mail_params
 
-    mail to: @user.email
+  def mail_apply
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.withdraw.subject
-  #
-  def withdraw
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def mail_approve
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.approve.subject
-  #
-  def approve
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def mail_reject
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.reject.subject
-  #
-  def reject
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def mail_cancel
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.deliver.subject
-  #
-  def deliver
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def mail_finish
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.cancel.subject
-  #
-  def cancel
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def mail_fail
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.discard.subject
-  #
-  def discard
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def mail_error
+    mail to: @to.map(&:email)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.finish.subject
-  #
-  def finish
-    @greeting = "Hi"
+  private
 
-    mail to: "to@example.org"
-  end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.error.subject
-  #
-  def error
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
-  end
+    def mail_params
+      @to = [*params[:to]]
+      @bulk_mail = params[:bulk_mail]
+      @comment = params[:comment]
+    end
 end
