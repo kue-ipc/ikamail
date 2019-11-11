@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   enum role: [:user, :admin]
 
-  validates :username, presence: true, uniqueness: true, length: {maximum: 255}
+  validates :username, presence: true, uniqueness: {case_sensitive: true}, length: {maximum: 255}
   validates :email, presence: true
   validates :fullname, allow_blank: true, length: {maximum: 255}
 

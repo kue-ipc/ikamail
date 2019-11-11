@@ -1,13 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  recipient_list: one
-  mail_user: one
+  recipient_list: all
+  mail_user: user01
   included: false
   excluded: false
 
 two:
-  recipient_list: two
-  mail_user: two
-  included: false
+  recipient_list: users
+  mail_user: user06
+  included: true
   excluded: false
+
+three:
+  recipient_list: users
+  mail_user: user02
+  included: false
+  excluded: true
