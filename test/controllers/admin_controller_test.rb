@@ -15,10 +15,10 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_root_path
   end
 
-  test "should get statistics" do
-    sign_in users(:admin)
-    post admin_statistics_url
-    assert_response :success
-  end
+  # test "should get statistics" do
+  #   sign_in users(:admin)
+  #   post admin_statistics_url
+  #   assert_response :success
+  # end
 
 end

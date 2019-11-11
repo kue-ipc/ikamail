@@ -1,48 +1,28 @@
 require 'test_helper'
 
 class ActionLogsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @action_log = action_logs(:one)
+    @bulk_mail = bulk_mails(:one)
   end
 
   test "should get index" do
-    get action_logs_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_action_log_url
+    sign_in users(:admin)
+    get bulk_mail_action_logs_url(@bulk_mail)
     assert_response :success
   end
 
   test "should create action_log" do
+    sign_in users(:admin)
     assert_difference('ActionLog.count') do
-      post action_logs_url, params: { action_log: { action: @action_log.action, bulk_mail_id: @action_log.bulk_mail_id, comment: @action_log.comment, user_id: @action_log.user_id } }
+      post bulk_mail_action_logs_url(@bulk_mail), params: {action_log: {
+        action: 'apply',
+        comment: '申請',
+      }}
     end
 
-    assert_redirected_to action_log_url(ActionLog.last)
+    assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 
-  test "should show action_log" do
-    get action_log_url(@action_log)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_action_log_url(@action_log)
-    assert_response :success
-  end
-
-  test "should update action_log" do
-    patch action_log_url(@action_log), params: { action_log: { action: @action_log.action, bulk_mail_id: @action_log.bulk_mail_id, comment: @action_log.comment, user_id: @action_log.user_id } }
-    assert_redirected_to action_log_url(@action_log)
-  end
-
-  test "should destroy action_log" do
-    assert_difference('ActionLog.count', -1) do
-      delete action_log_url(@action_log)
-    end
-
-    assert_redirected_to action_logs_url
-  end
 end

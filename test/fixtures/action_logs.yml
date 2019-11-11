@@ -3,11 +3,11 @@
 one:
   bulk_mail: one
   action: create
-  user: admin
-  comment: MyText
+  user: user01
+  comment: 作成しました。
 
 two:
-  bulk_mail: two
-  action: create
-  user: user
-  comment: MyText
+  bulk_mail: one
+  action: update
+  user: user01
+  comment: 編集しました。

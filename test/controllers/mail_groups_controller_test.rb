@@ -1,48 +1,45 @@
 require 'test_helper'
 
 class MailGroupsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @mail_group = mail_groups(:one)
+    @mail_group = mail_groups(:user)
   end
 
-  test "should get index" do
+  test "admin should get index" do
+    sign_in users(:admin)
     get mail_groups_url
     assert_response :success
   end
 
-  test "should get new" do
-    get new_mail_group_url
-    assert_response :success
-  end
-
-  test "should create mail_group" do
-    assert_difference('MailGroup.count') do
-      post mail_groups_url, params: { mail_group: { display_name: @mail_group.display_name, name: @mail_group.name } }
-    end
-
-    assert_redirected_to mail_group_url(MailGroup.last)
-  end
-
-  test "should show mail_group" do
+  test "admin should show mail_group" do
+    sign_in users(:admin)
     get mail_group_url(@mail_group)
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_mail_group_url(@mail_group)
+  test "user should get index" do
+    sign_in users(:user01)
+    get mail_groups_url
     assert_response :success
   end
 
-  test "should update mail_group" do
-    patch mail_group_url(@mail_group), params: { mail_group: { display_name: @mail_group.display_name, name: @mail_group.name } }
-    assert_redirected_to mail_group_url(@mail_group)
+  test "user should show mail_group" do
+    sign_in users(:user01)
+    get mail_group_url(@mail_group)
+    assert_response :success
   end
 
-  test "should destroy mail_group" do
-    assert_difference('MailGroup.count', -1) do
-      delete mail_group_url(@mail_group)
-    end
-
-    assert_redirected_to mail_groups_url
+  # annonymous
+  test "should NOT get index" do
+    get mail_groups_url
+    assert_redirected_to new_user_session_path
   end
+
+  test "should NOT show mail_group" do
+    get mail_group_url(@mail_group)
+    assert_redirected_to new_user_session_path
+  end
+
 end

@@ -1,4 +1,6 @@
 class BulkMailer < ApplicationMailer
+  layout 'empty_mailer'
+
   default charset: 'ISO-2022-JP'
 
   before_action :before_deliver_bulk_mail
