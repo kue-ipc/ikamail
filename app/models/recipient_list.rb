@@ -1,8 +1,8 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 class RecipientList < ApplicationRecord
-  has_many :templates, dependent: :restrict_with_error
   has_and_belongs_to_many :mail_groups
+  has_many :templates, dependent: :restrict_with_error
 
   has_many :recipients, dependent: :destroy
   has_many :applicable_recipients, -> { where(excluded: false) }, class_name: 'Recipient'

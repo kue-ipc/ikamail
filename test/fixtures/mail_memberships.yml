@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mail_user: one
+  mail_group: one
+  primary: false
+
+two:
+  mail_user: two
+  mail_group: two
+  primary: false
