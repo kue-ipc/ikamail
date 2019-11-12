@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class AdminControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
   include Devise::Test::IntegrationHelpers
 
   test "should get top" do
@@ -11,7 +12,9 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
 
   test "should get ldap_sync" do
     sign_in users(:admin)
-    put admin_ldap_sync_url
+    assert_enqueued_with(job: LdapUserSyncJob) do
+      put admin_ldap_sync_url
+    end
     assert_redirected_to admin_root_path
   end
 
