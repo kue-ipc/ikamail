@@ -20,10 +20,11 @@ user03:
   mail: user03@example.jp
   display_name: "湯座　花子"
 
+# 名前が間違っている
 user04:
   name: user04
   mail: user04@example.jp
-  display_name: "名無し　権兵衛"
+  display_name: "名有り　権三郎"
 
 # mailが間違っている
 user05:
@@ -31,11 +32,8 @@ user05:
   mail: none05@example.jp
   display_name: "鈴木　剛"
 
-# 名前が間違っている
-user06:
-  name: user06
-  mail: user06@example.jp
-  display_name: "佐藤　陽子"
+# 同期されていない
+# user06:
 
 # 存在しないユーザー
 unknown:

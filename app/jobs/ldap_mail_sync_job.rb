@@ -24,7 +24,7 @@ class LdapMailSyncJob < ApplicationJob
 
       # delete group out of LDAP
       mail_group_remains.each do |name|
-        MailGroup.find_by(name: name).delete
+        MailGroup.find_by(name: name).destroy
       end
     end
 
@@ -42,7 +42,7 @@ class LdapMailSyncJob < ApplicationJob
 
       # delete user out of LDAP
       mail_user_remains.each do |name|
-        MailUser.find_by(name: name).delete
+        MailUser.find_by(name: name).destroy
       end
     end
 

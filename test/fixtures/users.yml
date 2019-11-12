@@ -59,7 +59,7 @@ unknown:
   deleted: false
 
 deleted:
-  username: del
+  username: "#del#"
   email: del@example.jp
   fullname: "削除　された"
   role: user

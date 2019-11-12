@@ -17,4 +17,4 @@ user:
 unknown:
   name: unknown
   display_name: "不明なユーザー"
-  mail_users: user06
+  mail_users: user01

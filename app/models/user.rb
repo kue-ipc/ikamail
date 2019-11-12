@@ -53,6 +53,10 @@ class User < ApplicationRecord
     end
   end
 
+  def deleted?
+    deleted
+  end
+
   def to_s
     name
   end
