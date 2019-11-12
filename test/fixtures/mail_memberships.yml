@@ -1,11 +1,36 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  mail_user: one
-  mail_group: one
+admin:
+  mail_user: admin
+  mail_group: admin
+  primary: true
+
+user_user01:
+  mail_user: user01
+  mail_group: user
+  primary: true
+
+user_user02:
+  mail_user: user02
+  mail_group: user
   primary: false
 
-two:
-  mail_user: two
-  mail_group: two
+user_user03:
+  mail_user: user03
+  mail_group: user
+  primary: false
+
+user_user04:
+  mail_user: user04
+  mail_group: user
+  primary: true
+
+user_user05:
+  mail_user: user05
+  mail_group: user
+  primary: true
+
+unknown_user01:
+  mail_user: user01
+  mail_group: unknown
   primary: false
