@@ -2,7 +2,7 @@
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
-Rails.application.routes.default_url_options[:host]= 'ikamail.example.jp' 
+Rails.application.routes.default_url_options[:host] = 'ikamail.example.jp'
 
 require 'rails/test_help'
 

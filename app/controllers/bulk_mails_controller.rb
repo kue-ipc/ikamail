@@ -38,7 +38,7 @@ class BulkMailsController < ApplicationController
       if @bulk_mail.save
         ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
                               action: 'create', comment: @comment)
-        format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :create) }
+        format.html { redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :create) }
         format.json { render :show, status: :created, location: @bulk_mail }
       else
         format.html { render :new }
@@ -57,7 +57,7 @@ class BulkMailsController < ApplicationController
       if @bulk_mail.update(bulk_mail_params)
         ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
                               action: 'update', comment: @comment)
-        format.html { redirect_to @bulk_mail, notice: t_success_action(:bulk_mail, :update) }
+        format.html { redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { render :edit }
