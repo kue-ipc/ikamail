@@ -4,23 +4,24 @@ require 'mustache'
 require 'nkf'
 
 class BulkMail < ApplicationRecord
-  enum status: %i[
-    draft
-    pending
-    reserved
-    ready
-    waiting
-    delivering
-    delivered
-    failed
-    discarded
-  ], _prefix: true
+  enum status: {
+    draft: 0,
+    pending: 1,
+    ready: 2,
+    reserved: 3,
+    waiting: 4,
+    delivering: 5,
+    delivered: 6,
+    discarded: 7,
+    failed: 8,
+    error: 9,
+  }, _prefix: true
 
-  enum delivery_timing: %i[
-    immediate
-    reserved
-    manual
-  ], _prefix: true
+  enum delivery_timing: {
+    immediate: 0,
+    reserved: 1,
+    manual: 2,
+  }, _prefix: true
 
   belongs_to :template
   belongs_to :user

@@ -11,10 +11,11 @@ class ActionLog < ApplicationRecord
     cancel: 8,
     reserve: 9,
     deliver: 10,
-    finish: 11,
-    discard: 12,
-    fail: 16,
-    error: 17,
+    start: 11,
+    finish: 12,
+    fail: 13,
+    error: 14,
+    discard: 15,
   }, _prefix: true
 
   belongs_to :bulk_mail
