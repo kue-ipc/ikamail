@@ -20,4 +20,8 @@ class UserPolicy < ApplicationPolicy
   def admin?
     user.admin?
   end
+
+  def user?
+    user == record
+  end
 end
