@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Template < ApplicationRecord
   belongs_to :recipient_list
   belongs_to :user

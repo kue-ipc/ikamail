@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CollectRecipientAllJob < ApplicationJob
   queue_as :default
 

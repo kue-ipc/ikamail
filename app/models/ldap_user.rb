@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LdapUser < ActiveLdap::Base
   ldap_mapping dn_attribute: configurations['ldap']['user_dn'],
                prefix: configurations['ldap']['user_base'],

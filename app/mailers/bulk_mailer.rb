@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BulkMailer < ApplicationMailer
   layout 'empty_mailer'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class TemplatesControllerTest < ActionDispatch::IntegrationTest
@@ -35,7 +37,7 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         subject_postfix: @template.subject_postfix,
         subject_prefix: @template.subject_prefix,
       }}
-      
+
     end
 
     assert_redirected_to template_url(Template.last)

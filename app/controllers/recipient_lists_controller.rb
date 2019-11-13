@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RecipientListsController < ApplicationController
   before_action :set_recipient_list, only: [:show, :edit, :update, :destroy]
   before_action :authorize_recipient_list, only: [:index, :new, :create]
