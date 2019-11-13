@@ -7,7 +7,7 @@ class AdminController < ApplicationController
     authorize MailUser, :update?
 
     respond_to do |format|
-      if LdapUserSyncJob.perform_later && LdapMailSyncJob.perform_later
+      if LdapMailSyncJob.perform_later
         format.html { redirect_to admin_root_path, notice: 'LDAP同期を開始しました。'}
         format.json { render json: {notice: 'LDAP同期を開始しました。'}, status: :ok }
       else

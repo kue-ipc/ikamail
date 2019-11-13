@@ -12,7 +12,7 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
 
   test "should get ldap_sync" do
     sign_in users(:admin)
-    assert_enqueued_with(job: LdapUserSyncJob) do
+    assert_enqueued_with(job: LdapMailSyncJob) do
       put admin_ldap_sync_url
     end
     assert_redirected_to admin_root_path

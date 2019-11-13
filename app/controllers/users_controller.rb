@@ -1,20 +1,21 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
-  before_action :authorize_user, only: [:index, :create]
+  before_action :authorize_user, only: [:index, :create, :sync]
 
-  # GET /users
-  # GET /users.json
+  # GET /admin/users
+  # GET /admin/users.json
   def index
     @users = policy_scope(User).order(:username).page(params[:page])
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /admin/users/1
+  # GET /admin/users/1.json
+  # GET /user
   def show
   end
 
-  # POST /users
-  # POST /users.json
+  # POST /admin/users
+  # POST /admin/users.json
   def create
     @user = User.new(create_user_params)
     @user.sync_ldap!
@@ -30,8 +31,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /admin/users/1
+  # PATCH/PUT /admin/users/1.json
   def update
     respond_to do |format|
       if current_user == @user
@@ -43,6 +44,19 @@ class UsersController < ApplicationController
       else
         format.html { redirect_to admin_users_path, alert: t_failure_action(@user, :update)  }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /admin/users/sync
+  def sync
+    respond_to do |format|
+      if LdapUserSyncJob.perform_later
+        format.html { redirect_to admin_users_path, notice: 'LDAP同期を開始しました。'}
+        format.json { render json: {notice: 'LDAP同期を開始しました。'}, status: :ok }
+      else
+        format.html { redirect_to admin_users_path, alert: 'LDAP同期を開始できませんでした。'}
+        format.json { render json: {alert: 'LDAP同期を開始できませんんでした。'}, status: :unprocessable_entity }
       end
     end
   end

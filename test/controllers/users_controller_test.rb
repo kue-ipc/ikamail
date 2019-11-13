@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
   include Devise::Test::IntegrationHelpers
 
   setup do
@@ -56,6 +57,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       assert_equal '自分自身の情報は変更できません。', flash[:alert]
     end
 
+    test 'should sync user' do
+      assert_enqueued_with(job: LdapUserSyncJob) do
+        put sync_admin_users_url
+      end
+      assert_redirected_to admin_users_url
+      assert_equal 'LDAP同期を開始しました。', flash[:notice]
+    end
+
     test 'should get own user' do
       get user_url
       assert_response :success
@@ -95,6 +104,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
+    test 'should NOT sync user' do
+      assert_no_enqueued_jobs do
+        assert_raises(Pundit::NotAuthorizedError) do
+          put sync_admin_users_url
+        end
+      end
+    end
+
     test 'should get own user' do
       get user_url
       assert_response :success
@@ -102,12 +119,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Anonymous < UsersControllerTest
-    test 'redirect to login instead of get index' do
+    test 'redirect to login INSTEAD OF get index' do
       get admin_users_url
       assert_redirected_to new_user_session_path
     end
 
-    test 'should NOT create user' do
+    test 'redirect to login INSTEAD OF create user' do
       assert_no_difference('User.count') do
         post admin_users_url, params: {user: {
           username: 'user04',
@@ -116,13 +133,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login instead of show user' do
+    test 'redirect to login INSTEAD OF show user' do
       get admin_user_url(@user)
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login instead of update user' do
+    test 'redirect to login INSTEAD OF update user' do
       patch admin_user_url(@user), params: {user: {role: 'admin'}}
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login INSTEAD OF sync user' do
+      assert_no_enqueued_jobs do
+        put sync_admin_users_url
+      end
       assert_redirected_to new_user_session_path
     end
 

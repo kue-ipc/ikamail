@@ -10,14 +10,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    admin? || user?
+    user.admin? || user == record
+  end
+
+  def sync?
+    user.admin?
   end
 
   def admin?
     user.admin?
-  end
-
-  def user?
-    user == record
   end
 end

@@ -43,3 +43,8 @@ p
                    placeholder: User.human_attribute_name(:username)
     = f.submit class: 'btn btn-primary btn-sm'
       = t(:register, scope: :actions)
+
+p
+  | LDAPとの同期を行うには下記のボタンから行ってください。同期には時間がかかる場合があります。
+p
+  = link_to 'LDAP同期', sync_admin_users_path, method: :put, class: 'btn btn-primary'
