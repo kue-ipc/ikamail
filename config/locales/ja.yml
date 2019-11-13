@@ -59,6 +59,7 @@ ja:
     add: 追加
     delete: 削除
     insert: 挿入
+    register: 登録
 
   links:
     back_to: "%{name}に戻る"

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     root to: '/admin#top'
     put 'ldap_sync'
     post 'statistics'
-    resources :users, only: [:index, :show, :update], controller: '/users'
+    resources :users, only: [:index, :show, :create, :update], controller: '/users'
   end
 
   resource :user, only: [:show]

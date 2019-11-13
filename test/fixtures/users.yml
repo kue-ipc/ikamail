@@ -24,8 +24,6 @@ user02:
   fullname: "湯座　次郎"
   role: user
   deleted: false
-  role: user
-  deleted: false
 
 user03:
   username: user03

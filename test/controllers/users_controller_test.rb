@@ -17,6 +17,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
+    test 'should create user' do
+      assert_difference('User.count') do
+        post admin_users_url, params: {user: {
+          username: 'user04',
+        }}
+      end
+      assert_redirected_to admin_users_url
+      assert_equal 'ユーザーを登録しました。', flash[:notice]
+    end
+
+    test 'should NOT create existed user' do
+      assert_no_difference('User.count') do
+        post admin_users_url, params: {user: {
+          username: 'user01',
+        }}
+      end
+      assert_redirected_to admin_users_url
+      assert_equal 'ユーザーを登録することができません。', flash[:alert]
+    end
+
     test 'should show user' do
       get admin_user_url(@user)
       assert_response :success
@@ -53,6 +73,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
+    test 'should NOT create user' do
+      assert_no_difference('User.count') do
+        assert_raises(Pundit::NotAuthorizedError) do
+          post admin_users_url, params: {user: {
+            username: 'user04',
+          }}
+        end
+      end
+    end
+
     test 'should NOT show user' do
       assert_raises(Pundit::NotAuthorizedError) do
         get admin_user_url(@user)
@@ -74,6 +104,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   class Anonymous < UsersControllerTest
     test 'redirect to login instead of get index' do
       get admin_users_url
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'should NOT create user' do
+      assert_no_difference('User.count') do
+        post admin_users_url, params: {user: {
+          username: 'user04',
+        }}
+      end
       assert_redirected_to new_user_session_path
     end
 
