@@ -23,7 +23,7 @@ module Devise
         ## FIXME set errors here, the ldap.yml isn't set properly.
         return false if @required_groups.nil?
 
-        for group in @required_groups
+        @required_groups.each do |group|
           if group.is_a?(Array)
             return true if in_group?(group[1], group[0])
           else

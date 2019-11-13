@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'devise_ldap_authenticatable_authorizable'
 require 'devise_ldap_authenticatable_check_group_policy'
 require 'devise_ldap_authenticatable_nis_group_check'
 
@@ -11,7 +12,7 @@ Devise.setup do |config|
   config.ldap_create_user = true
   config.ldap_update_password = false
   config.ldap_config = proc do
-    yaml_config = YAML.safe_load(IO.read("#{Rails.root}/config/ldap.yml"),
+    yaml_config = YAML.safe_load(IO.read(Rails.root.join('config', 'ldap.yml')),
                                  [Symbol], [], true)
     ldap_config = {
       'host' => yaml_config.dig('ldap', 'host'),
@@ -31,7 +32,7 @@ Devise.setup do |config|
       ldap_config['admin_password'] = yaml_config.dig('ldap', 'auth', 'password')
     end
     ldap_config['require_attribute'] = {
-      'objectClass' => yaml_config.dig('ldap', 'user_class')
+      'objectClass' => yaml_config.dig('ldap', 'user_class'),
     }
     ldap_config.merge!(yaml_config['authorizations'])
     ldap_config
