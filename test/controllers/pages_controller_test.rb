@@ -1,23 +1,36 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PagesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-  test "admin should get top" do
-    sign_in users(:admin)
-    get root_url
-    assert_response :success
+  class SignInAdmin < PagesControllerTest
+    setup do
+      sign_in users(:admin)
+    end
+
+    test 'should get top' do
+      get root_url
+      assert_response :success
+    end
   end
 
-  test "user should get top" do
-    sign_in users(:user01)
-    get root_url
-    assert_response :success
+  class SignInUser < PagesControllerTest
+    setup do
+      sign_in users(:user01)
+    end
+
+    test 'should NOT get top' do
+      get root_url
+      assert_response :success
+    end
   end
 
-  test "should not get top" do
-    sign_out :user
-    get root_url
-    assert_redirected_to new_user_session_path
+  class Anonymous < PagesControllerTest
+    test 'redirect to login INSTEAD OF get top' do
+      get root_url
+      assert_redirected_to new_user_session_path
+    end
   end
 end

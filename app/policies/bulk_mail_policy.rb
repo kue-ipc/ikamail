@@ -5,28 +5,28 @@ class BulkMailPolicy < ApplicationPolicy
         scope.all
       else
         scope.includes(:template)
-          .where(user: user)
-          .or(scope.includes(:template)
-            .where(templates: {user: user}))
+             .where(user: user)
+             .or(scope.includes(:template)
+               .where(templates: {user: user}))
       end
     end
   end
 
   def readable?
     user.admin? ||
-    record.template.user == user ||
-    record.user == user
+      record.template.user == user ||
+      record.user == user
   end
 
   def writable?
     user.admin? ||
-    record.template.user == user ||
-    record.user == user
+      record.template.user == user ||
+      record.user == user
   end
 
   def manageable?
     user.admin? ||
-    record.template.user == user
+      record.template.user == user
   end
 
   def index?
