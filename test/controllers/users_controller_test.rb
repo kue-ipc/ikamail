@@ -7,56 +7,89 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:user02)
   end
 
-  ## admin
-  test "should get index" do
-    sign_in users(:admin)
-    get admin_users_url
-    assert_response :success
-  end
+  class SignInAdmin < UsersControllerTest
+    setup do
+      sign_in users(:admin)
+    end
 
-  test "should show user" do
-    sign_in users(:admin)
-    get admin_user_url(@user)
-    assert_response :success
-  end
-
-  test "should update user" do
-    sign_in users(:admin)
-    patch admin_user_url(@user), params: {user: {role: 'admin'} }
-    assert_redirected_to admin_users_url
-  end
-
-  test "admin should get own user" do
-    sign_in users(:admin)
-    get user_url
-    assert_response :success
-  end
-
-  ## user
-  test "user should NOT get index" do
-    sign_in users(:user01)
-    assert_raises(Pundit::NotAuthorizedError) do
+    test 'should get index' do
       get admin_users_url
+      assert_response :success
     end
-  end
 
-  test "user should NOT show user" do
-    sign_in users(:user01)
-    assert_raises(Pundit::NotAuthorizedError) do
+    test 'should show user' do
       get admin_user_url(@user)
+      assert_response :success
+    end
+
+    test 'should update user' do
+      patch admin_user_url(@user), params: {user: {role: 'admin'}}
+      assert User.find(@user.id).admin?
+      assert_redirected_to admin_users_url
+      assert_equal 'ユーザーを更新しました。', flash[:notice]
+    end
+
+    test 'should NOT update own user' do
+      patch admin_user_url(users(:admin)), params: {user: {role: 'user'}}
+      assert User.find(users(:admin).id).admin?
+      assert_redirected_to admin_users_url
+      assert_equal '自分自身の情報は変更できません。', flash[:alert]
+    end
+
+    test 'should get own user' do
+      get user_url
+      assert_response :success
     end
   end
 
-  test "user should NOT update user" do
-    sign_in users(:user01)
-    assert_raises(Pundit::NotAuthorizedError) do
-      patch admin_user_url(@user), params: {user: {role: 'admin'} }
+  class SignInUser < UsersControllerTest
+    setup do
+      sign_in users(:user01)
+    end
+
+    test 'should NOT get index' do
+      assert_raises(Pundit::NotAuthorizedError) do
+        get admin_users_url
+      end
+    end
+
+    test 'should NOT show user' do
+      assert_raises(Pundit::NotAuthorizedError) do
+        get admin_user_url(@user)
+      end
+    end
+
+    test 'should NOT update user' do
+      assert_raises(Pundit::NotAuthorizedError) do
+        patch admin_user_url(@user), params: {user: {role: 'admin'}}
+      end
+    end
+
+    test 'should get own user' do
+      get user_url
+      assert_response :success
     end
   end
 
-  test "user should get own user" do
-    sign_in users(:admin)
-    get user_url
-    assert_response :success
+  class Anonymous < UsersControllerTest
+    test 'redirect to login instead of get index' do
+      get admin_users_url
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login instead of show user' do
+      get admin_user_url(@user)
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login instead of update user' do
+      patch admin_user_url(@user), params: {user: {role: 'admin'}}
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login instead of get own user' do
+      get user_url
+      assert_redirected_to new_user_session_path
+    end
   end
 end

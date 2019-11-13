@@ -20,14 +20,14 @@ class ApplicationController < ActionController::Base
   def t_success_action(model, action)
     t(:success_action,
       scope: [:messages],
-      model: t(model, scope: [:activerecord, :models]),
+      model: model.model_name.human,
       action: t(action, scope: :actions))
   end
 
   def t_failure_action(model, action)
     t(:failure_action,
       scope: [:messages],
-      model: t(model, scope: [:activerecord, :models]),
+      model: model.model_name.human,
       action: t(action, scope: :actions))
   end
 end
