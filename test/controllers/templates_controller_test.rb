@@ -39,10 +39,109 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
           subject_postfix: @template.subject_postfix,
           subject_prefix: @template.subject_prefix,
         }}
-
       end
 
       assert_redirected_to template_url(Template.last)
+    end
+
+    test 'should create NOT template with uncovertible JIS from_name' do
+      assert_no_difference('Template.count') do
+        post templates_url, params: {template: {
+          body_footer: @template.body_footer,
+          body_header: @template.body_header,
+          count: @template.count,
+          description: @template.description,
+          from_mail_address: @template.from_mail_address,
+          from_name: @template.from_name + '😺',
+          name: @template.name + '_alt',
+          recipient_list_id: @template.recipient_list_id,
+          reserved_time: @template.reserved_time,
+          subject_postfix: @template.subject_postfix,
+          subject_prefix: @template.subject_prefix,
+        }}
+      end
+
+      assert_response :success
+    end
+
+    test 'should create NOT template with uncovertible JIS subject_prefix' do
+      assert_no_difference('Template.count') do
+        post templates_url, params: {template: {
+          body_footer: @template.body_footer,
+          body_header: @template.body_header,
+          count: @template.count,
+          description: @template.description,
+          from_mail_address: @template.from_mail_address,
+          from_name: @template.from_name,
+          name: @template.name + '_alt',
+          recipient_list_id: @template.recipient_list_id,
+          reserved_time: @template.reserved_time,
+          subject_postfix: @template.subject_postfix,
+          subject_prefix: @template.subject_prefix + '😺',
+        }}
+      end
+
+      assert_response :success
+    end
+
+    test 'should create NOT template with uncovertible JIS subject_postfix' do
+      assert_no_difference('Template.count') do
+        post templates_url, params: {template: {
+          body_footer: @template.body_footer,
+          body_header: @template.body_header,
+          count: @template.count,
+          description: @template.description,
+          from_mail_address: @template.from_mail_address,
+          from_name: @template.from_name,
+          name: @template.name + '_alt',
+          recipient_list_id: @template.recipient_list_id,
+          reserved_time: @template.reserved_time,
+          subject_postfix: @template.subject_postfix + '😺',
+          subject_prefix: @template.subject_prefix,
+        }}
+      end
+
+      assert_response :success
+    end
+
+    test 'should create NOT template with uncovertible JIS body_header' do
+      assert_no_difference('Template.count') do
+        post templates_url, params: {template: {
+          body_footer: @template.body_footer,
+          body_header: @template.body_header + '😺',
+          count: @template.count,
+          description: @template.description,
+          from_mail_address: @template.from_mail_address,
+          from_name: @template.from_name,
+          name: @template.name + '_alt',
+          recipient_list_id: @template.recipient_list_id,
+          reserved_time: @template.reserved_time,
+          subject_postfix: @template.subject_postfix,
+          subject_prefix: @template.subject_prefix,
+        }}
+      end
+
+      assert_response :success
+    end
+
+    test 'should create NOT template with uncovertible JIS body_footer' do
+      assert_no_difference('Template.count') do
+        post templates_url, params: {template: {
+          body_footer: @template.body_footer + '😺',
+          body_header: @template.body_header,
+          count: @template.count,
+          description: @template.description,
+          from_mail_address: @template.from_mail_address,
+          from_name: @template.from_name,
+          name: @template.name + '_alt',
+          recipient_list_id: @template.recipient_list_id,
+          reserved_time: @template.reserved_time,
+          subject_postfix: @template.subject_postfix,
+          subject_prefix: @template.subject_prefix,
+        }}
+      end
+
+      assert_response :success
     end
 
     test 'should show template' do

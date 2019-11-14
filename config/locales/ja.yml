@@ -141,7 +141,7 @@ ja:
         body_header: 本文の前文
         body_footer: 本文の後文
         description: 説明
-        user: 所有者
+        user: 管理者
       action_log:
         comment: コメント
       user:
@@ -214,3 +214,7 @@ ja:
           other: "全 <b>%{count}</b> 個の%{entry_name}を表示"
       more_pages:
         display_entries: "全 <b>%{total}</b> 個の%{entry_name}のうち、<b>%{first}&nbsp;-&nbsp;%{last}</b> 個目を表示"
+
+  errors:
+    messages:
+      uncovertible_char: "に使用できない文字「%{chars}」が含まれています"

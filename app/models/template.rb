@@ -5,8 +5,14 @@ class Template < ApplicationRecord
   belongs_to :user
   has_many :bulk_mail, dependent: :restrict_with_error
 
-  validates :from_name, allow_blank: true, length: {maximum: 255}
+  validates :from_name, allow_blank: true, length: {maximum: 255}, charcode: true
   validates :from_mail_address, presence: true, length: {maximum: 255}
+
+  validates :subject_prefix, allow_blank: true, length: {maximum: 255}, charcode: true
+  validates :subject_postfix, allow_blank: true, length: {maximum: 255}, charcode: true
+  validates :body_header, allow_blank: true, length: {maximum: 65536}, charcode: true
+  validates :body_footer, allow_blank: true, length: {maximum: 65536}, charcode: true
+
 
   def from
     if from_name.present?
