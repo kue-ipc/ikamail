@@ -37,4 +37,29 @@ class TemplateTest < ActiveSupport::TestCase
     assert_equal '', Template.find(@template.id).body_footer
   end
 
+  test 'han zen from_name' do
+    @template.update(from_name: 'ﾊﾝｶｸｶﾀｶﾅ')
+    assert_equal 'ハンカクカタカナ', Template.find(@template.id).from_name
+  end
+
+  test 'han zen subject_prefix' do
+    @template.update(subject_prefix: 'ﾊﾝｶｸｶﾀｶﾅ')
+    assert_equal 'ハンカクカタカナ', Template.find(@template.id).subject_prefix
+  end
+
+  test 'han zen subject_postfix' do
+    @template.update(subject_postfix: 'ﾊﾝｶｸｶﾀｶﾅ')
+    assert_equal 'ハンカクカタカナ', Template.find(@template.id).subject_postfix
+  end
+
+  test 'han zen body_header' do
+    @template.update(body_header: "ﾊﾝｶｸｶﾀｶﾅ\n")
+    assert_equal "ハンカクカタカナ\n", Template.find(@template.id).body_header
+  end
+
+  test 'han zen body_footer' do
+    @template.update(body_footer: "ﾊﾝｶｸｶﾀｶﾅ\n")
+    assert_equal "ハンカクカタカナ\n", Template.find(@template.id).body_footer
+  end
+
 end

@@ -88,5 +88,7 @@ class BulkMail < ApplicationRecord
     def adjust_chars
       self.subject = double_conv_jis(subject)
       self.body = double_conv_jis(body)
+
+      self.body += "\n" if body.present? && !body.end_with?("\n")
     end
 end

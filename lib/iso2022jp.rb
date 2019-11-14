@@ -14,7 +14,7 @@ module Iso2022jp
   end
 
   def double_conv_jis(str, fallback: 'skip')
-    raise ArgumentError, 'invalid fallback' unless %w[skil html xml perl java subchar].include?(fallback)
+    raise ArgumentError, 'invalid fallback' unless %w[skip html xml perl java subchar].include?(fallback)
 
     fb = "--fb-#{fallback}"
     NKF.nkf('-J -w', NKF.nkf("-W -j #{fb}", str))
