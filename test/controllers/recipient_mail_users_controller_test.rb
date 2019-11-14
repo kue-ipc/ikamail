@@ -6,41 +6,84 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @recipient_list = recipient_list(:user)
+    @recipient_list = recipient_lists(:users)
   end
 
-  # test "should get index" do
-  #   sign_in users(:admin)
-  #   get recipient_list_applicable_mail_users(@recipient_list)
-  #   assert_response :success
-  #   # get recipient_list_included_mail_users(@recipient_list
-  #   # get recipient_list_excluded_mail_users_url(@recipient_list)
-  #   # get recipient_mail_users_url
-  # end
+  class SignInAdmin < RecipientMailUsersControllerTest
+    setup do
+      sign_in users(:admin)
+    end
 
-  # test "should create recipient_mail_user" do
-  #   assert_difference('RecipientMailUser.count') do
-  #     post recipient_mail_users_url, params: { recipient_mail_user: {  } }
-  #   end
+    test 'should get index' do
+      get mail_users_recipient_list_url(@recipient_list, 'applicable')
+      assert_response :success
+    end
 
-  #   assert_redirected_to recipient_mail_user_url(RecipientMailUser.last)
-  # end
+    test 'should create recipient_mail_user' do
+      assert_difference('Recipient.count') do
+        post mail_users_recipient_list_url(@recipient_list, 'included'), params: {name: 'user04'}
+      end
 
-  # test "should show recipient_mail_user" do
-  #   get recipient_mail_user_url(@recipient_mail_user)
-  #   assert_response :success
-  # end
+      assert_redirected_to recipient_list_url(@recipient_list)
+    end
 
-  # test "should update recipient_mail_user" do
-  #   patch recipient_mail_user_url(@recipient_mail_user), params: { recipient_mail_user: {  } }
-  #   assert_redirected_to recipient_mail_user_url(@recipient_mail_user)
-  # end
+    test 'should destroy recipient_mail_user' do
+      assert_difference('Recipient.count', -1) do
+        delete mail_user_recipient_list_url(@recipient_list, 'included', mail_users(:admin))
+      end
 
-  # test "should destroy recipient_mail_user" do
-  #   assert_difference('RecipientMailUser.count', -1) do
-  #     delete recipient_mail_user_url(@recipient_mail_user)
-  #   end
+      assert_redirected_to recipient_list_url(@recipient_list)
+    end
+  end
 
-  #   assert_redirected_to recipient_mail_users_url
-  # end
+  class SignInUser < RecipientMailUsersControllerTest
+    setup do
+      sign_in users(:user01)
+    end
+
+    test 'should NOT get index' do
+      assert_raises(Pundit::NotAuthorizedError) do
+        get mail_users_recipient_list_url(@recipient_list, 'applicable')
+      end
+    end
+
+    test 'should NOT create recipient_mail_user' do
+      assert_no_difference('Recipient.count') do
+        assert_raises(Pundit::NotAuthorizedError) do
+          post mail_users_recipient_list_url(@recipient_list, 'included'), params: {name: 'user04'}
+        end
+      end
+    end
+
+    test 'should NOT destroy recipient_mail_user' do
+      assert_no_difference('Recipient.count') do
+        assert_raises(Pundit::NotAuthorizedError) do
+          delete mail_user_recipient_list_url(@recipient_list, 'included', mail_users(:admin))
+        end
+      end
+    end
+  end
+
+  class Anonymous < RecipientMailUsersControllerTest
+    test 'redirect to login INSTEAD OF get index' do
+      get mail_users_recipient_list_url(@recipient_list, 'applicable')
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login INSTEAD OF create recipient_mail_user' do
+      assert_no_difference('Recipient.count') do
+        post mail_users_recipient_list_url(@recipient_list, 'included'), params: {name: 'user04'}
+      end
+
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login INSTEAD OF destroy recipient_mail_user' do
+      assert_no_difference('Recipient.count') do
+        delete mail_user_recipient_list_url(@recipient_list, 'included', mail_users(:admin))
+      end
+
+      assert_redirected_to new_user_session_path
+    end
+  end
 end
