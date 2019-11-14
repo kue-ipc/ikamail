@@ -110,6 +110,7 @@ ja:
       bulk_mail: メール
       template: テンプレート
       recipient_list: 宛先リスト
+      recipient: 宛先
     attributes:
       recipient_list:
         name: リスト名

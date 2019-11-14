@@ -22,7 +22,7 @@ dl
     span.badge.badge-primary
       = @recipient_list.applicable_mail_users.size
     - if recipient_policy.index?
-      =< link_to '一覧表示', recipient_list_applicable_mail_users_path(@recipient_list), class: 'btn btn-link btn-sm'
+      =< link_to '一覧表示', mail_users_recipient_list_path(@recipient_list, 'applicable'), class: 'btn btn-link btn-sm'
 
   = dt_dd_tag RecipientList.human_attribute_name(:mail_groups)
     ul.list-inline.mb-0
@@ -32,7 +32,7 @@ dl
 
   = dt_dd_tag RecipientList.human_attribute_name(:included_mail_users)
     - if recipient_policy.create?
-      = form_tag recipient_list_included_mail_users_path(@recipient_list), method: :post, class: 'form-inline'
+      = form_tag mail_users_recipient_list_path(@recipient_list, 'included'), method: :post, class: 'form-inline'
         .form-group.mb-2
           .form-group.mr-2
             = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
@@ -45,8 +45,8 @@ dl
           li.list-inline-item.border.border-success.rounded.px-1.mb-1
             = "#{mail_user.display_name} (#{mail_user.name})"
             - if recipient_policy.destroy?
-              =< link_to '×', recipient_list_included_mail_user_path(@recipient_list, mail_user),
-                         data: { confirm: t(:corfirm_destroy, scope: :messages) },
+              =< link_to '×', mail_user_recipient_list_path(@recipient_list, 'included', mail_user),
+                         data: {confirm: t(:corfirm_destroy, scope: :messages)},
                          method: :delete,
                          class: 'badge badge-secondary'
     - else
@@ -55,7 +55,7 @@ dl
 
   = dt_dd_tag RecipientList.human_attribute_name(:excluded_mail_users)
     - if recipient_policy.create?
-      = form_tag recipient_list_excluded_mail_users_path(@recipient_list), method: :post, class: 'form-inline'
+      = form_tag mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post, class: 'form-inline'
         .form-group.mb-2
           .form-group.mr-2
             = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
@@ -68,8 +68,8 @@ dl
           li.list-inline-item.border.border-danger.rounded.px-1.mb-1
             = "#{mail_user.display_name} (#{mail_user.name})"
             - if recipient_policy.destroy?
-              =< link_to '×', recipient_list_excluded_mail_user_path(@recipient_list, mail_user),
-                         data: { confirm: t(:corfirm_destroy, scope: :messages) },
+              =< link_to '×', mail_user_recipient_list_path(@recipient_list, 'excluded', mail_user),
+                         data: {confirm: t(:corfirm_destroy, scope: :messages)},
                          method: :delete,
                          class: 'badge badge-secondary'
     - else

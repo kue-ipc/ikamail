@@ -1,19 +1,36 @@
-h1 Listing recipient_mail_users
+- content_for :heading
+  h1 = t_title(:listing, model: :recipient, count: 2)
 
-table
-  thead
-    tr
-      th
-      th
-      th
+p
+  = link_to '宛先リストに戻る', @recipient_list
 
-  tbody
-    - @recipient_mail_users.each do |recipient_mail_user|
+- case @type
+  - when 'applicable'
+    p リストの対象になる宛先のリストです。このリストに記載されている宛先にメールが配信されます。対象のグループおよび含めるユーザーから構成されます。ただし、除外するユーザーは除きます。
+  - when 'included'
+    p リストの対象に含める宛先のリストです。グループに関係なく、このリスト内のユーザーはリストの対象になります。ただし、除外するユーザーに記載の場合はそちらが優先されます。
+  - when 'excluded'
+    p リストの対象から除外するリストです。グループや含めるユーザーのリストに関係なく、このリストに記載されている宛先は対象となりません。
+
+- if @mail_users
+
+  p 詳細を確認する場合はユーザー名をクリックしてください。
+
+  table.table.table-sm
+    thead
       tr
-        td = link_to 'Show', recipient_mail_user
-        td = link_to 'Edit', edit_recipient_mail_user_path(recipient_mail_user)
-        td = link_to 'Destroy', recipient_mail_user, data: { confirm: 'Are you sure?' }, method: :delete
+        th scope="col" = MailUser.human_attribute_name(:name)
+        th scope="col" = MailUser.human_attribute_name(:display_name)
+        th scope="col" = MailUser.human_attribute_name(:mail)
 
-br
+    tbody
+      - @mail_users.each do |mail_user|
+        tr
+          td.position-relative
+            = link_to mail_user.name, mail_user, class: 'stretched-link'
+          td = mail_user.display_name
+          td = mail_user.mail
 
-= link_to 'New Recipient mail user', new_recipient_mail_user_path
+  = paginate @mail_users
+  p
+    = page_entries_info @mail_users

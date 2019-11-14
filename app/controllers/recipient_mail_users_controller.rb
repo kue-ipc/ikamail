@@ -2,73 +2,67 @@
 
 class RecipientMailUsersController < ApplicationController
   before_action :set_recipient_list
-  before_action :set_attribute
-  before_action :set_mail_user, only: [:show, :update, :destroy]
+  before_action :set_type
+  before_action :set_mail_user, only: [:destroy]
 
-  # GET /recipient_mail_users
-  # GET /recipient_mail_users.json
+  # GET /recipient_lists/1/mail_users/included
+  # GET /recipient_lists/1/mail_users/included
   def index
     @mail_users =
-      if @attribute == :inclruded
-        @recipient_list.included_mail_users.order(:name).page(params[:page])
-      elsif @attribute == :excluded
-        @recipient_list.exludede_mail_users.order(:name).page(params[:page])
-      end
+      case @type
+      when 'applicable'
+        @recipient_list.applicable_mail_users
+      when 'included'
+        @recipient_list.included_mail_users
+      when 'excluded'
+        @recipient_list.excluded_mail_users
+      end&.order(:name)&.page(params[:page])
+    flash.alert = '指定のリストはありません。' if @mail_users.nil?
   end
 
-  # GET /recipient_mail_users/1
-  # GET /recipient_mail_users/1.json
-  def show
-  end
-
-  # POST /recipient_mail_users
-  # POST /recipient_mail_users.json
+  # POST /recipient_lists/1/mail_users/included
+  # POST /recipient_lists/1/mail_users/included.json
   def create
     @mail_user = MailUser.find_by(name_params)
 
     respond_to do |format|
-      if @mail_user
+      if !['included', 'excluded'].include?(@type)
+        format.html { redirect_to @recipient_list, alert: '指定のリストにユーザーは追加できません。' }
+        format.json { render json: {erros: '指定のリストにユーザーは追加できません。'}, status: :unprocessable_entity }
+      elsif @mail_user
         @recipient = Recipient.find_or_create_by(recipient_list: @recipient_list, mail_user: @mail_user)
-        @recipient.update_column(@attribute, true)
+        @recipient.update_column(@type, true)
 
-        format.html { redirect_to @recipient_list, notice: '一覧にユーザーを追加しました。' }
+        format.html { redirect_to @recipient_list, notice: '指定のリストにユーザーを追加しました。' }
         format.json { render :show, status: :ok, location: @recipient_list }
       else
         format.html { redirect_to @recipient_list, alert: '該当する名前のユーザーはいません。' }
-        format.json { render json: {erros: '該当するユーザーはありません。'}, status: :unprocessable_entity }
+        format.json { render json: {erros: '該当する名前のユーザーはいません。'}, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /recipient_mail_users/1
-  # PATCH/PUT /recipient_mail_users/1.json
-  def update
-    respond_to do |format|
-      if @recipient_mail_user.update(recipient_mail_user_params)
-        format.html { redirect_to @recipient_mail_user, notice: 'Recipient mail user was successfully updated.' }
-        format.json { render :show, status: :ok, location: @recipient_mail_user }
-      else
-        format.html { render :edit }
-        format.json { render json: @recipient_mail_user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /recipient_mail_users/1
-  # DELETE /recipient_mail_users/1.json
+  # DELETE /recipient_lists/1/mail_users/included/1
+  # DELETE /recipient_lists/1/mail_users/included/1.json
   def destroy
+    @recipient = Recipient.find_by(recipient_list: @recipient_list, mail_user: @mail_user)
+
     respond_to do |format|
-      if @mail_user
-        @recipient = Recipient.find_by(recipient_list: @recipient_list, mail_user: @mail_user)
-        @recipient.update_column(@attribute, false)
-        if !@recipient.included && !@recipient.excluded && (@mail_user.mail_groups & @recipient_list.mail_groups).empty?
+      if !['included', 'excluded'].include?(@type)
+        format.html { redirect_to @recipient_list, alert: '指定のリストからユーザーは削除できません。' }
+        format.json { render json: {erros: '指定のリストからユーザーは削除できません。'},
+                             status: :unprocessable_entity }
+      elsif @recipient
+        @recipient.update_column(@type, false)
+        if !@recipient.included && !@recipient.excluded &&
+            (@mail_user.mail_groups & @recipient_list.mail_groups).empty?
           @recipient.destroy
         end
-        format.html { redirect_to @recipient_list, notice: '一覧からユーザーを削除しました。' }
+        format.html { redirect_to @recipient_list, notice: '指定のリストからユーザーを削除しました。' }
         format.json { head :no_content }
       else
-        format.html { redirect_to @recipient_list, alert: '該当する名前のユーザーはいません。' }
-        format.json { render json: {erros: '該当するユーザーはありません。'}, status: :unprocessable_entity }
+        format.html { redirect_to @recipient_list, alert: 'ユーザーはリストに含まれていません。' }
+        format.json { render json: {erros: 'ユーザーはリストに含まれていません。'}, status: :unprocessable_entity }
       end
     end
   end
@@ -76,21 +70,17 @@ class RecipientMailUsersController < ApplicationController
   private
 
     def set_recipient_list
-      @recipient_list = RecipientList.find(params[:recipient_list_id])
+      @recipient_list = RecipientList.find(params[:id])
       authorize @recipient_list
     end
 
-    def set_attribute
-      @attribute =
-        if request.path_info.include?('included_mail_users')
-          :included
-        elsif request.path_info.include?('excluded_mail_users')
-          :excluded
-        end
+    def set_type
+      @type = params[:type]
+      authorize Recipient
     end
 
     def set_mail_user
-      @mail_user = MailUser.find(params[:id])
+      @mail_user = MailUser.find(params[:mail_user_id])
     end
 
     def name_params
