@@ -33,7 +33,7 @@ class TemplatesController < ApplicationController
 
     respond_to do |format|
       if @template.save
-        format.html { redirect_to @template, notice: 'Bulk mail template was successfully created.' }
+        format.html { redirect_to @template, notice: t_success_action(@template, :create) }
         format.json { render :show, status: :created, location: @template }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ class TemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @template.update(template_params)
-        format.html { redirect_to @template, notice: 'Bulk mail template was successfully updated.' }
+        format.html { redirect_to @template, notice: t_success_action(@template, :update) }
         format.json { render :show, status: :ok, location: @template }
       else
         format.html { render :edit }
@@ -61,7 +61,7 @@ class TemplatesController < ApplicationController
   def destroy
     @template.destroy
     respond_to do |format|
-      format.html { redirect_to templates_url, notice: 'Bulk mail template was successfully destroyed.' }
+      format.html { redirect_to templates_url, notice: t_success_action(@template, :destroy) }
       format.json { head :no_content }
     end
   end
