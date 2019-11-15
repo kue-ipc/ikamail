@@ -1,9 +1,6 @@
 - content_for :heading
   h1 = t_title(:showing, count: 1)
 
-- dt_class = 'col-sm-6 col-md-4 col-xl-2'
-- dd_class = 'col-sm-6 col-md-8 col-xl-10'
-
 dl
   = dt_dd_for @mail_user, :name
   = dt_dd_for @mail_user, :display_name
