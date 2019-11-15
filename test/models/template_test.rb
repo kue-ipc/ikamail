@@ -47,9 +47,9 @@ class TemplateTest < ActiveSupport::TestCase
     assert_equal 'ハンカクカタカナ', Template.find(@template.id).subject_prefix
   end
 
-  test 'han zen subject_postfix' do
-    @template.update(subject_postfix: 'ﾊﾝｶｸｶﾀｶﾅ')
-    assert_equal 'ハンカクカタカナ', Template.find(@template.id).subject_postfix
+  test 'han zen subject_suffix' do
+    @template.update(subject_suffix: 'ﾊﾝｶｸｶﾀｶﾅ')
+    assert_equal 'ハンカクカタカナ', Template.find(@template.id).subject_suffix
   end
 
   test 'han zen body_header' do

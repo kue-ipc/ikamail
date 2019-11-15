@@ -29,15 +29,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         post templates_url, params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
       end
 
@@ -49,15 +49,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         post templates_url, params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name + '😺',
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
       end
 
@@ -69,35 +69,35 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         post templates_url, params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix + '😺',
+          user: {username: @template.user.username},
         }}
       end
 
       assert_response :success
     end
 
-    test 'should create NOT template with uncovertible JIS subject_postfix' do
+    test 'should create NOT template with uncovertible JIS subject_suffix' do
       assert_no_difference('Template.count') do
         post templates_url, params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix + '😺',
+          subject_suffix: @template.subject_suffix + '😺',
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
       end
 
@@ -109,15 +109,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         post templates_url, params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header + '😺',
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
       end
 
@@ -129,15 +129,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         post templates_url, params: {template: {
           body_footer: @template.body_footer + '😺',
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
       end
 
@@ -158,15 +158,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
       patch template_url(@template), params: {template: {
         body_footer: @template.body_footer,
         body_header: @template.body_header,
-        count: @template.count,
         description: @template.description,
         from_mail_address: @template.from_mail_address,
         from_name: @template.from_name,
         name: @template.name + '_alt',
         recipient_list_id: @template.recipient_list_id,
         reserved_time: @template.reserved_time,
-        subject_postfix: @template.subject_postfix,
+        subject_suffix: @template.subject_suffix,
         subject_prefix: @template.subject_prefix,
+        user: {username: @template.user.username},
       }}
       assert_redirected_to template_url(@template)
     end
@@ -210,15 +210,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
           post templates_url, params: {template: {
             body_footer: @template.body_footer,
             body_header: @template.body_header,
-            count: @template.count,
             description: @template.description,
             from_mail_address: @template.from_mail_address,
             from_name: @template.from_name,
             name: @template.name + '_alt',
             recipient_list_id: @template.recipient_list_id,
             reserved_time: @template.reserved_time,
-            subject_postfix: @template.subject_postfix,
+            subject_suffix: @template.subject_suffix,
             subject_prefix: @template.subject_prefix,
+            user: {username: @template.user.username},
           }}
         end
       end
@@ -240,15 +240,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         patch template_url(@template), params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
       end
     end
@@ -278,17 +278,16 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
         post templates_url, params: {template: {
           body_footer: @template.body_footer,
           body_header: @template.body_header,
-          count: @template.count,
           description: @template.description,
           from_mail_address: @template.from_mail_address,
           from_name: @template.from_name,
           name: @template.name + '_alt',
           recipient_list_id: @template.recipient_list_id,
           reserved_time: @template.reserved_time,
-          subject_postfix: @template.subject_postfix,
+          subject_suffix: @template.subject_suffix,
           subject_prefix: @template.subject_prefix,
+          user: {username: @template.user.username},
         }}
-
       end
 
       assert_redirected_to new_user_session_path
@@ -308,15 +307,15 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
       patch template_url(@template), params: {template: {
         body_footer: @template.body_footer,
         body_header: @template.body_header,
-        count: @template.count,
         description: @template.description,
         from_mail_address: @template.from_mail_address,
         from_name: @template.from_name,
         name: @template.name + '_alt',
         recipient_list_id: @template.recipient_list_id,
         reserved_time: @template.reserved_time,
-        subject_postfix: @template.subject_postfix,
+        subject_suffix: @template.subject_suffix,
         subject_prefix: @template.subject_prefix,
+        user: {username: @template.user.username},
       }}
       assert_redirected_to new_user_session_path
     end

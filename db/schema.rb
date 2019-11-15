@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_071000) do
     t.string "from_name"
     t.string "from_mail_address", null: false
     t.string "subject_prefix"
-    t.string "subject_postfix"
+    t.string "subject_suffix"
     t.text "body_header"
     t.text "body_footer"
     t.integer "count", default: 0, null: false

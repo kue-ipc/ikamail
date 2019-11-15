@@ -11,7 +11,7 @@
         li.list-group-item = message
 
 dl
-  = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_postfix]
+  = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_suffix]
   = dt_dd_for @bulk_mail, :status, format: :translate, scope: [:mail, :statuses]
   = dt_dd_for @bulk_mail, :template
   = dt_dd_for @bulk_mail, :body, format: :mail_body,

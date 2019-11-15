@@ -46,7 +46,7 @@ class BulkMail < ApplicationRecord
   before_save :adjust_chars
 
   def subject_all
-    subject_prefix + subject + subject_postfix
+    subject_prefix + subject + subject_suffix
   end
 
   def body_all
@@ -57,8 +57,8 @@ class BulkMail < ApplicationRecord
     Mustache.render(template.subject_prefix || '', individual_values)
   end
 
-  def subject_postfix
-    Mustache.render(template.subject_postfix || '', individual_values)
+  def subject_suffix
+    Mustache.render(template.subject_suffix || '', individual_values)
   end
 
   def body_header

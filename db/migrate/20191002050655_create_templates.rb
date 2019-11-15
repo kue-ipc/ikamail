@@ -12,7 +12,7 @@ class CreateTemplates < ActiveRecord::Migration[6.0]
       t.string :from_name
       t.string :from_mail_address, null: false
       t.string :subject_prefix
-      t.string :subject_postfix
+      t.string :subject_suffix
       t.text :body_header
       t.text :body_footer
 

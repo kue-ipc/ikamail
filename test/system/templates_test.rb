@@ -23,7 +23,7 @@ class TemplatesTest < ApplicationSystemTestCase
   #   fill_in "Name", with: @template.name
   #   fill_in "Recipient list", with: @template.recipient_list
   #   fill_in "Reservation time", with: @template.reserved_time
-  #   fill_in "Subject post", with: @template.subject_postfix
+  #   fill_in "Subject post", with: @template.subject_suffix
   #   fill_in "Subject pre", with: @template.subject_prefix
   #   click_on "Create Bulk mail template"
   #
@@ -44,7 +44,7 @@ class TemplatesTest < ApplicationSystemTestCase
   #   fill_in "Name", with: @template.name
   #   fill_in "Recipient list", with: @template.recipient_list
   #   fill_in "Reservation time", with: @template.reserved_time
-  #   fill_in "Subject post", with: @template.subject_postfix
+  #   fill_in "Subject post", with: @template.subject_suffix
   #   fill_in "Subject pre", with: @template.subject_prefix
   #   click_on "Update Bulk mail template"
   #

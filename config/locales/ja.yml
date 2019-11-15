@@ -139,7 +139,7 @@ ja:
         from_name: 送信元の名前
         from_mail_address: 送信元のアドレス
         subject_prefix: 題名の接頭辞
-        subject_postfix: 題名の接尾辞
+        subject_suffix: 題名の接尾辞
         body_header: 本文の前文
         body_footer: 本文の後文
         description: 説明

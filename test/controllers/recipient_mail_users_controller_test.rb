@@ -41,10 +41,9 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test 'should NOT get index' do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get mail_users_recipient_list_url(@recipient_list, 'applicable')
-      end
+    test 'should get index' do
+      get mail_users_recipient_list_url(@recipient_list, 'applicable')
+      assert_response :success
     end
 
     test 'should NOT create recipient_mail_user' do

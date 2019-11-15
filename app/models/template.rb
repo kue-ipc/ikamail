@@ -13,7 +13,7 @@ class Template < ApplicationRecord
   validates :from_mail_address, presence: true, length: {maximum: 255}
 
   validates :subject_prefix, allow_blank: true, length: {maximum: 255}, charcode: true
-  validates :subject_postfix, allow_blank: true, length: {maximum: 255}, charcode: true
+  validates :subject_suffix, allow_blank: true, length: {maximum: 255}, charcode: true
   validates :body_header, allow_blank: true, length: {maximum: 65536}, charcode: true
   validates :body_footer, allow_blank: true, length: {maximum: 65536}, charcode: true
 
@@ -46,7 +46,7 @@ class Template < ApplicationRecord
     def adjust_chars
       self.from_name = double_conv_jis(from_name)
       self.subject_prefix = double_conv_jis(subject_prefix)
-      self.subject_postfix = double_conv_jis(subject_postfix)
+      self.subject_suffix = double_conv_jis(subject_suffix)
       self.body_header = double_conv_jis(body_header)
       self.body_footer = double_conv_jis(body_footer)
 

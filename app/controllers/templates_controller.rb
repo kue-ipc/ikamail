@@ -97,11 +97,11 @@ class TemplatesController < ApplicationController
       params.require(:template).permit(
         :name, :recipient_list_id,
         :from_name, :from_mail_address,
-        :subject_prefix, :subject_postfix,
+        :subject_prefix, :subject_suffix,
         :body_header, :body_footer,
         :reserved_time,
         :description,
-        :enabled).merge({user_id: user&.id})
+        :enabled).merge({user: user})
     end
 
     def count_params
