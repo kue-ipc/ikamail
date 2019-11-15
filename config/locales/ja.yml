@@ -120,6 +120,7 @@ ja:
         applicable_mail_users: 対象ユーザー
         included_mail_users: 含めるユーザー
         excluded_mail_users: 除外するユーザー
+        templates: 利用しているテンプレート
       bulk_mail:
         template: テンプレート
         delivery_timing: 配信タイミング
@@ -154,10 +155,12 @@ ja:
         display_name: 名前
         mail: メールアドレス
         mail_groups: グループ
+        applicable_recipient_lists: 対象宛先リスト
       mail_group:
         name: グループ名
         display_name: 名前
-        mail_users: ユーザー
+        mail_users: 所属ユーザー
+        recipient_lists: 含まれる宛先リスト
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"

@@ -6,11 +6,10 @@ p 詳細を確認する場合はユーザー名をクリックしてください
 table.table.table-sm
   thead
     tr
-      th = t_attr(:name)
-      th = t_attr(:display_name)
+      th = MailGroup.human_attribute_name(:name)
+      th = MailGroup.human_attribute_name(:display_name)
       th
-        | 所属
-        = t_attr(:mail_users)
+        = MailGroup.human_attribute_name(:mail_users)
         | 数
 
   tbody

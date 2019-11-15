@@ -4,14 +4,11 @@
 - dt_class = 'col-sm-6 col-md-4 col-xl-2'
 - dd_class = 'col-sm-6 col-md-8 col-xl-10'
 
-dl.row
-  dt class=dt_class = t_attr(:name)
-  dd class=dd_class = @mail_user.name
+dl
+  = dt_dd_for @mail_user, :name
+  = dt_dd_for @mail_user, :display_name
+  = dt_dd_for @mail_user, :mail
+  = dt_dd_for @mail_user, :mail_groups
+  = dt_dd_for @mail_user, :applicable_recipient_lists
 
-  dt class=dt_class = t_attr(:display_name)
-  dd class=dd_class = @mail_user.display_name
-
-  dt class=dt_class = t_attr(:mail)
-  dd class=dd_class = @mail_user.mail
-
-=< link_to '一覧に戻る', mail_groups_path
+=< link_to '一覧に戻る', mail_users_path

@@ -68,31 +68,47 @@ module ApplicationHelper
       end
     else
       dt_dd_for(recored, attr, opts) do |value|
-        case value
-        when nil
-          content_tag('span', opts[:blank_alt] || t(:none, scope: :values), class: 'font-italic text-muted')
-        when '', [], {}
-          content_tag('span', opts[:blank_alt] || t(:empty, scope: :values), class: 'font-italic text-muted')
-        when String
-          case opts[:format]
-          when :mail_body
-            mail_body_tag(value, **opts)
-          when :translate
-            span_text_tag(t(value, scope: opts[:scope]), **opts)
-          else
-            span_text_tag(value, **opts)
-          end
-        when Time, Date, DateTime, ActiveSupport::TimeWithZone
-          content_tag('span', l(value, format: opts[:format]))
-        when true, false
-          content_tag('div', class: 'custom-control custom-switch') do
-            check_box_tag(:admin?, '1', value, disabled: true, class: 'custom-control-input') +
-              label_tag(:admin?, '', class: 'custom-control-label')
-          end
-        else
-          content_tag('span', value.to_s)
-        end
+        span_value_for(value, **opts)
       end
+    end
+  end
+
+  def span_value_for(value, **opts)
+    case value
+    when nil
+      content_tag('span', opts[:blank_alt] || t(:none, scope: :values), class: 'font-italic text-muted')
+    when '', [], {}
+      content_tag('span', opts[:blank_alt] || t(:empty, scope: :values), class: 'font-italic text-muted')
+    when String
+      case opts[:format]
+      when :mail_body
+        mail_body_tag(value, **opts)
+      when :translate
+        span_text_tag(t(value, scope: opts[:scope]), **opts)
+      else
+        span_text_tag(value, **opts)
+      end
+    when Time, Date, DateTime, ActiveSupport::TimeWithZone
+      content_tag('span', l(value, format: opts[:format]))
+    when true, false
+      content_tag('div', class: 'custom-control custom-switch') do
+        check_box_tag(:admin?, '1', value, disabled: true, class: 'custom-control-input') +
+          label_tag(:admin?, '', class: 'custom-control-label')
+      end
+    when Enumerable
+      content_tag('ul', class: 'list-inline mb-0') do
+        list_html = sanitize('')
+        value.each do |v|
+          list_html += content_tag('li', class: 'list-inline-item border border-primary rounded px-1 mb-1') do
+            span_value_for(v, **opts)
+          end
+        end
+        list_html
+      end
+    when BulkMail, MailGroup, MailUser, RecipientList, Template
+      link_to(value.to_s, value)
+    else
+      content_tag('span', value.to_s, class: '')
     end
   end
 
