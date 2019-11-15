@@ -34,12 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :mail_users, only: [:index, :show] do
-    collection do
-      post 'search'
-      get 'search'
-    end
-  end
+  resources :mail_users, only: [:index, :show]
 
   resources :mail_groups, only: [:index, :show] do
     resources :mail_users, only: [:index]

@@ -7,7 +7,11 @@ class MailUserPolicy < ApplicationPolicy
     end
   end
 
-  def search?
+  def index?
+    true
+  end
+
+  def show?
     true
   end
 end

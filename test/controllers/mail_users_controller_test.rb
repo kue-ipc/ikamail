@@ -9,16 +9,47 @@ class MailUsersControllerTest < ActionDispatch::IntegrationTest
     @mail_user = mail_users(:user02)
   end
 
-  test "admin should get index" do
-    sign_in users(:admin)
-    get mail_users_url
-    assert_response :success
+  class SignInAdmin < MailUsersControllerTest
+    setup do
+      sign_in users(:admin)
+    end
+
+    test 'should get index' do
+      get mail_users_url
+      assert_response :success
+    end
+
+    test 'should show mail_user' do
+      get mail_user_url(@mail_user)
+      assert_response :success
+    end
   end
 
-  test "admin should show mail_user" do
-    sign_in users(:admin)
-    get mail_user_url(@mail_user)
-    assert_response :success
+  class SignInUser < MailUsersControllerTest
+    setup do
+      sign_in users(:user01)
+    end
+
+    test 'should get index' do
+      get mail_users_url
+      assert_response :success
+    end
+
+    test 'should show mail_user' do
+      get mail_user_url(@mail_user)
+      assert_response :success
+    end
   end
 
+  class Anonymous < MailUsersControllerTest
+    test 'redirect to login INSTEAD OF should get index' do
+      get mail_users_url
+      assert_redirected_to new_user_session_path
+    end
+
+    test 'redirect to login INSTEAD OF should show mail_user' do
+      get mail_user_url(@mail_user)
+      assert_redirected_to new_user_session_path
+    end
+  end
 end

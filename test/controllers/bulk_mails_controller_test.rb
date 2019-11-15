@@ -9,6 +9,35 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     @bulk_mail = bulk_mails(:one)
   end
 
+  class SignInAdmin < BulkMailsControllerTest
+    setup do
+      sign_in users(:admin)
+    end
+  end
+
+  class SignInUser < BulkMailsControllerTest
+    # bulk_mails(:one) is  own
+    setup do
+      sign_in users(:user01)
+    end
+  end
+
+  class SignInManager < BulkMailsControllerTest
+    # bulk_mails(:two) is  own
+    # all tempalte is managed
+    setup do
+      sign_in users(:user03)
+    end
+  end
+
+  class Anonymous < BulkMailsControllerTest
+    # bulk_mails(:two) is  own
+    # all tempalte is managed
+    setup do
+      sign_in users(:user03)
+    end
+  end
+
   test "should get index" do
     sign_in users(:admin)
     get bulk_mails_url
