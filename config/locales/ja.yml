@@ -131,6 +131,7 @@ ja:
         updated_at: 更新日時
       template:
         name: テンプレート名
+        enabled: 有効
         recipient_list: 宛先
         count: カウント
         reserved_time: 予約時刻

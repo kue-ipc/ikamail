@@ -8,11 +8,18 @@
         li.list-group-item = message
 
 = form_for @template do |f|
-  .field.form_group
+  .field.form-group
     = f.label :name
     = f.text_field :name, class: 'form-control'
   .field.form-group
-    = f.label :recipient_list_id, t_attr(:recipient_list)
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+  .field.form-group
+    .custom-control.custom-switch
+      = f.check_box :enabled, class: 'custom-control-input'
+      = f.label :enabled, class: 'custom-control-label'
+  .field.form-group
+    = f.label :recipient_list_id, @template.class.human_attribute_name(:recipient_list)
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
       {prompt: true}, {class: 'form-control'}
   .field.form-group
@@ -34,13 +41,11 @@
     = f.label :body_footer
     = f.text_area :body_footer, class: 'form-control text-monospace'
   .field.form-group
-    = f.label :count
-    = f.number_field :count, class: 'form-control'
-  .form-inline
-    .field.form-group
-      = f.label :reserved_time
+    = f.label :reserved_time
+    .form-inline
       = f.time_select :reserved_time, {}, class: 'form-control mx-2'
-  .field.form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control'
+  .filed.form-group
+    = f.fields_for (@template.user || current_user) do |user|
+      = user.label :username, @template.class.human_attribute_name(:user)
+      = user.text_field :username, class: 'form-control' 
   .actions = f.submit class: 'btn btn-primary'

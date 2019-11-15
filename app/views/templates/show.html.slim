@@ -13,6 +13,7 @@
 dl
   = dt_dd_for @template, :name
   = dt_dd_for @template, :description
+  = dt_dd_for @template, :enabled
   = dt_dd_for @template, :recipient_list
   = dt_dd_for @template, :from_name
   = dt_dd_for @template, :from_mail_address
@@ -24,13 +25,13 @@ dl
   = dt_dd_for @template, :reserved_time, format: :time
   = dt_dd_for @template, :user
 
-
-- if current_user.admin?
-  p
-    => link_to t(:edit, scope: :actions), edit_template_path(@template), class: 'btn btn-primary'
-    '|
-    =< link_to t(:destroy, scope: :actions), @template,
-      data: { confirm: t(:corfirm_destroy, scope: :messages) }, method: :delete, class: 'btn btn-danger'
+p
+  - template_policy = policy(@template)
+  - if template_policy.edit?
+    =<> link_to t(:edit, scope: :actions), edit_template_path(@template), class: 'btn btn-primary'
+  - if template_policy.destroy?
+    =<> link_to t(:destroy, scope: :actions), @template,
+                data: {confirm: t(:corfirm_destroy, scope: :messages)}, method: :delete, class: 'btn btn-danger'
 
 hr
 p
