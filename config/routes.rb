@@ -16,10 +16,16 @@ Rails.application.routes.draw do
 
   resource :user, only: [:show]
 
-  resources :templates
+  resources :templates do
+    member do
+      patch 'count'
+    end
+  end
+
   resources :bulk_mails do
     resources :action_logs, path: 'actions', only: [:index, :create]
   end
+
   resources :recipient_lists do
     member do
       get 'mail_users/:type', to: 'recipient_mail_users#index', as: 'mail_users'

@@ -60,6 +60,7 @@ ja:
     delete: 削除
     insert: 挿入
     register: 登録
+    reset: リセット
 
   links:
     back_to: "%{name}に戻る"
@@ -160,6 +161,7 @@ ja:
 
   messages:
     corfirm_destroy: "本当に削除してもよろしいですか？"
+    corfirm_reset: "本当にリセットしてもよろしいですか？"
     error_prohibited_action:
       zero: "%{model}を%{action}することができません。"
       one: "エラーにより%{model}を%{action}することができません。"

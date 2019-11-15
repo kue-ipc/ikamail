@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TemplatesController < ApplicationController
-  before_action :set_template, only: [:show, :edit, :update, :destroy]
+  before_action :set_template, only: [:show, :edit, :update, :destroy, :count]
   before_action :authorize_template, only: [:index, :new, :create]
 
 
@@ -66,6 +66,19 @@ class TemplatesController < ApplicationController
     end
   end
 
+  def count
+    respond_to do |format|
+      if @template.update(count_params)
+        format.html { redirect_to @template, notice: t_success_action(@template, :update) }
+        format.json { render :show, status: :ok, location: @template }
+      else
+        format.html { render :edit }
+        format.json { render json: @template.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_template
@@ -89,5 +102,9 @@ class TemplatesController < ApplicationController
         :reserved_time,
         :description,
         :enabled).merge({user_id: user&.id})
+    end
+
+    def count_params
+      params.permit(:count)
     end
 end

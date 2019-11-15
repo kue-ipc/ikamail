@@ -14,4 +14,8 @@ class TemplatePolicy < ApplicationPolicy
   def show?
     true
   end
+
+  def count?
+    update?
+  end
 end

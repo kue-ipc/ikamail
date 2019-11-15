@@ -61,32 +61,37 @@ module ApplicationHelper
     end
   end
 
-  def dt_dd_for(recored, attr, format: nil, blank_alt: nil, scope: nil, **opts)
-    value = recored.__send__(attr)
-    dt_dd_tag recored.class.human_attribute_name(attr) do
-      case value
-      when nil
-        content_tag('span', blank_alt || t(:none, scope: :values), class: 'font-italic text-muted')
-      when '', [], {}
-        content_tag('span', blank_alt || t(:empty, scope: :values), class: 'font-italic text-muted')
-      when String
-        case format
-        when :mail_body
-          mail_body_tag(value, **opts)
-        when :translate
-          span_text_tag(t(value, scope: scope), **opts)
+  def dt_dd_for(recored, attr, **opts, &block)
+    if block_given?
+      dt_dd_tag recored.class.human_attribute_name(attr) do
+        yield recored.__send__(attr)
+      end
+    else
+      dt_dd_for(recored, attr, opts) do |value|
+        case value
+        when nil
+          content_tag('span', opts[:blank_alt] || t(:none, scope: :values), class: 'font-italic text-muted')
+        when '', [], {}
+          content_tag('span', opts[:blank_alt] || t(:empty, scope: :values), class: 'font-italic text-muted')
+        when String
+          case opts[:format]
+          when :mail_body
+            mail_body_tag(value, **opts)
+          when :translate
+            span_text_tag(t(value, scope: opts[:scope]), **opts)
+          else
+            span_text_tag(value, **opts)
+          end
+        when Time, Date, DateTime, ActiveSupport::TimeWithZone
+          content_tag('span', l(value, format: opts[:format]))
+        when true, false
+          content_tag('div', class: 'custom-control custom-switch') do
+            check_box_tag(:admin?, '1', value, disabled: true, class: 'custom-control-input') +
+              label_tag(:admin?, '', class: 'custom-control-label')
+          end
         else
-          span_text_tag(value, **opts)
+          content_tag('span', value.to_s)
         end
-      when Time, Date, DateTime, ActiveSupport::TimeWithZone
-        content_tag('span', l(value, format: format))
-      when true, false
-        content_tag('div', class: 'custom-control custom-switch') do
-          check_box_tag(:admin?, '1', value, disabled: true, class: 'custom-control-input') +
-            label_tag(:admin?, '', class: 'custom-control-label')
-        end
-      else
-        content_tag('span', value.to_s)
       end
     end
   end

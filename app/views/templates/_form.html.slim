@@ -47,5 +47,60 @@
   .filed.form-group
     = f.fields_for (@template.user || current_user) do |user|
       = user.label :username, @template.class.human_attribute_name(:user)
-      = user.text_field :username, class: 'form-control' 
+      = user.text_field :username, class: 'form-control'
   .actions = f.submit class: 'btn btn-primary'
+
+hr
+
+h3 置換コードについて
+p
+  | 題名の接頭辞、題名の接尾時、本文の前文、本文の後文には
+  code
+    | {{
+  | と
+  code
+    | }}
+  | で囲んだ置換コードが使えます。それぞれ、配信時に下記に置き換わります。
+table.table.table-sm
+  tr
+    td
+      code
+        | {{number}}
+    td
+      | 番号(半角数字)
+  tr
+    td
+      code
+        | {{number_zen}}
+    td
+      | 番号(全角数字)
+  tr
+    td
+      code
+        | {{number_kan}}
+    td
+      | 番号(漢数字)
+  tr
+    td
+      code
+        | {{name}}
+    td
+      | テンプレート名
+  tr
+    td
+      code
+        | {{datetime}}
+    td
+      | 配信日時
+  tr
+    td
+      code
+        | {{date}}
+    td
+      | 配信日
+  tr
+    td
+      code
+        | {{time}}
+    td
+      | 配信時刻
