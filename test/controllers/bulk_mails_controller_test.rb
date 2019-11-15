@@ -31,11 +31,6 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Anonymous < BulkMailsControllerTest
-    # bulk_mails(:two) is  own
-    # all tempalte is managed
-    setup do
-      sign_in users(:user03)
-    end
   end
 
   test "should get index" do
