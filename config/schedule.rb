@@ -18,3 +18,16 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+# 4月1日にカウンターをリセットする。
+every '0 0 1 4 *' do
+  runner 'CronTask.reset_count_template'
+end
+
+every 1.day, at: ['6:00 am', '6:00 pm'] do
+  runner 'CronTask.sync_ldap_mail'
+end
+
+every 1.day, at: '3:00 am' do
+  runner 'CronTask.sync_ldap_user'
+end
