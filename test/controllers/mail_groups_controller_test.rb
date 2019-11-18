@@ -42,12 +42,12 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Anonymous < MailGroupsControllerTest
-    test 'redirect to login INSTEAD OF should get index' do
+    test 'redirect to login INSTEAD OF get index' do
       get mail_groups_url
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF should show mail_user' do
+    test 'redirect to login INSTEAD OF show mail_user' do
       get mail_group_url(@mail_group)
       assert_redirected_to new_user_session_path
     end
