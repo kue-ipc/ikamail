@@ -69,15 +69,9 @@ class BulkMailsController < ApplicationController
   # DELETE /bulk_mails/1.json
   def destroy
     @bulk_mail.destroy
-    # 削除時にログも削除される。
+    # 削除時にログも削除されるため、ログには何も書かない。
     respond_to do |format|
-      format.html {
-        redirect_to bulk_mails_url,
-                    notice: t(:success_action,
-                              scope: [:messages],
-                              model: t(:bulk_mail, scope: [:activerecord, :models]),
-                              action: t(:destroy, scope: :actions))
-      }
+      format.html { redirect_to bulk_mails_url, notice: t_success_action(BulkMail, :destroy) }
       format.json { head :no_content }
     end
   end

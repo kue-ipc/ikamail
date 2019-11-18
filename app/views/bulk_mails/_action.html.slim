@@ -1,21 +1,27 @@
 button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target="#action-#{action}-modal"
-  = t(action, scope: [:mail, :actions])
+  = t(action, scope: :actions)
+
+p
+ = url
 
 .modal.fade id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label" aria-hidden="true"
   .modal-dialog role="document"
     .modal-content
-      = form_for ActionLog.new, url: bulk_mail_action_logs_path(@bulk_mail) do |f|
-        = f.hidden_field :action, value: action
+      = form_with url: url, method: :put
         .modal-header
           h5.modal-title id="action-#{action}-modal-label"
-            | 一括メールの
-            = t(action, scope: [:mail, :actions])
+            | メールの
+            = t(action, scope: :actions)
           button.close type="button" data-dismiss="modal" aria-label="閉じる"
             span aria-hidden="true" &times;
         .modal-body
           p = t(action, scope: [:mail, :action_messages])
-          = f.label :comment
-          = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
+          = label_tag :comment, ActionLog.human_attribute_name(:comment)
+          = text_area_tag :comment, '', class: 'form-control', rows: 10, required: comment_required
+          - if comment_required
+            p
+              small
+                | ※ コメントは必須です。
         .modal-footer
-          = f.submit "#{t(action, scope: [:mail, :actions])}する", class: "btn btn-#{level}"
+          = submit_tag "#{t(action, scope: :actions)}する", class: "btn btn-#{level}"
           button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
