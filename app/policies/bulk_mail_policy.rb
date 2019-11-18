@@ -75,12 +75,20 @@ class BulkMailPolicy < ApplicationPolicy
     record.status == 'pending' && manageable?
   end
 
+  def cancel?
+    (record.status == 'reserved' || record.status == 'ready') && manageable?
+  end
+
+  def reserve?
+    (record.status == 'reserved' || record.status == 'ready') && manageable?
+  end
+
   def deliver?
     record.status == 'ready' && record.delivery_timing == 'manual' && writable?
   end
 
-  def cancel?
-    (record.status == 'reserved' || record.status == 'ready') && manageable?
+  def redeliver?
+    record.status == 'ready' && record.delivery_timing == 'manual' && writable?
   end
 
   def discard?

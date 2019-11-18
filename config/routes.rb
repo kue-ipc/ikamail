@@ -23,7 +23,17 @@ Rails.application.routes.draw do
   end
 
   resources :bulk_mails do
-    resources :action_logs, path: 'actions', only: [:index, :create]
+    member do
+      put 'apply'
+      put 'withdraw'
+      put 'approve'
+      put 'reject'
+      put 'cancel'
+      put 'reserve'
+      put 'deliver'
+      put 'redeliver'
+      put 'discard'
+    end
   end
 
   resources :recipient_lists do

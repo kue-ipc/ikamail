@@ -63,14 +63,6 @@ class ActionLogsController < ApplicationController
     end
 
     def act_apply
-      authorize @bulk_mail, :apply?
-      @bulk_mail.update_columns(status: 'pending')
-      NotificationMailer.with(
-        user: @bulk_mail.template.user,
-        bulk_mail: @bulk_mail,
-        comment: @action_log.comment
-      ).mail_apply.deliver_later
-      flash.notice = 'メールを申請し、管理者に通知しました。メールは承認後に配信されます。保留中の状態では変更や削除はできません。変更が必要な場合は、「取り下げ」を行い、下書きに戻してください。'
     end
 
     def act_withdraw

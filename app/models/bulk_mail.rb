@@ -14,7 +14,7 @@ class BulkMail < ApplicationRecord
     waiting: 4,
     delivering: 5,
     delivered: 6,
-    discarded: 7,
+    waste: 7,
     failed: 8,
     error: 9,
   }, _prefix: true

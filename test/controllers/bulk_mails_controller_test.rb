@@ -7,6 +7,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @bulk_mail = bulk_mails(:draft_mail)
+    @comment = 'コメント'
   end
 
   class SignInAdmin < BulkMailsControllerTest
@@ -62,6 +63,51 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
       end
 
       assert_redirected_to bulk_mails_url
+    end
+
+    test 'should apply bulk_mail' do
+      put apply_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should withdraw bulk_mail' do
+      put withdraw_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should approve bulk_mail' do
+      put approve_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should reject bulk_mail' do
+      put reject_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should cancel bulk_mail' do
+      put cancel_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should reserve bulk_mail' do
+      put reserve_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should deliver bulk_mail' do
+      put deliver_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should redeliver bulk_mail' do
+      put redeliver_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should discard bulk_mail' do
+      put discard_bulk_mail_url(@bulk_mail), params: {comment: @comment}
+      assert_redirected_to bulk_mail_url(@bulk_mail)
     end
 
     test 'should NOT get edit DELIVERED' do
