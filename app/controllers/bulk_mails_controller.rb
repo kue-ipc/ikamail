@@ -189,7 +189,7 @@ class BulkMailsController < ApplicationController
     reserved_datetime = Time.zone.parse(params[:datetime])
 
     respond_to do |format|
-      if @bulk_mail.update(status: 'reserved')
+      if @bulk_mail.update(status: 'reserved', reserved_at: reserved_datetime)
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
                                 action: 'reserve', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)

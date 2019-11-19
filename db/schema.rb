@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_071000) do
+ActiveRecord::Schema.define(version: 2019_11_19_032222) do
 
   create_table "action_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_071000) do
     t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reserved_at"
     t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
     t.index ["status"], name: "index_bulk_mails_on_status"
     t.index ["template_id"], name: "index_bulk_mails_on_template_id"

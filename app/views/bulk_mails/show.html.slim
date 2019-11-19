@@ -17,8 +17,9 @@ dl
   = dt_dd_for @bulk_mail, :body, format: :mail_body,
                           around: [@bulk_mail.body_header, @bulk_mail.body_footer]
   = dt_dd_for @bulk_mail, :delivery_timing, format: :translate, scope: [:mail, :timings]
-  = dt_dd_for @bulk_mail, :delivered_at, blank_alt: '(未配信)'
-  = dt_dd_for @bulk_mail, :number, blank_alt: '(未割り当て)'
+  = dt_dd_for @bulk_mail, :reserved_at, blank_alt: ''
+  = dt_dd_for @bulk_mail, :delivered_at, blank_alt: ''
+  = dt_dd_for @bulk_mail, :number, blank_alt: ''
   = dt_dd_for @bulk_mail, :user
 - bulk_mail_policy = policy(@bulk_mail)
 

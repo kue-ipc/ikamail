@@ -137,6 +137,7 @@ ja:
         body: 本文
         user: 所有者
         status: 状態
+        reserved_at: 予約日時
         delivered_at: 配信日時
         number: 番号
         updated_at: 更新日時
