@@ -17,6 +17,8 @@ class Template < ApplicationRecord
   validates :body_header, allow_blank: true, length: {maximum: 65536}, charcode: true
   validates :body_footer, allow_blank: true, length: {maximum: 65536}, charcode: true
 
+  validates :reserved_time, presence: true
+
   before_save :adjust_chars
 
   def from

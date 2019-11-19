@@ -19,6 +19,7 @@ class TemplatesController < ApplicationController
   # GET /templates/new
   def new
     @template = Template.new
+    @template.reserved_time = '12:00'
   end
 
   # GET /templates/1/edit
@@ -92,16 +93,17 @@ class TemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def template_params
-      user_params = params.require(:template).require(:user).permit(:username)
-      user = User.find_by(username: user_params[:username])
-      params.require(:template).permit(
+      permitted = params.require(:template).permit(
         :name, :recipient_list_id,
         :from_name, :from_mail_address,
         :subject_prefix, :subject_suffix,
         :body_header, :body_footer,
         :reserved_time,
         :description,
-        :enabled).merge({user: user})
+        :enabled,
+        user: :username)
+      permitted[:user] = User.find_by(username: permitted[:user][:username])
+      permitted
     end
 
     def count_params

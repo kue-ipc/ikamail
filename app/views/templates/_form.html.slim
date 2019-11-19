@@ -42,8 +42,7 @@
     = f.text_area :body_footer, class: 'form-control text-monospace'
   .field.form-group
     = f.label :reserved_time
-    .form-inline
-      = f.time_select :reserved_time, {}, class: 'form-control mx-2'
+    = f.time_field :reserved_time, class: 'form-control'
   .filed.form-group
     = f.fields_for (@template.user || current_user) do |user|
       = user.label :username, @template.class.human_attribute_name(:user)
