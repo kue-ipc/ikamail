@@ -92,7 +92,7 @@ class BulkMailsController < ApplicationController
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
-        format.html { redirect_to @bulk_mail, notice: t(:apply, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:apply, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -108,7 +108,7 @@ class BulkMailsController < ApplicationController
                                 action: 'withdraw', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
-        format.html { redirect_to @bulk_mail, notice: t(:withdraw, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:withdraw, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -131,7 +131,7 @@ class BulkMailsController < ApplicationController
           end
         end
         # TODO: 準備完了即時配信のジョブなどのジョブ
-        format.html { redirect_to @bulk_mail, notice: t(:approve, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:approve, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -153,7 +153,7 @@ class BulkMailsController < ApplicationController
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
-        format.html { redirect_to @bulk_mail, notice: t(:reject, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:reject, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -175,7 +175,7 @@ class BulkMailsController < ApplicationController
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
-        format.html { redirect_to @bulk_mail, notice: t(:cancel, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:cancel, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -191,7 +191,7 @@ class BulkMailsController < ApplicationController
                                 action: 'reserve', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
-        format.html { redirect_to @bulk_mail, notice: t(:reserve, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:reserve, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -207,7 +207,7 @@ class BulkMailsController < ApplicationController
                                 action: 'deliver', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
-        format.html { redirect_to @bulk_mail, notice: t(:deliver, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:deliver, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -223,7 +223,7 @@ class BulkMailsController < ApplicationController
                                 action: 'redeliver', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
-        format.html { redirect_to @bulk_mail, notice: t(:redeliver, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:redeliver, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
@@ -239,7 +239,7 @@ class BulkMailsController < ApplicationController
                                 action: 'discard', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
-        format.html { redirect_to @bulk_mail, notice: t(:discard, scoep: [:mail, :done_messages]) }
+        format.html { redirect_to @bulk_mail, notice: t(:discard, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
         format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }

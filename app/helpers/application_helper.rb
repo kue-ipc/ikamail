@@ -127,4 +127,32 @@ module ApplicationHelper
       content_tag('span', value)
     end
   end
+
+  def html_month(time)
+    time.strftime('%Y-%m')
+  end
+
+  def html_date(time)
+    time.strftime('%Y-%m-%d')
+  end
+
+  def html_time(time, second: true)
+    if second
+      time.strftime('%H:%M:%S')
+    else
+      time.strftime('%H:%M')
+    end
+  end
+
+  def html_datetime_local(time, second: true)
+    if second
+      time.strftime('%Y-%m-%dT%H:%M:%S')
+    else
+      time.strftime('%H:%M')
+    end
+  end
+
+  def html_datetime_zone(time)
+    time.xmlschema
+  end
 end

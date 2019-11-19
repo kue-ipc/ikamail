@@ -23,35 +23,43 @@ dl
 - bulk_mail_policy = policy(@bulk_mail)
 
 - if bulk_mail_policy.edit?
-  =<> link_to t(:edit, scope: [:actions]), edit_bulk_mail_path(@bulk_mail),
-    class: 'btn btn-primary'
+  =<> link_to t(:edit, scope: [:actions]), edit_bulk_mail_path(@bulk_mail), class: 'btn btn-primary'
 
 - if bulk_mail_policy.apply?
   = render partial: 'action', locals: {action: :apply, url: apply_bulk_mail_path(@bulk_mail),
                                        comment_required: false, level: 'primary'}
+
 - if bulk_mail_policy.approve?
-  = render partial: 'action', locals: {action: :approve, comment_required: false, level: 'primary'}
+  = render partial: 'action', locals: {action: :approve, url: approve_bulk_mail_path(@bulk_mail),
+                                       comment_required: false, level: 'primary'}
 
 - if bulk_mail_policy.withdraw?
-  = render partial: 'action', locals: {action: :withdraw, comment_required: true, level: 'warning'}
+  = render partial: 'action', locals: {action: :withdraw, url: withdraw_bulk_mail_path(@bulk_mail),
+                                       comment_required: true, level: 'warning'}
 
 - elsif bulk_mail_policy.reject?
-  = render partial: 'action', locals: {action: :reject, comment_required: true, level: 'warning'}
+  = render partial: 'action', locals: {action: :reject, url: reject_bulk_mail_path(@bulk_mail),
+                                       comment_required: true, level: 'warning'}
 
 - if bulk_mail_policy.deliver?
-  = render partial: 'action', locals: {action: :deliver, comment_required: false, level: 'primary'}
+  = render partial: 'action', locals: {action: :deliver, url: deliver_bulk_mail_path(@bulk_mail),
+                                       comment_required: false, level: 'primary'}
 
 - if bulk_mail_policy.reserve?
-  = render partial: 'action', locals: {action: :reserve, comment_required: true, level: 'secandary'}
+  = render partial: 'action', locals: {action: :reserve, url: reserve_bulk_mail_path(@bulk_mail),
+                                       add_datetime: true, level: 'secondary'}
 
 - if bulk_mail_policy.cancel?
-  = render partial: 'action', locals: {action: :cancel, comment_required: true, level: 'warning'}
+  = render partial: 'action', locals: {action: :cancel, url: cancel_bulk_mail_path(@bulk_mail),
+                                       comment_required: true, level: 'warning'}
 
 - if bulk_mail_policy.redeliver?
-  = render partial: 'action', locals: {action: :redeliver, comment_required: false, level: 'primary'}
+  = render partial: 'action', locals: {action: :redeliver, url: redeliver_bulk_mail_path(@bulk_mail),
+                                       comment_required: false, level: 'primary'}
 
 - if bulk_mail_policy.discard?
-  = render partial: 'action', locals: {action: :discard, comment_required: true, level: 'danger'}
+  = render partial: 'action', locals: {action: :discard, url: discard_bulk_mail_path(@bulk_mail),
+                                       comment_required: false, level: 'danger'}
 
 - if bulk_mail_policy.destroy?
   =<> link_to t(:destroy, scope: [:actions]), @bulk_mail,
