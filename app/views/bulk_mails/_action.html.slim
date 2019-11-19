@@ -1,6 +1,6 @@
 - comment_required = false unless local_assigns.has_key?(:comment_required)
 - level = 'primary' unless local_assigns.has_key?(:level)
-- add_datetime = [] unless local_assigns.has_key?(:add_datetime)
+- add_datetime = false unless local_assigns.has_key?(:add_datetime)
 
 
 button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target="#action-#{action}-modal"
@@ -21,7 +21,7 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
           - if add_datetime
             .form-group
               = label_tag :datetime, t(action, scope: :actions) + '日時'
-              = datetime_field_tag :datetime, html_datetime_local(Time.zone.now.since(1.hour)),
+              = datetime_field_tag :datetime, html_datetime_local(Time.zone.now.since(1.hour), second: false),
                                    class: 'form-control', required: true
           .form-group
             = label_tag :comment, ActionLog.human_attribute_name(:comment)

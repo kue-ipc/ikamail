@@ -148,7 +148,7 @@ module ApplicationHelper
     if second
       time.strftime('%Y-%m-%dT%H:%M:%S')
     else
-      time.strftime('%H:%M')
+      time.strftime('%Y-%m-%dT%H:%M')
     end
   end
 

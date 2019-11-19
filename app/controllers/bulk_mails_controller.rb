@@ -185,12 +185,16 @@ class BulkMailsController < ApplicationController
   end
 
   def reserve
+    params.require(:datetime)
+    reserved_datetime = Time.zone.parse(params[:datetime])
+
     respond_to do |format|
       if @bulk_mail.update(status: 'reserved')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
                                 action: 'reserve', comment: @comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
+        ReservedDeliveryJob.set(wait_until: reserved_datetime).perform_later(@bulk_mail.id)
         format.html { redirect_to @bulk_mail, notice: t(:reserve, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
