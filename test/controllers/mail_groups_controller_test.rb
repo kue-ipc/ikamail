@@ -19,8 +19,8 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should show mail_user' do
-      get mail_user_url(@mail_user)
+    test 'should show mail_group' do
+      get mail_group_url(@mail_group)
       assert_response :success
     end
   end
@@ -35,7 +35,7 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should show mail_user' do
+    test 'should show mail_group' do
       get mail_group_url(@mail_group)
       assert_response :success
     end
@@ -47,7 +47,7 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF show mail_user' do
+    test 'redirect to login INSTEAD OF show mail_group' do
       get mail_group_url(@mail_group)
       assert_redirected_to new_user_session_path
     end

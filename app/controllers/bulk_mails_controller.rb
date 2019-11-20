@@ -4,7 +4,7 @@ class BulkMailsController < ApplicationController
   before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
                                        :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver,
                                        :redeliver, :discard]
-  before_action :set_action_info, only: [:create, :update, :destroy,
+  before_action :set_action_info, only: [:create, :update,
                                          :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver,
                                          :redeliver, :discard]
   before_action :authorize_bulk_mail, only: [:index, :new, :create]

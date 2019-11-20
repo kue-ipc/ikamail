@@ -4,7 +4,7 @@ require 'test_helper'
 
 class BulkMailerTest < ActionMailer::TestCase
   test "all" do
-    mail = BulkMailer.with(bulk_mail: bulk_mails(:one)).all
+    mail = BulkMailer.with(bulk_mail: bulk_mails(:draft_mail)).all
     assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
     # assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from

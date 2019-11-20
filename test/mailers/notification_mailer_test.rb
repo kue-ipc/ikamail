@@ -8,7 +8,7 @@ class NotificationMailerTest < ActionMailer::TestCase
   setup do
     @params = {
       to: users(:user01),
-      bulk_mail: bulk_mails(:one),
+      bulk_mail: bulk_mails(:draft_mail),
       comment: 'テストコメント',
     }
   end
