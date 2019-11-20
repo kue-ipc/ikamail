@@ -1,10 +1,12 @@
 - if alert
-  .alert.alert-danger.alertdismissible.fade.show role=alert
-    = alert
-    button.close type="button" data-dismiss="alert" aria-labal="Close"
-      span aria-hidden="true" &times
+  - [*alert].each do |msg|
+    .alert.alert-danger.alertdismissible.fade.show role="alert"
+      = msg
+      button.close type="button" data-dismiss="alert" aria-label=t(:close, scope: :do_actions)
+        span aria-hidden="true" &times
 - if notice
-  .alert.alert-success.alertdismissible.fade.show role=alert
-    = notice
-    button.close type="button" data-dismiss="alert" aria-labal="Close"
-      span aria-hidden="true" &times
+  - [*notice].each do |msg|
+    .alert.alert-success.alertdismissible.fade.show role="alert"
+      = msg
+      button.close type="button" data-dismiss="alert" aria-label=t(:close, scope: :do_actions)
+        span aria-hidden="true" &times

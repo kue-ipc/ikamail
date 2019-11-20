@@ -4,9 +4,9 @@ class BulkMailsController < ApplicationController
   before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
                                        :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver,
                                        :redeliver, :discard]
-  before_action :set_comment, only: [:create, :update, :destroy,
-                                     :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver,
-                                     :redeliver, :discard]
+  before_action :set_action_info, only: [:create, :update, :destroy,
+                                         :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver,
+                                         :redeliver, :discard]
   before_action :authorize_bulk_mail, only: [:index, :new, :create]
 
   # GET /bulk_mails
@@ -17,17 +17,19 @@ class BulkMailsController < ApplicationController
 
   # GET /bulk_mails/1
   # GET /bulk_mails/1.json
-  def show; end
+  def show
+    @action_info = ActionInfo.new(current_status: @bulk_mail.status, datetime: Time.zone.now.since(1.hour))
+  end
 
   # GET /bulk_mails/new
   def new
     @bulk_mail = BulkMail.new
-    @comment = nil
+    @action_info = ActionInfo.new
   end
 
   # GET /bulk_mails/1/edit
   def edit
-    @comment = nil
+    @action_info = ActionInfo.new(current_status: @bulk_mail.status)
   end
 
   # POST /bulk_mails
@@ -36,16 +38,12 @@ class BulkMailsController < ApplicationController
     @bulk_mail = BulkMail.new(bulk_mail_params)
     @bulk_mail.status = 'draft'
     @bulk_mail.user = current_user
-    respond_to do |format|
-      if @bulk_mail.save
-        ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                         action: 'create', comment: @comment)
-        format.html { redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :create) }
-        format.json { render :show, status: :created, location: @bulk_mail }
-      else
-        format.html { render :new }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
-      end
+    if @bulk_mail.save
+      record_action_log
+      redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :create)
+    else
+      @action_info.current_status = nil
+      render :new
     end
   end
 
@@ -54,8 +52,7 @@ class BulkMailsController < ApplicationController
   def update
     respond_to do |format|
       if @bulk_mail.update(bulk_mail_params)
-        ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                         action: 'update', comment: @comment)
+        record_action_log
         format.html { redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
@@ -83,12 +80,12 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'pending')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'apply', comment: @comment)
+                                action: 'apply', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         if current_user != @bulk_mail.template.user
           unless NotificationMailer.with(user: @bulk_mail.template.user, bulk_mail: @bulk_mail,
-                                         comment: @comment).mail_apply.deliver_later
+                                         comment: @action_info.comment).mail_apply.deliver_later
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
@@ -103,9 +100,9 @@ class BulkMailsController < ApplicationController
 
   def withdraw
     respond_to do |format|
-      if @bulk_mail.update(status: 'dfraft')
+      if @bulk_mail.update(status: 'draft')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'withdraw', comment: @comment)
+                                action: 'withdraw', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         format.html { redirect_to @bulk_mail, notice: t(:withdraw, scope: [:mail, :done_messages]) }
@@ -121,12 +118,12 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'ready')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'approve', comment: @comment)
+                                action: 'approve', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         if current_user != @bulk_mail.user
           unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                         comment: @comment).mail_approve.deliver_later
+                                         comment: @action_info.comment).mail_approve.deliver_later
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
@@ -144,12 +141,12 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'draft')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'reject', comment: @comment)
+                                action: 'reject', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         if current_user != @bulk_mail.user
           unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                         comment: @comment).mail_apply.deliver_later
+                                         comment: @action_info.comment).mail_apply.deliver_later
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
@@ -166,12 +163,12 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'pending')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'cancel', comment: @comment)
+                                action: 'cancel', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         if current_user != @bulk_mail.user
           unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                         comment: @comment).mail_apply.deliver_later
+                                         comment: @action_info.comment).mail_apply.deliver_later
             flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
           end
         end
@@ -185,16 +182,13 @@ class BulkMailsController < ApplicationController
   end
 
   def reserve
-    params.require(:datetime)
-    reserved_datetime = Time.zone.parse(params[:datetime])
-
     respond_to do |format|
-      if @bulk_mail.update(status: 'reserved', reserved_at: reserved_datetime)
+      if @bulk_mail.update(status: 'reserved', reserved_at: @action_info.datetime)
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'reserve', comment: @comment)
+                                action: 'reserve', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
-        ReservedDeliveryJob.set(wait_until: reserved_datetime).perform_later(@bulk_mail.id)
+        ReservedDeliveryJob.set(wait_until: @action_info.datetime).perform_later(@bulk_mail.id)
         format.html { redirect_to @bulk_mail, notice: t(:reserve, scope: [:mail, :done_messages]) }
         format.json { render :show, status: :ok, location: @bulk_mail }
       else
@@ -208,7 +202,7 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'waiting')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'deliver', comment: @comment)
+                                action: 'deliver', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         format.html { redirect_to @bulk_mail, notice: t(:deliver, scope: [:mail, :done_messages]) }
@@ -224,7 +218,7 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'waiting')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'redeliver', comment: @comment)
+                                action: 'redeliver', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         format.html { redirect_to @bulk_mail, notice: t(:redeliver, scope: [:mail, :done_messages]) }
@@ -240,7 +234,7 @@ class BulkMailsController < ApplicationController
     respond_to do |format|
       if @bulk_mail.update(status: 'waste')
         unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'discard', comment: @comment)
+                                action: 'discard', comment: @action_info.comment)
           flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
         end
         format.html { redirect_to @bulk_mail, notice: t(:discard, scope: [:mail, :done_messages]) }
@@ -259,8 +253,8 @@ class BulkMailsController < ApplicationController
       authorize @bulk_mail
     end
 
-    def set_comment
-      @comment = params[:comment]
+    def set_action_info
+      @action_info = ActionInfo.new(action_info_params)
     end
 
     def authorize_bulk_mail
@@ -271,4 +265,26 @@ class BulkMailsController < ApplicationController
     def bulk_mail_params
       params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body)
     end
+
+    def action_info_params
+      params.require(:action_info).permit(:comment, :current_status, :datetime)
+    end
+
+    def record_action_log(action: action_name, user: current_user)
+      action_log =  ActionLog.create(bulk_mail: @bulk_mail, user: user,
+                              action: action, comment: @action_info.comment)
+      flash.alert = [*flash.alert, t(:failure_record_action_log, scope: :messages)] unless action_log
+      action_log
+    end
+
+    def send_notification_mail(action: action_name, user: @bulk_mail.user, skip_current_user: true)
+      return if skip_current_user && current_user == user
+
+      mailer = NotificationMailer.with(user: user, bulk_mail: @bulk_mail,
+                                       comment: @action_info.comment).send("mail_#{action}").deliver_later
+      flash.alert = [*flash.alert, t(:failure_send_notification_mail, scope: :messages)] unless mailler
+      mailer
+    end
+
+
 end

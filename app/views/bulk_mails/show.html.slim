@@ -75,7 +75,7 @@ table.table.table-sm
     tr
       td = l(log.created_at, format: :short)
       td = log.user&.name || '(system)'
-      td = t(log.action, scope: [:mail, :actions])
+      td = t(log.action, scope: :actions)
       td
-        pre
+        pre.my-0
           = log.comment

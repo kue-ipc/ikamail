@@ -28,6 +28,8 @@
     = f.label :body
     = f.text_area :body, class: 'form-control text-monospace line-80', rows: 20
   .field.form-group
-    = label_tag :comment, 'コメント (任意)'
-    = text_area_tag :comment, @comment, rows: 3, class: 'form-control'
+    = fields @action_info do |field|
+      = field.hidden_field :current_status
+      = field.label :comment, 'コメント (任意)'
+      = field.text_area :comment, rows: 3, class: 'form-control'
   .actions = f.submit class: 'btn btn-primary'

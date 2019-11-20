@@ -9,7 +9,7 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
 .modal.fade id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label" aria-hidden="true"
   .modal-dialog role="document"
     .modal-content
-      = form_with url: url, method: :put
+      = form_with model: @action_info, url: url, method: :put do |f|
         .modal-header
           h5.modal-title id="action-#{action}-modal-label"
             | メールの
@@ -20,15 +20,15 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
           p = t(action, scope: [:mail, :action_messages])
           - if add_datetime
             .form-group
-              = label_tag :datetime, t(action, scope: :actions) + '日時'
-              = datetime_field_tag :datetime, html_datetime_local(Time.zone.now.since(1.hour), second: false),
+              = f.label :datetime, t(action, scope: :actions) + '日時'
+              = f.datetime_field :datetime, second: false,
                                    class: 'form-control', required: true
           .form-group
-            = label_tag :comment, ActionLog.human_attribute_name(:comment)
-            = text_area_tag :comment, '', class: 'form-control', rows: 10, required: comment_required
+            = f.label :comment, ActionLog.human_attribute_name(:comment)
+            = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
             - if comment_required
               small.form-text.text-muted
                 | コメントは必須です。
         .modal-footer
-          = submit_tag "#{t(action, scope: :actions)}する", class: "btn btn-#{level}"
+          = f.submit "#{t(action, scope: :actions)}する", class: "btn btn-#{level}"
           button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
