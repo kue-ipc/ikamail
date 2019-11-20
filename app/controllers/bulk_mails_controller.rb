@@ -179,18 +179,6 @@ class BulkMailsController < ApplicationController
     end
   end
 
-  def redeliver
-    if @bulk_mail.update(status: 'waiting')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'redeliver', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      redirect_to @bulk_mail, notice: t(:redeliver, scope: [:mail, :done_messages])
-    else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
-    end
-  end
-
   def discard
     if @bulk_mail.update(status: 'waste')
       unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,

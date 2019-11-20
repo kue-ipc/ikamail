@@ -30,15 +30,15 @@ dl
   = render partial: 'action', locals: {action: :apply, url: apply_bulk_mail_path(@bulk_mail),
                                        comment_required: false, level: 'primary'}
 
-- if bulk_mail_policy.approve?
-  = render partial: 'action', locals: {action: :approve, url: approve_bulk_mail_path(@bulk_mail),
-                                       comment_required: false, level: 'primary'}
-
 - if bulk_mail_policy.withdraw?
   = render partial: 'action', locals: {action: :withdraw, url: withdraw_bulk_mail_path(@bulk_mail),
                                        comment_required: true, level: 'warning'}
 
-- elsif bulk_mail_policy.reject?
+- if bulk_mail_policy.approve?
+  = render partial: 'action', locals: {action: :approve, url: approve_bulk_mail_path(@bulk_mail),
+                                       comment_required: false, level: 'primary'}
+
+- if bulk_mail_policy.reject?
   = render partial: 'action', locals: {action: :reject, url: reject_bulk_mail_path(@bulk_mail),
                                        comment_required: true, level: 'warning'}
 

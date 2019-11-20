@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-draft_mail:
+mail:
   user: user01
   template: all
   delivery_timing: immediate
@@ -8,18 +8,153 @@ draft_mail:
   body: |+
     テスト
     全ユーザー宛
-  delivered_at: null
-  number: null
   status: draft
 
-delivered_mail:
-  user: user03
-  template: users
-  delivery_timing: reserved
-  subject: "テスト一般ユーザー"
+draft:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
   body: |+
     テスト
-    一般ユーザー宛
+    全ユーザー宛
+  status: draft
+
+pending:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: pending
+
+pending_immediate:
+  user: user01
+  template: all
+  delivery_timing: immediate
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: pending
+
+pending_reserved:
+  user: user01
+  template: all
+  delivery_timing: reserved
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: pending
+
+pending_manual:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: pending
+
+ready:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  delivered_at: null
+  number: null
+  status: ready
+
+reserved:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  reserved_at: 2019-01-02 21:30:00 +09:00
+  status: reserved
+
+waiting:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: waiting
+
+delivering:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  number: 1
+  status: delivering
+
+delivered:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
   delivered_at: 2019-01-02 21:30:00 +09:00
   number: 2
   status: delivered
+
+waste:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  number: 3
+  status: waste
+
+failed:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  number: 4
+  status: failed
+
+error:
+  user: user01
+  template: all
+  delivery_timing: immediate
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  number: 5
+  status: error
+
+error_no_number:
+  user: user01
+  template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: error

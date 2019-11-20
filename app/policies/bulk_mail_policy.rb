@@ -56,42 +56,42 @@ class BulkMailPolicy < ApplicationPolicy
 
   def destroy?
     # すでに番号が割り当てられている場合は削除不可
-    record.status == 'draft' && record.number.nil? && writable?
+    record.status_draft? && record.number.nil? && writable?
   end
 
   def apply?
-    record.status == 'draft' && writable?
+    record.status_draft? && writable?
   end
 
   def withdraw?
-    record.status == 'pending' && record.user == user
+    record.status_pending? && record.user == user
   end
 
   def approve?
-    record.status == 'pending' && manageable?
+    (record.status_draft? || record.status_pending?) && manageable?
   end
 
   def reject?
-    record.status == 'pending' && manageable?
+    record.status_pending? && manageable?
   end
 
   def cancel?
-    (record.status == 'reserved' || record.status == 'ready') && manageable?
+    (record.status_reserved? || record.status_ready?) && manageable?
   end
 
   def reserve?
-    (record.status == 'reserved' || record.status == 'ready') && manageable?
+    (record.status_reserved? || record.status_ready?) && manageable?
   end
 
   def deliver?
-    record.status == 'ready' && record.delivery_timing == 'manual' && writable?
+    record.status_ready? && record.delivery_timing_manual? && writable?
   end
 
   def redeliver?
-    record.status == 'ready' && record.delivery_timing == 'manual' && writable?
+    record.status_ready? && record.delivery_timing_manual? && writable?
   end
 
   def discard?
-    record.status == 'draft' && !record.number.nil? && writable?
+    record.status_draft? && !record.number.nil? && writable?
   end
 end

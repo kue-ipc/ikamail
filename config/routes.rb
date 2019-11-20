@@ -28,10 +28,9 @@ Rails.application.routes.draw do
       put 'withdraw'
       put 'approve'
       put 'reject'
-      put 'cancel'
-      put 'reserve'
       put 'deliver'
-      put 'redeliver'
+      put 'reserve'
+      put 'cancel'
       put 'discard'
     end
   end
