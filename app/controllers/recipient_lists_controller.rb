@@ -28,49 +28,38 @@ class RecipientListsController < ApplicationController
   # POST /recipient_lists.json
   def create
     @recipient_list = RecipientList.new(recipient_list_params)
-    respond_to do |format|
-      if @recipient_list.save
-        CollectRecipientJob.perform_later(@recipient_list.id)
-        format.html { redirect_to @recipient_list, notice: t_success_action(@recipient_list, :create) }
-        format.json { render :show, status: :created, location: @recipient_list }
-      else
-        format.html { render :new }
-        format.json { render json: @recipient_list.errors, status: :unprocessable_entity }
-      end
+    if @recipient_list.save
+      CollectRecipientJob.perform_later(@recipient_list.id)
+      redirect_to @recipient_list, notice: t_success_action(@recipient_list, :create)
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /recipient_lists/1
   # PATCH/PUT /recipient_lists/1.json
   def update
-    respond_to do |format|
-      if @recipient_list.update(recipient_list_params)
-        CollectRecipientJob.perform_later(@recipient_list.id)
-        format.html { redirect_to @recipient_list, notice: t_success_action(@recipient_list, :update) }
-        format.json { render :show, status: :ok, location: @recipient_list }
-      else
-        format.html { render :edit }
-        format.json { render json: @recipient_list.errors, status: :unprocessable_entity }
-      end
+    if @recipient_list.update(recipient_list_params)
+      CollectRecipientJob.perform_later(@recipient_list.id)
+      redirect_to @recipient_list, notice: t_success_action(@recipient_list, :update)
+    else
+      render :edit
     end
   end
 
   # DELETE /recipient_lists/1
   # DELETE /recipient_lists/1.json
   def destroy
-    respond_to do |format|
-      if @recipient_list.destroy
-        format.html { redirect_to recipient_lists_url, notice: 'Recipient list was successfully destroyed.' }
-        format.json { head :no_content }
-      else
-        flash.alert = '削除できませんでした。'
-        format.html { render :show }
-        format.json { render json: @recipient_list.errors, status: :unprocessable_entity }
-      end
+    if @recipient_list.destroy
+      redirect_to recipient_lists_url, notice: 'Recipient list was successfully destroyed.'
+    else
+      flash.alert = '削除できませんでした。'
+      render :show
     end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_recipient_list
       @recipient_list = RecipientList.find(params[:id])

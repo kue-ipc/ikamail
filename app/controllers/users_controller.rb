@@ -22,44 +22,31 @@ class UsersController < ApplicationController
     @user = User.new(create_user_params)
     @user.sync_ldap!
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to admin_users_path, notice: t_success_action(@user, :register) }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { redirect_to admin_users_path, alert: t_failure_action(@user, :register)  }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to admin_users_path, notice: t_success_action(@user, :register)
+    else
+      redirect_to admin_users_path, alert: t_failure_action(@user, :register)
     end
   end
 
   # PATCH/PUT /admin/users/1
   # PATCH/PUT /admin/users/1.json
   def update
-    respond_to do |format|
-      if current_user == @user
-        format.html { redirect_to admin_users_path, alert: t(:cannot_modify_own, scope: :messages)}
-        format.json { render json: {erros: t(:cannot_modify_own, scope: :messages)}, status: :unprocessable_entity }
-      elsif @user.update(update_user_params)
-        format.html { redirect_to admin_users_path, notice: t_success_action(@user, :update) }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { redirect_to admin_users_path, alert: t_failure_action(@user, :update)  }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if current_user == @user
+      redirect_to admin_users_path, alert: t(:cannot_modify_own, scope: :messages)
+    elsif @user.update(update_user_params)
+      redirect_to admin_users_path, notice: t_success_action(@user, :update)
+    else
+      redirect_to admin_users_path, alert: t_failure_action(@user, :update)
     end
   end
 
   # PUT /admin/users/sync
   def sync
-    respond_to do |format|
-      if LdapUserSyncJob.perform_later
-        format.html { redirect_to admin_users_path, notice: 'LDAP同期を開始しました。'}
-        format.json { render json: {notice: 'LDAP同期を開始しました。'}, status: :ok }
-      else
-        format.html { redirect_to admin_users_path, alert: 'LDAP同期を開始できませんでした。'}
-        format.json { render json: {alert: 'LDAP同期を開始できませんんでした。'}, status: :unprocessable_entity }
-      end
+    if LdapUserSyncJob.perform_later
+      redirect_to admin_users_path, notice: 'LDAP同期を開始しました。'
+    else
+      redirect_to admin_users_path, alert: 'LDAP同期を開始できませんでした。'
     end
   end
 

@@ -50,15 +50,11 @@ class BulkMailsController < ApplicationController
   # PATCH/PUT /bulk_mails/1
   # PATCH/PUT /bulk_mails/1.json
   def update
-    respond_to do |format|
-      if @bulk_mail.update(bulk_mail_params)
-        record_action_log
-        format.html { redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { render :edit }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
-      end
+    if @bulk_mail.update(bulk_mail_params)
+      record_action_log
+      redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update)
+    else
+      render :edit
     end
   end
 
@@ -67,182 +63,143 @@ class BulkMailsController < ApplicationController
   def destroy
     @bulk_mail.destroy
     # 削除時にログも削除されるため、ログには何も書かない。
-    respond_to do |format|
-      format.html { redirect_to bulk_mails_url, notice: t_success_action(BulkMail, :destroy) }
-      format.json { head :no_content }
-    end
+    redirect_to bulk_mails_url, notice: t_success_action(BulkMail, :destroy)
   end
 
   # Acions
   # PUT /bulk_mails/1/{action}
 
   def apply
-    respond_to do |format|
-      if @bulk_mail.update(status: 'pending')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'apply', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        if current_user != @bulk_mail.template.user
-          unless NotificationMailer.with(user: @bulk_mail.template.user, bulk_mail: @bulk_mail,
-                                         comment: @action_info.comment).mail_apply.deliver_later
-            flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-          end
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:apply, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'pending')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'apply', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      if current_user != @bulk_mail.template.user
+        unless NotificationMailer.with(user: @bulk_mail.template.user, bulk_mail: @bulk_mail,
+                                       comment: @action_info.comment).mail_apply.deliver_later
+          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
+        end
+      end
+      redirect_to @bulk_mail, notice: t(:apply, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def withdraw
-    respond_to do |format|
-      if @bulk_mail.update(status: 'draft')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'withdraw', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:withdraw, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'draft')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'withdraw', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      redirect_to @bulk_mail, notice: t(:withdraw, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def approve
-    respond_to do |format|
-      if @bulk_mail.update(status: 'ready')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'approve', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        if current_user != @bulk_mail.user
-          unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                         comment: @action_info.comment).mail_approve.deliver_later
-            flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-          end
-        end
-        # TODO: 準備完了即時配信のジョブなどのジョブ
-        format.html { redirect_to @bulk_mail, notice: t(:approve, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'ready')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'approve', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      if current_user != @bulk_mail.user
+        unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
+                                       comment: @action_info.comment).mail_approve.deliver_later
+          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
+        end
+      end
+      # TODO: 準備完了即時配信のジョブなどのジョブ
+      redirect_to @bulk_mail, notice: t(:approve, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def reject
-    respond_to do |format|
-      if @bulk_mail.update(status: 'draft')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'reject', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        if current_user != @bulk_mail.user
-          unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                         comment: @action_info.comment).mail_apply.deliver_later
-            flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-          end
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:reject, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'draft')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'reject', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      if current_user != @bulk_mail.user
+        unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
+                                       comment: @action_info.comment).mail_apply.deliver_later
+          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
+        end
+      end
+      redirect_to @bulk_mail, notice: t(:reject, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def cancel
-    respond_to do |format|
-      if @bulk_mail.update(status: 'pending')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'cancel', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        if current_user != @bulk_mail.user
-          unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                         comment: @action_info.comment).mail_apply.deliver_later
-            flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-          end
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:cancel, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'pending')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'cancel', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      if current_user != @bulk_mail.user
+        unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
+                                       comment: @action_info.comment).mail_apply.deliver_later
+          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
+        end
+      end
+      redirect_to @bulk_mail, notice: t(:cancel, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def reserve
-    respond_to do |format|
-      if @bulk_mail.update(status: 'reserved', reserved_at: @action_info.datetime)
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'reserve', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        ReservedDeliveryJob.set(wait_until: @action_info.datetime).perform_later(@bulk_mail.id)
-        format.html { redirect_to @bulk_mail, notice: t(:reserve, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'reserved', reserved_at: @action_info.datetime)
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'reserve', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      ReservedDeliveryJob.set(wait_until: @action_info.datetime).perform_later(@bulk_mail.id)
+      redirect_to @bulk_mail, notice: t(:reserve, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def deliver
-    respond_to do |format|
-      if @bulk_mail.update(status: 'waiting')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'deliver', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:deliver, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'waiting')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'deliver', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      redirect_to @bulk_mail, notice: t(:deliver, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def redeliver
-    respond_to do |format|
-      if @bulk_mail.update(status: 'waiting')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'redeliver', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:redeliver, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'waiting')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'redeliver', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      redirect_to @bulk_mail, notice: t(:redeliver, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
   def discard
-    respond_to do |format|
-      if @bulk_mail.update(status: 'waste')
-        unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                                action: 'discard', comment: @action_info.comment)
-          flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-        end
-        format.html { redirect_to @bulk_mail, notice: t(:discard, scope: [:mail, :done_messages]) }
-        format.json { render :show, status: :ok, location: @bulk_mail }
-      else
-        format.html { redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply) }
-        format.json { render json: @bulk_mail.errors, status: :unprocessable_entity }
+    if @bulk_mail.update(status: 'waste')
+      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
+                              action: 'discard', comment: @action_info.comment)
+        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
       end
+      redirect_to @bulk_mail, notice: t(:discard, scope: [:mail, :done_messages])
+    else
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
     end
   end
 
@@ -285,6 +242,4 @@ class BulkMailsController < ApplicationController
       flash.alert = [*flash.alert, t(:failure_send_notification_mail, scope: :messages)] unless mailler
       mailer
     end
-
-
 end

@@ -32,28 +32,20 @@ class TemplatesController < ApplicationController
     @template = Template.new(template_params)
     @template.user = current_user
 
-    respond_to do |format|
-      if @template.save
-        format.html { redirect_to @template, notice: t_success_action(@template, :create) }
-        format.json { render :show, status: :created, location: @template }
-      else
-        format.html { render :new }
-        format.json { render json: @template.errors, status: :unprocessable_entity }
-      end
+    if @template.save
+      redirect_to @template, notice: t_success_action(@template, :create)
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /templates/1
   # PATCH/PUT /templates/1.json
   def update
-    respond_to do |format|
-      if @template.update(template_params)
-        format.html { redirect_to @template, notice: t_success_action(@template, :update) }
-        format.json { render :show, status: :ok, location: @template }
-      else
-        format.html { render :edit }
-        format.json { render json: @template.errors, status: :unprocessable_entity }
-      end
+    if @template.update(template_params)
+      redirect_to @template, notice: t_success_action(@template, :update)
+    else
+      render :edit
     end
   end
 
@@ -61,26 +53,20 @@ class TemplatesController < ApplicationController
   # DELETE /templates/1.json
   def destroy
     @template.destroy
-    respond_to do |format|
-      format.html { redirect_to templates_url, notice: t_success_action(@template, :destroy) }
-      format.json { head :no_content }
-    end
+    redirect_to templates_url, notice: t_success_action(@template, :destroy)
   end
 
   def count
-    respond_to do |format|
-      if @template.update(count_params)
-        format.html { redirect_to @template, notice: t_success_action(@template, :update) }
-        format.json { render :show, status: :ok, location: @template }
-      else
-        format.html { render :edit }
-        format.json { render json: @template.errors, status: :unprocessable_entity }
-      end
+    if @template.update(count_params)
+      redirect_to @template, notice: t_success_action(@template, :update)
+    else
+      render :edit
     end
   end
 
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_template
       @template = Template.find(params[:id])
