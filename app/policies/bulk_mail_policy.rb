@@ -14,23 +14,6 @@ class BulkMailPolicy < ApplicationPolicy
     end
   end
 
-  def readable?
-    user.admin? ||
-      record.template.user == user ||
-      record.user == user
-  end
-
-  def writable?
-    user.admin? ||
-      record.template.user == user ||
-      record.user == user
-  end
-
-  def manageable?
-    user.admin? ||
-      record.template.user == user
-  end
-
   def index?
     true
   end
@@ -44,19 +27,14 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def update?
-    case record.status
-    when 'draft'
-      writable?
-    when 'pending'
-      manageable?
-    else
-      false
-    end
+    record.status_draft? && writable? ||
+      record.status_pending? && manageable?
   end
 
   def destroy?
-    # すでに番号が割り当てられている場合は削除不可
-    record.status_draft? && record.number.nil? && writable?
+    record.status_draft? && writable? ||
+      record.status_pending? && manageable? ||
+      record.status_error? && record.number.nil? && writable?
   end
 
   def apply?
@@ -64,7 +42,7 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def withdraw?
-    record.status_pending? && record.user == user
+    (record.status_pending? || record.status_ready? || record.status_reserved?) && owned?
   end
 
   def approve?
@@ -80,18 +58,35 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def reserve?
-    (record.status_reserved? || record.status_ready?) && manageable?
+    record.status_ready? && manageable?
   end
 
   def deliver?
-    record.status_ready? && record.delivery_timing_manual? && writable?
-  end
-
-  def redeliver?
-    record.status_ready? && record.delivery_timing_manual? && writable?
+    record.status_ready? && record.delivery_timing_manual? && writable? ||
+      record.status_failed? && writable?
   end
 
   def discard?
-    record.status_draft? && !record.number.nil? && writable?
+    record.status_failed? && writable? ||
+      record.status_error? && writable?
   end
+
+  private
+
+    def owned?
+      record.user == user
+    end
+
+    def readable?
+      manageable? || owned?
+    end
+
+    def writable?
+      manageable? || owned?
+    end
+
+    def manageable?
+      user.admin? || record.template.user == user
+    end
+
 end
