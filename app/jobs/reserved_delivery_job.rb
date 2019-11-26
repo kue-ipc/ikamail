@@ -4,7 +4,7 @@ class ReservedDeliveryJob < ApplicationJob
   queue_as :default
 
   def perform(bulk_mail_id)
-    bulk_mail = BulkMail.find_by(id: bulk_mial_id)
+    bulk_mail = BulkMail.find_by(id: bulk_mail_id)
     return if bulk_mail.nil? || bulk_mail.satus != 'reserved'
 
     bulk_mail.update_columns(status: 'waiting')

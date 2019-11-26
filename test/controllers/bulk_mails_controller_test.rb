@@ -118,11 +118,13 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
       assert_emails 1 do
         put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
       end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@bulk_mail.template.user.email], mail.to
+      assert_equal '【一括メールシステム通知】申請', NKF.nkf('-J -w -m', mail.subject)
+
       assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
-
-      # email = ActionMailer::Base.deliveries.last
-      # assert_equal [@bulk_mail.template.user.mail], email.to
     end
 
     test 'should NOT withdraw DRAFT' do
@@ -243,7 +245,15 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should approve PENDING' do
       @bulk_mail = bulk_mails(:pending)
       @action_info_params[:current_status] = @bulk_mail.status
-      put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+
+      assert_emails 1 do
+        put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@bulk_mail.user.email], mail.to
+      assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+
       assert_equal 'ready', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
@@ -251,7 +261,15 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should reject PENDING' do
       @bulk_mail = bulk_mails(:pending)
       @action_info_params[:current_status] = @bulk_mail.status
-      put reject_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+
+      assert_emails 1 do
+        put reject_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@bulk_mail.user.email], mail.to
+      assert_equal '【一括メールシステム通知】却下', NKF.nkf('-J -w -m', mail.subject)
+
       assert_equal 'draft', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
@@ -385,7 +403,15 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should cancel READY' do
       @bulk_mail = bulk_mails(:ready)
       @action_info_params[:current_status] = @bulk_mail.status
-      put cancel_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+
+      assert_emails 1 do
+        put cancel_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@bulk_mail.user.email], mail.to
+      assert_equal '【一括メールシステム通知】取消', NKF.nkf('-J -w -m', mail.subject)
+
       assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
@@ -494,7 +520,15 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should cancel RESERVED' do
       @bulk_mail = bulk_mails(:reserved)
       @action_info_params[:current_status] = @bulk_mail.status
-      put cancel_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+
+      assert_emails 1 do
+        put cancel_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@bulk_mail.user.email], mail.to
+      assert_equal '【一括メールシステム通知】取消', NKF.nkf('-J -w -m', mail.subject)
+
       assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end

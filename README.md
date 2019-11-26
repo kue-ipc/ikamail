@@ -12,6 +12,7 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 * OS
     * Ubuntu 18.04LTS、20.04 LTS 以上推奨
     * CentOS 8 以上
+    * CentOS 7 with SCL
 
 * データベース
     * MariaDB 10.1 以上、10.2.2 以上推奨

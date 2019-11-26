@@ -80,106 +80,90 @@ class BulkMailsController < ApplicationController
 
   def withdraw
     if @bulk_mail.update(status: 'draft')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'withdraw', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      redirect_to @bulk_mail, notice: t(:withdraw, scope: [:mail, :done_messages])
+      record_action_log
+      flash.notice = t(:withdraw, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :withdraw)]
     end
+    redirect_to @bulk_mail
   end
 
   def approve
     if @bulk_mail.update(status: 'ready')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'approve', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
+      record_action_log
+      send_notification_mail(to: @bulk_mail.user)
+      flash.notice = [*flash.notice, t(:approve, scope: [:mail, :done_messages])]
+      if @bulk_mail.delivery_timing_immediate? && @bulk_mail.update(status: 'waiting')
+        ActionLog.create(bulk_mail: @bulk_mail, action: 'reserve', comment: 'auto')
+        BulkMailer.with(bulk_mail: @bulk_mail).all.deliver_later
+        flash.notice = [*flash.notice, t(:reserve, scope: [:mail, :done_messages])]
       end
-      if current_user != @bulk_mail.user
-        unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                       comment: @action_info.comment).mail_approve.deliver_later
-          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-        end
+
+      if @bulk_mail.delivery_timing_reserved? &&
+          @bulk_mail.update(status: 'reserved', reserved_at: @bulk_mail.template.next_reserved_datetime)
+        ActionLog.create(bulk_mail: @bulk_mail, action: 'deliver', comment: 'auto')
+        ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail.id)
+        flash.notice = [*flash.notice, t(:deliver, scope: [:mail, :done_messages])]
       end
-      # TODO: 準備完了即時配信のジョブなどのジョブ
-      redirect_to @bulk_mail, notice: t(:approve, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :approve)]
     end
+
+    redirect_to @bulk_mail
   end
 
   def reject
     if @bulk_mail.update(status: 'draft')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'reject', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      if current_user != @bulk_mail.user
-        unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                       comment: @action_info.comment).mail_apply.deliver_later
-          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-        end
-      end
-      redirect_to @bulk_mail, notice: t(:reject, scope: [:mail, :done_messages])
+      record_action_log
+      send_notification_mail(to: @bulk_mail.user)
+      flash.notice = t(:reject, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :reject)]
     end
+    redirect_to @bulk_mail
   end
 
   def cancel
     if @bulk_mail.update(status: 'pending')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'cancel', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      if current_user != @bulk_mail.user
-        unless NotificationMailer.with(user: @bulk_mail.user, bulk_mail: @bulk_mail,
-                                       comment: @action_info.comment).mail_apply.deliver_later
-          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-        end
-      end
-      redirect_to @bulk_mail, notice: t(:cancel, scope: [:mail, :done_messages])
+      record_action_log
+      send_notification_mail(to: @bulk_mail.user)
+      flash.notice = t(:cancel, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :cancel)]
     end
+    redirect_to @bulk_mail
   end
 
   def reserve
     if @bulk_mail.update(status: 'reserved', reserved_at: @action_info.datetime)
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'reserve', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      ReservedDeliveryJob.set(wait_until: @action_info.datetime).perform_later(@bulk_mail.id)
-      redirect_to @bulk_mail, notice: t(:reserve, scope: [:mail, :done_messages])
+      record_action_log
+      ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail.id)
+      flash.notice = t(:reserve, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :reserve)]
     end
+    redirect_to @bulk_mail
   end
 
   def deliver
     if @bulk_mail.update(status: 'waiting')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'deliver', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      redirect_to @bulk_mail, notice: t(:deliver, scope: [:mail, :done_messages])
+      record_action_log
+      BulkMailer.with(bulk_mail: @bulk_mail).all.deliver_later
+      flash.notice = t(:deliver, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :deliver)]
     end
+    redirect_to @bulk_mail
   end
 
   def discard
     if @bulk_mail.update(status: 'waste')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'discard', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      redirect_to @bulk_mail, notice: t(:discard, scope: [:mail, :done_messages])
+      record_action_log
+      flash.notice = t(:discard, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :discard)]
     end
+    redirect_to @bulk_mail
   end
 
   private
