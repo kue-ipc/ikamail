@@ -114,9 +114,15 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should apply DRAFT' do
       @bulk_mail = bulk_mails(:draft)
       @action_info_params[:current_status] = @bulk_mail.status
-      put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+
+      assert_emails 1 do
+        put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
       assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
+
+      # email = ActionMailer::Base.deliveries.last
+      # assert_equal [@bulk_mail.template.user.mail], email.to
     end
 
     test 'should NOT withdraw DRAFT' do
@@ -1174,6 +1180,44 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
       @action_info_params[:current_status] = @bulk_mail.status
       put discard_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
       assert_equal 'waste', BulkMail.find(@bulk_mail.id).status
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    ## change status ##
+    test 'should show DRAFT to DELIVERED' do
+      @bulk_mail = bulk_mails(:delivered)
+      get bulk_mail_url(@bulk_mail)
+      assert_response :success
+    end
+
+    # test 'redirect show INSTEAD OF edit DRAFT to DELIVERED' do
+    #   @bulk_mail = bulk_mails(:delivered)
+    #   get edit_bulk_mail_url(@bulk_mail)
+    #   assert_redirected_to bulk_mail_url(@bulk_mail)
+    # end
+
+    test 'should NOT update DRAFT to DELIVERED' do
+      @bulk_mail = bulk_mails(:delivered)
+      patch bulk_mail_url(@bulk_mail), params: {
+        bulk_mail: {template_id: templates(:users).id},
+        action_info: @action_info_params,
+      }
+      assert_not_equal templates(:users).id, BulkMail.find(@bulk_mail.id).template_id
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    # test 'should NOT destroy DRAFT to DELIVERED' do
+    #   @bulk_mail = bulk_mails(:delivered)
+    #   assert_no_difference('BulkMail.count') do
+    #     delete bulk_mail_url(@bulk_mail)
+    #   end
+    #   assert_redirected_to bulk_mail_url(@bulk_mail)
+    # end
+
+    test 'should NOT apply DRAFT to DELIVERED' do
+      @bulk_mail = bulk_mails(:delivered)
+      put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
   end

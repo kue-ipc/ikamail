@@ -10,6 +10,7 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
   .modal-dialog role="document"
     .modal-content
       = form_with model: @action_info, url: url, method: :put do |f|
+        = f.hidden_field :current_status
         .modal-header
           h5.modal-title id="action-#{action}-modal-label"
             | メールの

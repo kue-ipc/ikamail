@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class BulkMailsController < ApplicationController
-  before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
-                                       :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver, :discard]
   before_action :set_action_info, only: [:create, :update,
                                          :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver, :discard]
+  before_action :set_bulk_mail, only: [:show, :edit, :update, :destroy,
+                                       :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver, :discard]
   before_action :authorize_bulk_mail, only: [:index, :new, :create]
 
   # GET /bulk_mails
@@ -69,20 +69,13 @@ class BulkMailsController < ApplicationController
 
   def apply
     if @bulk_mail.update(status: 'pending')
-      unless ActionLog.create(bulk_mail: @bulk_mail, user: current_user,
-                              action: 'apply', comment: @action_info.comment)
-        flash.alert = flash.alert.to_s + t(:cannot_log_action, scope: :messages)
-      end
-      if current_user != @bulk_mail.template.user
-        unless NotificationMailer.with(user: @bulk_mail.template.user, bulk_mail: @bulk_mail,
-                                       comment: @action_info.comment).mail_apply.deliver_later
-          flash.alert = flash.alert.to_s + t(:cannot_deliver_notification, scope: :messages)
-        end
-      end
-      redirect_to @bulk_mail, notice: t(:apply, scope: [:mail, :done_messages])
+      record_action_log
+      send_notification_mail(to: @bulk_mail.template.user)
+      flash.notice = t(:apply, scope: [:mail, :done_messages])
     else
-      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, :apply)
+      flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :apply)]
     end
+    redirect_to @bulk_mail
   end
 
   def withdraw
@@ -193,6 +186,12 @@ class BulkMailsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bulk_mail
       @bulk_mail = BulkMail.find(params[:id])
+      if @action_info && @action_info.current_status != @bulk_mail.status
+        authorize @bulk_mail, :show?
+        redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, action_name)
+        return
+      end
+
       authorize @bulk_mail
     end
 
@@ -215,17 +214,18 @@ class BulkMailsController < ApplicationController
 
     def record_action_log(action: action_name, user: current_user)
       action_log =  ActionLog.create(bulk_mail: @bulk_mail, user: user,
-                              action: action, comment: @action_info.comment)
+                                     action: action, comment: @action_info.comment)
       flash.alert = [*flash.alert, t(:failure_record_action_log, scope: :messages)] unless action_log
       action_log
     end
 
-    def send_notification_mail(action: action_name, user: @bulk_mail.user, skip_current_user: true)
-      return if skip_current_user && current_user == user
+    def send_notification_mail(action: action_name, to: current_user, skip_current_user: true)
+      return if skip_current_user && current_user == to
 
-      mailer = NotificationMailer.with(user: user, bulk_mail: @bulk_mail,
-                                       comment: @action_info.comment).send("mail_#{action}").deliver_later
-      flash.alert = [*flash.alert, t(:failure_send_notification_mail, scope: :messages)] unless mailler
+      mailer = NotificationMailer.with(to: to, bulk_mail: @bulk_mail, comment: @action_info.comment)
+                                 .send("mail_#{action}")
+                                 .deliver_later
+      flash.alert = [*flash.alert, t(:failure_send_notification_mail, scope: :messages)] unless mailer
       mailer
     end
 end
