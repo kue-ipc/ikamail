@@ -58,7 +58,7 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def reserve?
-    record.status_ready? && manageable?
+    record.status_ready? && writable?
   end
 
   def deliver?
