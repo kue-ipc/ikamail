@@ -387,15 +387,28 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should deliver READY' do
       @bulk_mail = bulk_mails(:ready)
       @action_info_params[:current_status] = @bulk_mail.status
-      put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
-      assert_equal 'waiting', BulkMail.find(@bulk_mail.id).status
+
+      assert_emails 1 do
+        put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail), mail.bcc
+      assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
+
+      # メールのチェックが終わった時点で配送は完了している。
+      assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
 
     test 'should reserve READY' do
       @bulk_mail = bulk_mails(:ready)
       @action_info_params[:current_status] = @bulk_mail.status
-      put reserve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+
+      assert_enqueued_with(job: ReservedDeliveryJob) do
+        put reserve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
       assert_equal 'reserved', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
@@ -949,8 +962,17 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     test 'should deliver FAILED' do
       @bulk_mail = bulk_mails(:failed)
       @action_info_params[:current_status] = @bulk_mail.status
-      put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
-      assert_equal 'waiting', BulkMail.find(@bulk_mail.id).status
+
+      assert_emails 1 do
+        put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail), mail.bcc
+      assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
+
+      # メールのチェックが終わった時点で配送は完了している。
+      assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
 
@@ -1252,6 +1274,63 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
       @bulk_mail = bulk_mails(:delivered)
       put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
       assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    ## timing ##
+
+    test 'should approve PENDING IMMEDIATE' do
+      @bulk_mail = bulk_mails(:pending_immediate)
+      @action_info_params[:current_status] = @bulk_mail.status
+
+      assert_emails 2 do
+        put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail_n = ActionMailer::Base.deliveries[-2]
+      assert_equal [@bulk_mail.user.email], mail_n.to
+      assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail_n.subject)
+
+      mail = ActionMailer::Base.deliveries[-1]
+      assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail), mail.bcc
+      assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
+
+      assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should approve PENDING RESERVED' do
+      @bulk_mail = bulk_mails(:pending_reserved)
+      @action_info_params[:current_status] = @bulk_mail.status
+
+      # メールのテストを有効にするとJobのテストができなくなる。
+      # assert_emails 1 do
+        assert_enqueued_with(job: ReservedDeliveryJob) do
+          put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+        end
+      # end
+
+      # mail = ActionMailer::Base.deliveries.last
+      # assert_equal [@bulk_mail.user.email], mail.to
+      # assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+
+      assert_equal 'reserved', BulkMail.find(@bulk_mail.id).status
+      assert_redirected_to bulk_mail_url(@bulk_mail)
+    end
+
+    test 'should approve PENDING MANUAL' do
+      @bulk_mail = bulk_mails(:pending_manual)
+      @action_info_params[:current_status] = @bulk_mail.status
+
+      assert_emails 1 do
+        put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@bulk_mail.user.email], mail.to
+      assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+
+      assert_equal 'ready', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to bulk_mail_url(@bulk_mail)
     end
   end
