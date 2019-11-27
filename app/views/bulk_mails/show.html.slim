@@ -69,9 +69,9 @@ h4 履歴
 table.table.table-sm
   - @bulk_mail.action_logs.includes(:user).order(created_at: :desc).each do |log|
     tr
+      td = t(log.action, scope: :actions)
       td = l(log.created_at, format: :short)
       td = log.user&.name || '(system)'
-      td = t(log.action, scope: :actions)
       td
         pre.my-0
           = log.comment

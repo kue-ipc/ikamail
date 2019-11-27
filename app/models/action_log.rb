@@ -21,5 +21,5 @@ class ActionLog < ApplicationRecord
   }, _prefix: true
 
   belongs_to :bulk_mail
-  belongs_to :user
+  belongs_to :user, optional: true
 end

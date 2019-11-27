@@ -94,14 +94,14 @@ class BulkMailsController < ApplicationController
       send_notification_mail(to: @bulk_mail.user)
       flash.notice = [*flash.notice, t(:approve, scope: [:mail, :done_messages])]
       if @bulk_mail.delivery_timing_immediate? && @bulk_mail.update(status: 'waiting')
-        ActionLog.create(bulk_mail: @bulk_mail, action: 'reserve', comment: 'auto')
+        ActionLog.create(bulk_mail: @bulk_mail, action: 'deliver', comment: 'auto')
         BulkMailer.with(bulk_mail: @bulk_mail).all.deliver_later
         flash.notice = [*flash.notice, t(:reserve, scope: [:mail, :done_messages])]
       end
 
       if @bulk_mail.delivery_timing_reserved? &&
           @bulk_mail.update(status: 'reserved', reserved_at: @bulk_mail.template.next_reserved_datetime)
-        ActionLog.create(bulk_mail: @bulk_mail, action: 'deliver', comment: 'auto')
+        ActionLog.create(bulk_mail: @bulk_mail, action: 'reserve', comment: 'auto')
         ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail.id)
         flash.notice = [*flash.notice, t(:deliver, scope: [:mail, :done_messages])]
       end

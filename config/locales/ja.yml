@@ -72,6 +72,7 @@ ja:
     finish: 終了
     fail: 失敗
     error: エラー
+    start: 開始
 
   do_actions:
     close: 閉じる
@@ -105,10 +106,11 @@ ja:
       reserved: 予約中
       ready: 準備完了
       waiting: 配信待ち
-      delivery: 配信中
+      delivering: 配信中
       delivered: 配信済み
       failure: 失敗
       error: エラー
+      waste: 廃棄済み
     timings:
       immediate: 即時
       reserved: 予約

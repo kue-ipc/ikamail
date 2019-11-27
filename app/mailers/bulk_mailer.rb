@@ -25,9 +25,13 @@ class BulkMailer < ApplicationMailer
 
     def before_deliver_bulk_mail
       @bulk_mail = params[:bulk_mail]
+      @bulk_mail.update_columns(status: 'delivering')
+      ActionLog.create(bulk_mail: @bulk_mail, action: 'start')
     end
 
     def after_deliver_bulk_mail
-      @bulk_mail.update_columns(status: 'delivered', delivered_at: Time.current)
+      @bulk_mail.update_columns(status: 'delivered', delivered_at: Time.zone.now)
+      ActionLog.create(bulk_mail: @bulk_mail, action: 'finish')
+      NotificationMailer.with(to: @bulk_mail.user, bulk_mail: @bulk_mail).mail_finish.deliver_later
     end
 end
