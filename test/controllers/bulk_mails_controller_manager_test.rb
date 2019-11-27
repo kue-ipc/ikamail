@@ -105,13 +105,10 @@ class BulkMailsControllerManagerTest < BulkMailsControllerTest
   test 'should NOT apply DRAFT' do
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
-
     assert_raises(Pundit::NotAuthorizedError) do
       put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     end
-
     assert_equal 'draft', BulkMail.find(@bulk_mail.id).status
-    assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 
   test 'should NOT withdraw DRAFT' do

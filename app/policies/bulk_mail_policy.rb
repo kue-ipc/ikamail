@@ -38,7 +38,7 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def apply?
-    record.status_draft? && writable?
+    record.status_draft? && owned?
   end
 
   def withdraw?

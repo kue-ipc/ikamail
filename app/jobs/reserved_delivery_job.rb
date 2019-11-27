@@ -5,7 +5,8 @@ class ReservedDeliveryJob < ApplicationJob
 
   def perform(bulk_mail_id)
     bulk_mail = BulkMail.find_by(id: bulk_mail_id)
-    return if bulk_mail.nil? || bulk_mail.satus != 'reserved'
+    return if bulk_mail.nil?
+    return unless bulk_mail.status_reserved?
 
     bulk_mail.update_columns(status: 'waiting')
     BulkMailer.with(bulk_mail: bulk_mail).all.deliver_later

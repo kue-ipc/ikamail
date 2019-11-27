@@ -3,7 +3,17 @@
 require 'test_helper'
 
 class ReservedDeliveryJobTest < ActiveJob::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  include ActionMailer::TestHelper
+
+  test 'deliver reserved mail' do
+    assert_emails 1 do
+      ReservedDeliveryJob.perform_now(bulk_mails(:reserved))
+    end
+  end
+
+  test 'NO deliver pending mail' do
+    assert_emails 0 do
+      ReservedDeliveryJob.perform_now(bulk_mails(:pending))
+    end
+  end
 end
