@@ -364,7 +364,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
 
-    assert_emails 1 do
+    assert_emails 2 do
       put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     end
 
@@ -923,7 +923,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
 
-    assert_emails 1 do
+    assert_emails 2 do
       put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     end
 

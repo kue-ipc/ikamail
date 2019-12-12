@@ -6,7 +6,7 @@ class ReservedDeliveryJobTest < ActiveJob::TestCase
   include ActionMailer::TestHelper
 
   test 'deliver reserved mail' do
-    assert_emails 1 do
+    assert_emails 2 do
       ReservedDeliveryJob.perform_now(bulk_mails(:reserved))
     end
   end

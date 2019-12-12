@@ -371,7 +371,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
 
-    assert_emails 1 do
+    assert_emails 2 do
       put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     end
 
@@ -946,7 +946,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
 
-    assert_emails 1 do
+    assert_emails 2 do
       put deliver_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     end
 
@@ -1266,13 +1266,17 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending_immediate)
     @action_info_params[:current_status] = @bulk_mail.status
 
-    assert_emails 2 do
+    assert_emails 3 do
       put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     end
 
-    mail_n = ActionMailer::Base.deliveries[-2]
-    assert_equal [@bulk_mail.user.email], mail_n.to
-    assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail_n.subject)
+    mail = ActionMailer::Base.deliveries[-3]
+    assert_equal [@bulk_mail.user.email], mail.to
+    assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+
+    mail = ActionMailer::Base.deliveries[-2]
+    assert_equal [@bulk_mail.user.email], mail.to
+    assert_equal '【一括メールシステム通知】配信完了', NKF.nkf('-J -w -m', mail.subject)
 
     mail = ActionMailer::Base.deliveries[-1]
     assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail), mail.bcc
