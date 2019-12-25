@@ -49,6 +49,18 @@ rootのパスワードはpassで
 sudo yum install mariadb mariadb-devel
 
 
+/etc/opt/rh/rh-mariadb103/my.cnf
+
+```
+[client]
+default-character-set = utf8mb4
+
+[server]
+character-set-server = utf8mb4
+```
+
+show variables like 'char%';で確認
+
 ## その他
 
 sudo yum install libxml2-devel
@@ -135,3 +147,26 @@ scl enable rh-nodejs10 rh-ruby26 -- bash
 git clone ...
 cd ikamail
 bundle install --deployment
+
+EDITOR=vim bundle exec rails credentials:edit
+
+bash
+export RAILS_ENV=production
+export IKAMAIL_DATABASE_PASSWORD=dbpass
+
+EDITOR=vim bundle exec rails credentials:edit
+
+
+bundle exec rails yarn:install
+bundle exec rails assets:precompile
+
+mysql -h localhost -u root -p
+```
+create database ikamail;
+create user ikamail@'localhost' identified by 'dbpass';
+grant all privileges on ikamail.* to ikamail@'localhost';
+flush privileges;
+```
+
+bundle exec rails db:migrate
+bundle exec rails server
