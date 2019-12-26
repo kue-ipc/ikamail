@@ -190,6 +190,13 @@ flush privileges;
 ```
 
 bundle exec rails db:migrate
+
+実行
 bundle exec rails server
 
+終了
 kill `cat tmp/pids/puma.pid`
+
+ジョブ
+bundle exec bin/delayed_job -n 2 start
+bundle exec bin/delayed_job stop
