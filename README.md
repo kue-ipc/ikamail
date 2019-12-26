@@ -65,6 +65,18 @@ apt install libmariadbclient-dev-compat
 テストにはヘッドレスなChromiumとWebDriverが必要です。
 chromium-chromedriver
 
+## デプロイ
+
+config/environments/production.rb
+
+```
+database:
+  password: データベースのパスワード
+ldap:
+  password: LDAPのパスワード
+secret_key_base: (自動生成)
+```
+
 ## 制限事項
 
 * 宛先の最大数よりPostfixのsmtpd_recipient_limitが大きくなければならない。

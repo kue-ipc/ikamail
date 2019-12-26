@@ -51,7 +51,7 @@ production:
   <<: *default
   database: ikamail
   username: ikamail
-  password: <%= ENV['IKAMAIL_DATABASE_PASSWORD'] %>
+  password: <%= Rails.application.credentials.dig(:database, :password) %>
 
 # SQLite3
 # # SQLite. Versions 3.8.0 and up are supported.
