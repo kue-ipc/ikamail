@@ -193,12 +193,3 @@ bundle exec rails db:migrate
 bundle exec rails server
 
 kill `cat tmp/pids/puma.pid`
-
-
-## 修正すべき点
-
-* smtpd_recipient_limitにあわせて分割する
-* sendmailで送る場合も分割が必要
-* hostが無いよって怒られる
-* メール送信がエラーになってもエラーにならない。
-* LDAPとか本番と切り替えられるようにする。
