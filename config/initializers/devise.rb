@@ -12,8 +12,8 @@ Devise.setup do |config|
   config.ldap_create_user = true
   config.ldap_update_password = false
   config.ldap_config = proc do
-    yaml_config = YAML.safe_load(IO.read(Rails.root.join('config', 'ldap.yml')),
-                                 [Symbol], [], true)
+    yaml_str = ERB.new(IO.read(Rails.root.join('config', 'ldap.yml'))).result
+    yaml_config = YAML.safe_load(yaml_str, [Symbol], [], true)
     ldap_config = {
       'host' => yaml_config.dig('ldap', 'host'),
       'port' => yaml_config.dig('ldap', 'port'),

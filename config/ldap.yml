@@ -8,7 +8,7 @@ ldap: &LDAP
   auth:
     method: :sipmle
     username: &AUTH_USRERNAME cn=admin,dc=example,dc=jp
-    password: &AUTH_PASSOWRD <%= Rails.application.credentials.dig(:ldap, :password) || secret %>
+    password: &AUTH_PASSOWRD <%= Rails.application.credentials.dig(:ldap, :password) || 'secret' %>
   base: &BASE dc=example,dc=jp
   encryption: null
   # encryption: :simple_tls
