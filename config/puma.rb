@@ -16,7 +16,7 @@ threads min_threads_count, max_threads_count
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
 if !ENV.include?('PORT') && rails_env == 'production'
-  bind File.join(app_root, 'tmp/sockets/puma.sock')
+  bind 'unix://' + File.expand_path('tmp/sockets/puma.sock', app_root)
 else
   port ENV.fetch("PORT") { 3000 }
 end
@@ -44,7 +44,9 @@ environment rails_env
 plugin :tmp_restart
 
 if rails_env == 'production'
-  pidfile File.join(app_root, 'tmp/pids/puma.pid')
-  stdout_redirect File.join(app_root, 'log/puma.log'), File.join(app_root, 'log/puma-error.log'), true
+  pidfile File.expand_path('tmp/pids/puma.pid', app_root)
+  stdout_redirect(File.expand_path('log/puma.log', app_root),
+                  File.expand_path('log/puma-error.log', app_root),
+                  true)
   daemonize true
 end
