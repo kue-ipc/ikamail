@@ -73,6 +73,27 @@ sudo yum install libxml2-devel
 ```
 sudo yum install rh-nginx114
 ```
+systemctl status rh-nginx114-nginx
+
+```
+http {
+    upstream ikamail {
+        server unix:/opt/app/ikamail/tmp/sockets/puma.sock
+    }
+    server {
+        location / {
+            proxy_path http://ikamail;
+            proxy_redirect off;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+}
+```
+
+/opt/app/ikamail/tmp/sockets/puma.sock
+はsclで制限有り。
+/opt/app/ikamail/
 
 ### ldap
 
@@ -170,3 +191,13 @@ flush privileges;
 
 bundle exec rails db:migrate
 bundle exec rails server
+
+kill `cat tmp/pids/puma.pid`
+
+
+## 修正すべき点
+
+* smtpd_recipient_limitにあわせて分割する
+* sendmailで送る場合も分割が必要
+* hostが無いよって怒られる
+* メール送信がエラーになってもエラーにならない。
