@@ -35,6 +35,8 @@ class LdapUser < ActiveLdap::Base
         end
       end
       lang_desc
+    when Hash
+      self['description'].keys.first
     else
       self['displayName']
     end
