@@ -29,7 +29,7 @@ class LdapGroup < ActiveLdap::Base
       self['description'].each do |desc|
         if desc.is_a?(String)
           lang_desc = desc
-        elsif desc[lang]
+        elsif desc[lang].is_a?(String)
           lang_desc = desc[lang]
           break
         end
