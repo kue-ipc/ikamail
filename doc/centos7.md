@@ -1,6 +1,15 @@
 # CentOS 7 インストール
 
+このファイルはメモです。メンテナンスされていない場合があります。
+
 ## パッケージインストール
+
+### 全体
+
+```
+sudo yum install git
+sudo yum install vim
+```
 
 ```
 sudo yum install epel-release
@@ -8,13 +17,7 @@ sudo yum install centos-release-scl
 sudo yum groupinstall "Development Tools"
 ```
 
-```
-sudo yum install git
-sudo yum install vim
-```
-
-
-## Node.js と Yarn
+### Node.js と Yarn
 
 ```
 sudo yum install rh-nodejs10
@@ -22,36 +25,32 @@ curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yu
 sudo yum install yarn
 ```
 
-## Ruby
+### Ruby
 
 ```
 sudo yum install rh-ruby26 rh-ruby26-ruby-devel rh-ruby26-rubygem-bundler
 ```
 
-## MariaDB
+### MariaDB
 
-serverは10.3だがクライアントはcompitableで
+serverは10.3だがクライアントはcompitableなデフォルトのバージョンで行う。
 
 ```
 sudo yum install rh-mariadb103
+sudo yum install mariadb-devel
 ```
 
+```
 sudo systemctl start rh-mariadb103-mariadb
 sudo systemctl enable rh-mariadb103-mariadb
-
-scl enable rh-mariadb102 -- bash
-
+sudo scl enable rh-mariadb103 -- bash
 mysql_secure_installation
-
-rootのパスワードはpassで
-
-やはりコンパイルするしか無い
-sudo yum install mariadb mariadb-devel
-
-
-/etc/opt/rh/rh-mariadb103/my.cnf
-
 ```
+
+rootのパスワードを設定すること
+
+
+```/etc/opt/rh/rh-mariadb103/my.cnf.d/
 [client]
 default-character-set = utf8mb4
 
@@ -59,14 +58,96 @@ default-character-set = utf8mb4
 character-set-server = utf8mb4
 ```
 
-show variables like 'char%';で確認
+```/etc/my.cnf.d/defult.cnf
+[client]
+default-character-set = utf8mb4
 
-## その他
+[server]
+character-set-server = utf8mb4
+```
 
+utf8mb4が使用されているかどうかは`show variables like 'char%';`で確認する。
+
+### その他
+
+```
 sudo yum install libxml2-devel
+```
 
+## 環境構築
 
-## テスト環境構築
+```
+scl enable rh-nodejs10 rh-ruby26 -- bash
+```
+
+クローン
+
+```
+git clone ...
+cd ikamail
+bundle install --deployment
+bundle exec rails yarn:install
+bundle exec rails assets:precompile
+```
+
+```
+EDITOR=vim bundle exec rails credentials:edit
+```
+
+```credentials
+secret_key_base: 自動生成されるキー
+database:
+  password: データベースのikamailのパスワード
+ldap:
+  password: LDAPプロキシエージェントの設定
+```
+
+mysql -h localhost -u root -p
+```
+create database ikamail;
+create user ikamail@'localhost' identified by 'dbpass';
+grant all privileges on ikamail.* to ikamail@'localhost';
+flush privileges;
+```
+
+データベースのマイグレーション
+
+```
+RAILS_ENV=production bundle exec rails db:migrate
+```
+
+テスト
+```
+RAILS_ENV=production bundle exec rails server
+```
+
+クーロン登録
+```
+bundle exec whenever --update-crontab
+```
+
+ただし、sclが反映されないため、`/bin/scl enable rh-nodejs10 rh-ruby26 -- `を付ける必要がある。
+
+```実行
+bundle exec rails server
+```
+
+```終了
+kill `cat tmp/pids/puma.pid`
+```
+
+```ジョブ
+bundle exec bin/delayed_job -n 2 start
+bundle exec bin/delayed_job -n 2 stop
+```
+
+リバースプロキシ等は下記のテスト環境構築を参考に適当に設定すること。
+
+なお、Apacheは2.4.6のためUNIXドメインソケット経由でのリバースプロキシに未対応なので注意。
+
+## テスト環境構築(参考)
+
+これはメール送信まで可能なテスト環境を構築するための方法について記載したものです。各設定はサーバーによって大きく異なるため、本番環境では下記内容をそのまま設定してはいけません。内容を理解の上に参考情報としてお使いください。
 
 ### nginx
 
