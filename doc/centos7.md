@@ -85,7 +85,7 @@ scl enable rh-nodejs10 rh-ruby26 -- bash
 ```
 git clone ...
 cd ikamail
-bundle install --deployment
+bundle install --deployment --without development test
 bundle exec rails yarn:install
 bundle exec rails assets:precompile
 ```
