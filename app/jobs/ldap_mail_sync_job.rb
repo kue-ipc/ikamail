@@ -34,6 +34,9 @@ class LdapMailSyncJob < ApplicationJob
       mail_user_remains = Set.new(MailUser.all.map(&:name))
 
       LdapUser.all.each do |user|
+        # ignore user who dose not have mail addresses
+        next unless user.mail
+
         name = user.name
         mail_user_remains.delete(name)
         mail_user = MailUser.find_or_initialize_by(name: name)
