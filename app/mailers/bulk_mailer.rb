@@ -26,7 +26,8 @@ class BulkMailer < ApplicationMailer
 
     def before_deliver_bulk_mail
       @bulk_mail = params[:bulk_mail]
-      @bulk_mail.update_columns(status: 'delivering')
+      mail_count = @bulk_mail.template.increment!(:count).count
+      @bulk_mail.update_columns(status: 'delivering', number: mail_count)
       ActionLog.create(bulk_mail: @bulk_mail, action: 'start')
     end
 
