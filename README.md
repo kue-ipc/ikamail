@@ -4,7 +4,7 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 
 ユーザーのメールアドレス情報をLDAPから取得し、条件に一致するユーザーに対してメールを一括で送信します。
 
-##
+## 環境
 
 * 言語
     * Ruby 2.5 以上、2.6 以上推奨
@@ -17,7 +17,6 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 
 * データベース
     * MariaDB 10.1 以上、10.2.2 以上推奨
-
 
 * Configuration
 
@@ -39,6 +38,15 @@ collation-server      = utf8mb4_general_ci
 ```
 
 MariaDB 10.2.2 以上は上記のInnoDB設定がデフォルトであるため、不要です。
+
+
+### カーネル設定
+
+inotifyの最大監視数がデフォルトの8192では足りなくなる場合があります。ジョブのデーモンでエラーが出る場合は、/etc/sysctl.confに下記を追加してください。
+
+```/etc/sysctl.conf
+fs.inotify.max_user_watches = 32768
+```
 
 * Database initialization
 
