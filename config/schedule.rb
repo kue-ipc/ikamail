@@ -21,13 +21,13 @@
 
 # 4月1日にカウンターをリセットする。
 every '0 0 1 4 *' do
-  runner 'CronTask.reset_count_template'
+  runner 'ResetCountTemplateJob.perform_later'
 end
 
 every 1.day, at: ['6:00 am', '6:00 pm'] do
-  runner 'CronTask.sync_ldap_mail'
+  runner 'LdapMailSyncJob.perform_later'
 end
 
 every 1.day, at: '3:00 am' do
-  runner 'CronTask.sync_ldap_user'
+  runner 'LdapUserSyncJob.perform_later'
 end
