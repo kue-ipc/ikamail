@@ -79,7 +79,7 @@ class BulkMail < ApplicationRecord
         number_zen: number_str.tr('0-9', '０-９'),
         number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
         name: template.name,
-        datetime: I18n.t(datetime),
+        datetime: I18n.l(datetime, format: :datetime),
         date: I18n.l(datetime, format: :date),
         time: I18n.l(datetime, format: :time),
       }
