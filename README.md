@@ -75,7 +75,10 @@ chromium-chromedriver
 
 ## デプロイ
 
-config/environments/production.rb
+下記のファイルについてexample.jpの部分を環境に合わせて書き換える必要があります。
+
+- config/environments/production.rb
+- config/ldap.yml
 
 ```
 database:
@@ -84,6 +87,9 @@ ldap:
   password: LDAPのパスワード
 secret_key_base: (自動生成)
 ```
+
+
+
 
 ## 制限事項
 
