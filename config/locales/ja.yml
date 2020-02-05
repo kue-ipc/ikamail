@@ -193,6 +193,7 @@ ja:
     formats:
       date: "%Y年%m月%d日"
       time: "%H時%M分"
+      datetime: "%Y年%m月%d日 %H時%M分"
 
   notification_mailer:
     mail_apply:
