@@ -17,7 +17,7 @@ class BulkMailer < ApplicationMailer
     mail(
       subject: @bulk_mail.subject_all,
       from: @bulk_mail.template.from,
-      bcc: @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) +
+      bcc: @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
         [@bulk_mail.template.user.email, @bulk_mail.user.email]
     )
   end

@@ -369,7 +369,8 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail), mail.bcc
+    assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
+        [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -928,7 +929,8 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail), mail.bcc
+    assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
+        [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
 
     # メールのチェックが終わった時点で配送は完了している。
