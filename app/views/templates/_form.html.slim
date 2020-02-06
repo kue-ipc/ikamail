@@ -41,6 +41,9 @@
     = f.label :body_footer
     = f.text_area :body_footer, class: 'form-control text-monospace'
   .field.form-group
+    = f.label :count
+    = f.number_field :count, class: 'form-control'
+  .field.form-group
     = f.label :reserved_time
     = f.time_field :reserved_time, class: 'form-control'
   .filed.form-group

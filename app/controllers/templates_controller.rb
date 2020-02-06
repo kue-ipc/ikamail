@@ -84,6 +84,7 @@ class TemplatesController < ApplicationController
         :from_name, :from_mail_address,
         :subject_prefix, :subject_suffix,
         :body_header, :body_footer,
+        :count,
         :reserved_time,
         :description,
         :enabled,
