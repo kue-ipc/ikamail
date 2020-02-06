@@ -226,6 +226,8 @@ ja:
   values:
     none: "(無)"
     empty: "(空)"
+    disabled: "(無効)"
+    enabled: "(有効)"
 
   helpers:
     page_entries_info:

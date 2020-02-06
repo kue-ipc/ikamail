@@ -20,6 +20,9 @@ table.table
       tr
         td.position-relative
           = link_to template.name, template, class: 'stretched-link'
+          - unless template.enabled
+            span
+              = t(:disabled, scope: :values)
         td.position-relative
           = link_to template.recipient_list.name, template.recipient_list, class: 'stretched-link'
         td = template.count
