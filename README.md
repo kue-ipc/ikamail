@@ -88,9 +88,6 @@ ldap:
 secret_key_base: (自動生成)
 ```
 
-
-
-
 ## 制限事項
 
 * 宛先の最大数よりPostfixのsmtpd_recipient_limitが大きくなければならない。
