@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - 'bin/**/*'
     - 'node_modules/**/*'
+    - 'db/schema.rb'
 
 Rails:
   Enabled: true
@@ -35,6 +36,9 @@ Layout/EndOfLine:
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
+Layout/LineLength:
+  Max: 120
+
 Style/NumericLiterals:
   Enabled: false
 
@@ -59,9 +63,6 @@ Metrics/ClassLength:
 
 Metrics/CyclomaticComplexity:
   Max: 9
-
-Metrics/LineLength:
-  Max: 120
 
 Metrics/MethodLength:
   Max: 15

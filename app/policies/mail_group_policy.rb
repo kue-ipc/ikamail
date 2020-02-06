@@ -6,12 +6,4 @@ class MailGroupPolicy < ApplicationPolicy
       scope.all
     end
   end
-
-  def index?
-    true
-  end
-
-  def show?
-    true
-  end
 end

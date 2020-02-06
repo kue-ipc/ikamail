@@ -52,6 +52,17 @@ module ApplicationHelper
       path: recipient_lists_path,
       label: t_menu_action(:index, model: :recipient_list, count: 2),
     }
+    if current_user.admin?
+      list << {
+        path: mail_users_path,
+        label: t_menu_action(:index, model: :mail_user, count: 2),
+      }
+      list << {
+        path: mail_groups_path,
+        label: t_menu_action(:index, model: :mail_group, count: 2),
+      }
+    end
+    list
   end
 
   def dt_dd_tag(term, &block)
