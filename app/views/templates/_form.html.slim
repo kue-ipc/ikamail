@@ -49,7 +49,7 @@
   .filed.form-group
     = f.fields_for (@template.user || current_user) do |user|
       = user.label :username, @template.class.human_attribute_name(:user)
-      = user.text_field :username, class: 'form-control'
+      = user.text_field :username, class: 'form-control', disabled: !current_user.admin?
   .actions = f.submit class: 'btn btn-primary'
 
 hr

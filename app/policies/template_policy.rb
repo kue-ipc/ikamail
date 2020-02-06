@@ -19,6 +19,10 @@ class TemplatePolicy < ApplicationPolicy
     true
   end
 
+  def update?
+    user.admin? || record.user == user
+  end
+
   def count?
     update?
   end

@@ -89,7 +89,11 @@ class TemplatesController < ApplicationController
         :description,
         :enabled,
         user: :username)
-      permitted[:user] = User.find_by(username: permitted[:user][:username])
+      if current_user.admin?
+        permitted[:user] = User.find_by(username: permitted[:user][:username])
+      else
+        permitted[:user] = current_user
+      end
       permitted
     end
 
