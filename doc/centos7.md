@@ -87,7 +87,7 @@ git clone ...
 cd ikamail
 bundle install --deployment --without development test
 bundle exec rails yarn:install
-bundle exec rails assets:precompile
+RAILS_ENV=production bundle exec rails assets:precompile
 ```
 
 ```
