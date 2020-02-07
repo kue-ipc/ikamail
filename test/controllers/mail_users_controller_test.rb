@@ -31,13 +31,15 @@ class MailUsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should get index' do
-      get mail_users_url
-      assert_response :success
+      assert_raises(Pundit::NotAuthorizedError) do
+        get mail_users_url
+      end
     end
 
     test 'should show mail_user' do
-      get mail_user_url(@mail_user)
-      assert_response :success
+      assert_raises(Pundit::NotAuthorizedError) do
+        get mail_user_url(@mail_user)
+      end
     end
   end
 
