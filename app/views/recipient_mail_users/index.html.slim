@@ -4,9 +4,17 @@
 p
   = link_to '宛先リストに戻る', @recipient_list
 
+p
+  | 宛先リスト名:
+  =< @recipient_list.name
+
 - case @type
   - when 'applicable'
     p リストの対象になる宛先のリストです。このリストに記載されている宛先にメールが配信されます。対象のグループおよび含めるユーザーから構成されます。ただし、除外するユーザーは除きます。
+    p
+      => link_to '一覧のダウンロード', mail_users_recipient_list_path(@recipient_list, @type, page: 'all', format: 'csv'), class: 'btn btn-primary', download: "宛先一覧[#{@recipient_list.name}].csv"
+    p.small
+      | ファイルはCSV UTF-8 with BOMです。Excel 2016以上で文字化けせずに開くことができます。
   - when 'included'
     p リストの対象に含める宛先のリストです。グループに関係なく、このリスト内のユーザーはリストの対象になります。ただし、除外するユーザーに記載の場合はそちらが優先されます。
   - when 'excluded'

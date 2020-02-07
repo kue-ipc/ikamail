@@ -8,7 +8,7 @@ class RecipientMailUsersController < ApplicationController
   # GET /recipient_lists/1/mail_users/included
   # GET /recipient_lists/1/mail_users/included
   def index
-    @mail_users =
+    all_mail_users =
       case @type
       when 'applicable'
         @recipient_list.applicable_mail_users
@@ -16,7 +16,15 @@ class RecipientMailUsersController < ApplicationController
         @recipient_list.included_mail_users
       when 'excluded'
         @recipient_list.excluded_mail_users
-      end&.order(:name)&.page(params[:page])
+      end&.order(:name)
+
+    @mail_users =
+      if params[:page] == 'all'
+        all_mail_users&.page(nil)&.per(all_mail_users&.count)
+      else
+        all_mail_users&.page(params[:page])
+      end
+
     flash.alert = '指定のリストはありません。' if @mail_users.nil?
   end
 

@@ -1,0 +1,7 @@
+<%= "\uFEFF" -%>
+<%- require 'csv' -%>
+<%- attrs = [:name, :display_name, :mail] -%>
+<%== attrs.map { |attr| MailUser.human_attribute_name(attr) }.to_csv -%>
+<%- @mail_users.each do |mail_user| -%>
+<%== attrs.map { |attr| mail_user[attr] }.to_csv -%>
+<%- end -%>
