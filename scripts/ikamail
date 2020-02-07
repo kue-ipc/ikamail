@@ -1,0 +1,13 @@
+# ikamail
+#
+# You must change here if you use the other directory.
+IKAMAIL_ROOT=/opt/ikamail
+# production mode
+RAILS_ENV=production
+# Port
+PORT=8080
+# User and Group
+IKAMAIL_USER=ikamail
+IKAMAIL_GROUP=ikamail
+# SCLs
+SCLS=rh-nodejs10 rh-ruby26

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd $IKAMAIL
+
+bundle exec bin/delayed_job -n 2 stop
+kill `cat tmp/pids/puma.pid`
