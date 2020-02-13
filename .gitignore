@@ -36,3 +36,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# specify version for the local development
+.*-version
