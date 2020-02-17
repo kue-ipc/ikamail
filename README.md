@@ -32,17 +32,21 @@ fs.inotify.max_user_watches = 32768
 拡張面の漢字や絵文字等に対応するためにはutf8mb4でなければなりません。しかし、utf8mb4では255文字が767バイトを越えてしまうため、`innodb_large_prefix`が有効でなければなりません。MariaDB 10.2.1 以下でutf8mb4を使用する場合は以下のようにmy.cnfに追加してください。これはアプリ用のデータベースを作成する前に実施する必要があります。
 
 ```my.cnf
+[client]
+default-character-set = utf8mb4
+
+[server]
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
+
 [mysqld]
 innodb_file_format = Barracuda
 innodb_file_per_table
 innodb_large_prefix
 innodb_default_row_format = DYNAMIC
-
-character-set-server  = utf8mb4
-collation-server      = utf8mb4_general_ci
 ```
 
-MariaDB 10.2.2 以上は上記のInnoDB設定がデフォルトであるため、不要です。
+MariaDB 10.2.2 以上は上記のInnoDB設定がデフォルトであるため、後半は不要です。
 
 ## デプロイ
 
@@ -58,7 +62,7 @@ RAILS_ENV=production bundle exec rails assets:precompile
 
 `EDITOR=vim bundle exec rails credentials:edit`でmaster.keyを新たに生成して、credentialsに下記情報を書き込んでください。Yaml形式です。
 
-```Yaml
+```YAML
 secret_key_base: (自動生成)
 database:
   password: データベースのパスワード
@@ -99,8 +103,7 @@ bundle exec whenever --update-crontab
 
 ## 開発とテスト
 
-テスト用LDAPサーバーは"test/ldap"にあります。slapdとldap-utilsを入れておいてください。
-`./test/ldap/run-server`でサーバーが起動します。初期データはbase.ldifを投げてください。
+テスト用LDAPサーバーは"test/ldap"にあります。slapdとldap-utilsを入れておいてください。`./test/ldap/run-server`でサーバーが起動します。初期データはbase.ldifを投げてください。Ubuntuでslapdサービスを起動している場合は、exmaple.ldifを投げてください。状況に応じて、config/ldap.ymlを書き換えてください。
 
 テストにはヘッドレスなChromiumとWebDriverが必要ですが、現在テストは実装されていません。
 
