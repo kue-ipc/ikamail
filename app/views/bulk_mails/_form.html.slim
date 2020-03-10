@@ -30,6 +30,6 @@
   .field.form-group
     = fields @action_info do |field|
       = field.hidden_field :current_status
-      = field.label :comment, 'コメント (任意)'
+      = field.label :comment, (ActionLog.human_attribute_name(:comment) + ' ' + t(:optional, scope: :values))
       = field.text_area :comment, rows: 3, class: 'form-control'
   .actions = f.submit class: 'btn btn-primary'
