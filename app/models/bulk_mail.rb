@@ -20,8 +20,8 @@ class BulkMail < ApplicationRecord
   }, _prefix: true
 
   enum delivery_timing: {
-    immediate: 0,
     reserved: 1,
+    immediate: 0,
     manual: 2,
   }, _prefix: true
 
