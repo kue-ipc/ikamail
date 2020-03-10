@@ -1,5 +1,14 @@
+noscript
+  .alert.alert-danger.alertdismissible.fade.show role="alert"
+    = t(:require_javascript, scope: :messages)
+
+#require-modern-browser.d-none
+  .alert.alert-danger.alertdismissible.fade.show role="alert"
+    = t(:require_modern_browser, scope: :messages)
+
 h2
   = t('.sign_in')
+
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   .field.form-group
     = f.label :username
@@ -14,3 +23,5 @@ h2
   .actions
     = f.submit t('.sign_in'), class: 'btn btn-primary'
 = render "devise/shared/links"
+
+= javascript_pack_tag 'require-modern-browser', 'data-turbolinks-track': 'reload'

@@ -17,6 +17,13 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 * データベース
     * MariaDB 10.1 以上、10.2.2 以上推奨
 
+* ブラウザ
+    * Microsoft Edge
+    * Mozilla Firefox
+    * Apple Safari
+    * Google Chrome
+    ※ Internet Explorerには対応していません。
+
 ## OS設定
 
 本番環境でのDelayedJobが大量のファイルを監視を行う関係で、inotifyの監視数上限(デフォルトは`8192`)を超えてしまう場合があります。DelayedJobのデーモンでエラーが出る場合は、/etc/sysctl.confに下記を追加して、`sysctl -p`で読み込みを行ってください。
