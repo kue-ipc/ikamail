@@ -21,6 +21,11 @@
         = f.label '', class: ['btn', 'btn-primary', @bulk_mail.delivery_timing == timing ? 'active' : '']
           = f.radio_button :delivery_timing, timing, required: true
           = t timing, scope: [:mail, :timings]
+    - BulkMail::delivery_timings.each_key do |timing|
+      small.form-text.text-muted
+        = t timing, scope: [:mail, :timings]
+        | :
+        =< t timing, scope: [:descriptions, :timings]
   .field.form-group
     = f.label :subject
     = f.text_field :subject, class: 'form-control'
