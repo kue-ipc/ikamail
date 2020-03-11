@@ -1,27 +1,21 @@
-noscript
-  .alert.alert-danger.alertdismissible.fade.show role="alert"
-    = t(:require_javascript, scope: :messages)
-
-#require-modern-browser.d-none
-  .alert.alert-danger.alertdismissible.fade.show role="alert"
-    = t(:require_modern_browser, scope: :messages)
-
 h2
   = t('.sign_in')
 
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field.form-group
-    = f.label :username
-    = f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control'
-  .field.form-group
-    = f.label :password
-    = f.password_field :password, autocomplete: 'current-password', class: 'form-control'
-  - if devise_mapping.rememberable?
-    .field.form-group.form-check
-      = f.check_box :remember_me, class: 'form-check-input'
-      = f.label :remember_me, class: 'form-check-label'
-  .actions
-    = f.submit t('.sign_in'), class: 'btn btn-primary'
+  fieldset#login-fieldset disabled=true
+    .field.form-group
+      = f.label :username
+      = f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control'
+    .field.form-group
+      = f.label :password
+      = f.password_field :password, autocomplete: 'current-password', class: 'form-control'
+    - if devise_mapping.rememberable?
+      .field.form-group.custom-control.custom-checkbox
+        = f.check_box :remember_me, class: 'custom-control-input'
+        = f.label :remember_me, class: 'custom-control-label'
+    .actions
+      = f.submit t('.sign_in'), id: 'login-submit', class: 'btn btn-primary', disabled: true
 = render "devise/shared/links"
 
-= javascript_pack_tag 'require-modern-browser', 'data-turbolinks-track': 'reload'
+javascript:
+  if (window.Promise != null) ['login-fieldset', 'login-submit'].forEach((id) => document.getElementById(id).disabled = false);
