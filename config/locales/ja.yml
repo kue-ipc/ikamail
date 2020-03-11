@@ -46,6 +46,31 @@ ja:
 
   do_actions:
     close: 閉じる
+    index: 一覧を表示する
+    new: 新規作成する
+    show: 閲覧する
+    edit: 編集する
+    destroy: 削除する
+    save: 保存する
+    create: 作成する
+    update: 更新する
+    add: 追加する
+    delete: 削除する
+    insert: 挿入する
+    register: 登録する
+    reset: リセットする
+    apply: 申し込む
+    withdraw: 取り下げる
+    approve: 受け付ける
+    reject: 拒否する
+    cancel: 中止する
+    reserve: 予約する
+    deliver: 配信する
+    redilver: 再配信する
+    finish: 完了する
+    fail: 失敗する
+    error: エラーになる
+    start: 開始する
 
   links:
     back_to: "%{name}に戻る"

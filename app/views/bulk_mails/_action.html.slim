@@ -31,5 +31,5 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
               small.form-text.text-muted
                 | コメントは必須です。
         .modal-footer
-          = f.submit "#{t(action, scope: :actions)}する", class: "btn btn-#{level}"
+          = f.submit t(action, scope: :do_actions), class: "btn btn-#{level}"
           button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
