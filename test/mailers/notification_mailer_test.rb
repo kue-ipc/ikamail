@@ -15,7 +15,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_apply' do
     mail = NotificationMailer.with(**@params).mail_apply
-    assert_equal '【一括メールシステム通知】申請', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】申込み', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_apply.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -23,7 +23,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_apply two users' do
     mail = NotificationMailer.with(**@params.merge({to: [users(:user01), users(:user02)]})).mail_apply
-    assert_equal '【一括メールシステム通知】申請', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】申込み', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp', 'user02@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_apply.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -31,7 +31,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_apply nil comment' do
     mail = NotificationMailer.with(**@params.merge({comment: nil})).mail_apply
-    assert_equal '【一括メールシステム通知】申請', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】申込み', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_apply_no_comment.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -39,7 +39,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_apply empty comment' do
     mail = NotificationMailer.with(**@params.merge({comment: ''})).mail_apply
-    assert_equal '【一括メールシステム通知】申請', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】申込み', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_apply_no_comment.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -47,7 +47,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_approve' do
     mail = NotificationMailer.with(**@params).mail_approve
-    assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_approve.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -55,7 +55,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_reject' do
     mail = NotificationMailer.with(**@params).mail_reject
-    assert_equal '【一括メールシステム通知】却下', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】受付拒否', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_reject.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -63,7 +63,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_cancel' do
     mail = NotificationMailer.with(**@params).mail_cancel
-    assert_equal '【一括メールシステム通知】取消', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】配信中止', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_cancel.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
@@ -79,7 +79,7 @@ class NotificationMailerTest < ActionMailer::TestCase
 
   test 'mail_fail' do
     mail = NotificationMailer.with(**@params).mail_fail
-    assert_equal '【一括メールシステム通知】失敗', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】配信失敗', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_fail.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")

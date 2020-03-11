@@ -235,7 +235,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.user.email], mail.to
-    assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'ready', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -251,7 +251,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.user.email], mail.to
-    assert_equal '【一括メールシステム通知】却下', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】受付拒否', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'draft', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -407,7 +407,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.user.email], mail.to
-    assert_equal '【一括メールシステム通知】取消', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】配信中止', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -524,7 +524,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.user.email], mail.to
-    assert_equal '【一括メールシステム通知】取消', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】配信中止', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -1274,7 +1274,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries[-3]
     assert_equal [@bulk_mail.user.email], mail.to
-    assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
 
     mail = ActionMailer::Base.deliveries[-2]
     assert_equal [@bulk_mail.user.email], mail.to
@@ -1302,7 +1302,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     # mail = ActionMailer::Base.deliveries.last
     # assert_equal [@bulk_mail.user.email], mail.to
-    # assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+    # assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'reserved', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -1318,7 +1318,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.user.email], mail.to
-    assert_equal '【一括メールシステム通知】承認', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'ready', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)

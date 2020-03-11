@@ -1,5 +1,2 @@
-一括メールシステムで下記メールの承認が取り消されました。
-再度承認されるまで配信されることはありません。
-管理者が承認または却下するまで、お待ち下さい。
-
-<%= render partial: 'mail', locals: {comment_name: '取消時のコメント'} %>
+<%= t('.message') %>
+<%= render partial: 'mail', locals: {action: :cancel} %>

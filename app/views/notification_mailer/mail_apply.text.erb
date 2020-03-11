@@ -1,4 +1,2 @@
-一括メールシステムで下記メールが申請されました。
-メール内容を確認し、承認または却下を実施してください。
-
-<%= render partial: 'mail', locals: {comment_name: '申請時のコメント'} %>
+<%= t('.message') %>
+<%= render partial: 'mail', locals: {action: :apply} %>

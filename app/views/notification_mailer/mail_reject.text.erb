@@ -1,4 +1,2 @@
-一括メールシステムで下記メールが却下されました。
-コメントを参考にメールを編集し、再度申請してください。
-
-<%= render partial: 'mail', locals: {comment_name: '却下時のコメント'} %>
+<%= t('.message') %>
+<%= render partial: 'mail', locals: {action: :reject} %>

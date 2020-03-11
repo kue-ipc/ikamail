@@ -1,9 +1,16 @@
-題名: <%= @bulk_mail.subject %>
-テンプレート: <%= @bulk_mail.template.name %>
-配信タイミング: <%= t(@bulk_mail.delivery_timing, scope: [:mail, :timings]) %>
-作成者: <%= @bulk_mail.user.name %>
+<%= BulkMail.human_attribute_name(:subject) %>: <%= @bulk_mail.subject %>
+<%= BulkMail.human_attribute_name(:template) %>: <%= @bulk_mail.template.name %>
+<%= BulkMail.human_attribute_name(:delivery_timing) %>: <%= t(@bulk_mail.delivery_timing, scope: [:mail, :timings]) %>
+<%= BulkMail.human_attribute_name(:user) %>: <%= @bulk_mail.user.name %>
 <% if @comment.present? %>
 
-<%= comment_name || 'コメント' %>:
+<%= if (defined? comment_title) && comment_title
+  comment_title
+elsif (defined? action) && action
+  t(:comment_of_action, scope: :messages, action: t(action, scope: :actions))
+else
+  t(:comment, scope: :messages)
+end
+%>:
 <%= @comment %>
 <% end %>

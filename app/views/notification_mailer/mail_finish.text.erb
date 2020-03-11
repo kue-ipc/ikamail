@@ -1,3 +1,2 @@
-一括メールシステムで下記メールの配信が完了ました。
-
-<%= render partial: 'mail', locals: {comment_name: '完了時のコメント'} %>
+<%= t('.message') %>
+<%= render partial: 'mail', locals: {action: :finish} %>

@@ -1,4 +1,4 @@
-一括メールシステムで下記メールの処理が失敗しました。
-失敗内容を確認し、必要に応じて再度申請・承認等を行ってください。
-
-<%= render partial: 'mail', locals: {comment_name: '失敗内容'} %>
+<%= t('.message') %>
+<%= render partial: 'mail', locals: {
+  comment_title: t(:content_of_action, scope: :messages, action: t(:fail, scope: :actions))
+} %>

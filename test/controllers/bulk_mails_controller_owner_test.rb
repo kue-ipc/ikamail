@@ -111,7 +111,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.template.user.email], mail.to
-    assert_equal '【一括メールシステム通知】申請', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal '【一括メールシステム通知】申込み', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
