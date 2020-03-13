@@ -2,7 +2,7 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.6
   Exclude:
     - 'bin/**/*'
     - 'node_modules/**/*'
@@ -75,3 +75,12 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Max: 11
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
