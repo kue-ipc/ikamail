@@ -1,0 +1,23 @@
+## LDAP
+# For development and test
+ldap:
+  host: localhost
+  port: 389
+  auth: :sipmle
+  username: cn=admin,dc=example,dc=jp
+  password: pass
+  base: dc=example,dc=jp
+  encryption: null
+  user:
+    dn: uid
+    base: ou=Users
+    class: posixAccount
+  group:
+    dn: cn
+    base: ou=Groups
+    class: posixGroup
+  restrict:
+    auth:
+      groups:
+        - admin
+        - staff

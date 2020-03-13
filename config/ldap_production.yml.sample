@@ -1,0 +1,28 @@
+## LDAP
+# This is a sample "ldap_production.yml" for production environment.
+# You must rename it to "ldap_production.yml" and change values.
+ldap:
+  # LDAP Server Host
+  host: ldap.example.jp
+  # LDAP Server Port
+  port: 636
+  # null(:anonymouse) or :simple
+  # if :simple, you must set ldap: -> username: and password: in credentials.
+  auth: :simple
+  base: dc=example,dc=jp
+  # null or :start_tls or :simple_tls
+  encryption: :simple_tls
+  # user
+  user_dn: uid
+  user_base: ou=Users
+  user_class: posixAccount
+  # group
+  group_dn: cn
+  group_base: ou=Groups
+  group_class: posixGroup
+  # restrict user and group
+  restrict:
+    auth:
+      groups:
+        - admin
+        - staff

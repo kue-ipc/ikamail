@@ -50,8 +50,8 @@ test:
 production:
   <<: *default
   database: ikamail
-  username: <%= Rails.application.credentials.dig(:database, :username) %>
-  password: <%= Rails.application.credentials.dig(:database, :password) %>
+  username: <%= Rails.application.credentials.dig(:database, :username).to_json %>
+  password: <%= Rails.application.credentials.dig(:database, :password).to_json %>
 
 # SQLite3
 # # SQLite. Versions 3.8.0 and up are supported.

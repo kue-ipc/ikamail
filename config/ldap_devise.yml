@@ -16,6 +16,75 @@ else
   config = YAML.safe_load(IO.read(yaml_file), [Symbol], [], true, yaml_file, symbolize_names: true)[:ldap]
 end
 %>
+# devise_ldap_authenticatable
+authorizations: &AUTHORIZATIONS
+  host: <%= config[:host].to_json %>
+  port: <%= config[:port].to_json %>
+  ssl: <%= (config[:encryption] || false).to_json %>
+  attribute: <%= config[:user][:dn] %>
+  base: <%= "#{config[:user][:base]},#{config[:base]}".to_json %>
+  group_base: <%= "#{config[:group][:base]},#{config[:base]}".to_json %>
+<% if config[:auth] == :sipmle>
+  allow_unauthenticated_bind: false
+  admin_user: <%= config[:username].to_json %>
+  admin_password: <%= config[:password].to_json %>
+<% else %>
+  allow_unauthenticated_bind: true
+<% end %>
+  require_attribute:
+    objectClass: <%= config[:user][:class] %>
+  required_groups: <%=
+    config[:restrict][:auth][:groups]
+  %>
+    # If only a group name is given, membership will be checked against "uniqueMember"
+    - cn=admins,ou=groups,dc=test,dc=com
+    - cn=users,ou=groups,dc=test,dc=com
+    # If an array is given, the first element will be the attribute to check against, the second the group name
+    - ["moreMembers", "cn=users,ou=groups,dc=test,dc=com"]
+  ## Requires config.ldap_check_attributes in devise.rb to be true
+  ## Can have multiple attributes and values, must match all to be authorized
+  require_attribute:
+    objectClass: inetOrgPerson
+    authorizationRole: postsAdmin
+  ## Requires config.ldap_check_attributes_presence in devise.rb to be true
+  ## Can have multiple attributes set to true or false to check presence, all must match all to be authorized
+  require_attribute_presence:
+    mail: true
+    telephoneNumber: true
+    serviceAccount: false
+
+## Environment
+
+development:
+  host: localhost
+  port: 389
+  attribute: cn
+  base: ou=people,dc=test,dc=com
+  admin_user: cn=admin,dc=test,dc=com
+  admin_password: admin_password
+  ssl: false
+  # <<: *AUTHORIZATIONS
+
+test:
+  host: localhost
+  port: 3389
+  attribute: cn
+  base: ou=people,dc=test,dc=com
+  admin_user: cn=admin,dc=test,dc=com
+  admin_password: admin_password
+  ssl: simple_tls
+  # <<: *AUTHORIZATIONS
+
+production:
+  host: localhost
+  port: 636
+  attribute: cn
+  base: ou=people,dc=test,dc=com
+  admin_user: cn=admin,dc=test,dc=com
+  admin_password: admin_password
+  ssl: start_tls
+  # <<: *AUTHORIZATIONS
+
 # # compitable Net::LDAP
 # ldap: &LDAP
 #   host: &HOST localhost
