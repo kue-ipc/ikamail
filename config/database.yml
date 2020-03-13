@@ -50,7 +50,7 @@ test:
 production:
   <<: *default
   database: ikamail
-  username: ikamail
+  username: <%= Rails.application.credentials.dig(:database, :username) %>
   password: <%= Rails.application.credentials.dig(:database, :password) %>
 
 # SQLite3
