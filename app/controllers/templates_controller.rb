@@ -4,7 +4,6 @@ class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy, :count]
   before_action :authorize_template, only: [:index, :new, :create]
 
-
   # GET /templates
   # GET /templates.json
   def index
@@ -64,7 +63,6 @@ class TemplatesController < ApplicationController
     end
   end
 
-
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -84,16 +82,15 @@ class TemplatesController < ApplicationController
         :from_name, :from_mail_address,
         :subject_prefix, :subject_suffix,
         :body_header, :body_footer,
-        :count,
-        :reserved_time,
-        :description,
-        :enabled,
-        user: :username)
-      if current_user.admin?
-        permitted[:user] = User.find_by(username: permitted[:user][:username])
-      else
-        permitted[:user] = current_user
-      end
+        :count, :reserved_time, :description, :enabled,
+        user: :username
+      )
+      permitted[:user] =
+        if current_user.admin?
+          User.find_by(username: permitted[:user][:username])
+        else
+          current_user
+        end
       permitted
     end
 

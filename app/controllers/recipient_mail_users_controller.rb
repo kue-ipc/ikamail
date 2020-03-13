@@ -55,7 +55,7 @@ class RecipientMailUsersController < ApplicationController
     elsif @recipient
       @recipient.update_column(@type, false)
       if !@recipient.included && !@recipient.excluded &&
-          (@mail_user.mail_groups & @recipient_list.mail_groups).empty?
+         (@mail_user.mail_groups & @recipient_list.mail_groups).empty?
         @recipient.destroy
       end
       redirect_to @recipient_list, notice: '指定のリストからユーザーを削除しました。'

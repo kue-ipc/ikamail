@@ -12,7 +12,8 @@ class MailGroupsController < ApplicationController
 
   # GET /mail_groups/1
   # GET /mail_groups/1.json
-  def show; end
+  def show
+  end
 
   private
 

@@ -84,3 +84,9 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/WordArray:
+  MinSize: 3

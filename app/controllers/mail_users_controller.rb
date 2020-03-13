@@ -14,9 +14,7 @@ class MailUsersController < ApplicationController
         MailUser
       end
 
-    if search_params[:query].present?
-      all_mail_users = all_mail_users.where('name LIKE ?', "#{search_params[:query]}%")
-    end
+    all_mail_users = all_mail_users.where('name LIKE ?', "#{search_params[:query]}%") if search_params[:query].present?
 
     @mail_users = policy_scope(all_mail_users).order(:name).page(params[:page])
   end
@@ -42,6 +40,7 @@ class MailUsersController < ApplicationController
   # end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_mail_user
       @mail_user = MailUser.find(params[:id])

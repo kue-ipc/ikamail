@@ -72,7 +72,7 @@ module ApplicationHelper
     end
   end
 
-  def dt_dd_for(recored, attr, **opts, &block)
+  def dt_dd_for(recored, attr, **opts)
     if block_given?
       dt_dd_tag recored.class.human_attribute_name(attr) do
         yield recored.__send__(attr)
