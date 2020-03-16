@@ -17,8 +17,10 @@ else
 end
 %>
 
+ldap: <%= config.to_json %>
+
 ## ActiveLdap
-ldap: &ACTIVE_LDAP
+active_ldap: &ACTIVE_LDAP
   host: <%= config[:host].to_json %>
   port: <%= config[:port].to_json %>
   base: <%= config[:base].to_json %>

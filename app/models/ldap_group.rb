@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class LdapGroup < ActiveLdap::Base
-  ldap_mapping dn_attribute: configurations['ldap']['group_dn'],
-               prefix: configurations['ldap']['group_base'],
-               classes: configurations['ldap']['group_classes']
+  ldap_mapping dn_attribute: configurations['ldap']['group']['dn'],
+               prefix: configurations['ldap']['group']['base'],
+               classes: configurations['ldap']['group']['classes']
 
   has_many :primary_users, class_name: 'LdapUser',
                            primary_key: 'gidNumber',

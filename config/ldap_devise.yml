@@ -17,6 +17,8 @@ else
 end
 %>
 
+ldap: <%= config.to_json %>
+
 # devise_ldap_authenticatable
 authorizations: &AUTHORIZATIONS
   host: <%= config[:host].to_json %>
