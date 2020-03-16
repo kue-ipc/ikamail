@@ -87,20 +87,24 @@ git clone ...
 cd ikamail
 bundle install --deployment --without development test
 bundle exec rails yarn:install
-RAILS_ENV=production bundle exec rails assets:precompile
 ```
+
+config/credentilas.yml.sampleを参考にcredentialsを作成する。
 
 ```
 EDITOR=vim bundle exec rails credentials:edit
 ```
 
-```credentials
-secret_key_base: 自動生成されるキー
-database:
-  password: データベースのikamailのパスワード
-ldap:
-  password: LDAPプロキシエージェントの設定
+config/ldap_production.yml.sampleをコピーして、config/ldap_production.ymlを作成する。
+内容は適当に編集する。
+
+アセットを事前コンパイルする。
+
 ```
+RAILS_ENV=production bundle exec rails assets:precompile
+```
+
+データベースを作る。
 
 mysql -h localhost -u root -p
 ```
@@ -126,7 +130,7 @@ RAILS_ENV=production bundle exec rails server
 bundle exec whenever --update-crontab
 ```
 
-ただし、sclが反映されないため、`/bin/scl enable rh-nodejs10 rh-ruby26 -- `を付ける必要がある。
+.bashrcでsclを読み込む場合はそのままでよい。読み込まない場合は、sclが反映されないため、`/bin/scl enable rh-nodejs10 rh-ruby26 -- `を付ける必要がある。
 
 ```実行
 bundle exec rails server

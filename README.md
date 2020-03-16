@@ -26,7 +26,7 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 
 ## OS設定
 
-本番環境でのDelayedJobが大量のファイルを監視を行う関係で、inotifyの監視数上限(デフォルトは`8192`)を超えてしまう場合があります。DelayedJobのデーモンでエラーが出る場合は、/etc/sysctl.confに下記を追加して、`sysctl -p`で読み込みを行ってください。
+本番環境でのDelayedJobが大量のファイルを監視を行う関係で、inotifyの監視数上限(デフォルトは`8192`)を超えてしまう場合があります。DelayedJobのデーモンでエラーが出る場合は、"/etc/sysctl.conf"に下記を追加して、`sysctl -p`で読み込みを行ってください。
 
 ```/etc/sysctl.conf
 fs.inotify.max_user_watches = 32768
@@ -57,33 +57,41 @@ MariaDB 10.2.2 以上は上記のInnoDB設定がデフォルトであるため�
 
 ## デプロイ
 
-下記コマンドで準備をします。
+下記コマンドでクローンおよび必要なライブラリをインストールします。
 
 ```
 git clone https://github.com/kue-ipc/ikamail.git
 cd ikamail
 bundle install --deployment --without development test
 bundle exec rails yarn:install
+```
+
+コマンドがエラーになった場合は、Ruby、Node.js、Yarnが正常にインストールされているかを確認してください。
+
+下記コマンドでcredentialsを作成します。
+
+```
+EDITOR=vim bundle exec rails credentials:edit
+```
+
+redentialsにデータベースやLDAPのアカウント情報をYAML形式で記入してください。最初の実行で"config/master.key"と"config/credentials.yml.enc"を新たに作成されます。編集する場合は、上記のコマンドを再度実行してください。追加する項目は"config/credentials.yml.sample"を参考にしてください。"config/master.key"は漏洩しないように注意してください。ファイルではなく、環境変数`RAILS_MASTER_KEY`で渡すようにすることもできます。
+
+続いてLDAPの設定を行います。下記コマンドで"config/ldap_production.yml.sapmle"のコピーとして"config/ldap_production.yml"を作成し、編集します。
+
+```
+cp -ip config/ldap_production.yml.sapmle config/ldap_production.yml
+vim config/ldap_production.yml
+```
+
+サンプルを参考に、バインドアカウント以外のLDAP情報を記入してください。バインドアカウント情報はcredentialsに記入してください。
+
+下記コマンドでアセットファイルを事前コンパイルを行います。
+
+```
 RAILS_ENV=production bundle exec rails assets:precompile
 ```
 
-`EDITOR=vim bundle exec rails credentials:edit`でmaster.keyを新たに生成して、credentialsに下記情報を書き込んでください。Yaml形式です。
-
-```YAML
-secret_key_base: (自動生成)
-database:
-  password: データベースのパスワード
-ldap:
-  password: LDAPのパスワード
-```
-
-
-また、下記のファイルについてexample.jpの部分を環境に合わせて書き換える必要があります。
-
-- config/environments/production.rb
-- config/ldap.yml
-
-`config/database.yml`を書き換えるか、既に書いてある内容通りのデータベースを作成してください。
+データベースに専用のデータベースとユーザーを作成します。データベースのデフォルト接続先はlocalhostのMariaDBで、データベース名はikamailです。環境変数`DATABASE_URL`を使用してください。
 
 ```SQL
 create database ikamail;
