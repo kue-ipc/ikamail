@@ -16,146 +16,39 @@ else
   config = YAML.safe_load(IO.read(yaml_file), [Symbol], [], true, yaml_file, symbolize_names: true)[:ldap]
 end
 %>
+
 # devise_ldap_authenticatable
 authorizations: &AUTHORIZATIONS
   host: <%= config[:host].to_json %>
   port: <%= config[:port].to_json %>
   ssl: <%= (config[:encryption] || false).to_json %>
-  attribute: <%= config[:user][:dn] %>
-  base: <%= "#{config[:user][:base]},#{config[:base]}".to_json %>
-  group_base: <%= "#{config[:group][:base]},#{config[:base]}".to_json %>
-<% if config[:auth] == :sipmle>
+  attribute: <%= config[:user][:dn].to_json %>
+  base: <%= [config[:user][:base], config[:base]].join(',').to_json %>
+  group_base: <%= [config[:group][:base], config[:base]].join(',').to_json %>
+<% if config[:auth] == :sipmle %>
   allow_unauthenticated_bind: false
   admin_user: <%= config[:username].to_json %>
   admin_password: <%= config[:password].to_json %>
 <% else %>
   allow_unauthenticated_bind: true
 <% end %>
-  require_attribute:
-    objectClass: <%= config[:user][:class] %>
   required_groups: <%=
-    config[:restrict][:auth][:groups]
+    config[:restrict][:auth][:groups].map do |name|
+      ["#{config[:group][:dn]}=#{name}", config[:group][:base], config[:base]].join(',')
+    end.to_json
   %>
-    # If only a group name is given, membership will be checked against "uniqueMember"
-    - cn=admins,ou=groups,dc=test,dc=com
-    - cn=users,ou=groups,dc=test,dc=com
-    # If an array is given, the first element will be the attribute to check against, the second the group name
-    - ["moreMembers", "cn=users,ou=groups,dc=test,dc=com"]
-  ## Requires config.ldap_check_attributes in devise.rb to be true
-  ## Can have multiple attributes and values, must match all to be authorized
   require_attribute:
-    objectClass: inetOrgPerson
-    authorizationRole: postsAdmin
-  ## Requires config.ldap_check_attributes_presence in devise.rb to be true
-  ## Can have multiple attributes set to true or false to check presence, all must match all to be authorized
+    objectClass: <%= config[:user][:class].to_json %>
   require_attribute_presence:
     mail: true
-    telephoneNumber: true
-    serviceAccount: false
 
 ## Environment
 
 development:
-  host: localhost
-  port: 389
-  attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
-  admin_password: admin_password
-  ssl: false
-  # <<: *AUTHORIZATIONS
+  <<: *AUTHORIZATIONS
 
 test:
-  host: localhost
-  port: 3389
-  attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
-  admin_password: admin_password
-  ssl: simple_tls
-  # <<: *AUTHORIZATIONS
+  <<: *AUTHORIZATIONS
 
 production:
-  host: localhost
-  port: 636
-  attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
-  admin_password: admin_password
-  ssl: start_tls
-  # <<: *AUTHORIZATIONS
-
-# # compitable Net::LDAP
-# ldap: &LDAP
-#   host: &HOST localhost
-#   port: &PORT <%= Rails.env == 'production' ? 389 : 389 %>
-#   # auth: :anonymous
-#   auth:
-#     method: :sipmle
-#     username: &AUTH_USERNAME cn=admin,dc=example,dc=jp
-#     password: &AUTH_PASSOWRD <%= Rails.application.credentials.dig(:ldap, :password) || 'pass' %>
-#   base: &BASE dc=example,dc=jp
-#   encryption: null
-#   # user
-#   user_dn: uid
-#   user_base: ou=Users
-#   user_class: posixAccount
-#   # group
-#   group_dn: cn
-#   group_base: ou=Groups
-#   group_class: posixGroup
-
-## ActiveLdap
-active_ldap: &ACTIVE_LDAP
-  host: <%= config[:host].to_json %>
-  port: <%= config[:port].to_json %>
-  base: <%= config[:base].to_json %>
-<% if config[:auth] == :sipmle>
-  allow_anonymous: false
-  bind_dn: <%= config[:username].to_json %>
-  password: <%= config[:password].to_json %>
-<% else %>
-  allow_anonymous: true
-<% end %>
-  method: :<%=
-    case config[:encryption]
-    when :simple_tls
-      'tls'
-    when :start_tls
-      'ssl'
-    else
-      'plain'
-    end
-  %>
-
-## Devise LDAP Authorizatatble
-# Uncomment out the merging for each environment that you'd like to include.
-# You can also just copy and paste the tree (do not include the "authorizations") to each
-# environment if you need something different per environment.
-authorizations:
-  required_groups:
-    # If only a group name is given, membership will be checked against "uniqueMember"
-    - cn=admin,ou=Groups,dc=example,dc=jp
-    - cn=staff,ou=Groups,dc=example,dc=jp
-    # If an array is given, the first element will be the attribute to check against, the second the group name
-    # - ["moreMembers", "cn=users,ou=groups,dc=test,dc=com"]
-  ## Requires config.ldap_check_attributes in devise.rb to be true
-  ## Can have multiple attributes and values, must match all to be authorized
-  # require_attribute:
-    # objectClass: posixAccount
-    # authorizationRole: postsAdmin
-  ## Requires config.ldap_check_attributes_presence in devise.rb to be true
-  ## Can have multiple attributes set to true or false to check presence, all must match all to be authorized
-  require_attribute_presence:
-    mail: true
-    # telephoneNumber: true
-    # serviceAccount: false
-
-development:
-  <<: *ACTIVE_LDAP
-
-test:
-  <<: *ACTIVE_LDAP
-
-production:
-  <<: *ACTIVE_LDAP
+  <<: *AUTHORIZATIONS

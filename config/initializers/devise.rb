@@ -11,32 +11,7 @@ Devise.setup do |config|
   config.ldap_logger = true
   config.ldap_create_user = true
   config.ldap_update_password = false
-  config.ldap_config = proc do
-    yaml_str = ERB.new(IO.read(Rails.root.join('config', 'ldap.yml'))).result
-    yaml_config = YAML.safe_load(yaml_str, [Symbol], [], true)
-    ldap_config = {
-      'host' => yaml_config.dig('ldap', 'host'),
-      'port' => yaml_config.dig('ldap', 'port'),
-      'ssl' => yaml_config.dig('ldap', 'encryption')&.to_s || false,
-      'base' => yaml_config.dig('ldap', 'user_base') + ',' +
-                yaml_config.dig('ldap', 'base'),
-      'attribute' => yaml_config.dig('ldap', 'user_dn'),
-      'group_base' => yaml_config.dig('ldap', 'group_base') + ',' +
-                      yaml_config.dig('ldap', 'base'),
-    }
-    if yaml_config.dig('ldap', 'auth') == :annonymouse
-      ldap_config['allow_unauthenticated_bind'] = true
-    else
-      ldap_config['allow_unauthenticated_bind'] = false
-      ldap_config['admin_user'] = yaml_config.dig('ldap', 'auth', 'username')
-      ldap_config['admin_password'] = yaml_config.dig('ldap', 'auth', 'password')
-    end
-    ldap_config['require_attribute'] = {
-      'objectClass' => yaml_config.dig('ldap', 'user_class'),
-    }
-    ldap_config.merge!(yaml_config['authorizations'])
-    ldap_config
-  end
+  config.ldap_config = Rails.root.join('config', 'ldap_devise.yml')
   config.ldap_check_group_membership = true
   config.ldap_check_group_membership_without_admin = false
   config.ldap_check_attributes = true
