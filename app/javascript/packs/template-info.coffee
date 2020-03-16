@@ -1,5 +1,7 @@
 document.addEventListener 'turbolinks:load', ->
   templateInfoEl = document.getElementById('template-info')
+  return unless templateInfoEl?
+
   list = JSON.parse(templateInfoEl.getAttribute('data-list'))
   target = templateInfoEl.getAttribute('data-target')
 
@@ -9,8 +11,9 @@ document.addEventListener 'turbolinks:load', ->
   reservedTimeEls = document.getElementsByClassName('template-info-reserved-time')
 
   targetEl = document.getElementById(target)
-  targetEl.addEventListener 'change', (e) ->
-    selectedId = e.target.value
+
+  changeSelect = ->
+    selectedId = targetEl.value
     if /^\d+$/.test(selectedId)
       selected = list[selectedId]
       for el in nameEls
@@ -31,6 +34,7 @@ document.addEventListener 'turbolinks:load', ->
       for el in reservedTimeEls
         el.innerText = '-'
 
-
+  targetEl.addEventListener 'change', changeSelect
+  changeSelect()
 
 , false
