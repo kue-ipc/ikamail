@@ -13,6 +13,19 @@
     = f.collection_select :template_id, policy_scope(::Template).where(enabled: true), :id, :name,
       {prompt: true},
       {class: 'form-control', required: true}
+    .form-text
+      =< ::Template.human_attribute_name(:recipient_list)
+      | :
+      span.template-info-recipient-list<
+        | -
+      =< ::Template.human_attribute_name(:reserved_time)
+      | :
+      span.template-info-reserved-time<
+        | -
+      =< ::Template.human_attribute_name(:user)
+      | :
+      span.template-info-user<
+        | -
   .field.form-group
     = f.label :delivery_timing
     br
@@ -38,3 +51,6 @@
       = field.label :comment, (ActionLog.human_attribute_name(:comment) + ' ' + t(:optional, scope: :values))
       = field.text_area :comment, rows: 3, class: 'form-control'
   .actions = f.submit class: 'btn btn-primary'
+
+div#template-info.d-none data-list=h(template_to_hash(::Template.all).to_json) data-target="bulk_mail_template_id"
+= javascript_pack_tag 'template-info', 'data-turbolinks-track': 'reload'
