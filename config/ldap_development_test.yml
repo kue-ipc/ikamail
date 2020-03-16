@@ -3,11 +3,11 @@
 ldap:
   host: localhost
   port: 389
+  encryption: null
+  base: dc=example,dc=jp
   auth: :sipmle
   username: cn=admin,dc=example,dc=jp
   password: pass
-  base: dc=example,dc=jp
-  encryption: null
   user:
     dn: uid
     base: ou=Users
