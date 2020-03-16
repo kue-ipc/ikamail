@@ -12,7 +12,7 @@
     = f.label :template_id, t_attr(:template)
     = f.collection_select :template_id, policy_scope(::Template).where(enabled: true), :id, :name,
       {prompt: true},
-      {class: 'form-control', required: true}
+      {class: 'custom-select', required: true}
     .form-text
       =< ::Template.human_attribute_name(:recipient_list)
       | :
