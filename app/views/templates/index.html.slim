@@ -12,8 +12,8 @@ table.table
     tr
       th scope="col" = t_attr :name
       th scope="col" = t_attr :recipient_list
-      th scope="col" = t_attr :count
       th scope="col" = t_attr :reserved_time
+      th scope="col" = t_attr :user
 
   tbody
     - @templates.each do |template|
@@ -25,8 +25,8 @@ table.table
               = t(:disabled, scope: :values)
         td.position-relative
           = link_to template.recipient_list.name, template.recipient_list, class: 'stretched-link'
-        td = template.count
         td = template.reserved_time.strftime('%H:%M')
+        td = template.user.name
 
 = paginate @templates
 p
