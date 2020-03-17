@@ -1,6 +1,7 @@
 - comment_required = false unless local_assigns.has_key?(:comment_required)
 - level = 'primary' unless local_assigns.has_key?(:level)
 - add_datetime = false unless local_assigns.has_key?(:add_datetime)
+- timing = false unless local_assigns.has_key?(:timing)
 
 
 button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target="#action-#{action}-modal"
@@ -19,6 +20,9 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
             span aria-hidden="true" &times;
         .modal-body
           p = t(action, scope: [:mail, :action_messages])
+          - if timing
+            p
+              strong = t(timing, scope: [:mail, :action_timing_messages, action])
           - if add_datetime
             .form-group
               = f.label :datetime, t(action, scope: :actions) + '日時'

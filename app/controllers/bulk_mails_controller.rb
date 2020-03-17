@@ -38,7 +38,8 @@ class BulkMailsController < ApplicationController
     @bulk_mail.user = current_user
     if @bulk_mail.save
       record_action_log
-      redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :create)
+      redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :create) +
+                                      t(:create, scope: [:mail, :done_messages])
     else
       @action_info.current_status = nil
       render :new
@@ -50,7 +51,8 @@ class BulkMailsController < ApplicationController
   def update
     if @bulk_mail.update(bulk_mail_params)
       record_action_log
-      redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update)
+      redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update) +
+                                      t(:update, scope: [:mail, :done_messages])
     else
       render :edit
     end
@@ -72,6 +74,8 @@ class BulkMailsController < ApplicationController
       record_action_log
       send_notification_mail(to: @bulk_mail.template.user)
       flash.notice = t(:apply, scope: [:mail, :done_messages])
+      timing_message = t(@bulk_mail.delivery_timing, scope: [:mail, :done_timing_messages, :apply])
+      flash.notice = [*flash.notice, timing_message] if timing_message.present?
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :apply)]
     end

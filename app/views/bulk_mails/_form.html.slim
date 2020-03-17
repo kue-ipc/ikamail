@@ -16,13 +16,15 @@
     .form-text
       =< ::Template.human_attribute_name(:recipient_list)
       | :
-      span.template-info-recipient-list<
+      span.template-info-recipient-list<>
         | -
-      =< ::Template.human_attribute_name(:reserved_time)
+      | |
+      =<> ::Template.human_attribute_name(:reserved_time)
       | :
-      span.template-info-reserved-time<
+      span.template-info-reserved-time<>
         | -
-      =< ::Template.human_attribute_name(:user)
+      | |
+      =<> ::Template.human_attribute_name(:user)
       | :
       span.template-info-user<
         | -

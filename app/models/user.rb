@@ -47,7 +47,9 @@ class User < ApplicationRecord
 
   def name
     if fullname.present?
-      "#{fullname} (#{username})"
+      # 冗長すぎるかもしれない。設定で変更できるようにすべきか。
+      # "#{fullname} (#{username})"
+      fullname
     else
       username
     end

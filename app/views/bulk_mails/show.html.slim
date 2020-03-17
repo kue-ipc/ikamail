@@ -13,7 +13,21 @@
 dl
   = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_suffix]
   = dt_dd_for @bulk_mail, :status, format: :translate, scope: [:mail, :statuses]
-  = dt_dd_for @bulk_mail, :template
+  = dt_dd_for @bulk_mail, :template do |template|
+    = link_to template.name, template
+    br
+    =< ::Template.human_attribute_name(:recipient_list)
+    | :
+    =<> link_to template.recipient_list.name, template.recipient_list
+    | |
+    =<> ::Template.human_attribute_name(:reserved_time)
+    | :
+    =<> l(template.reserved_time, format: :time)
+    | |
+    =<> ::Template.human_attribute_name(:user)
+    | :
+    =<> template.user.name
+
   = dt_dd_for @bulk_mail, :body, format: :mail_body,
                           around: [@bulk_mail.body_header, @bulk_mail.body_footer]
   = dt_dd_for @bulk_mail, :delivery_timing, format: :translate, scope: [:mail, :timings]
@@ -28,7 +42,8 @@ dl
 
 - if bulk_mail_policy.apply?
   = render partial: 'action', locals: {action: :apply, url: apply_bulk_mail_path(@bulk_mail),
-                                       comment_required: false, level: 'primary'}
+                                       comment_required: false, level: 'primary',
+                                       timing: @bulk_mail.delivery_timing}
 
 - if bulk_mail_policy.withdraw?
   = render partial: 'action', locals: {action: :withdraw, url: withdraw_bulk_mail_path(@bulk_mail),
