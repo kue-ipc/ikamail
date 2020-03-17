@@ -27,7 +27,7 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
             .form-group
               = f.label :datetime, t(action, scope: :actions) + '日時'
               = f.datetime_field :datetime, second: false,
-                                   class: 'form-control', required: true
+                                   class: 'form-control', required: true, min: Time.now
           .form-group
             = f.label :comment, ActionLog.human_attribute_name(:comment)
             = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
