@@ -7,29 +7,8 @@ dl
   = dt_dd_for @user, :email
   = dt_dd_for @user, :admin?
 
-hr
-p
-  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), admin_users_path,
-            class: 'btn btn-secondary'
-
-  /
-  /
-  / dt class=dt_class
-  /   = t_attr(:username)
-  / dd class=dd_class
-  /   = @user.username
-  / dt class=dt_class
-  /   = t_attr(:fullname)
-  / dd class=dd_class
-  /   = @user.fullname
-  / dt class=dt_class
-  /   = t_attr(:email)
-  / dd class=dd_class
-  /   = @user.email
-  / dt class=dt_class
-  /   = t_attr(:admin)
-  / dd class=dd_class
-  /   .custom-control.custom-switch
-  /     = check_box_tag :admin, '1', @user.admin, disabled: true, class: 'custom-control-input'
-  /     label class="custom-control-label" for="admin"
-  /       = @user.admin ? 'あり' : 'なし'
+- if current_user.admin?
+  hr
+  p
+    = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), admin_users_path,
+              class: 'btn btn-secondary'
