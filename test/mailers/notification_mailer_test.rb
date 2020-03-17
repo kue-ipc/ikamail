@@ -45,12 +45,34 @@ class NotificationMailerTest < ActionMailer::TestCase
     assert_equal read_fixture('mail_apply_no_comment.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
   end
 
-  test 'mail_approve' do
+  test 'mail_approve immediate' do
+    @params[:bulk_mail].delivery_timing = :immediate
+
     mail = NotificationMailer.with(**@params).mail_approve
     assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
-    assert_equal read_fixture('mail_approve.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
+    assert_equal read_fixture('mail_approve_immediate.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
+  end
+
+  test 'mail_approve reserved' do
+    @params[:bulk_mail].delivery_timing = :reserved
+
+    mail = NotificationMailer.with(**@params).mail_approve
+    assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal ['user01@example.jp'], mail.to
+    assert_equal ['no-reply@example.jp'], mail.from
+    assert_equal read_fixture('mail_approve_reserved.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
+  end
+
+  test 'mail_approve manual' do
+    @params[:bulk_mail].delivery_timing = :manual
+
+    mail = NotificationMailer.with(**@params).mail_approve
+    assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal ['user01@example.jp'], mail.to
+    assert_equal ['no-reply@example.jp'], mail.from
+    assert_equal read_fixture('mail_approve_manual.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
   end
 
   test 'mail_reject' do

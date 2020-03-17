@@ -1,2 +1,3 @@
-<%= t('.message') %>
+<%= t('.message') -%>
+<%= t('.timings.' + @bulk_mail.delivery_timing) %>
 <%= render partial: 'mail', locals: {action: :approve} %>
