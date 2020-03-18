@@ -33,9 +33,9 @@ active_ldap: &ACTIVE_LDAP
 <% end %>
   method: :<%=
     case config[:encryption]
-    when :simple_tls
+    when 'simple_tls'
       'ssl'
-    when :start_tls
+    when 'start_tls'
       'tls'
     else
       'plain'
