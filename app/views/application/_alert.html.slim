@@ -6,7 +6,7 @@ noscript
   .alert.alert-danger.alertdismissible.fade.show role="alert"
     = t(:require_modern_browser, scope: :messages)
 javascript:
-  if (!window.Promise == null) document.getElementById('require-modern-browser').classList.remove('d-none');
+  if (window.Promise == null) document.getElementById('require-modern-browser').classList.remove('d-none');
 
 - if alert
   - [*alert].each do |msg|
