@@ -2,6 +2,10 @@ noscript
   .alert.alert-danger.alertdismissible.fade.show role="alert"
     = t(:require_javascript, scope: :messages)
 
+/[if IE]
+  .alert.alert-danger.alertdismissible.fade.show role="alert"
+    = t(:require_other_than_ie, scope: :messages)
+
 #require-modern-browser.d-none
   .alert.alert-danger.alertdismissible.fade.show role="alert"
     = t(:require_modern_browser, scope: :messages)
