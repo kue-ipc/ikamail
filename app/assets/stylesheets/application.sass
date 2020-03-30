@@ -8,6 +8,15 @@ $font-family-serif: "BIZ UDPMincho Medium", "Noto Serif CJK JP", "Yu Mincho", "M
 @import "bootstrap"
 @import "font-awesome"
 
+@media print
+  .col-print-full
+    flex: 0 0 100%
+    max-width: 100%
+  .col-print-none
+    flex: 0 0 0%
+    max-width: 0%
+    display: none
+
 header
   position: sticky
   top: 0
@@ -40,3 +49,4 @@ pre.mail-body
   width: 2rem
   height: 100%
   z-index: 1
+
