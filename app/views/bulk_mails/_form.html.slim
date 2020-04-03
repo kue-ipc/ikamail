@@ -10,7 +10,7 @@
 = form_for @bulk_mail do |f|
   .field.form-group
     = f.label :template_id, t_attr(:template)
-    = f.collection_select :template_id, policy_scope(::Template).where(enabled: true), :id, :name,
+    = f.collection_select :template_id, policy_scope(::Template).where(enabled: true).order(:name), :id, :name,
       {prompt: true},
       {class: 'custom-select', required: true}
     .form-text
