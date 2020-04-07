@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_032222) do
+ActiveRecord::Schema.define(version: 2020_04_07_061207) do
 
   create_table "action_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
@@ -130,6 +130,16 @@ ActiveRecord::Schema.define(version: 2019_11_19_032222) do
     t.index ["name"], name: "index_templates_on_name", unique: true
     t.index ["recipient_list_id"], name: "index_templates_on_recipient_list_id"
     t.index ["user_id"], name: "index_templates_on_user_id"
+  end
+
+  create_table "translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "locale"
+    t.string "key"
+    t.text "value"
+    t.text "interpolations"
+    t.boolean "is_proc", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
