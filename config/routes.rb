@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     root to: '/admin#top'
     put 'ldap_sync'
     post 'statistics'
+    get 'translations'
+    put 'translations', to: '/admin#translations_update'
     resources :users, only: [:index, :show, :create, :update], controller: '/users' do
       collection do
         put 'sync'
