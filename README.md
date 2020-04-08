@@ -128,3 +128,4 @@ bundle exec whenever --update-crontab
 * 宛先の最大数よりPostfixのsmtpd_recipient_limitが大きくなければならない。
 * sendmailではコマンドの引数制限による制限がある。
 * メール送信がエラーになってもエラーにならない。(メール送信エラーが検知できない)
+* 日本語のみ対応しています。言語切替はできません。

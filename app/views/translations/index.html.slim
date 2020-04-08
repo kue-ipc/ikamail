@@ -1,0 +1,42 @@
+h1 Translations#index
+p Find me in app/views/translations/index.html.slim
+
+- content_for :heading
+  h1 翻訳
+
+
+- @translations.each do |translation|
+  = form_with model: translation,
+      url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)) do |f|
+    = f.hidden_field(:locale)
+    = f.hidden_field(:key)
+    .form-group.row
+      .col-lg-2
+        small
+          = translation.key.split('.').join(' ')
+      .col-lg-8
+        = f.text_area :value, class: 'form-control', rows: (translation.value.size / 40.0).ceil
+      .col-lg-2
+        = f.submit class: 'btn btn-primary'
+
+/ tr
+/   td = translation[:key]
+/   td = translation[:value]
+
+/ table.table
+/   thead
+/     tr
+/       th キー
+/       td 値
+/       td アクション
+/   tbody
+/     - @translations.each do |translation|
+/       tr
+/         td = translation[:key]
+/         td = translation[:value]
+/         / td
+/         /   = form.check_box("translations[#{key}][checked]", checked: checked)
+/         / td
+/         /   = form.text_field("translations[#{key}][value]", value: value)
+
+
