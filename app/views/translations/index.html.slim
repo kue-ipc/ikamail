@@ -6,8 +6,9 @@ p Find me in app/views/translations/index.html.slim
 
 
 - @translations.each do |translation|
-  = form_with model: translation,
-      url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)) do |f|
+  = form_with model: translation, remote: true,
+      url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)),
+      id: "form_#{translation.key}" do |f|
     = f.hidden_field(:locale)
     = f.hidden_field(:key)
     .form-group.row
@@ -18,25 +19,3 @@ p Find me in app/views/translations/index.html.slim
         = f.text_area :value, class: 'form-control', rows: (translation.value.size / 40.0).ceil
       .col-lg-2
         = f.submit class: 'btn btn-primary'
-
-/ tr
-/   td = translation[:key]
-/   td = translation[:value]
-
-/ table.table
-/   thead
-/     tr
-/       th キー
-/       td 値
-/       td アクション
-/   tbody
-/     - @translations.each do |translation|
-/       tr
-/         td = translation[:key]
-/         td = translation[:value]
-/         / td
-/         /   = form.check_box("translations[#{key}][checked]", checked: checked)
-/         / td
-/         /   = form.text_field("translations[#{key}][value]", value: value)
-
-

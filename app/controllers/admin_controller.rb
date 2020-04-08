@@ -17,14 +17,4 @@ class AdminController < ApplicationController
 
   def statistics
   end
-
-  def translations
-    authorize current_user, :admin?
-
-    @locale = I18n.default_locale
-  end
-
-  def translations_update
-    authorize current_user, :admin?
-  end
 end

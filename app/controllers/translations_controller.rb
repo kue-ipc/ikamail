@@ -9,15 +9,16 @@ class TranslationsController < ApplicationController
 
   end
 
-  def show
-  end
-
   def create
-    Translation.create(translation_params)
+    t_params = translation_params
+    @translation = Translation.find_or_initialize_by(locale: t_params[:locale], key: t_params[:key])
+    @translation.value = t_params[:value]
+    @translation.save
+    I18n.backend.reload!
   end
 
   def update
-    @translation.update(translation_params)
+    @translation.update(value: translation_params[:value])
     I18n.backend.reload!
   end
 
@@ -50,7 +51,6 @@ class TranslationsController < ApplicationController
       end
     end
 
-
     def all_translations(key, value, db)
       case value
       when String
@@ -61,8 +61,8 @@ class TranslationsController < ApplicationController
           value: value
         )
       when Hash
-        value.map do |c_key, c_value|
-          all_translations(key + [c_key], c_value, db)
+        value.each_key.sort.map do |c_key|
+          all_translations(key + [c_key], value[c_key], db)
         end.compact.flatten
       else
         # nothing

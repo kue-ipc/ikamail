@@ -1,0 +1,7 @@
+(() => {
+  const id = <%== @translation.id.to_json %>;
+  const key = <%== @translation.key.to_json %>;
+  console.log(`create ${id} ${key}`);
+
+  const form = document.getElementById(`form_${key}`);
+})();
