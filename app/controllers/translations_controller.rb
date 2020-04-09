@@ -42,7 +42,7 @@ class TranslationsController < ApplicationController
     end
 
     def translation_params
-      params.require(:i18n_backend_active_record_translation).permit(:locale, :key, :value)
+      params.require(:translation).permit(:locale, :key, :value)
     end
 
     def translations_to_hash(list)
