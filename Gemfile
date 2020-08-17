@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.1'
+gem 'rails', '~> 6.0.3'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 # Use mysql as the database for Active Record
@@ -50,7 +50,7 @@ gem 'delayed_job_web'
 gem 'daemons'
 
 # bootstrap
-gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap', '~> 4.5.2'
 
 # FontAwesome
 gem 'font-awesome-rails'
