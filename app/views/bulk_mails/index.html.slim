@@ -29,3 +29,7 @@ table.table
         td = bulk_mail.template.name
         td = l(bulk_mail.updated_at, format: :short)
         td = (bulk_mail.delivered_at || bulk_mail.reserved_at)&.yield_self { |time| l(time, format: :short) }
+
+= paginate @bulk_mails
+p
+  = page_entries_info @bulk_mails
