@@ -42,7 +42,7 @@
     = f.text_field :subject, class: 'form-control'
   .field.form-group
     = f.label :body
-    = f.text_area :body, class: 'form-control text-monospace line-80', rows: 20
+    = f.text_area :body, class: 'form-control text-monospace width-col', rows: 20, style: 'width: 40rem;', wrap: 'hard'
   .field.form-group
     = fields @action_info do |field|
       = field.hidden_field :current_status
