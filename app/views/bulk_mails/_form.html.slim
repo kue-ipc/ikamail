@@ -42,7 +42,7 @@
     = f.text_field :subject, class: 'form-control'
   .field.form-group
     = f.label :body
-    = f.text_area :body, class: 'form-control text-monospace width-col', rows: 20, style: 'width: 40rem;', wrap: 'hard'
+    = f.text_area :body, class: 'form-control text-monospace width-col', rows: 20
   .field.form-row
     .col-auto
       = f.select :wrap_col, wrap_col_collection, {}, \
@@ -52,7 +52,7 @@
         class: 'custom-select'
   small.form-text.text-muted
     = t('descriptions.word_wrap')
-
+  = javascript_pack_tag 'bulk_mail-textarea', 'data-turbolinks-track': 'reload'
 
   .field.form-group
     = fields @action_info do |field|

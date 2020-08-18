@@ -195,7 +195,7 @@ class BulkMailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bulk_mail_params
-      params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body)
+      params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule)
     end
 
     def action_info_params
