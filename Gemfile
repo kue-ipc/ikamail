@@ -72,6 +72,10 @@ gem 'kaminari'
 # whenever
 gem 'whenever', require: false
 
+# unicode display width
+gem 'unicode-display_width'
+gem 'unicode-emoji'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console

@@ -27,7 +27,7 @@ dl
     =<> ::Template.human_attribute_name(:user)
     | :
     =<> template.user.name
-  = dt_dd_for @bulk_mail, :body, format: :mail_body,
+  = dt_dd_for @bulk_mail, :body_wrap, format: :mail_body,
                           around: [@bulk_mail.body_header, @bulk_mail.body_footer]
   = dt_dd_tag t(:word_wrap, scope: [:activerecord, :attributes, :bulk_mail]) do
     = t('helpers.wrap_cols', count: @bulk_mail.wrap_col)

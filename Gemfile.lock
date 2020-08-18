@@ -318,6 +318,9 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
+    unicode-emoji (2.5.0)
+      unicode-version (~> 1.0)
+    unicode-version (1.0.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (4.0.4)
@@ -383,6 +386,8 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
+  unicode-display_width
+  unicode-emoji
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 5.0)

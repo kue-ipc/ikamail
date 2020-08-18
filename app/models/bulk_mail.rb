@@ -5,6 +5,7 @@ require 'iso2022jp'
 
 class BulkMail < ApplicationRecord
   include Iso2022jp
+  include WordWrap
 
   enum status: {
     draft: 0,
@@ -26,7 +27,7 @@ class BulkMail < ApplicationRecord
   }, _prefix: true
 
   enum wrap_rule: {
-    none: 0,
+    force: 0,
     word_wrap: 1,
     jisx4051: 2,
   }, _prefix: true
@@ -58,23 +59,41 @@ class BulkMail < ApplicationRecord
   end
 
   def body_all
-    body_header + body + body_footer
+    body_header + body_wrap + body_footer
+  end
+
+  def body_wrap
+    word_wrap(body, col: wrap_col, rule: wrap_rule)
   end
 
   def subject_prefix
-    Mustache.render(template.subject_prefix || '', individual_values)
+    return '' if template.subject_prefix.blank?
+
+    Mustache.render(template.subject_prefix, individual_values)
   end
 
   def subject_suffix
-    Mustache.render(template.subject_suffix || '', individual_values)
+    return '' if template.subject_suffix.blank?
+
+    Mustache.render(template.subject_suffix, individual_values)
   end
 
   def body_header
-    Mustache.render(template.body_header || '', individual_values)
+    return '' if template.body_header.blank?
+
+    word_wrap(
+      Mustache.render(template.body_header, individual_values),
+      col: wrap_col, rule: wrap_rule
+    )
   end
 
   def body_footer
-    Mustache.render(template.body_footer || '', individual_values)
+    return '' if template.body_footer.blank?
+
+    word_wrap(
+      Mustache.render(template.body_footer, individual_values),
+      col: wrap_col, rule: wrap_rule
+    )
   end
 
   private
