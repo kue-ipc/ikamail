@@ -49,6 +49,8 @@ class BulkMail < ApplicationRecord
 
   # validate :subject_can_contert_to_jis, :body_can_contert_to_jis
 
+  validates :wrap_col, numericality: {only_integer: true}, inclusion: {in: [0, 76, 80]}
+
   before_save :adjust_chars
 
   def subject_all

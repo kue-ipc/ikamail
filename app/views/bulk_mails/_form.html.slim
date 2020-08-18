@@ -42,7 +42,7 @@
     = f.text_field :subject, class: 'form-control'
   .field.form-group
     = f.label :body
-    = f.text_area :body, class: 'form-control text-monospace width-col', rows: 20
+    = f.text_area :body, class: 'form-control text-monospace scroll-y', rows: 20
   .field.form-row
     .col-auto
       = f.select :wrap_col, wrap_col_collection, {}, \

@@ -8,7 +8,7 @@ setStyleBody = ->
   col = parseInt(colEl.value)
   rule = ruleEl.value
   if col > 0
-    bodyEl.style.width = "#{(col / 2 + 2)}rem"
+    bodyEl.style.width = "#{(col / 2 + 3)}rem"
     bodyEl.style.whiteSpace = 'break-spaces'
   else
     bodyEl.style.width = '100%'
