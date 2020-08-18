@@ -210,6 +210,9 @@ ja:
         delivered_at: 配信日時
         number: 番号
         updated_at: 更新日時
+        wrap_col: 折り返し桁数
+        wrap_rule: 折り返し規則
+        word_wrap: 折り返し
       template:
         name: テンプレート名
         enabled: 有効
@@ -356,11 +359,11 @@ ja:
         display_entries: "全 <b>%{total}</b> 個の%{entry_name}のうち、<b>%{first}&nbsp;-&nbsp;%{last}</b> 個目を表示"
     wrap_cols:
       zero: 折り返し無し
-      other: "%{count}桁目で折り返し"
+      other: "%{count}桁目で"
     wrap_rules:
       none: 強制折り返し
-      word_wrap: 欧文折り返し(単語区切り)
-      jisx4051: 和文折り返し(JIS X 4051)
+      word_wrap: 欧文折り返し (単語区切り)
+      jisx4051: 和文折り返し (JIS X 4051)
 
   errors:
     messages:
