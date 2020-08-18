@@ -354,6 +354,13 @@ ja:
           other: "全 <b>%{count}</b> 個の%{entry_name}を表示"
       more_pages:
         display_entries: "全 <b>%{total}</b> 個の%{entry_name}のうち、<b>%{first}&nbsp;-&nbsp;%{last}</b> 個目を表示"
+    wrap_cols:
+      zero: 折り返し無し
+      other: "%{count}桁目で折り返し"
+    wrap_rules:
+      none: 強制折り返し
+      word_wrap: 欧文折り返し(単語区切り)
+      jisx4051: 和文折り返し(JIS X 4051)
 
   errors:
     messages:
@@ -367,3 +374,5 @@ ja:
         受付担当者による受付完了後、メールは定時配信時刻に配信されます。
       manual: |
         受付担当者による受付完了後、メールを任意のタイミングで配信することができます。
+    word_wrap: |
+      折り返しのルールが編集中と異なる場合があります。実際に折り返される箇所については、編集終了後の画面で確認してください。

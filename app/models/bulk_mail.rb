@@ -25,6 +25,12 @@ class BulkMail < ApplicationRecord
     manual: 2,
   }, _prefix: true
 
+  enum wrap_rule: {
+    none: 0,
+    word_wrap: 1,
+    jisx4051: 2,
+  }, _prefix: true
+
   belongs_to :template
   belongs_to :user
   has_many :action_logs, dependent: :destroy

@@ -23,6 +23,8 @@ class BulkMailsController < ApplicationController
   def new
     @bulk_mail = BulkMail.new
     @action_info = ActionInfo.new
+    @bulk_mail.wrap_col = 76
+    @bulk_mail.wrap_rule = 'jisx4051'
   end
 
   # GET /bulk_mails/1/edit
