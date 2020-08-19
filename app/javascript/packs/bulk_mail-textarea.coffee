@@ -10,9 +10,11 @@ setStyleBody = ->
   if col > 0
     bodyEl.style.width = "#{(col / 2 + 3)}rem"
     bodyEl.style.whiteSpace = 'break-spaces'
+    ruleEl.disabled = false
   else
     bodyEl.style.width = '100%'
     bodyEl.style.whiteSpace = 'pre'
+    ruleEl.disabled = true
 
   switch rule
     when 'none'

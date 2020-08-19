@@ -31,7 +31,8 @@ dl
                           around: [@bulk_mail.body_header, @bulk_mail.body_footer]
   = dt_dd_tag t(:word_wrap, scope: [:activerecord, :attributes, :bulk_mail]) do
     = t('helpers.wrap_cols', count: @bulk_mail.wrap_col)
-    = t(@bulk_mail.wrap_rule, scope: [:helpers, :wrap_rules])
+    - if @bulk_mail.wrap_col.positive?
+      = t(@bulk_mail.wrap_rule, scope: [:helpers, :wrap_rules])
   = dt_dd_for @bulk_mail, :delivery_timing, format: :translate, scope: [:mail, :timings]
   = dt_dd_for @bulk_mail, :reserved_at, blank_alt: ''
   = dt_dd_for @bulk_mail, :delivered_at, blank_alt: ''
