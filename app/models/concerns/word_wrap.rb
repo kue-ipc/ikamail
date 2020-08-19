@@ -42,7 +42,7 @@ module WordWrap
   end
 
   def each_wrap(str, col: 0, rule: :force)
-    unless col.positive?
+    if !col.positive? || rule == :none
       yield str
       return
     end
@@ -65,44 +65,16 @@ module WordWrap
         end
       end
 
-      pt = min_pt
-
-      if rule != :force
-        # none
-      elsif remnant[pt] =~ /\s/
-        pt += 1
-        while remnant[pt] =~ /\s/
-          pt += 1
-        end
+      pt = case rule
+      when :force
+        min_pt
+      when :word_wrap
+        search_breakable_word_wrap(remnant, min_pt)
+      when :jisx4051
+        search_breakable_jisx4051(remnant, min_pt)
       else
-        while pt > 0
-          # 次が空白の場合、空白ではなくなるところまで探す。
-          # 禁則処理は無視する
-
-          # 0x2000までを単語構成文字と満たす。全角英字は構成しないとする
-          case remnant[pt - 1]
-          when /\s/
-            # 禁則処理は無視する
-            break
-          when '-'
-            # '-' 区切りはどんな時も改行可能とする
-            # 禁則処理は無視する
-            break
-          when /[\u0020-\u2000]/
-            # 単語構成なので次へ
-          else
-            if rule == :word_wrap
-              break
-            end
-
-            if !NOT_STARTING_CHARS.include?(remnant[pt]) &&
-              !NOT_ENDING_CHARS.include?(remnant[pt - 1])
-              break
-            end
-          end
-          pt -= 1
-        end
-        pt = min_pt unless pt.positive?
+        logger.error "unknown rule: #{rule}"
+        min_pt
       end
 
       # 左の余白は常に削る。
@@ -112,4 +84,91 @@ module WordWrap
 
     yield remnant
   end
+
+  def search_breakable_word_wrap(str, pt)
+    # 続きが空白の場合は、空白が終わりまで
+    # わざとスペースを付けているのだから、和文の禁則処理はしない
+    fw_pt = search_forward_space(str, pt)
+    return fw_pt if fw_pt
+
+    # 続きが非単語の場合は即座に終了
+    return pt unless check_word_char(str[pt])
+
+    # 単語区切りを見つける
+    cur_pt = pt
+    while cur_pt.positive?
+      # 非単語で終わっていれば終了
+      return cur_pt unless check_word_char(str[cur_pt - 1])
+      pp cur_pt
+
+      cur_pt -= 1
+    end
+
+    # 区切り場所が見つからない場合は、強制切断
+    pt
+  end
+
+
+  def search_breakable_jisx4051(str, pt)
+    cur_pt = pt
+    while cur_pt.positive?
+      cur_pt = search_breakable_word_wrap(str, cur_pt)
+      if !NOT_STARTING_CHARS.include?(str[cur_pt]) &&
+        !NOT_ENDING_CHARS.include?(str[cur_pt - 1])
+        return cur_pt
+      end
+
+      cur_pt -= 1
+    end
+    pt
+  end
+
+
+  def search_forward_space(str, pt)
+    return if str[pt] !~ /\s/
+
+    pt += 1
+    pt += 1 while str[pt] =~ /\s/
+
+    return pt
+  end
+
+  def check_word_char(c)
+    # 非常に簡易的に欧文文字だけを対象とする
+    c =~ /[\u0021-\u2000]/
+  end
+
+  # def search_backward_word(str, pt, lb_rule: false)
+  #   cur_pt = pt
+  #   pre_word = (str[cur_pt] =~ /[\u0020-\u2000]/)
+  #   while cur_pt.positive?
+  #     case str[cur_pt - 1]
+  #     when /\s/, '-'
+  #       # 空白の場合は禁則処理を無視して切断
+  #       return cur_pt
+  #     when '-'
+  #       # '-' 区切りは次の文字の禁則だけ考慮
+  #       return cur_pt if !lb_rule && NOT_STARTING_CHARS.include?(str[cur_pt])
+  #     when /[\u0020-\u2000]/
+  #       unless pre_word
+  #         return cur_pt if !lb_rule && NOT_STARTING_CHARS.include?(str[cur_pt])
+  #       end
+
+  #       pre_word = true
+  #     else
+  #       if rule == :word_wrap
+  #         break
+  #       end
+
+  #       if !NOT_STARTING_CHARS.include?(remnant[pt]) &&
+  #         !NOT_ENDING_CHARS.include?(remnant[pt - 1])
+  #         break
+  #       end
+  #     end
+  #     cur_pt -= 1
+  #   end
+
+  #   # 区切り場所が見つからない場合は、強制切断
+  #   pt
+  # end
 end

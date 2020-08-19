@@ -63,7 +63,7 @@ class BulkMail < ApplicationRecord
   end
 
   def body_wrap
-    word_wrap(body, col: wrap_col, rule: wrap_rule)
+    word_wrap(body, col: wrap_col, rule: wrap_rule.intern)
   end
 
   def subject_prefix
@@ -83,7 +83,7 @@ class BulkMail < ApplicationRecord
 
     word_wrap(
       Mustache.render(template.body_header, individual_values),
-      col: wrap_col, rule: wrap_rule
+      col: wrap_col, rule: wrap_rule.intern
     )
   end
 
@@ -92,7 +92,7 @@ class BulkMail < ApplicationRecord
 
     word_wrap(
       Mustache.render(template.body_footer, individual_values),
-      col: wrap_col, rule: wrap_rule
+      col: wrap_col, rule: wrap_rule.intern
     )
   end
 
