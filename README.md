@@ -7,12 +7,12 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 ## 環境
 
 * 言語
-    * Ruby 2.5 以上 (2.6 以上推奨)
-    * Node.js 10以上 (アセットファイルコンパイル時のみ使用、12以上推奨)
+    * Ruby 2.6 以上
+    * Node.js 12 以上 (アセットファイルコンパイル時のみ使用)
 
 * OS
-    * Ubuntu 18.04LTS、20.04LTS(予定)
-    * CentOS 7(with SCL)、8
+    * Ubuntu 18.04LTS、20.04LTS
+    * CentOS 7、8
 
 * データベース
     * MariaDB 10.1 以上、10.2.2 以上推奨
@@ -121,7 +121,6 @@ bundle exec whenever --update-crontab
 テスト用LDAPサーバーは"test/ldap"にあります。slapdとldap-utilsを入れておいてください。`./test/ldap/run-server`でサーバーが起動します。初期データはbase.ldifを投げてください。Ubuntuでslapdサービスを起動している場合は、exmaple.ldifを投げてください。状況に応じて、config/ldap.ymlを書き換えてください。
 
 テストにはヘッドレスなChromiumとWebDriverが必要ですが、現在テストは実装されていません。
-
 
 ## 制限事項
 
