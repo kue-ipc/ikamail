@@ -20,7 +20,8 @@ sudo yum groupinstall "Development Tools"
 ### Node.js と Yarn
 
 ```
-sudo yum install rh-nodejs10
+curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+sudo yum install nodejs
 curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
 sudo yum install yarn
 ```
