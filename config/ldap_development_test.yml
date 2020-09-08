@@ -7,14 +7,14 @@ ldap:
   base: dc=example,dc=jp
   auth: :sipmle
   username: cn=admin,dc=example,dc=jp
-  password: pass
+  password: admin_password
   user:
     dn: uid
-    base: ou=Users
+    base: ou=people
     class: posixAccount
   group:
     dn: cn
-    base: ou=Groups
+    base: ou=groups
     class: posixGroup
   restrict:
     auth:
