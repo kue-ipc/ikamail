@@ -5,10 +5,13 @@ p
   = link_to 'LDAP同期', admin_ldap_sync_path, method: :put
 
 p
-  = link_to 'ジョブ状態', '/admin/delayed_job'
+  = link_to 'ジョブ状態', '/admin/delayed_job', target: '_blank'
 
 p
   = link_to 'ログインユーザー一覧', admin_users_path
 
 p
   = link_to '翻訳管理', admin_translations_path
+
+p
+  = link_to '統計', admin_statistics_path

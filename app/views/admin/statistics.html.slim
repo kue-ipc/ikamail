@@ -1,2 +1,29 @@
-h1 Admin#statistics
-p Find me in app/views/admin/statistics.html.slim
+h1 統計
+
+h3 = "#{@year}年度"
+
+p
+  | 集計期間:
+  =<> l(@begin_time.to_date)
+  | ～
+  =< l(@end_time.ago(1.day).to_date)
+p
+  => link_to "#{@year - 1}年度", admin_statistics_path(year: @year - 1)
+  | |
+  strong
+    =<> "#{@year}年度 (現在のページ)"
+  | |
+  =< link_to "#{@year + 1}年度", admin_statistics_path(year: @year + 1)
+
+
+table.table
+  thead
+    tr
+      th テンプレート名
+      th 件数
+  tbody
+    - @template_statistics.each_value do |data|
+      tr
+        td = data[:name]
+        td = data[:count]
+
