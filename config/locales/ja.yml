@@ -330,10 +330,6 @@ ja:
         システム内で不具合が発生している可能性があります。
         メール内容とともにシステム管理者にお問い合わせください。
 
-  devise:
-    failure:
-      unauthenticated: ログインしてください。
-
   views:
     pagination:
       first: "&laquo; 最初"
