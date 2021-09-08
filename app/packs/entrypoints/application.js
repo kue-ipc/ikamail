@@ -16,3 +16,6 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 import './bootstrap-native.coffee'
+import './bulk_mail-textarea'
+import './template-info'
+import './translation-index'
