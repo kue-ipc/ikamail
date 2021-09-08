@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 rails_env = ENV.fetch('RAILS_ENV') { 'development' }
 app_root = Dir.pwd
 
@@ -9,9 +7,14 @@ app_root = Dir.pwd
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch('RAILS_MAX_THREADS') { 5 }
-min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
+
+# Specifies the `worker_timeout` threshold that Puma will use to wait before
+# terminating a worker in development environments.
+#
+worker_timeout 3600 if rails_env == "development"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
@@ -24,6 +27,9 @@ end
 # Specifies the `environment` that Puma will run in.
 #
 environment rails_env
+
+# Specifies the `pidfile` that Puma will use.
+pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together
@@ -44,7 +50,6 @@ environment rails_env
 plugin :tmp_restart
 
 if rails_env == 'production'
-  pidfile File.expand_path('tmp/pids/puma.pid', app_root)
   stdout_redirect(File.expand_path('log/puma.log', app_root),
                   File.expand_path('log/puma-error.log', app_root),
                   true)
