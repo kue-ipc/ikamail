@@ -166,4 +166,8 @@ module ApplicationHelper
   def html_datetime_zone(time)
     time.xmlschema
   end
+
+  def fa_icon(name)
+    tag.i(class: ['fa', name])
+  end
 end
