@@ -1,4 +1,4 @@
-import bsn from 'bootstrap.native'
+import bsn from 'bootstrap.native/src/index-v4'
 document.addEventListener 'turbolinks:load', ->
   [
     [bsn.Alert, '[data-dismiss="alert"]']
