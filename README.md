@@ -11,11 +11,11 @@ ikamail は組織内に一括でメールを送信するためのシステムで
     * Node.js 12 以上 (アセットファイルコンパイル時のみ使用)
 
 * OS
-    * Ubuntu 18.04LTS、20.04LTS
-    * CentOS 7、8
+    * Ubuntu 20.04LTS
+    * Rocky Linux 8
 
 * データベース
-    * MariaDB 10.1 以上、10.2.2 以上推奨
+    * MariaDB 10.3 以上
 
 * ブラウザ
     * Microsoft Edge
@@ -36,7 +36,7 @@ fs.inotify.max_user_watches = 32768
 
 ## データベース設定
 
-拡張面の漢字や絵文字等に対応するためにはutf8mb4でなければなりません。しかし、utf8mb4では255文字が767バイトを越えてしまうため、`innodb_large_prefix`が有効でなければなりません。MariaDB 10.2.1 以下でutf8mb4を使用する場合は以下のようにmy.cnfに追加してください。これはアプリ用のデータベースを作成する前に実施する必要があります。
+拡張面の漢字や絵文字等に対応するためにはutf8mb4でなければなりません。utf8mb4を使用する場合は以下のようにmy.cnfに追加の必要がある場合があります。これはアプリ用のデータベースを作成する前に実施する必要があります。
 
 ```my.cnf
 [client]
@@ -45,15 +45,9 @@ default-character-set = utf8mb4
 [server]
 character-set-server = utf8mb4
 collation-server = utf8mb4_general_ci
-
-[mysqld]
-innodb_file_format = Barracuda
-innodb_file_per_table
-innodb_large_prefix
-innodb_default_row_format = DYNAMIC
 ```
 
-MariaDB 10.2.2 以上は上記のInnoDB設定がデフォルトであるため、後半は不要です。
+MariaDB 10.2.1 以下の場合は、インデックスサイズ拡張のためにInnoDBの設定が必要な場合があります。
 
 ## デプロイ
 
