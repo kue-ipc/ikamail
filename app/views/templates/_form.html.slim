@@ -21,7 +21,7 @@
   .field.form-group
     = f.label :recipient_list_id, @template.class.human_attribute_name(:recipient_list)
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
-      {prompt: true}, {class: 'custom-select'}
+      {prompt: true}, {class: 'form-select'}
   .field.form-group
     = f.label :from_name
     = f.text_field :from_name, class: 'form-control'

@@ -12,7 +12,7 @@
     = f.label :template_id, t_attr(:template)
     = f.collection_select :template_id, policy_scope(::Template).where(enabled: true).order(:name), :id, :name,
       {prompt: true},
-      {class: 'custom-select', required: true}
+      {class: 'form-select', required: true}
     .form-text
       =< ::Template.human_attribute_name(:recipient_list)
       | :
@@ -43,13 +43,13 @@
   .field.form-group
     = f.label :body
     = f.text_area :body, class: 'form-control text-monospace scroll-y', rows: 20
-  .field.form-row
+  .field.row
     .col-auto
       = f.select :wrap_col, wrap_col_collection, {}, \
-        class: 'custom-select'
+        class: 'form-select'
     .col-auto
       = f.select :wrap_rule, wrap_rule_collection, {}, \
-        class: 'custom-select'
+        class: 'form-select'
   small.form-text.text-muted
     = t('descriptions.word_wrap')
 

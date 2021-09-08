@@ -102,9 +102,10 @@ module ApplicationHelper
     when Time, Date, DateTime, ActiveSupport::TimeWithZone
       content_tag('span', l(value, format: opts[:format]))
     when true, false
-      content_tag('div', class: 'custom-control custom-switch') do
-        check_box_tag(:admin?, '1', value, disabled: true, class: 'custom-control-input') +
-          label_tag(:admin?, '', class: 'custom-control-label')
+      if value
+        icon('check', class: 'text-primary')
+      else
+        icon('x', class: 'text-muted')
       end
     when Enumerable
       content_tag('ul', class: 'list-inline mb-0') do
@@ -167,7 +168,12 @@ module ApplicationHelper
     time.xmlschema
   end
 
-  def fa_icon(name)
-    tag.i(class: ['fa', name])
+  def icon(name, **opts)
+    opts = {width: 32, height: 32, fill: 'currentColor'}.merge(opts)
+    opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
+    opts[:class] += ['bi']
+    tag.svg(opts) do
+      tag.use('xlink:href': asset_pack_path('static/bootstrap-icons.svg') + '#' + name)
+    end
   end
 end

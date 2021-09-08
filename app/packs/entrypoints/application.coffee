@@ -12,6 +12,11 @@ turbolinks.start()
 # images = require.context('../images', true)
 # imagePath = (name) => images(name, true)
 
+require 'bootstrap-icons/bootstrap-icons.svg'
+# imagePath = (name) => images(name, true)
+# console.log()
+
+
 import 'bootstrap'
 
 import BulkMailTextArea from 'src/bulk-mail-textarea'

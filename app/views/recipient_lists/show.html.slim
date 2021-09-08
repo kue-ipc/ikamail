@@ -32,13 +32,15 @@ dl
 
     = dt_dd_tag RecipientList.human_attribute_name(:included_mail_users)
       - if recipient_policy.create?
-        = form_tag mail_users_recipient_list_path(@recipient_list, 'included'), method: :post, class: 'form-inline'
-          .form-group.mb-2
-            .form-group.mr-2
-              = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
-              = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
-                               placeholder: MailUser.human_attribute_name(:name)
-            = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
+        = form_tag mail_users_recipient_list_path(@recipient_list, 'included'), method: :post
+          .row
+            .col-auto
+              .form-group.mb-2.mr-2
+                = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
+                = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
+                                placeholder: MailUser.human_attribute_name(:name)
+            .col-auto
+              = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
       - if recipient_policy.index?
         ul.list-inline.mb-0
           - @recipient_list.included_mail_users.each do |mail_user|
@@ -55,13 +57,15 @@ dl
 
     = dt_dd_tag RecipientList.human_attribute_name(:excluded_mail_users)
       - if recipient_policy.create?
-        = form_tag mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post, class: 'form-inline'
-          .form-group.mb-2
-            .form-group.mr-2
-              = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
-              = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
-                               placeholder: MailUser.human_attribute_name(:name)
-            = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
+        = form_tag mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post
+          .row
+            .col-auto
+              .form-group.mb-2.mr-2
+                = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
+                = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
+                                placeholder: MailUser.human_attribute_name(:name)
+            .col-auto
+              = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
       - if recipient_policy.index?
         ul.list-inline.mb-0
           - @recipient_list.excluded_mail_users.each do |mail_user|

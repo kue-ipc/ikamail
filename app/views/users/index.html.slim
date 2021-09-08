@@ -37,12 +37,15 @@ p
   | 管理者権限の設定やテンプレートの所有者設定は登録済みユーザーのみ可能です。ログインにより自動的に登録されますが、下記より、未ログインのユーザーを事前に登録することができます。
 
 p
-  = form_for User.new, url: admin_users_path, html: {class: 'form-inline'} do |f|
-    = f.label :username, class: 'sr-only'
-    = f.text_field :username, class: 'form-control form-control-sm mr-2', required: true,
-                   placeholder: User.human_attribute_name(:username)
-    = f.submit class: 'btn btn-primary btn-sm'
-      = t(:register, scope: :actions)
+  = form_for User.new, url: admin_users_path do |f|
+    .row
+      .col-auto
+        = f.label :username, class: 'sr-only'
+        = f.text_field :username, class: 'form-control form-control-sm mr-2', required: true,
+                      placeholder: User.human_attribute_name(:username)
+      .col-auto
+        = f.submit class: 'btn btn-primary btn-sm'
+          = t(:register, scope: :actions)
 
 p
   | LDAPとの同期を行うには下記のボタンから行ってください。同期には時間がかかる場合があります。

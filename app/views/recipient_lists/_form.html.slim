@@ -28,7 +28,7 @@
     = f.label :mail_group_ids, t('activerecord.attributes.recipient_list.mail_groups')
     = f.collection_select :mail_group_ids, MailGroup.all, :id, :display_name,
       {},
-      {multiple: true, size: [10, MailGroup.count].min, class: 'custom-select'}
+      {multiple: true, size: [10, MailGroup.count].min, class: 'form-select'}
     small.form-text.text-muted
       | Ctrlキーを押しながら、複数選択することができます。対象となるグループをすべて選択してください。
   .actions
