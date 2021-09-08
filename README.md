@@ -7,15 +7,15 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 ## 環境
 
 * 言語
-    * Ruby 2.6 以上
-    * Node.js 12 以上 (アセットファイルコンパイル時のみ使用)
+    * Ruby 2.6 以上 2.7 以上推奨
+    * Node.js 12 以上 14 以上推奨 (アセットファイルコンパイル時のみ使用)
 
 * OS
     * Ubuntu 20.04LTS
-    * Rocky Linux 8
+    * Rocky Linux 8 （他互換ディストリビューション)
 
 * データベース
-    * MariaDB 10.3 以上
+    * MariaDB 10.3 以上 10.5 以上推奨
 
 * ブラウザ
     * Microsoft Edge
