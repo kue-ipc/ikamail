@@ -911,6 +911,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@popperjs/core@^2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.1.tgz#728ecd95ab207aab8a9a4e421f0422db329232be"
+  integrity sha512-HnUhk1Sy9IuKrxEMdIRCxpIqPw6BFsbYSEUO9p/hNw5sMld/+3OLMWQP80F8/db9qsv3qUjs7ZR5bS/R+iinXw==
+
 "@rails/actioncable@^6.1.4-1":
   version "6.1.4-1"
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.4-1.tgz#69982e7f352d732f71fda0cc01b7ba8269c9945b"
@@ -1359,14 +1364,6 @@ boolbase@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
-
-bootstrap.native@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/bootstrap.native/-/bootstrap.native-4.0.6.tgz#5b7faced42b0612b3806604f93d8da77e6e8e359"
-  integrity sha512-FVqIScNumUUDNXpdME/r4jOWAxaOEvsrwmlWzVGF6UJFI/SZRAyD3Lg8LB+xfeCEd7AiaJe1D3L+3LyKvx1zeA==
-  dependencies:
-    minifill "^0.0.16"
-    shorter-js "^0.2.1"
 
 bootstrap@^5.1.1:
   version "5.1.1"
@@ -2846,11 +2843,6 @@ mini-css-extract-plugin@^2.2.2:
   dependencies:
     schema-utils "^3.1.0"
 
-minifill@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/minifill/-/minifill-0.0.16.tgz#1999956127379e435b6653f3d3f2b70d64544789"
-  integrity sha512-ya61lgDqSRlaOVbD8neOkZMpMpmbfCbRewzJ/rfzc9nbisFthip3YcmBBL3fu+gneIKTrzcOG7mDysJh5ZDjqQ==
-
 minimalistic-assert@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -3788,11 +3780,6 @@ shebang-regex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
-
-shorter-js@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/shorter-js/-/shorter-js-0.2.1.tgz#e1c5e4730cec60eaeac2c58961d1cf930bc39337"
-  integrity sha512-C5w9DWKgmtduDIm+sPreDHBnXJ9mbT6g6ARhcqIQ4Ys7Zj8gqmfvIPX6YoW0tXXdCnL/xlni24CWTFXm4GCecA==
 
 signal-exit@^3.0.2, signal-exit@^3.0.3:
   version "3.0.3"

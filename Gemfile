@@ -47,12 +47,6 @@ gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 gem 'daemons'
 
-# bootstrap
-gem 'bootstrap', '~> 4.5.2'
-
-# FontAwesome
-gem 'font-awesome-rails'
-
 # i18n
 gem 'rails-i18n', '~> 6.0.0'
 gem 'devise-i18n'
