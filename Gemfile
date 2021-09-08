@@ -16,7 +16,7 @@ gem 'slim-rails'
 # Use SCSS for stylesheets
 gem 'sassc-rails'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0'
+gem 'webpacker', '6.0.0.rc.5'
 # Turbolinks makes navigating your web application faster. Read more:
 #  https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
