@@ -52,7 +52,6 @@
         class: 'custom-select'
   small.form-text.text-muted
     = t('descriptions.word_wrap')
-  = javascript_pack_tag 'bulk_mail-textarea', 'data-turbolinks-track': 'reload'
 
   .field.form-group
     = fields @action_info do |field|
@@ -62,4 +61,3 @@
   .actions = f.submit class: 'btn btn-primary'
 
 div#template-info.d-none data-list=h(template_to_hash(::Template.all).to_json) data-target="bulk_mail_template_id"
-= javascript_pack_tag 'template-info', 'data-turbolinks-track': 'reload'

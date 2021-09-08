@@ -16,6 +16,11 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 import './bootstrap-native.coffee'
-import './bulk_mail-textarea'
-import './template-info'
+import BulkMailTextArea from './bulk-mail-textarea'
+import TemplateInfo from './template-info'
 import './translation-index'
+
+document.addEventListener('turbolinks:load', function() {
+  BulkMailTextArea()
+  TemplateInfo()
+})

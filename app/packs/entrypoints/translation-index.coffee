@@ -55,10 +55,11 @@ class TranslationForm
   updatedRecord: (_path, _value) ->
     @disableSubmit()
 
-formMap = new Map
+document.addEventListener 'turbolinks:load', ->
+  formMap = new Map
 
-for form in document.getElementsByClassName('form-translation')
-  tForm = new TranslationForm(form)
-  formMap.set(tForm.key, tForm)
+  for form in document.getElementsByClassName('form-translation')
+    tForm = new TranslationForm(form)
+    formMap.set(tForm.key, tForm)
 
-window.TRANSLATION_FORM_MAP = formMap
+  window.TRANSLATION_FORM_MAP = formMap

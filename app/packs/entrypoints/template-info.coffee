@@ -1,4 +1,4 @@
-templateInfo = ->
+export default templateInfo = ->
   templateInfoEl = document.getElementById('template-info')
   return unless templateInfoEl?
 
@@ -36,5 +36,3 @@ templateInfo = ->
 
   targetEl.addEventListener 'change', changeSelect
   changeSelect()
-
-templateInfo()
