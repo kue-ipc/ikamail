@@ -1,34 +1,21 @@
+# https://docs.rubocop.org/rubycop/
+
 require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
+  NewCops: enable
   Exclude:
     - 'bin/**/*'
     - 'node_modules/**/*'
     - 'db/schema.rb'
+    - 'vender/**/*'
 
-Rails:
-  Enabled: true
-
-Bundler/OrderedGems:
-  Enabled: false
-
+# Layout
 Layout/ExtraSpacing:
   Exclude:
     - 'db/migrate/*.rb'
-
-Style/AsciiComments:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-
-Style/SymbolArray:
-  EnforcedStyle: brackets
 
 Layout/EndOfLine:
   EnforcedStyle: lf
@@ -90,3 +77,10 @@ Style/EmptyMethod:
 
 Style/WordArray:
   MinSize: 3
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
