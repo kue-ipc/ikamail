@@ -33,27 +33,17 @@ pre.mail-body
 textarea.form-control.scroll-y
   overflow-y: scroll
 
-pre.line-80::after
-  display: block
-  position: absolute
-  top: 0
-  margin-left: 40rem
-  content: "<80"
-  color: $gray-400
-  background-color: $gray-400
-  width: 1px
-  height: 100%
-  z-index: 1
-
-pre.line-76-80::after
-  display: block
-  position: absolute
-  top: 0
-  margin-left: 38rem
-  content: "<76 <80"
-  color: $gray-400
-  border-left: dashed 1px $gray-400
-  border-right: solid 1px $gray-400
-  width: 2rem
-  height: 100%
-  z-index: 1
+pre.line-76-80
+  position: relative
+  &::after
+    display: block
+    position: absolute
+    top: 0
+    margin-left: 38rem
+    content: "<76 <80"
+    color: $gray-400
+    border-left: dashed 1px $gray-400
+    border-right: solid 1px $gray-400
+    width: 2rem
+    height: 100%
+    z-index: 1
