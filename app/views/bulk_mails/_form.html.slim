@@ -8,7 +8,7 @@
         li.list-group-item = message
 
 = form_for @bulk_mail do |f|
-  .md-3
+  .mb-3
     = f.label :template_id, t_attr(:template), class: 'form-label'
     = f.collection_select :template_id, policy_scope(::Template).where(enabled: true).order(:name), :id, :name,
       {prompt: true},
@@ -28,7 +28,7 @@
       | :
       span.template-info-user<
         | -
-  .md-3
+  .mb-3
     = f.label :delivery_timing, class: 'form-label'
     - BulkMail::delivery_timings.each_key do |timing|
       .form-check
@@ -37,10 +37,10 @@
           = t timing, scope: [:mail, :timings]
           | :
           =< t timing, scope: [:descriptions, :timings]
-  .md-3
+  .mb-3
     = f.label :subject, class: 'form-label'
     = f.text_field :subject, class: 'form-control'
-  .md-3
+  .mb-3
     = f.label :body, class: 'form-label'
     = f.text_area :body, class: 'form-control font-monospace scroll-y', rows: 20
   .field.row
@@ -53,7 +53,7 @@
   small.form-text.text-muted
     = t('descriptions.word_wrap')
 
-  .md-3
+  .mb-3
     = fields @action_info do |field|
       = field.hidden_field :current_status
       = field.label :comment, (ActionLog.human_attribute_name(:comment) + ' ' + t(:optional, scope: :values)), class: 'form-label'

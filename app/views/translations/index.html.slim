@@ -23,13 +23,13 @@ hr
       id: form_id, class: 'form-translation', data: {key: translation.key} do |f|
     = f.hidden_field :locale, id: "#{form_id}-locale"
     = f.hidden_field :key, id: "#{form_id}-key"
-    .row
-      .col-lg-2
+    .row.mb-1
+      .col-md-2.mb-1
         small
           = translation.key.split('.').join(' ')
-      .col-lg-8
+      .col-md-8.mb-1
         = f.text_area :value, id: "#{form_id}-value", class: 'form-control', rows: (translation.value.size / 40.0).ceil
-      .col-lg-2
+      .col-md-2.mb-1
         = f.submit '適用', id: "#{form_id}-submit", class: 'btn btn-primary', disabled: true
         - if translation.new_record?
           =< link_to 'リセット', "#",
