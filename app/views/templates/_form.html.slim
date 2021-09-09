@@ -8,47 +8,47 @@
         li.list-group-item = message
 
 = form_for @template do |f|
-  .field.form-group
-    = f.label :name
+  .md-3
+    = f.label :name, class: 'form-label'
     = f.text_field :name, class: 'form-control'
-  .field.form-group
-    = f.label :description
+  .md-3
+    = f.label :description, class: 'form-label'
     = f.text_area :description, class: 'form-control'
-  .field.form-group
-    .custom-control.custom-switch
-      = f.check_box :enabled, class: 'custom-control-input'
-      = f.label :enabled, class: 'custom-control-label'
-  .field.form-group
-    = f.label :recipient_list_id, @template.class.human_attribute_name(:recipient_list)
+  .md-3
+    .form-check.form-switch
+      = f.check_box :enabled, class: 'form-check-input'
+      = f.label :enabled, class: 'form-check-label'
+  .md-3
+    = f.label :recipient_list_id, @template.class.human_attribute_name(:recipient_list), class: 'form-label'
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
       {prompt: true}, {class: 'form-select'}
-  .field.form-group
-    = f.label :from_name
+  .md-3
+    = f.label :from_name, class: 'form-label'
     = f.text_field :from_name, class: 'form-control'
-  .field.form-group
-    = f.label :from_mail_address
+  .md-3
+    = f.label :from_mail_address, class: 'form-label'
     = f.email_field :from_mail_address, class: 'form-control'
-  .field.form-group
-    = f.label :subject_prefix
+  .md-3
+    = f.label :subject_prefix, class: 'form-label'
     = f.text_field :subject_prefix, class: 'form-control'
-  .field.form-group
-    = f.label :subject_suffix
+  .md-3
+    = f.label :subject_suffix, class: 'form-label'
     = f.text_field :subject_suffix, class: 'form-control'
-  .field.form-group
-    = f.label :body_header
+  .md-3
+    = f.label :body_header, class: 'form-label'
     = f.text_area :body_header, class: 'form-control text-monospace'
-  .field.form-group
-    = f.label :body_footer
+  .md-3
+    = f.label :body_footer, class: 'form-label'
     = f.text_area :body_footer, class: 'form-control text-monospace'
-  .field.form-group
-    = f.label :count
+  .md-3
+    = f.label :count, class: 'form-label'
     = f.number_field :count, class: 'form-control'
-  .field.form-group
-    = f.label :reserved_time
+  .md-3
+    = f.label :reserved_time, class: 'form-label'
     = f.time_field :reserved_time, class: 'form-control'
-  .filed.form-group
+  .mb-3
     = f.fields_for (@template.user || current_user) do |user|
-      = user.label :username, @template.class.human_attribute_name(:user)
+      = user.label :username, @template.class.human_attribute_name(:user), class: 'form-label'
       = user.text_field :username, class: 'form-control', disabled: !current_user.admin?
   .actions = f.submit class: 'btn btn-primary'
 

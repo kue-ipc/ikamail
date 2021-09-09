@@ -24,12 +24,12 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
             p
               strong = t(timing, scope: [:mail, :action_timing_messages, action])
           - if add_datetime
-            .form-group
-              = f.label :datetime, t(action, scope: :actions) + '日時'
+            .mb-3
+              = f.label :datetime, t(action, scope: :actions) + '日時', class: 'form-label'
               = f.datetime_field :datetime, second: false,
                                    class: 'form-control', required: true, min: Time.now
-          .form-group
-            = f.label :comment, ActionLog.human_attribute_name(:comment)
+          .mb-3
+            = f.label :comment, ActionLog.human_attribute_name(:comment), class: 'form-label'
             = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
             - if comment_required
               small.form-text.text-muted

@@ -18,14 +18,14 @@
         li.list-group-item = message
 
 = form_for @recipient_list do |f|
-  .field.form-group
-    = f.label :name
+  .md-3
+    = f.label :name, class: 'form-label'
     = f.text_field :name, class: 'form-control'
-  .field.form-group
-    = f.label :description
+  .md-3
+    = f.label :description, class: 'form-label'
     = f.text_area :description, class: 'form-control', rows: 3
-  .field.form-group
-    = f.label :mail_group_ids, t('activerecord.attributes.recipient_list.mail_groups')
+  .md-3
+    = f.label :mail_group_ids, t('activerecord.attributes.recipient_list.mail_groups'), class: 'form-label'
     = f.collection_select :mail_group_ids, MailGroup.all, :id, :display_name,
       {},
       {multiple: true, size: [10, MailGroup.count].min, class: 'form-select'}

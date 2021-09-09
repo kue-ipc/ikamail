@@ -8,8 +8,8 @@
         li.list-group-item = message
 
 = form_for @bulk_mail do |f|
-  .field.form-group
-    = f.label :template_id, t_attr(:template)
+  .md-3
+    = f.label :template_id, t_attr(:template), class: 'form-label'
     = f.collection_select :template_id, policy_scope(::Template).where(enabled: true).order(:name), :id, :name,
       {prompt: true},
       {class: 'form-select', required: true}
@@ -28,20 +28,20 @@
       | :
       span.template-info-user<
         | -
-  .field.form-group
-    = f.label :delivery_timing
+  .md-3
+    = f.label :delivery_timing, class: 'form-label'
     - BulkMail::delivery_timings.each_key do |timing|
-      .custom-control.custom-radio
-        = f.radio_button :delivery_timing, timing, required: true, class: 'custom-control-input'
-        = f.label "delivery_timing_#{timing}", class: 'custom-control-label'
+      .form-check
+        = f.radio_button :delivery_timing, timing, required: true, class: 'form-check-input'
+        = f.label "delivery_timing_#{timing}", class: 'form-check-label'
           = t timing, scope: [:mail, :timings]
           | :
           =< t timing, scope: [:descriptions, :timings]
-  .field.form-group
-    = f.label :subject
+  .md-3
+    = f.label :subject, class: 'form-label'
     = f.text_field :subject, class: 'form-control'
-  .field.form-group
-    = f.label :body
+  .md-3
+    = f.label :body, class: 'form-label'
     = f.text_area :body, class: 'form-control text-monospace scroll-y', rows: 20
   .field.row
     .col-auto
@@ -53,10 +53,10 @@
   small.form-text.text-muted
     = t('descriptions.word_wrap')
 
-  .field.form-group
+  .md-3
     = fields @action_info do |field|
       = field.hidden_field :current_status
-      = field.label :comment, (ActionLog.human_attribute_name(:comment) + ' ' + t(:optional, scope: :values))
+      = field.label :comment, (ActionLog.human_attribute_name(:comment) + ' ' + t(:optional, scope: :values)), class: 'form-label'
       = field.text_area :comment, rows: 3, class: 'form-control'
   .actions = f.submit class: 'btn btn-primary'
 

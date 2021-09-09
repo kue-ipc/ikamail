@@ -168,8 +168,8 @@ module ApplicationHelper
     time.xmlschema
   end
 
-  def icon(name, **opts)
-    opts = {width: 32, height: 32, fill: 'currentColor'}.merge(opts)
+  def icon(name, size: 16, **opts)
+    opts = {width: size, height: size, fill: 'currentColor'}.merge(opts)
     opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
     opts[:class] += ['bi']
     tag.svg(opts) do

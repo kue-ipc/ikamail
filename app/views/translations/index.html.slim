@@ -23,7 +23,7 @@ hr
       id: form_id, class: 'form-translation', data: {key: translation.key} do |f|
     = f.hidden_field :locale, id: "#{form_id}-locale"
     = f.hidden_field :key, id: "#{form_id}-key"
-    .form-group.row
+    .row
       .col-lg-2
         small
           = translation.key.split('.').join(' ')

@@ -35,7 +35,7 @@ dl
         = form_tag mail_users_recipient_list_path(@recipient_list, 'included'), method: :post
           .row
             .col-auto
-              .form-group.mb-2.mr-2
+              .mb-2.mr-2
                 = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
                 = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
                                 placeholder: MailUser.human_attribute_name(:name)
@@ -60,7 +60,7 @@ dl
         = form_tag mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post
           .row
             .col-auto
-              .form-group.mb-2.mr-2
+              .mb-2.mr-2
                 = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
                 = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
                                 placeholder: MailUser.human_attribute_name(:name)
