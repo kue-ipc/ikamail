@@ -47,10 +47,11 @@ dl
             li.list-inline-item.border.border-success.rounded.px-1.mb-1
               = "#{mail_user.display_name} (#{mail_user.name})"
               - if recipient_policy.destroy?
-                =< link_to '×', mail_user_recipient_list_path(@recipient_list, 'included', mail_user),
-                           data: {confirm: t(:corfirm_destroy, scope: :messages)},
-                           method: :delete,
-                           class: 'badge bg-secondary'
+                small.px-1.rounded-3.ms-1.border.boder-dark
+                  = link_to '', mail_user_recipient_list_path(@recipient_list, 'included', mail_user),
+                            data: {confirm: t(:corfirm_destroy, scope: :messages)},
+                            method: :delete,
+                            class: 'btn-close'
       - else
         span.badge.bg-success
           = @recipient_list.included_mail_users.size
@@ -72,10 +73,11 @@ dl
             li.list-inline-item.border.border-danger.rounded.px-1.mb-1
               = "#{mail_user.display_name} (#{mail_user.name})"
               - if recipient_policy.destroy?
-                =< link_to '×', mail_user_recipient_list_path(@recipient_list, 'excluded', mail_user),
-                           data: {confirm: t(:corfirm_destroy, scope: :messages)},
-                           method: :delete,
-                           class: 'badge bg-secondary'
+                small.px-1.rounded-3.ms-1.border.boder-dark
+                  =< link_to '', mail_user_recipient_list_path(@recipient_list, 'excluded', mail_user),
+                            data: {confirm: t(:corfirm_destroy, scope: :messages)},
+                            method: :delete,
+                            class: 'btn-close'
       - else
         span.badge.bg-danger
           = @recipient_list.excluded_mail_users.size

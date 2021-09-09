@@ -103,9 +103,9 @@ module ApplicationHelper
       content_tag('span', l(value, format: opts[:format]))
     when true, false
       if value
-        icon('check', class: 'text-primary')
+        icon('toggle-on')
       else
-        icon('x', class: 'text-muted')
+        icon('toggle-off')
       end
     when Enumerable
       content_tag('ul', class: 'list-inline mb-0') do
@@ -168,7 +168,7 @@ module ApplicationHelper
     time.xmlschema
   end
 
-  def icon(name, size: 16, **opts)
+  def icon(name, size: 24, **opts)
     opts = {width: size, height: size, fill: 'currentColor'}.merge(opts)
     opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
     opts[:class] += ['bi']

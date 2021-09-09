@@ -12,12 +12,12 @@ javascript:
 - if alert
   - [*alert].each do |msg|
     .alert.alert-danger.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
-      = icon 'exclamation-triangle-fill', size: 24, class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Danger:'
+      = icon 'exclamation-triangle-fill', class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Danger:'
       = msg
       button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
 - if notice
   - [*notice].each do |msg|
     .alert.alert-success.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
-      = icon 'check-circle-fill', size: 24, class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Success:'
+      = icon 'check-circle-fill', class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Success:'
       = msg
       button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"

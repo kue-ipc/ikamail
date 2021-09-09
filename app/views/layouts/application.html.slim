@@ -6,7 +6,7 @@ html
     title = t(:bulk_mail_system)
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
     header.mb-2
@@ -20,7 +20,7 @@ html
               li.nav-item.px-1
                 = link_to destroy_user_session_path, method: :delete, class: 'nav-link py-1', title: 'ログアウト',
                           'data-bs-toggle': 'tooltip', 'data-bs-placement': 'left' do
-                  = icon 'door-closed', size: 24, roll: 'img', 'aria-label': 'Logout'
+                  = icon 'door-closed', roll: 'img', 'aria-label': 'Logout'
     .container-fluid
       .row
         .col-12.col-md-3.col-xl-2.col-print-none
