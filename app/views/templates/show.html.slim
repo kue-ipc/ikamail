@@ -24,17 +24,17 @@ dl
   = dt_dd_for @template, :count do |count|
     - if policy(@template).update?
       =<> link_to count_template_path(@template, count: count - 1),
-                  method: :patch, class: 'badge badge-light badge-pill'
+                  method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &minus;
-      span.badge.badge-primary = count
+      span.badge.bg-primary = count
       =<> link_to count_template_path(@template, count: count + 1),
-                  method: :patch, class: 'badge badge-light badge-pill'
+                  method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &plus;
       =<> link_to t(:reset, scope: :actions), count_template_path(@template, count: 0),
                   data: {confirm: t(:corfirm_reset, scope: :messages)},
-                  method: :patch, class: 'btn btn-warning btn-sm'
+                  method: :patch, class: 'btn btn-warning btn-sm', role: 'button'
     - else
-      span.badge.badge-primary = count
+      span.badge.bg-primary = count
 
   = dt_dd_for @template, :reserved_time, format: :time
   = dt_dd_for @template, :user

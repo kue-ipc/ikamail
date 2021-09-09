@@ -18,7 +18,7 @@ dl
   = dt_dd_for @recipient_list, :description
 
   = dt_dd_tag "#{RecipientList.human_attribute_name(:applicable_mail_users)}数"
-    span.badge.badge-primary
+    span.badge.bg-primary
       = @recipient_list.applicable_mail_users.size
     - if recipient_policy.index?
       =< link_to '一覧表示', mail_users_recipient_list_path(@recipient_list, 'applicable'), class: 'btn btn-link btn-sm'
@@ -35,8 +35,8 @@ dl
         = form_tag mail_users_recipient_list_path(@recipient_list, 'included'), method: :post
           .row
             .col-auto
-              .mb-2.mr-2
-                = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
+              .mb-2.me-2
+                = label_tag :name, MailUser.human_attribute_name(:name), class: 'visually-hidden'
                 = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
                                 placeholder: MailUser.human_attribute_name(:name)
             .col-auto
@@ -50,9 +50,9 @@ dl
                 =< link_to '×', mail_user_recipient_list_path(@recipient_list, 'included', mail_user),
                            data: {confirm: t(:corfirm_destroy, scope: :messages)},
                            method: :delete,
-                           class: 'badge badge-secondary'
+                           class: 'badge bg-secondary'
       - else
-        span.badge.badge-success
+        span.badge.bg-success
           = @recipient_list.included_mail_users.size
 
     = dt_dd_tag RecipientList.human_attribute_name(:excluded_mail_users)
@@ -60,8 +60,8 @@ dl
         = form_tag mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post
           .row
             .col-auto
-              .mb-2.mr-2
-                = label_tag :name, MailUser.human_attribute_name(:name), class: 'sr-only'
+              .mb-2.me-2
+                = label_tag :name, MailUser.human_attribute_name(:name), class: 'visually-hidden'
                 = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
                                 placeholder: MailUser.human_attribute_name(:name)
             .col-auto
@@ -75,9 +75,9 @@ dl
                 =< link_to '×', mail_user_recipient_list_path(@recipient_list, 'excluded', mail_user),
                            data: {confirm: t(:corfirm_destroy, scope: :messages)},
                            method: :delete,
-                           class: 'badge badge-secondary'
+                           class: 'badge bg-secondary'
       - else
-        span.badge.badge-danger
+        span.badge.bg-danger
           = @recipient_list.excluded_mail_users.size
 
   = dt_dd_for @recipient_list, :templates

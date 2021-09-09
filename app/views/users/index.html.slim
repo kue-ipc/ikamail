@@ -18,12 +18,12 @@ table.table.table-sm
         td = user.email
         td
           - if current_user == user
-            .form-check.form-switch data-toggle="tooltip" data-placement="left" title="自分自身は変更不可"
+            .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="自分自身は変更不可"
               = check_box_tag "admin_#{user.id}", '1', user.admin?, disabled: true, class: 'form-check-input'
               = label_tag "admin_#{user.id}", '', class: 'form-check-label'
           - else
             = link_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}), method: :patch
-              .form-check.form-switch data-toggle="tooltip" data-placement="left" title="クリックして変更"
+              .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="クリックして変更"
                 = check_box_tag "admin_#{user.id}", '1', user.admin?, class: 'form-check-input'
                 = label_tag "admin_#{user.id}", '', class: 'form-check-label'
 
@@ -40,8 +40,8 @@ p
   = form_for User.new, url: admin_users_path do |f|
     .row
       .col-auto
-        = f.label :username, class: 'sr-only'
-        = f.text_field :username, class: 'form-control form-control-sm mr-2', required: true,
+        = f.label :username, class: 'visually-hidden'
+        = f.text_field :username, class: 'form-control form-control-sm me-2', required: true,
                       placeholder: User.human_attribute_name(:username)
       .col-auto
         = f.submit class: 'btn btn-primary btn-sm'

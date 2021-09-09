@@ -4,7 +4,7 @@
 - timing = false unless local_assigns.has_key?(:timing)
 
 
-button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target="#action-#{action}-modal"
+button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-target="#action-#{action}-modal"
   = t(action, scope: :actions)
 
 .modal.fade id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label" aria-hidden="true"
@@ -16,8 +16,7 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
           h5.modal-title id="action-#{action}-modal-label"
             | メールの
             = t(action, scope: :actions)
-          button.close type="button" data-dismiss="modal" aria-label="閉じる"
-            span aria-hidden="true" &times;
+          button.btn-close type="button" data-bs-dismiss="modal" aria-label=t('do_actions.close')
         .modal-body
           p = t(action, scope: [:mail, :action_messages])
           - if timing
@@ -36,4 +35,5 @@ button<> class="btn btn-#{level}" type="button" data-toggle="modal" data-target=
                 | コメントは必須です。
         .modal-footer
           = f.submit t(action, scope: :do_actions), class: "btn btn-#{level}"
-          button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
+          button.btn.btn-secondary type="button" data-bs-dismiss="modal"
+            = t('do_actions.close')

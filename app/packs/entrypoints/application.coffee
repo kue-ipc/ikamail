@@ -1,3 +1,5 @@
+# rails component
+
 import ujs from '@rails/ujs'
 ujs.start()
 
@@ -9,16 +11,12 @@ turbolinks.start()
 
 # import 'channels'
 
-# images = require.context('../images', true)
-# imagePath = (name) => images(name, true)
-
+# other assets
 require 'bootstrap-icons/bootstrap-icons.svg'
-# imagePath = (name) => images(name, true)
-# console.log()
 
+# custom modules
 
-import 'bootstrap'
-
+import 'src/bootstrap-trigger'
 import BulkMailTextArea from 'src/bulk-mail-textarea'
 import TemplateInfo from 'src/template-info'
 import 'src/translation-index'
