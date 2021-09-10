@@ -31,7 +31,7 @@ class RecipientMailUsersController < ApplicationController
   def create
     @mail_user = MailUser.find_by(name_params)
 
-    if !['included', 'excluded'].include?(@type)
+    if ['included', 'excluded'].exclude?(@type)
       redirect_to @recipient_list, alert: '指定のリストにユーザーは追加できません。'
     elsif @mail_user
       @recipient = Recipient.find_or_create_by(recipient_list: @recipient_list, mail_user: @mail_user)
@@ -48,7 +48,7 @@ class RecipientMailUsersController < ApplicationController
   def destroy
     @recipient = Recipient.find_by(recipient_list: @recipient_list, mail_user: @mail_user)
 
-    if !['included', 'excluded'].include?(@type)
+    if ['included', 'excluded'].exclude?(@type)
       redirect_to @recipient_list, alert: '指定のリストからユーザーは削除できません。'
     elsif @recipient
       @recipient.update_column(@type, false)

@@ -25,7 +25,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     test 'should create recipient_list' do
       assert_difference('RecipientList.count') do
         post recipient_lists_url, params: {recipient_list: {
-          name: @recipient_list.name + '_alt',
+          name: "#{@recipient_list.name}_alt",
           description: @recipient_list.description,
           mail_group_ids: @recipient_list.mail_group_ids,
         }}
@@ -46,7 +46,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
     test 'should update recipient_list' do
       patch recipient_list_url(@recipient_list), params: {recipient_list: {
-        name: @recipient_list.name + '_alt',
+        name: "#{@recipient_list.name}_alt",
         description: @recipient_list.description,
         mail_group_ids: @recipient_list.mail_group_ids,
       }}
@@ -90,7 +90,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
       assert_no_difference('RecipientList.count') do
         assert_raises(Pundit::NotAuthorizedError) do
           post recipient_lists_url, params: {recipient_list: {
-            name: @recipient_list.name + '_alt',
+            name: "#{@recipient_list.name}_alt",
             description: @recipient_list.description,
             mail_group_ids: @recipient_list.mail_group_ids,
           }}
@@ -114,7 +114,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     test 'should NOT update recipient_list' do
       assert_raises(Pundit::NotAuthorizedError) do
         patch recipient_list_url(@recipient_list), params: {recipient_list: {
-          name: @recipient_list.name + '_alt',
+          name: "#{@recipient_list.name}_alt",
           description: @recipient_list.description,
           mail_group_ids: @recipient_list.mail_group_ids,
         }}
@@ -147,7 +147,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     test 'redirect to login INSTEAD OF create recipient_list' do
       assert_no_difference('RecipientList.count') do
         post recipient_lists_url, params: {recipient_list: {
-          name: @recipient_list.name + '_alt',
+          name: "#{@recipient_list.name}_alt",
           description: @recipient_list.description,
           mail_group_ids: @recipient_list.mail_group_ids,
         }}
@@ -167,7 +167,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
     test 'redirect to login INSTEAD OF update recipient_list' do
       patch recipient_list_url(@recipient_list), params: {recipient_list: {
-        name: @recipient_list.name + '_alt',
+        name: "#{@recipient_list.name}_alt",
         description: @recipient_list.description,
         mail_group_ids: @recipient_list.mail_group_ids,
       }}

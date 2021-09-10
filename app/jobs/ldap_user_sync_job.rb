@@ -18,7 +18,7 @@ class LdapUserSyncJob < ApplicationJob
           user.sync_ldap!
           counter[:sync] += 1
         else
-          user.username = '#' + user.id.to_s + '#' + user.username
+          user.username = "##{user.id}\##{user.username}"
           user.deleted = true
           counter[:delete] += 1
         end

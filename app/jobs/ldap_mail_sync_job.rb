@@ -54,7 +54,7 @@ class LdapMailSyncJob < ApplicationJob
 
     def sync_mail_memberships
       MailGroup.find_each do |group|
-        ldap_group = LdapGroup.find_by_name(group.name)
+        ldap_group = LdapGroup.find_dn(group.name)
         group.primary_users = MailUser.where(name: ldap_group.primary_users.map(&:name)).all
         group.secondary_users = MailUser.where(name: ldap_group.users.map(&:name)).all
       end

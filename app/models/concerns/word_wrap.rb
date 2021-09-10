@@ -76,7 +76,7 @@ module WordWrap
            end
 
       # 左の余白は常に削る。
-      yield remnant[0, pt].rstrip + "\n"
+      yield "#{remnant[0, pt].rstrip}\n"
       remnant = remnant[pt, remnant.size - pt]
     end
 
@@ -98,7 +98,7 @@ module WordWrap
       # 非単語で終わっていれば終了
       return cur_pt unless check_word_char(str[cur_pt - 1])
 
-      pp cur_pt
+      Rails.logger.debug cur_pt
 
       cur_pt -= 1
     end
@@ -111,8 +111,8 @@ module WordWrap
     cur_pt = pt
     while cur_pt.positive?
       cur_pt = search_breakable_word_wrap(str, cur_pt)
-      if !NOT_STARTING_CHARS.include?(str[cur_pt]) &&
-         !NOT_ENDING_CHARS.include?(str[cur_pt - 1])
+      if NOT_STARTING_CHARS.exclude?(str[cur_pt]) &&
+         NOT_ENDING_CHARS.exclude?(str[cur_pt - 1])
         return cur_pt
       end
 

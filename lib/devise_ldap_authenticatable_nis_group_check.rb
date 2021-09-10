@@ -9,9 +9,9 @@ module Devise
   @@ldap_nis_group_check = false
 
   module LDAP
-    DEFAULT_GID_NUMBER_KEY = 'gidNumber'
-    DEFAULT_MEMBER_UID_KEY = 'memberUid'
-    DEFAULT_UID_KEY = 'uid'
+    DEFAULT_GID_NUMBER_KEY = 'gidNumber'.freeze
+    DEFAULT_MEMBER_UID_KEY = 'memberUid'.freeze
+    DEFAULT_UID_KEY = 'uid'.freeze
 
     class Connection
       def gid_number

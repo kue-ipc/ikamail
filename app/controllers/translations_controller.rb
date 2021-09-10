@@ -46,9 +46,7 @@ class TranslationsController < ApplicationController
     end
 
     def translations_to_hash(list)
-      list.index_by do |e|
-        e.key
-      end
+      list.index_by(&:key)
     end
 
     def all_translations(key, value, db)

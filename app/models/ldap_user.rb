@@ -40,7 +40,7 @@ class LdapUser < ActiveLdap::Base
     end
   end
 
-  def self.find_by_name(name)
+  def self.find_dn(name)
     find(:first, filter: {dn_attribute => name})
   end
 end

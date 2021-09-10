@@ -7,7 +7,7 @@ app_root = Dir.pwd
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch('RAILS_MAX_THREADS') { 5 }
+max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 5)
 min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
 threads min_threads_count, max_threads_count
 
@@ -18,10 +18,10 @@ worker_timeout 3600 if rails_env == 'development'
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-if !ENV.include?('PORT') && rails_env == 'production'
-  bind 'unix://' + File.expand_path('tmp/sockets/puma.sock', app_root)
+if ENV.exclude?('PORT') && rails_env == 'production'
+  bind "unix://#{File.expand_path('tmp/sockets/puma.sock', app_root)}"
 else
-  port ENV.fetch('PORT') { 3000 }
+  port ENV.fetch('PORT', 3000)
 end
 
 # Specifies the `environment` that Puma will run in.
