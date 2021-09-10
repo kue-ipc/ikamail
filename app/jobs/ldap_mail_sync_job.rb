@@ -14,49 +14,47 @@ class LdapMailSyncJob < ApplicationJob
     sync_mail_memberships
   end
 
-  private
+  private def sync_mail_groups
+    mail_group_remains = Set.new(MailGroup.all.map(&:name))
 
-    def sync_mail_groups
-      mail_group_remains = Set.new(MailGroup.all.map(&:name))
-
-      LdapGroup.all.each do |group|
-        name = group.name
-        mail_group_remains.delete(name)
-        MailGroup.find_or_create_by(name: name).update(display_name: group.display_name)
-      end
-
-      # delete group out of LDAP
-      mail_group_remains.each do |name|
-        MailGroup.find_by(name: name).destroy
-      end
+    LdapGroup.all.each do |group|
+      name = group.name
+      mail_group_remains.delete(name)
+      MailGroup.find_or_create_by(name: name).update(display_name: group.display_name)
     end
 
-    def sync_mail_users
-      mail_user_remains = Set.new(MailUser.all.map(&:name))
+    # delete group out of LDAP
+    mail_group_remains.each do |name|
+      MailGroup.find_by(name: name).destroy
+    end
+  end
 
-      LdapUser.all.each do |user|
-        # ignore user who dose not have mail addresses
-        next unless user.mail
+  private def sync_mail_users
+    mail_user_remains = Set.new(MailUser.all.map(&:name))
 
-        name = user.name
-        mail_user_remains.delete(name)
-        mail_user = MailUser.find_or_initialize_by(name: name)
-        mail_user.mail = user.mail
-        mail_user.display_name = user.display_name
-        mail_user.save
-      end
+    LdapUser.all.each do |user|
+      # ignore user who dose not have mail addresses
+      next unless user.mail
 
-      # delete user out of LDAP
-      mail_user_remains.each do |name|
-        MailUser.find_by(name: name).destroy
-      end
+      name = user.name
+      mail_user_remains.delete(name)
+      mail_user = MailUser.find_or_initialize_by(name: name)
+      mail_user.mail = user.mail
+      mail_user.display_name = user.display_name
+      mail_user.save
     end
 
-    def sync_mail_memberships
-      MailGroup.find_each do |group|
-        ldap_group = LdapGroup.find_dn(group.name)
-        group.primary_users = MailUser.where(name: ldap_group.primary_users.map(&:name)).all
-        group.secondary_users = MailUser.where(name: ldap_group.users.map(&:name)).all
-      end
+    # delete user out of LDAP
+    mail_user_remains.each do |name|
+      MailUser.find_by(name: name).destroy
     end
+  end
+
+  private def sync_mail_memberships
+    MailGroup.find_each do |group|
+      ldap_group = LdapGroup.find_dn(group.name)
+      group.primary_users = MailUser.where(name: ldap_group.primary_users.map(&:name)).all
+      group.secondary_users = MailUser.where(name: ldap_group.users.map(&:name)).all
+    end
+  end
 end

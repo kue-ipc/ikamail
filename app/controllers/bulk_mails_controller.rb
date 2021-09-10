@@ -170,51 +170,49 @@ class BulkMailsController < ApplicationController
     redirect_to @bulk_mail
   end
 
-  private
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bulk_mail
-      @bulk_mail = BulkMail.find(params[:id])
-      if @action_info && @action_info.current_status != @bulk_mail.status
-        authorize @bulk_mail, :show?
-        redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, action_name)
-        return
-      end
-
-      authorize @bulk_mail
+  # Use callbacks to share common setup or constraints between actions.
+  private def set_bulk_mail
+    @bulk_mail = BulkMail.find(params[:id])
+    if @action_info && @action_info.current_status != @bulk_mail.status
+      authorize @bulk_mail, :show?
+      redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, action_name)
+      return
     end
 
-    def set_action_info
-      @action_info = ActionInfo.new(action_info_params)
-    end
+    authorize @bulk_mail
+  end
 
-    def authorize_bulk_mail
-      authorize BulkMail
-    end
+  private def set_action_info
+    @action_info = ActionInfo.new(action_info_params)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bulk_mail_params
-      params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule)
-    end
+  private def authorize_bulk_mail
+    authorize BulkMail
+  end
 
-    def action_info_params
-      params.require(:action_info).permit(:comment, :current_status, :datetime)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  private def bulk_mail_params
+    params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule)
+  end
 
-    def record_action_log(action: action_name, user: current_user)
-      action_log =  ActionLog.create(bulk_mail: @bulk_mail, user: user,
-        action: action, comment: @action_info.comment)
-      flash.alert = [*flash.alert, t(:failure_record_action_log, scope: :messages)] unless action_log
-      action_log
-    end
+  private def action_info_params
+    params.require(:action_info).permit(:comment, :current_status, :datetime)
+  end
 
-    def send_notification_mail(action: action_name, to: current_user, skip_current_user: true)
-      return if skip_current_user && current_user == to
+  private def record_action_log(action: action_name, user: current_user)
+    action_log = ActionLog.create(bulk_mail: @bulk_mail, user: user,
+                                  action: action, comment: @action_info.comment)
+    flash.alert = [*flash.alert, t(:failure_record_action_log, scope: :messages)] unless action_log
+    action_log
+  end
 
-      mailer = NotificationMailer.with(to: to, bulk_mail: @bulk_mail, comment: @action_info.comment)
-        .send("mail_#{action}")
-        .deliver_later
-      flash.alert = [*flash.alert, t(:failure_send_notification_mail, scope: :messages)] unless mailer
-      mailer
-    end
+  private def send_notification_mail(action: action_name, to: current_user, skip_current_user: true)
+    return if skip_current_user && current_user == to
+
+    mailer = NotificationMailer.with(to: to, bulk_mail: @bulk_mail, comment: @action_info.comment)
+      .send("mail_#{action}")
+      .deliver_later
+    flash.alert = [*flash.alert, t(:failure_send_notification_mail, scope: :messages)] unless mailer
+    mailer
+  end
 end

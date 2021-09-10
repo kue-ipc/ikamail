@@ -61,38 +61,35 @@ class TemplatesController < ApplicationController
     end
   end
 
-  private
+  # Use callbacks to share common setup or constraints between actions.
+  private def set_template
+    @template = Template.find(params[:id])
+    authorize @template
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_template
-      @template = Template.find(params[:id])
-      authorize @template
-    end
+  private def authorize_template
+    authorize Template
+  end
 
-    def authorize_template
-      authorize Template
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  private def template_params
+    permitted = params.require(:template).permit(
+      :name, :recipient_list_id,
+      :from_name, :from_mail_address,
+      :subject_prefix, :subject_suffix,
+      :body_header, :body_footer,
+      :count, :reserved_time, :description, :enabled,
+      user: :username,
+    )
+    permitted[:user] = if current_user.admin?
+        User.find_by(username: permitted[:user][:username])
+      else
+        current_user
+      end
+    permitted
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def template_params
-      permitted = params.require(:template).permit(
-        :name, :recipient_list_id,
-        :from_name, :from_mail_address,
-        :subject_prefix, :subject_suffix,
-        :body_header, :body_footer,
-        :count, :reserved_time, :description, :enabled,
-        user: :username
-      )
-      permitted[:user] =
-        if current_user.admin?
-          User.find_by(username: permitted[:user][:username])
-        else
-          current_user
-        end
-      permitted
-    end
-
-    def count_params
-      params.permit(:count)
-    end
+  private def count_params
+    params.permit(:count)
+  end
 end

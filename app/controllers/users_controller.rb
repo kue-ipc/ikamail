@@ -48,29 +48,26 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+  # Use callbacks to share common setup or constraints between actions.
+  private def set_user
+    @user = if params[:id]
+        User.find(params[:id])
+      else
+        current_user
+      end
+    authorize @user
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user =
-        if params[:id]
-          User.find(params[:id])
-        else
-          current_user
-        end
-      authorize @user
-    end
+  private def authorize_user
+    authorize User
+  end
 
-    def authorize_user
-      authorize User
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  private def create_user_params
+    params.require(:user).permit(:username)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def create_user_params
-      params.require(:user).permit(:username)
-    end
-
-    def update_user_params
-      params.require(:user).permit(:role)
-    end
+  private def update_user_params
+    params.require(:user).permit(:role)
+  end
 end

@@ -16,8 +16,7 @@ class RecipientMailUsersController < ApplicationController
         @recipient_list.excluded_mail_users
       end&.order(:name)
 
-    @mail_users =
-      if params[:page] == 'all'
+    @mail_users = if params[:page] == 'all'
         all_mail_users&.page(nil)&.per(all_mail_users&.count)
       else
         all_mail_users&.page(params[:page])
@@ -62,23 +61,21 @@ class RecipientMailUsersController < ApplicationController
     end
   end
 
-  private
+  private def set_recipient_list
+    @recipient_list = RecipientList.find(params[:id])
+    authorize @recipient_list
+  end
 
-    def set_recipient_list
-      @recipient_list = RecipientList.find(params[:id])
-      authorize @recipient_list
-    end
+  private def set_type
+    @type = params[:type]
+    authorize Recipient
+  end
 
-    def set_type
-      @type = params[:type]
-      authorize Recipient
-    end
+  private def set_mail_user
+    @mail_user = MailUser.find(params[:mail_user_id])
+  end
 
-    def set_mail_user
-      @mail_user = MailUser.find(params[:mail_user_id])
-    end
-
-    def name_params
-      params.permit(:name)
-    end
+  private def name_params
+    params.permit(:name)
+  end
 end

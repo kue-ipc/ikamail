@@ -5,7 +5,7 @@ class TranslationsController < ApplicationController
 
   def index
     @translations = all_translations([], I18n.t('.', locale: @locale),
-      translations_to_hash(Translation.locale(@locale)))
+                                     translations_to_hash(Translation.locale(@locale)))
   end
 
   def create
@@ -26,45 +26,43 @@ class TranslationsController < ApplicationController
     I18n.backend.reload!
   end
 
-  private
+  private def set_locale
+    @locale = I18n.default_locale
+  end
 
-    def set_locale
-      @locale = I18n.default_locale
-    end
+  private def set_translation
+    @translation = Translation.find(params[:id])
+    authorize @translation
+  end
 
-    def set_translation
-      @translation = Translation.find(params[:id])
-      authorize @translation
-    end
+  private def authorize_translation
+    authorize Translation
+  end
 
-    def authorize_translation
-      authorize Translation
-    end
+  private def translation_params
+    params.require(:translation).permit(:locale, :key, :value)
+  end
 
-    def translation_params
-      params.require(:translation).permit(:locale, :key, :value)
-    end
+  private def translations_to_hash(list)
+    list.index_by(&:key)
+  end
 
-    def translations_to_hash(list)
-      list.index_by(&:key)
+  private def all_translations(key, value, db)
+    case value
+    when String
+      full_key = key.join('.')
+      db[full_key] || Translation.new(
+        locale: @locale,
+        key: full_key,
+        value: value,
+      )
+    when Hash
+      value.each_key.sort.map do |c_key|
+        all_translations(key + [c_key], value[c_key], db)
+      end.compact.flatten
+    else
+      # nothing
+      nil
     end
-
-    def all_translations(key, value, db)
-      case value
-      when String
-        full_key = key.join('.')
-        db[full_key] || Translation.new(
-          locale: @locale,
-          key: full_key,
-          value: value
-        )
-      when Hash
-        value.each_key.sort.map do |c_key|
-          all_translations(key + [c_key], value[c_key], db)
-        end.compact.flatten
-      else
-        # nothing
-        nil
-      end
-    end
+  end
 end

@@ -40,9 +40,7 @@ class AdminController < ApplicationController
     end
   end
 
-  private
-
-    def authorize_admin
-      authorize current_user, :admin?
-    end
+  private def authorize_admin
+    authorize current_user, :admin?
+  end
 end

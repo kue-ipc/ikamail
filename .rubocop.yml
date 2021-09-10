@@ -41,35 +41,44 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
-# Loose Metrics
+# Metrics double
 Metrics/AbcSize:
-  Max: 23
+  Max: 34 # 17
 
 Metrics/BlockLength:
-  Max: 38
+  Max: 50 # 25
 
 Metrics/BlockNesting:
-  Max: 5
+  Max: 6 # 3
 
 Metrics/ClassLength:
-  Max: 150
+  Max: 200 # 100
 
 Metrics/CyclomaticComplexity:
-  Max: 9
+  Max: 14 # 7
 
 Metrics/MethodLength:
-  Max: 15
+  Max: 20 # 10
+  CountAsOne: ['array', 'hash', 'heredoc']
+  Exclude:
+    - 'db/migrate/*.rb'
 
 Metrics/ModuleLength:
-  Max: 150
+  Max: 200 # 100
 
 Metrics/ParameterLists:
-  Max: 8
+  Max: 10 # 5
+  MaxOptionalParameters: 6 # 3
 
 Metrics/PerceivedComplexity:
-  Max: 11
+  Max: 16 # 8
 
 # Styles
+
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+  AllowModifiersOnSymbols: false
+
 Style/AsciiComments:
   Enabled: false
 

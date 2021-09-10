@@ -16,22 +16,20 @@ class BulkMailer < ApplicationMailer
       subject: @bulk_mail.subject_all,
       from: @bulk_mail.template.from,
       bcc: @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
-        [@bulk_mail.template.user.email, @bulk_mail.user.email]
+           [@bulk_mail.template.user.email, @bulk_mail.user.email],
     )
   end
 
-  private
+  private def before_deliver_bulk_mail
+    @bulk_mail = params[:bulk_mail]
+    mail_count = @bulk_mail.template.increment!(:count).count
+    @bulk_mail.update_columns(status: 'delivering', number: mail_count)
+    ActionLog.create(bulk_mail: @bulk_mail, action: 'start')
+  end
 
-    def before_deliver_bulk_mail
-      @bulk_mail = params[:bulk_mail]
-      mail_count = @bulk_mail.template.increment!(:count).count
-      @bulk_mail.update_columns(status: 'delivering', number: mail_count)
-      ActionLog.create(bulk_mail: @bulk_mail, action: 'start')
-    end
-
-    def after_deliver_bulk_mail
-      @bulk_mail.update_columns(status: 'delivered', delivered_at: Time.zone.now)
-      ActionLog.create(bulk_mail: @bulk_mail, action: 'finish')
-      NotificationMailer.with(to: @bulk_mail.user, bulk_mail: @bulk_mail).mail_finish.deliver_later
-    end
+  private def after_deliver_bulk_mail
+    @bulk_mail.update_columns(status: 'delivered', delivered_at: Time.zone.now)
+    ActionLog.create(bulk_mail: @bulk_mail, action: 'finish')
+    NotificationMailer.with(to: @bulk_mail.user, bulk_mail: @bulk_mail).mail_finish.deliver_later
+  end
 end

@@ -13,15 +13,13 @@ class MailGroupsController < ApplicationController
   def show
   end
 
-  private
+  # Use callbacks to share common setup or constraints between actions.
+  private def set_mail_group
+    @mail_group = MailGroup.find(params[:id])
+    authorize @mail_group
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mail_group
-      @mail_group = MailGroup.find(params[:id])
-      authorize @mail_group
-    end
-
-    def authorize_mail_group
-      authorize MailGroup
-    end
+  private def authorize_mail_group
+    authorize MailGroup
+  end
 end

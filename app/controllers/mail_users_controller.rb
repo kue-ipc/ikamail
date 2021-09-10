@@ -5,8 +5,7 @@ class MailUsersController < ApplicationController
   # GET /mail_users
   # GET /mail_users.json
   def index
-    all_mail_users =
-      if search_params[:mail_group_id].present?
+    all_mail_users = if search_params[:mail_group_id].present?
         MailGroup.find(search_params[:mail_group_id]).mail_users
       else
         MailUser
@@ -37,19 +36,17 @@ class MailUsersController < ApplicationController
   #   end
   # end
 
-  private
+  # Use callbacks to share common setup or constraints between actions.
+  private def set_mail_user
+    @mail_user = MailUser.find(params[:id])
+    authorize @mail_user
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mail_user
-      @mail_user = MailUser.find(params[:id])
-      authorize @mail_user
-    end
+  private def authorize_mail_user
+    authorize MailUser
+  end
 
-    def authorize_mail_user
-      authorize MailUser
-    end
-
-    def search_params
-      params.permit(:mail_group_id, :query)
-    end
+  private def search_params
+    params.permit(:mail_group_id, :query)
+  end
 end

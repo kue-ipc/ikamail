@@ -31,11 +31,9 @@ class NotificationMailer < ApplicationMailer
     mail to: @to.map(&:email)
   end
 
-  private
-
-    def mail_params
-      @to = [*params[:to]]
-      @bulk_mail = params[:bulk_mail]
-      @comment = params[:comment]
-    end
+  private def mail_params
+    @to = [*params[:to]]
+    @bulk_mail = params[:bulk_mail]
+    @comment = params[:comment]
+  end
 end

@@ -7,7 +7,7 @@ class BulkMailPolicy < ApplicationPolicy
         scope.includes(:template)
           .where(user: user)
           .or(scope.includes(:template)
-               .where(templates: {user: user}))
+            .where(templates: { user: user }))
       end
     end
   end
@@ -69,21 +69,19 @@ class BulkMailPolicy < ApplicationPolicy
       record.status_error? && writable?
   end
 
-  private
+  private def owned?
+    record.user == user
+  end
 
-    def owned?
-      record.user == user
-    end
+  private def readable?
+    manageable? || owned?
+  end
 
-    def readable?
-      manageable? || owned?
-    end
+  private def writable?
+    manageable? || owned?
+  end
 
-    def writable?
-      manageable? || owned?
-    end
-
-    def manageable?
-      user.admin? || record.template.user == user
-    end
+  private def manageable?
+    user.admin? || record.template.user == user
+  end
 end
