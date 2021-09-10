@@ -1,3 +1,4 @@
+# rubocop: disable Rails/InverseOf
 class LdapUser < ActiveLdap::Base
   ldap_mapping dn_attribute: configurations['ldap']['user']['dn'],
     prefix: configurations['ldap']['user']['base'],
@@ -17,10 +18,8 @@ class LdapUser < ActiveLdap::Base
 
   def display_name
     case self['displayName']
-    when nil
-      name
-    when String
-      self['displayName']
+    when nil then name
+    when String then self['displayName']
     when Array
       lang = "lang-#{I18n.default_locale}"
       lang_desc = name
@@ -33,10 +32,8 @@ class LdapUser < ActiveLdap::Base
         end
       end
       lang_desc
-    when Hash
-      self['description'].values.first
-    else
-      self['displayName']
+    when Hash then self['description'].values.first
+    else self['displayName'].to_s
     end
   end
 
@@ -44,3 +41,4 @@ class LdapUser < ActiveLdap::Base
     find(:first, filter: {dn_attribute => name})
   end
 end
+# rubocop: enable Rails/InverseOf

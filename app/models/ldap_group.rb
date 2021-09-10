@@ -1,3 +1,4 @@
+# rubocop: disable Rails/HasManyOrHasOneDependent, Rails/InverseOf
 class LdapGroup < ActiveLdap::Base
   ldap_mapping dn_attribute: configurations['ldap']['group']['dn'],
     prefix: configurations['ldap']['group']['base'],
@@ -17,10 +18,8 @@ class LdapGroup < ActiveLdap::Base
 
   def display_name
     case self['description']
-    when nil
-      name
-    when String
-      self['description']
+    when nil then name
+    when String then self['description']
     when Array
       lang = "lang-#{I18n.default_locale}"
       lang_desc = name
@@ -33,10 +32,8 @@ class LdapGroup < ActiveLdap::Base
         end
       end
       lang_desc
-    when Hash
-      self['description'].values.first
-    else
-      self['description']
+    when Hash then self['description'].values.first
+    else self['description'].to_s
     end
   end
 
@@ -44,3 +41,4 @@ class LdapGroup < ActiveLdap::Base
     find(:first, filter: {dn_attribute => name})
   end
 end
+# rubocop: enable Rails/HasManyOrHasOneDependent, Rails/InverseOf

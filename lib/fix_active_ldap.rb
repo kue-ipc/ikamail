@@ -8,6 +8,7 @@ module ActiveLdap
         private :_find_target
       end
 
+      # rubocop: disable Lint/UnderscorePrefixedVariableName
       private def find_target
         targets, requested_targets = collect_targets(@options[:wrap], true)
         return [] if targets.nil?
@@ -18,14 +19,17 @@ module ActiveLdap
           found_targets[target[_foreign_key]] ||= target
         end
 
-        klass = foreign_class
+        # --- original code ---
+        # klass = foreign_class
+        # requested_targets.collect do |name|
+        #   found_targets[name] || klass.new(name)
+        # end
+
         requested_targets.collect do |name|
-          # orgininal code is newing klass
-          # found_targets[name] || klass.new(name)
-          # no klass
           found_targets[name]
         end.compact
       end
+      # rubocop: enable Lint/UnderscorePrefixedVariableName
     end
   end
 end

@@ -22,13 +22,14 @@ class BulkMailer < ApplicationMailer
 
   private def before_deliver_bulk_mail
     @bulk_mail = params[:bulk_mail]
-    mail_count = @bulk_mail.template.increment!(:count).count
-    @bulk_mail.update_columns(status: 'delivering', number: mail_count)
+    @bulk_mail.template.increment(:count).save
+    mail_count = @bulk_mail.template.count
+    @bulk_mail.update(status: 'delivering', number: mail_count)
     ActionLog.create(bulk_mail: @bulk_mail, action: 'start')
   end
 
   private def after_deliver_bulk_mail
-    @bulk_mail.update_columns(status: 'delivered', delivered_at: Time.zone.now)
+    @bulk_mail.update(status: 'delivered', delivered_at: Time.zone.now)
     ActionLog.create(bulk_mail: @bulk_mail, action: 'finish')
     NotificationMailer.with(to: @bulk_mail.user, bulk_mail: @bulk_mail).mail_finish.deliver_later
   end

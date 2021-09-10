@@ -1,9 +1,9 @@
-# ISO-2022-JP いわやる JISコード について
+# libary for ISO-2022-JP (JIS code)
 
 require 'nkf'
 
 module Iso2022jp
-  module_function
+  module_function # rubocop:disable Style/AccessModifierDeclarations
 
   def check_unconvertible_chars(str)
     no_amp_str = str.gsub('&', '&amp;')

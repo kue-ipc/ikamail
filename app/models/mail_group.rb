@@ -1,9 +1,9 @@
 class MailGroup < ApplicationRecord
-  has_and_belongs_to_many :recipient_lists
+  has_and_belongs_to_many :recipient_lists # rubocop: disable Rails/HasAndBelongsToMany
 
   has_many :mail_memberships, dependent: :destroy
-  has_many :primary_memberships, -> { where(primary: true) }, class_name: 'MailMembership'
-  has_many :secondary_memberships, -> { where(primary: false) }, class_name: 'MailMembership'
+  has_many :primary_memberships, -> { where(primary: true) }, class_name: 'MailMembership', inverse_of: :mail_group
+  has_many :secondary_memberships, -> { where(primary: false) }, class_name: 'MailMembership', inverse_of: :mail_group
 
   has_many :mail_users, through: :mail_memberships
   has_many :primary_users, through: :primary_memberships, source: :mail_user

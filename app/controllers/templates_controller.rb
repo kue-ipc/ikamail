@@ -61,7 +61,6 @@ class TemplatesController < ApplicationController
     end
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   private def set_template
     @template = Template.find(params[:id])
     authorize @template
@@ -71,7 +70,6 @@ class TemplatesController < ApplicationController
     authorize Template
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   private def template_params
     permitted = params.require(:template).permit(
       :name, :recipient_list_id,

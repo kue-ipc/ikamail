@@ -1,6 +1,6 @@
 class TranslationsController < ApplicationController
   before_action :set_locale
-  before_action :set_translation, only: [:show, :update, :destroy]
+  before_action :set_translation, only: [:update, :destroy]
   before_action :authorize_translation, only: [:index, :create]
 
   def index
@@ -60,9 +60,6 @@ class TranslationsController < ApplicationController
       value.each_key.sort.map do |c_key|
         all_translations(key + [c_key], value[c_key], db)
       end.compact.flatten
-    else
-      # nothing
-      nil
     end
   end
 end

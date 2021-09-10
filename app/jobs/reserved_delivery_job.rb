@@ -6,7 +6,7 @@ class ReservedDeliveryJob < ApplicationJob
     return if bulk_mail.nil?
     return unless bulk_mail.status_reserved?
 
-    bulk_mail.update_columns(status: 'waiting')
+    bulk_mail.update(status: 'waiting')
     ActionLog.create(bulk_mail: bulk_mail, action: 'deliver', comment: 'reserved')
     BulkMailer.with(bulk_mail: bulk_mail).all.deliver_later
   end

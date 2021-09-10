@@ -56,7 +56,6 @@ class RecipientListsController < ApplicationController
     end
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   private def set_recipient_list
     @recipient_list = RecipientList.find(params[:id])
     authorize @recipient_list
@@ -66,7 +65,6 @@ class RecipientListsController < ApplicationController
     authorize RecipientList
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   private def recipient_list_params
     params.require(:recipient_list).permit(:name, :description, mail_group_ids: [])
   end

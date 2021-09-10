@@ -10,7 +10,7 @@ require 'devise_ldap_authenticatable'
 
 module Devise
   mattr_accessor :ldap_check_group_policy
-  @@ldap_check_group_policy = :and
+  @@ldap_check_group_policy = :and # rubocop: disable Style/ClassVars
 
   module LDAP
     class Connection

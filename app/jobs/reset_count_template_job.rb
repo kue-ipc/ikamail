@@ -3,7 +3,7 @@ class ResetCountTemplateJob < ApplicationJob
 
   def perform(*_args)
     Template.find_each do |template|
-      template.update_column(:count, 0)
+      template.update(count: 0)
     end
   end
 end
