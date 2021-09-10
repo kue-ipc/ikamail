@@ -4,13 +4,13 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
   include Devise::Test::IntegrationHelpers
 
-  test "should get top" do
+  test 'should get top' do
     sign_in users(:admin)
     get admin_root_url
     assert_response :success
   end
 
-  test "should get ldap_sync" do
+  test 'should get ldap_sync' do
     sign_in users(:admin)
     assert_enqueued_with(job: LdapMailSyncJob) do
       put admin_ldap_sync_url
@@ -23,5 +23,4 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
   #   post admin_statistics_url
   #   assert_response :success
   # end
-
 end

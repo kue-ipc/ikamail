@@ -7,7 +7,7 @@ class BulkMailerTest < ActionMailer::TestCase
     assert_equal ['user01@example.jp', 'user03@example.jp'], mail.bcc
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal "前文\nテスト\n全ユーザー宛\n後文\n",
-                 NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
+      NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
   end
 
   test 'delver all' do

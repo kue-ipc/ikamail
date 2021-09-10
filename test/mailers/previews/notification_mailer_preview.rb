@@ -1,6 +1,5 @@
 # Preview all emails at http://localhost:3000/rails/mailers/notification_mailer
 class NotificationMailerPreview < ActionMailer::Preview
-
   # Preview this email at http://localhost:3000/rails/mailers/notification_mailer/apply
   def apply
     NotificationMailer.apply
@@ -45,5 +44,4 @@ class NotificationMailerPreview < ActionMailer::Preview
   def error
     NotificationMailer.error
   end
-
 end

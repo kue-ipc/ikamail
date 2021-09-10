@@ -17,9 +17,7 @@ class UserPolicy < ApplicationPolicy
     user.admin?
   end
 
-  def admin?
-    user.admin?
-  end
+  delegate :admin?, to: :user
 
   def user?
     user == record

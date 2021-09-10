@@ -13,7 +13,7 @@ class RecipientList < ApplicationRecord
   has_many :excluded_mail_users, through: :excluded_recipients, source: :mail_user
 
   validates :name, presence: true, uniqueness: {case_sensitive: true}, length: {maximum: 255}
-  validates :description, length: {maximum: 65536}
+  validates :description, length: {maximum: 65_536}
 
   def to_s
     name

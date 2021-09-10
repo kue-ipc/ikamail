@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class LdapUserSyncJobTest < ActiveJob::TestCase
-  test "sync user attribute" do
+  test 'sync user attribute' do
     LdapUserSyncJob.perform_now
 
     # emailとfullnameの修正
@@ -9,7 +9,7 @@ class LdapUserSyncJobTest < ActiveJob::TestCase
     assert_equal '鈴木　陽子', User.find(users(:user06).id).fullname
   end
 
-  test "sync user delete" do
+  test 'sync user delete' do
     LdapUserSyncJob.perform_now
 
     # 存在しないユーザーの削除
@@ -19,7 +19,7 @@ class LdapUserSyncJobTest < ActiveJob::TestCase
     assert_equal '#', deleted_user.username.first
   end
 
-  test "sync user not create" do
+  test 'sync user not create' do
     LdapUserSyncJob.perform_now
 
     # 未ログインユーザーが作成されないこと

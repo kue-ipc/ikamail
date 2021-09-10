@@ -64,16 +64,16 @@ module WordWrap
       end
 
       pt = case rule
-      when :force
-        min_pt
-      when :word_wrap
-        search_breakable_word_wrap(remnant, min_pt)
-      when :jisx4051
-        search_breakable_jisx4051(remnant, min_pt)
-      else
-        logger.error "unknown rule: #{rule}"
-        min_pt
-      end
+           when :force
+             min_pt
+           when :word_wrap
+             search_breakable_word_wrap(remnant, min_pt)
+           when :jisx4051
+             search_breakable_jisx4051(remnant, min_pt)
+           else
+             logger.error "unknown rule: #{rule}"
+             min_pt
+           end
 
       # 左の余白は常に削る。
       yield remnant[0, pt].rstrip + "\n"
@@ -97,6 +97,7 @@ module WordWrap
     while cur_pt.positive?
       # 非単語で終わっていれば終了
       return cur_pt unless check_word_char(str[cur_pt - 1])
+
       pp cur_pt
 
       cur_pt -= 1
@@ -106,13 +107,12 @@ module WordWrap
     pt
   end
 
-
   def search_breakable_jisx4051(str, pt)
     cur_pt = pt
     while cur_pt.positive?
       cur_pt = search_breakable_word_wrap(str, cur_pt)
       if !NOT_STARTING_CHARS.include?(str[cur_pt]) &&
-        !NOT_ENDING_CHARS.include?(str[cur_pt - 1])
+         !NOT_ENDING_CHARS.include?(str[cur_pt - 1])
         return cur_pt
       end
 
@@ -121,14 +121,13 @@ module WordWrap
     pt
   end
 
-
   def search_forward_space(str, pt)
     return if str[pt] !~ /\s/
 
     pt += 1
     pt += 1 while str[pt] =~ /\s/
 
-    return pt
+    pt
   end
 
   def check_word_char(c)

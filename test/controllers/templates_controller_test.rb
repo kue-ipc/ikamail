@@ -326,5 +326,4 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to new_user_session_path
     end
   end
-
 end

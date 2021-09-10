@@ -1,7 +1,7 @@
 class LdapGroup < ActiveLdap::Base
   ldap_mapping dn_attribute: configurations['ldap']['group']['dn'],
-               prefix: configurations['ldap']['group']['base'],
-               classes: configurations['ldap']['group']['classes']
+    prefix: configurations['ldap']['group']['base'],
+    classes: configurations['ldap']['group']['classes']
 
   has_many :primary_users, class_name: 'LdapUser',
                            primary_key: 'gidNumber',

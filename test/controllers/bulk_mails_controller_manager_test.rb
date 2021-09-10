@@ -376,7 +376,7 @@ class BulkMailsControllerManagerTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
-        [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
+                 [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -952,7 +952,7 @@ class BulkMailsControllerManagerTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
-        [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
+                 [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -1281,7 +1281,7 @@ class BulkMailsControllerManagerTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries[-1]
     assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
-        [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
+                 [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
@@ -1294,9 +1294,9 @@ class BulkMailsControllerManagerTest < BulkMailsControllerTest
 
     # メールのテストを有効にするとJobのテストができなくなる。
     # assert_emails 1 do
-      assert_enqueued_with(job: ReservedDeliveryJob) do
-        put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
-      end
+    assert_enqueued_with(job: ReservedDeliveryJob) do
+      put approve_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+    end
     # end
 
     # mail = ActionMailer::Base.deliveries.last

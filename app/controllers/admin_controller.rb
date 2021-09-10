@@ -41,6 +41,7 @@ class AdminController < ApplicationController
   end
 
   private
+
     def authorize_admin
       authorize current_user, :admin?
     end

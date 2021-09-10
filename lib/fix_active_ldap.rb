@@ -1,4 +1,4 @@
-require 'active_ldap/association/has_many_wrap.rb'
+require 'active_ldap/association/has_many_wrap'
 
 module ActiveLdap
   module Association
@@ -9,6 +9,7 @@ module ActiveLdap
       end
 
       private
+
         def find_target
           targets, requested_targets = collect_targets(@options[:wrap], true)
           return [] if targets.nil?

@@ -5,8 +5,6 @@ class CharcodeValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)
     unconvertible_chars = check_unconvertible_chars(value)
-    unless unconvertible_chars.empty?
-      record.errors.add(attribute, :uncovertible_char, chars: unconvertible_chars.join)
-    end
+    record.errors.add(attribute, :uncovertible_char, chars: unconvertible_chars.join) unless unconvertible_chars.empty?
   end
 end

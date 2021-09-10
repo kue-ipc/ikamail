@@ -48,7 +48,7 @@ gem 'daemons'
 # i18n
 gem 'rails-i18n', '~> 6.0.0'
 gem 'devise-i18n'
-gem 'i18n-active_record', :require => 'i18n/active_record'
+gem 'i18n-active_record', require: 'i18n/active_record'
 
 # Mustache
 gem 'mustache', '~> 1.0'

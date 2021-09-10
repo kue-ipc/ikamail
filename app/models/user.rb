@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # and :omniauthable, :lockable, :timeoutable, :trackable
   devise :ldap_authenticatable, :rememberable
 
-  enum role: [:user, :admin]
+  enum role: {user: 0, admin: 1}
 
   validates :username, presence: true, uniqueness: {case_sensitive: true}, length: {maximum: 255}
   validates :email, presence: true
@@ -44,13 +44,7 @@ class User < ApplicationRecord
   end
 
   def name
-    if fullname.present?
-      # 冗長すぎるかもしれない。設定で変更できるようにすべきか。
-      # "#{fullname} (#{username})"
-      fullname
-    else
-      username
-    end
+    fullname.presence || username
   end
 
   def deleted?

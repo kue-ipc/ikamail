@@ -7,7 +7,7 @@ module Devise
   module LDAP
     module Adapter
       def self.authorizable?(login)
-        self.ldap_connect(login).authorizable?
+        ldap_connect(login).authorizable?
       end
     end
 

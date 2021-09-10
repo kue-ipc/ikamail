@@ -5,8 +5,7 @@ class TranslationsController < ApplicationController
 
   def index
     @translations = all_translations([], I18n.t('.', locale: @locale),
-                                      translations_to_hash(Translation.locale(@locale)))
-
+      translations_to_hash(Translation.locale(@locale)))
   end
 
   def create
@@ -28,6 +27,7 @@ class TranslationsController < ApplicationController
   end
 
   private
+
     def set_locale
       @locale = I18n.default_locale
     end
@@ -46,8 +46,8 @@ class TranslationsController < ApplicationController
     end
 
     def translations_to_hash(list)
-      list.to_h do |e|
-        [e.key, e]
+      list.index_by do |e|
+        e.key
       end
     end
 

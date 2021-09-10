@@ -15,7 +15,6 @@ class MailUser < ApplicationRecord
 
   # has_and_belongs_to_many :mail_groups
 
-
   def to_s
     if display_name.present?
       "#{display_name} (#{name})"

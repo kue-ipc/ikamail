@@ -20,11 +20,23 @@ Layout/ExtraSpacing:
 Layout/EndOfLine:
   EnforcedStyle: lf
 
+Layout/LineLength:
+  Max: 120
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
-Layout/LineLength:
-  Max: 120
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
@@ -58,29 +70,29 @@ Metrics/PerceivedComplexity:
   Max: 11
 
 # Styles
-Style/NumericLiterals:
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_perl_names
+
 Style/WordArray:
-  MinSize: 3
+  MinSize: 8
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+
+Style/SymbolArray:
+  MinSize: 8
 
 # Bundler
 Bundler/OrderedGems:

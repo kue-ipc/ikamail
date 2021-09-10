@@ -12,8 +12,8 @@ class Template < ApplicationRecord
 
   validates :subject_prefix, allow_blank: true, length: {maximum: 255}, charcode: true
   validates :subject_suffix, allow_blank: true, length: {maximum: 255}, charcode: true
-  validates :body_header, allow_blank: true, length: {maximum: 65536}, charcode: true
-  validates :body_footer, allow_blank: true, length: {maximum: 65536}, charcode: true
+  validates :body_header, allow_blank: true, length: {maximum: 65_536}, charcode: true
+  validates :body_footer, allow_blank: true, length: {maximum: 65_536}, charcode: true
 
   validates :reserved_time, presence: true
 

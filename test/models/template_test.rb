@@ -59,5 +59,4 @@ class TemplateTest < ActiveSupport::TestCase
     @template.update(body_footer: "ﾊﾝｶｸｶﾀｶﾅ\n")
     assert_equal "ハンカクカタカナ\n", Template.find(@template.id).body_footer
   end
-
 end

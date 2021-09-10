@@ -50,7 +50,8 @@ class NotificationMailerTest < ActionMailer::TestCase
     assert_equal '【一括メールシステム通知】受付完了', NKF.nkf('-J -w -m', mail.subject)
     assert_equal ['user01@example.jp'], mail.to
     assert_equal ['no-reply@example.jp'], mail.from
-    assert_equal read_fixture('mail_approve_immediate.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
+    assert_equal read_fixture('mail_approve_immediate.text').join,
+      NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
   end
 
   test 'mail_approve reserved' do
@@ -112,5 +113,4 @@ class NotificationMailerTest < ActionMailer::TestCase
     assert_equal ['no-reply@example.jp'], mail.from
     assert_equal read_fixture('mail_error.text').join, NKF.nkf('-J -w', mail.body.encoded).gsub("\r\n", "\n")
   end
-
 end

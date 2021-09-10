@@ -39,7 +39,7 @@ class BulkMail < ApplicationRecord
 
   validates :delivery_timing, presence: true
   validates :subject, presence: true, length: {maximum: 255}, charcode: true
-  validates :body, presence: true, length: {maximum: 65536}, charcode: true
+  validates :body, presence: true, length: {maximum: 65_536}, charcode: true
 
   # validates :delivery_datetime
   validates :number, numericality: {only_integer: true, greater_than: 0},

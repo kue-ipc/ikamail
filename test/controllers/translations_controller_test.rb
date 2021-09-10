@@ -10,5 +10,4 @@ class TranslationsControllerTest < ActionDispatch::IntegrationTest
   #   get translations_update_url
   #   assert_response :success
   # end
-
 end

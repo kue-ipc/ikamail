@@ -24,11 +24,11 @@ module Devise
         @required_groups.each do |group|
           if group.is_a?(Array)
             return true if in_group?(group[1], group[0])
-          else
-            return true if in_group?(group)
+          elsif in_group?(group)
+            return true
           end
         end
-        return false
+        false
       end
 
       # overwrite in_required_groups?
@@ -38,14 +38,15 @@ module Devise
                            @check_group_membership_without_admin
 
         case Devise.ldap_check_group_policy
-        when :and, /\Aand\z/i, "&", "&&"
-          return in_required_groups_and?
-        when :or, /\Aor\z/i, "|", "||"
-          return in_required_groups_or?
+        when :and, /\Aand\z/i, '&', '&&'
+          in_required_groups_and?
+        when :or, /\Aor\z/i, '|', '||'
+          in_required_groups_or?
         else
           DeviseLdapAuthenticatable::Logger.send(
-            "Invalid check policy: #{Devise.ldap_check_group_policy}")
-          return false
+            "Invalid check policy: #{Devise.ldap_check_group_policy}"
+          )
+          false
         end
       end
     end
