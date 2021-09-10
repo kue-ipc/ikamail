@@ -34,7 +34,7 @@ class RecipientMailUsersController < ApplicationController
       redirect_to @recipient_list, alert: '指定のリストにユーザーは追加できません。'
     elsif @mail_user
       @recipient = Recipient.find_or_create_by(recipient_list: @recipient_list, mail_user: @mail_user)
-      @recipient.update_column(@type, true)
+      @recipient.update(@type => true)
 
       redirect_to @recipient_list, notice: '指定のリストにユーザーを追加しました。'
     else
@@ -50,7 +50,7 @@ class RecipientMailUsersController < ApplicationController
     if ['included', 'excluded'].exclude?(@type)
       redirect_to @recipient_list, alert: '指定のリストからユーザーは削除できません。'
     elsif @recipient
-      @recipient.update_column(@type, false)
+      @recipient.update(@type => false)
       if !@recipient.included && !@recipient.excluded &&
          (@mail_user.mail_groups & @recipient_list.mail_groups).empty?
         @recipient.destroy
