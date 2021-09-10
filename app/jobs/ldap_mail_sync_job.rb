@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # fix active_ldap
 require 'fix_active_ldap'
 

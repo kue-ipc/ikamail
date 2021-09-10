@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # `authorizable?` is `autholized?` without `authenticated?`
 
 require 'devise'

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module BulkMailsHelper
   def template_to_hash(templates)
     templates.map do |template|

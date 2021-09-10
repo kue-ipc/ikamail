@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # ワードラップを行うが、JISであることを前提とし、厳密性はかける
 # 絵文字とかには未対応
 

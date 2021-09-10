@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MailUser < ApplicationRecord
   has_many :mail_memberships, dependent: :destroy
   has_many :primary_memberships, -> { where(primary: true) }, class_name: 'MailMembership'

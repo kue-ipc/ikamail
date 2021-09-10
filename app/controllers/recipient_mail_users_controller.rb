@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class RecipientMailUsersController < ApplicationController
   before_action :set_recipient_list
   before_action :set_type

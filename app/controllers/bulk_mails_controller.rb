@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class BulkMailsController < ApplicationController
   before_action :set_action_info, only: [:create, :update,
                                          :apply, :withdraw, :approve, :reject, :cancel, :reserve, :deliver, :discard]

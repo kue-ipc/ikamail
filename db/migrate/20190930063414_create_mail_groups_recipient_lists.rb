@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class CreateMailGroupsRecipientLists < ActiveRecord::Migration[6.0]
   def change
     create_table :mail_groups_recipient_lists do |t|

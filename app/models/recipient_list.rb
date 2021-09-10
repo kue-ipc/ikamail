@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class RecipientList < ApplicationRecord
   has_and_belongs_to_many :mail_groups
   has_many :templates, dependent: :restrict_with_error

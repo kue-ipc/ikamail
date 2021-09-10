@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'active_ldap/association/has_many_wrap.rb'
 
 module ActiveLdap

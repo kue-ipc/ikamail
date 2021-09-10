@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MailGroupsController < ApplicationController
   before_action :set_mail_group, only: [:show]
   before_action :authorize_mail_group, only: [:index]

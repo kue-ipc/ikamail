@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ActionLog < ApplicationRecord
   enum action: {
     create: 0,

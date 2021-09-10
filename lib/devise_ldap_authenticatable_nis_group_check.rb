@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # RFC 2307 LDAP as a NIS
 # setting: config.ldap_nis_group_check
 

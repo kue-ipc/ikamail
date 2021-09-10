@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # check group membersip policy
 # setting
 # * config.ldap_check_group_policy = :and

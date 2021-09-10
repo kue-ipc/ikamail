@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
   before_action :authorize_user, only: [:index, :create, :sync]

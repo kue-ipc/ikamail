@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MailGroup < ApplicationRecord
   has_and_belongs_to_many :recipient_lists
 

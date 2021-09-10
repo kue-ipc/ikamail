@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy, :count]
   before_action :authorize_template, only: [:index, :new, :create]

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MailUsersController < ApplicationController
   before_action :set_mail_user, only: [:show]
   before_action :authorize_mail_user, only: [:index]

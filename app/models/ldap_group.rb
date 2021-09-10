@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class LdapGroup < ActiveLdap::Base
   ldap_mapping dn_attribute: configurations['ldap']['group']['dn'],
                prefix: configurations['ldap']['group']['base'],
