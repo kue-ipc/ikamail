@@ -13,61 +13,61 @@ require 'set'
 module WordWrap
   extend ActiveSupport::Concern
 
-  module Character
-    # 始め括弧類
-    OPENING_BRACKETS = %w!‘ “ ( 〔 [ { 〈 《 「 『 【 ⦅ 〘 〖 « 〝!.freeze
-    OPENING_BRACKETS_FULLWIDTH = %w!（ ［ ｛ ｟!
+  # module Character
+  #   # 始め括弧類
+  #   OPENING_BRACKETS = %w!‘ “ ( 〔 [ { 〈 《 「 『 【 ⦅ 〘 〖 « 〝!.freeze
+  #   OPENING_BRACKETS_FULLWIDTH = %w!（ ［ ｛ ｟!
 
-    # 終わり括弧類
-    CLOSING_BRACKETS = %w!’ ” ) 〕 ] } 〉 》 」 』 】 ⦆ 〙 〗 » 〟!.freeze
-    CLOSING_BRACKETS_FULLWIDTH = %w!） ］ ｝ ｠!
+  #   # 終わり括弧類
+  #   CLOSING_BRACKETS = %w!’ ” ) 〕 ] } 〉 》 」 』 】 ⦆ 〙 〗 » 〟!.freeze
+  #   CLOSING_BRACKETS_FULLWIDTH = %w!） ］ ｝ ｠!
 
-    # ハイフン類
-    HYPHENS = %w[‐ 〜 ゠ –] 
+  #   # ハイフン類
+  #   HYPHENS = %w[‐ 〜 ゠ –] 
 
-    # 区切り約物
-    DIVIDING_PUNCTUATION_MARKS = %w[! ? ‼ ⁇ ⁈ ⁉]
-    DIVIDING_PUNCTUATION_MARKS_FULLWIDTH = %w[！ ？]
+  #   # 区切り約物
+  #   DIVIDING_PUNCTUATION_MARKS = %w[! ? ‼ ⁇ ⁈ ⁉]
+  #   DIVIDING_PUNCTUATION_MARKS_FULLWIDTH = %w[！ ？]
 
-    # 中点類
-    MIDDLE_DOTS = %w[・ : ;]
-    MIDDLE_DOTS_FULLWIDTH = %w[： ；]
+  #   # 中点類
+  #   MIDDLE_DOTS = %w[・ : ;]
+  #   MIDDLE_DOTS_FULLWIDTH = %w[： ；]
 
-    # 句点類
-    FULL_STOPS = %w[。 .]
-    FULL_STOPS_FULLWIDTH = %w[．]
+  #   # 句点類
+  #   FULL_STOPS = %w[。 .]
+  #   FULL_STOPS_FULLWIDTH = %w[．]
 
-    # 読点類
-    COMMAS = %w[、 ,]
-    COMMAS_FULLWIDTH = %w[，]
+  #   # 読点類
+  #   COMMAS = %w[、 ,]
+  #   COMMAS_FULLWIDTH = %w[，]
 
-    # 繰返し記号
-    ITERATION_MARKS = %w[
-      ヽ ヾ ゝ ゞ 々 〻
-    ]
+  #   # 繰返し記号
+  #   ITERATION_MARKS = %w[
+  #     ヽ ヾ ゝ ゞ 々 〻
+  #   ]
 
-    # 長音記号
-    PROLONGED_SOUND_MARK = %w[
-      ー
-    ]
+  #   # 長音記号
+  #   PROLONGED_SOUND_MARK = %w[
+  #     ー
+  #   ]
 
-    # 小書きの仮名
-    Small kana
-    SMALL_KANA = %w[
-      ぁ ぃ ぅ ぇ ぉ
-      ァ ィ ゥ ェ ォ
-      っ ゃ ゅ ょ ゎ ゕ ゖ
-      ッ ャ ュ ョ ヮ ヵ ヶ ㇰ
-      ㇱ ㇲ ㇳ ㇴ ㇵ ㇶ ㇷ ㇸ ㇹ ㇺ
-      ㇻ ㇼ ㇽ ㇾ ㇿ
-    ]
-    # ㇷ゚ U+31F7 U+309A
+  #   # 小書きの仮名
+  #   Small kana
+  #   SMALL_KANA = %w[
+  #     ぁ ぃ ぅ ぇ ぉ
+  #     ァ ィ ゥ ェ ォ
+  #     っ ゃ ゅ ょ ゎ ゕ ゖ
+  #     ッ ャ ュ ョ ヮ ヵ ヶ ㇰ
+  #     ㇱ ㇲ ㇳ ㇴ ㇵ ㇶ ㇷ ㇸ ㇹ ㇺ
+  #     ㇻ ㇼ ㇽ ㇾ ㇿ
+  #   ]
+  #   # ㇷ゚ U+31F7 U+309A
 
 
-    NOT_STARTING_CHARS
+  #   NOT_STARTING_CHARS
 
-    NOT_ENDING_CHARS
-  end
+  #   NOT_ENDING_CHARS
+  # end
 
   NOT_STARTING_CHARS = Set.new(%w[
     ’ ” ） 〕 ］ ｝ 〉 》 」 』 】 ｠ 〙 〗 » 〟
