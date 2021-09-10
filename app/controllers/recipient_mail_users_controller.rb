@@ -17,10 +17,10 @@ class RecipientMailUsersController < ApplicationController
       end&.order(:name)
 
     @mail_users = if params[:page] == 'all'
-        all_mail_users&.page(nil)&.per(all_mail_users&.count)
-      else
-        all_mail_users&.page(params[:page])
-      end
+      all_mail_users&.page(nil)&.per(all_mail_users&.count)
+    else
+      all_mail_users&.page(params[:page])
+    end
 
     flash.alert = '指定のリストはありません。' if @mail_users.nil?
   end

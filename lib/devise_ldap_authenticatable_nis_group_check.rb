@@ -26,10 +26,10 @@ module Devise
         in_group = false
 
         group_checking_ldap = if @check_group_membership_without_admin
-                                @ldap
-                              else
-                                Connection.admin
-                              end
+          @ldap
+        else
+          Connection.admin
+        end
 
         group_checking_ldap.search(base: group_name,
           scope: Net::LDAP::SearchScope_BaseObject) do |entry|

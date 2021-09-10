@@ -201,7 +201,7 @@ class BulkMailsController < ApplicationController
 
   private def record_action_log(action: action_name, user: current_user)
     action_log = ActionLog.create(bulk_mail: @bulk_mail, user: user,
-                                  action: action, comment: @action_info.comment)
+      action: action, comment: @action_info.comment)
     flash.alert = [*flash.alert, t(:failure_record_action_log, scope: :messages)] unless action_log
     action_log
   end

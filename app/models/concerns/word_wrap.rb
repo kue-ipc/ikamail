@@ -73,7 +73,7 @@ module WordWrap
            else
              logger.error "unknown rule: #{rule}"
              min_pt
-           end
+      end
 
       # 左の余白は常に削る。
       yield "#{remnant[0, pt].rstrip}\n"

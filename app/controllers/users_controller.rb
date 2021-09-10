@@ -51,10 +51,10 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   private def set_user
     @user = if params[:id]
-        User.find(params[:id])
-      else
-        current_user
-      end
+      User.find(params[:id])
+    else
+      current_user
+    end
     authorize @user
   end
 

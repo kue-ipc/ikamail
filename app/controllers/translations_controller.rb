@@ -5,7 +5,7 @@ class TranslationsController < ApplicationController
 
   def index
     @translations = all_translations([], I18n.t('.', locale: @locale),
-                                     translations_to_hash(Translation.locale(@locale)))
+      translations_to_hash(Translation.locale(@locale)))
   end
 
   def create
@@ -54,7 +54,7 @@ class TranslationsController < ApplicationController
       db[full_key] || Translation.new(
         locale: @locale,
         key: full_key,
-        value: value,
+        value: value
       )
     when Hash
       value.each_key.sort.map do |c_key|

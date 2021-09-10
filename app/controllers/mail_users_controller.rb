@@ -6,10 +6,10 @@ class MailUsersController < ApplicationController
   # GET /mail_users.json
   def index
     all_mail_users = if search_params[:mail_group_id].present?
-        MailGroup.find(search_params[:mail_group_id]).mail_users
-      else
-        MailUser
-      end
+      MailGroup.find(search_params[:mail_group_id]).mail_users
+    else
+      MailUser
+    end
 
     all_mail_users = all_mail_users.where('name LIKE ?', "#{search_params[:query]}%") if search_params[:query].present?
 
