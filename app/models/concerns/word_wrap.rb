@@ -2,93 +2,130 @@
 # 参考文献
 # * JIS X 4051
 # * 日本語組版処理の要件 (日本語版) https://www.w3.org/TR/jlreq/
-# ワードラップを行うが、JISであることを前提とし、厳密性はかける
-# 未対応
-# * 絵文字
-# * 合字
+# ワードラップも行うが、JISであることを前提とし、厳密性にはかける。
 # 割注始め括弧類や割注終わり括弧類は、それぞれの括弧類に含まれる。
+# JIS X 4051 / 日本語組版処理の要件 との違い
+# * 濁音・半濁音を行頭禁止文字に含める。
+# * 合字である「ㇷ゚ U+31F7 U+309A」を考慮しないが、実質行頭禁止になる。
 
 require 'set'
 
 module WordWrap
   extend ActiveSupport::Concern
 
-  # module Character
-  #   # 始め括弧類
-  #   OPENING_BRACKETS = %w!‘ “ ( 〔 [ { 〈 《 「 『 【 ⦅ 〘 〖 « 〝!.freeze
-  #   OPENING_BRACKETS_FULLWIDTH = %w!（ ［ ｛ ｟!
+  # rubocop: disable Style/PercentLiteralDelimiters
+  # 始め括弧類
+  OPENING_BRACKETS = %w!‘ “ ( 〔 [ { 〈 《 「 『 【 ⦅ 〘 〖 « 〝!.freeze
+  OPENING_BRACKETS_FULLWIDTH = %w!（ ［ ｛ ｟!.freeze
+  OPENING_BRACKETS_HALFWIDTH = %w!｢!.freeze
 
-  #   # 終わり括弧類
-  #   CLOSING_BRACKETS = %w!’ ” ) 〕 ] } 〉 》 」 』 】 ⦆ 〙 〗 » 〟!.freeze
-  #   CLOSING_BRACKETS_FULLWIDTH = %w!） ］ ｝ ｠!
+  # 終わり括弧類
+  CLOSING_BRACKETS = %w!’ ” ) 〕 ] } 〉 》 」 』 】 ⦆ 〙 〗 » 〟!.freeze
+  CLOSING_BRACKETS_FULLWIDTH = %w!） ］ ｝ ｠!.freeze
+  CLOSING_BRACKETS_HALFWIDTH = %w!｣!.freeze
+  # rubocop: enable Style/PercentLiteralDelimiters
 
-  #   # ハイフン類
-  #   HYPHENS = %w[‐ 〜 ゠ –] 
+  # ハイフン類
+  HYPHENS = %w[‐ 〜 ゠ –].freeze
 
-  #   # 区切り約物
-  #   DIVIDING_PUNCTUATION_MARKS = %w[! ? ‼ ⁇ ⁈ ⁉]
-  #   DIVIDING_PUNCTUATION_MARKS_FULLWIDTH = %w[！ ？]
+  # 区切り約物
+  DIVIDING_PUNCTUATION_MARKS = %w[! ? ‼ ⁇ ⁈ ⁉].freeze
+  DIVIDING_PUNCTUATION_MARKS_FULLWIDTH = %w[！ ？].freeze
 
-  #   # 中点類
-  #   MIDDLE_DOTS = %w[・ : ;]
-  #   MIDDLE_DOTS_FULLWIDTH = %w[： ；]
+  # 中点類
+  MIDDLE_DOTS = %w[・ : ;].freeze
+  MIDDLE_DOTS_FULLWIDTH = %w[： ；].freeze
+  MIDDLE_DOTS_HALFWIDTH = %w[･].freeze
 
-  #   # 句点類
-  #   FULL_STOPS = %w[。 .]
-  #   FULL_STOPS_FULLWIDTH = %w[．]
+  # 句点類
+  FULL_STOPS = %w[。 .].freeze
+  FULL_STOPS_FULLWIDTH = %w[．].freeze
+  FULL_STOPS_HALFWIDTH = %w[｡].freeze
 
-  #   # 読点類
-  #   COMMAS = %w[、 ,]
-  #   COMMAS_FULLWIDTH = %w[，]
+  # 読点類
+  COMMAS = %w[、 ,].freeze
+  COMMAS_FULLWIDTH = %w[，].freeze
+  COMMAS_HALFWIDTH = %w[､].freeze
 
-  #   # 繰返し記号
-  #   ITERATION_MARKS = %w[
-  #     ヽ ヾ ゝ ゞ 々 〻
-  #   ]
+  # 繰返し記号
+  ITERATION_MARKS = %w[ヽ ヾ ゝ ゞ 々 〻].freeze
 
-  #   # 長音記号
-  #   PROLONGED_SOUND_MARK = %w[
-  #     ー
-  #   ]
+  # 長音記号
+  PROLONGED_SOUND_MARK = %w[ー].freeze
+  PROLONGED_SOUND_MARK_HALFWIDTH = %w[ｰ].freeze
 
-  #   # 小書きの仮名
-  #   Small kana
-  #   SMALL_KANA = %w[
-  #     ぁ ぃ ぅ ぇ ぉ
-  #     ァ ィ ゥ ェ ォ
-  #     っ ゃ ゅ ょ ゎ ゕ ゖ
-  #     ッ ャ ュ ョ ヮ ヵ ヶ ㇰ
-  #     ㇱ ㇲ ㇳ ㇴ ㇵ ㇶ ㇷ ㇸ ㇹ ㇺ
-  #     ㇻ ㇼ ㇽ ㇾ ㇿ
-  #   ]
-  #   # ㇷ゚ U+31F7 U+309A
-
-
-  #   NOT_STARTING_CHARS
-
-  #   NOT_ENDING_CHARS
-  # end
-
-  NOT_STARTING_CHARS = Set.new(%w[
-    ’ ” ） 〕 ］ ｝ 〉 》 」 』 】 ｠ 〙 〗 » 〟
-    ‐ 〜 ゠ –
-    ！ ？ ‼ ⁇ ⁈ ⁉
-    ・ ： ；
-    。 ．
-    、 ，
-    ヽ ヾ ゝ ゞ 々 〻
-    ー
+  # 小書きの仮名
+  SMALL_KANA = %w[
     ぁ ぃ ぅ ぇ ぉ
-    っ ゃ ゅ ょ ゎ ゕ ゖ
     ァ ィ ゥ ェ ォ
+    っ ゃ ゅ ょ ゎ ゕ ゖ
     ッ ャ ュ ョ ヮ ヵ ヶ ㇰ
     ㇱ ㇲ ㇳ ㇴ ㇵ ㇶ ㇷ ㇸ ㇹ ㇺ
     ㇻ ㇼ ㇽ ㇾ ㇿ
-  ])
+  ].freeze
+  SMALL_KANA_HALFWIDTH = %w[
+    ｧ ｨ ｩ ｪ ｫ
+    ｯ ｬ ｭ ｮ
+  ].freeze
+  # ㇷ゚ U+31F7 U+309A
 
-  NOT_ENDING_CHARS = Set.new(%w[
-    ‘ “ （ 〔 ［ ｛ 〈 《 「 『 【 ｟ 〘 〖 « 〝
-  ])
+  # 濁点・半濁点
+  SOUND_MARKS = (%w[゛ ゜] + ["\u3099", "\u309A"]).freeze
+  SOUND_MARKS_HALFWIDTH = ["\uFF9E", "\uFF9F"].freeze
+
+  # 分離禁止文字列
+  INSEPARABLE_STRS = %w[
+    ——
+    ……
+    ‥‥
+    〳〵
+    〴〵
+  ]
+
+  NOT_STARTING_CHARS = Set.new([
+    *CLOSING_BRACKETS,
+    *CLOSING_BRACKETS_FULLWIDTH,
+    *CLOSING_BRACKETS_HALFWIDTH,
+    *HYPHENS,
+    *DIVIDING_PUNCTUATION_MARKS,
+    *DIVIDING_PUNCTUATION_MARKS_FULLWIDTH,
+    *MIDDLE_DOTS,
+    *MIDDLE_DOTS_FULLWIDTH,
+    *MIDDLE_DOTS_HALFWIDTH,
+    *FULL_STOPS,
+    *FULL_STOPS_FULLWIDTH,
+    *FULL_STOPS_HALFWIDTH,
+    *COMMAS,
+    *COMMAS_FULLWIDTH,
+    *COMMAS_HALFWIDTH,
+    *ITERATION_MARKS,
+    *PROLONGED_SOUND_MARK,
+    *PROLONGED_SOUND_MARK_HALFWIDTH,
+    *SMALL_KANA,
+    *SMALL_KANA_HALFWIDTH,
+    *SOUND_MARKS,
+    *SOUND_MARKS_HALFWIDTH,
+  ]).freeze
+
+  NOT_ENDING_CHARS = Set.new([
+    *OPENING_BRACKETS,
+    *OPENING_BRACKETS_FULLWIDTH,
+    *OPENING_BRACKETS_HALFWIDTH,
+  ]).freeze
+
+  HANGING_CHARS = Set.new([
+    *FULL_STOPS,
+    *FULL_STOPS_FULLWIDTH,
+    *FULL_STOPS_HALFWIDTH,
+    *COMMAS,
+    *COMMAS_FULLWIDTH,
+    *COMMAS_HALFWIDTH,
+  ]).freeze
+
+  ASCII_CHARS = Set.new("\u0020".."\u007E").freeze
+
+  FULLWIDTH_CHARS = Set.new([*("\uFF01".."\uFF60"), *("\uFFE0".."\uFFE6")])
+  HALFWIDTH_CHARS = Set.new([*("\uFF61".."\uFF9F"), *("\uFFE8".."\uFFEE")])
 
   def word_wrap(str, col: 0, **opts)
     return str unless col.positive?
