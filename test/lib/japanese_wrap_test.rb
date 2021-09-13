@@ -14,44 +14,41 @@ class JapaneseWrapTest < ActiveSupport::TestCase
 　聞いて、メロスは激怒した。「呆れた王だ。生かして置けぬ。」
   TEXT
 
-    test 'force wrap Engrish' do
-    text = 'All your package are belong to us.'
-    assert_equal "All your p\nackage are\n belong to\n us.", JapaneseWrap.text_wrap(text, col: 10, rule: :force)
-    assert_equal "All your package are\n belong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :force)
-    assert_equal "All your package are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :force)
-    assert_equal "All your package are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+  test 'force wrap Engrish' do
+    text = 'All your code are belong to us.'
+    assert_equal "All your c\node are be\nlong to us\n.", JapaneseWrap.text_wrap(text, col: 10, rule: :force)
+    assert_equal "All your code are be\nlong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :force)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :force)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :force)
   end
 
   test 'word wrap Engrish' do
-    text = 'All your package are belong to us.'
-    assert_equal "All your\npackage\nare belong\nto us.", JapaneseWrap.text_wrap(text, col: 10, rule: :word_wrap)
-    assert_equal "All your package are\nbelong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :word_wrap)
-    assert_equal "All your package are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :word_wrap)
-    assert_equal "All your package are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    text = 'All your code are belong to us.'
+    assert_equal "All your\ncode are\nbelong to\nus.", JapaneseWrap.text_wrap(text, col: 10, rule: :word_wrap)
+    assert_equal "All your code are\nbelong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :word_wrap)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :word_wrap)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
   end
 
   test 'jisx4051 wrap Engrish' do
-    text = 'All your package are belong to us.'
-    assert_equal "All your\npackage\nare belong\nto us.", JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051)
-    assert_equal "All your package are\nbelong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :jisx4051)
-    assert_equal "All your package are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051)
-    assert_equal "All your package are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+    text = 'All your code are belong to us.'
+    assert_equal "All your\ncode are\nbelong to\nus.", JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051)
+    assert_equal "All your code are\nbelong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :jisx4051)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
   test 'search_breakable word wrap Engrish' do
-    text = 'All your package are belong to us.'
+    text = 'All your code are belong to us.'
     assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 10)
     assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 11)
     assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 12)
-    assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 13)
-    assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 14)
-    assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 15)
-    assert_equal 17, JapaneseWrap.search_breakable_word_wrap(text, 16)
-    assert_equal 17, JapaneseWrap.search_breakable_word_wrap(text, 17)
-    assert_equal 17, JapaneseWrap.search_breakable_word_wrap(text, 18)
-    assert_equal 17, JapaneseWrap.search_breakable_word_wrap(text, 19)
-    assert_equal 21, JapaneseWrap.search_breakable_word_wrap(text, 20)
-    # assert_equal 21, JapaneseWrap.search_breakable_word_wrap(text, 80)
+    assert_equal 14, JapaneseWrap.search_breakable_word_wrap(text, 13)
+    assert_equal 14, JapaneseWrap.search_breakable_word_wrap(text, 14)
+    assert_equal 14, JapaneseWrap.search_breakable_word_wrap(text, 15)
+    assert_equal 14, JapaneseWrap.search_breakable_word_wrap(text, 16)
+    assert_equal 18, JapaneseWrap.search_breakable_word_wrap(text, 17)
+    # assert_equal nil, JapaneseWrap.search_breakable_word_wrap(text, 80)
   end
 
   test 'search_breakable jisx4051 Engrish' do
