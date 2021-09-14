@@ -1,9 +1,10 @@
 require 'mustache'
 require 'iso2022jp'
+require 'japanese_wrap'
 
 class BulkMail < ApplicationRecord
   include Iso2022jp
-  include WordWrap
+  include JapaneseWrap
 
   enum status: {
     draft: 0,
@@ -61,7 +62,7 @@ class BulkMail < ApplicationRecord
   end
 
   def body_wrap
-    word_wrap(body, col: wrap_col, rule: wrap_rule.intern)
+    text_wrap(body, col: wrap_col, rule: wrap_rule.intern)
   end
 
   def subject_prefix
@@ -79,7 +80,7 @@ class BulkMail < ApplicationRecord
   def body_header
     return '' if template.body_header.blank?
 
-    word_wrap(
+    text_wrap(
       Mustache.render(template.body_header, individual_values),
       col: wrap_col, rule: wrap_rule.intern
     )
@@ -88,7 +89,7 @@ class BulkMail < ApplicationRecord
   def body_footer
     return '' if template.body_footer.blank?
 
-    word_wrap(
+    text_wrap(
       Mustache.render(template.body_footer, individual_values),
       col: wrap_col, rule: wrap_rule.intern
     )
