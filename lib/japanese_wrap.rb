@@ -183,11 +183,12 @@ module JapaneseWrap
     yield remnant
   end
 
-  def search_breakable_word_wrap(str, ptr)
-    # 続きが空白の場合は、空白が終わりまで
-    # わざとスペースを付けているのだから、和文の禁則処理はしない
-    fw_ptr = search_forward_space(str, ptr)
-    return fw_ptr if fw_ptr
+  def search_breakable_word_wrap(str, ptr, forward: true)
+    # 続きが空白の場合は、空白が終わりまで前進する
+    if forward
+      fw_ptr = search_forward_space(str, ptr)
+      return fw_ptr if fw_ptr
+    end
 
     # 続きが非単語の場合は即座に終了
     return ptr unless check_word_char(str[ptr])
@@ -198,8 +199,6 @@ module JapaneseWrap
       # 非単語で終わっていれば終了
       return cur_ptr unless check_word_char(str[cur_ptr - 1])
 
-      Rails.logger.debug cur_ptr
-
       cur_ptr -= 1
     end
 
@@ -207,18 +206,21 @@ module JapaneseWrap
     ptr
   end
 
-  def search_breakable_jisx4051(str, ptr)
-    cur_ptr = ptr
+  def search_breakable_jisx4051(str, ptr, hanging: true)
+    ww_ptr = search_breakable_word_wrap(str, ptr)
+    cur_ptr = ww_ptr
     while cur_ptr.positive?
-      cur_ptr = search_breakable_word_wrap(str, cur_ptr)
-      if NOT_STARTING_CHARS.exclude?(str[cur_ptr]) &&
-         NOT_ENDING_CHARS.exclude?(str[cur_ptr - 1])
-        return cur_ptr
+      if str[cur_ptr] != ' '
+        cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false)
+        if NOT_STARTING_CHARS.exclude?(str[cur_ptr]) &&
+           NOT_ENDING_CHARS.exclude?(str[cur_ptr - 1])
+          return cur_ptr
+        end
       end
 
       cur_ptr -= 1
     end
-    ptr
+    ww_ptr
   end
 
   def search_forward_space(str, ptr)
