@@ -140,23 +140,23 @@ class JapaneseWrapTest < ActiveSupport::TestCase
       assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051)
     end
 
-    # # 幅1
-    # list.each do |char|
-    #   text = "前文#{char}後文"
-    #   assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051, ambiguous: 1)
-    #   assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051, ambiguous: 1)
-    #   assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051, ambiguous: 1)
-    #   assert_equal "前文#{char}後\n文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051, ambiguous: 1)
-    # end
+    # 幅1
+    list.each do |char|
+      text = "前文#{char}後文"
+      assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051, ambiguous: 1)
+      assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051, ambiguous: 1)
+      assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051, ambiguous: 1)
+      assert_equal "前文#{char}後\n文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051, ambiguous: 1)
+    end
 
-    # # 幅2
-    # list.each do |char|
-    #   text = "前文#{char}後文"
-    #   assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051, ambiguous: 2)
-    #   assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051, ambiguous: 2)
-    #   assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051, ambiguous: 2)
-    #   assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051, ambiguos: 2)
-    # end
+    # 幅2
+    list.each do |char|
+      text = "前文#{char}後文"
+      assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051, ambiguous: 2)
+      assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051, ambiguous: 2)
+      assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051, ambiguous: 2)
+      assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051, ambiguous: 2)
+    end
   end
 
   # 行頭禁止
@@ -244,5 +244,12 @@ class JapaneseWrapTest < ActiveSupport::TestCase
 
     text = "」」」」」」」」」」」」」」」」」」」"
     assert_equal "」」」」\n」」」」\n」」」」\n」」」」\n」」」", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
+  end
+
+  test 'not wrap 日本語' do
+    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 0)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: -1)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
   end
 end

@@ -127,27 +127,27 @@ module JapaneseWrap
   FULLWIDTH_CHARS = Set.new([*("\uFF01".."\uFF60"), *("\uFFE0".."\uFFE6")])
   HALFWIDTH_CHARS = Set.new([*("\uFF61".."\uFF9F"), *("\uFFE8".."\uFFEE")])
 
-  def text_wrap(str, col: 0, **opts)
-    return str unless col.positive?
-
+  def text_wrap(str, **opts)
     buff = String.new(encoding: 'UTF-8')
     str.each_line do |line|
-      each_wrap(line, col: col, **opts) do |part|
+      each_wrap(line, **opts) do |part|
         buff << part
       end
     end
     buff
   end
 
-  def each_wrap(str, col: 0, rule: :force)
+  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, **opts)
     if !col.positive? || rule == :none
       yield str
       return
     end
 
+    display_with = Unicode::DisplayWidth.new(ambiguous: ambiguous, emoji: true)
+
     remnant = str.dup
 
-    while (width = Unicode::DisplayWidth.of(remnant, 2, {}, emoji: true)) > col
+    while (width = display_with.of(remnant)) > col
       min_ptr = 0
       max_ptr = remnant.size
       ptr = max_ptr
@@ -156,7 +156,7 @@ module JapaneseWrap
         ptr = col * ptr / width
         ptr = min_ptr + 1 if ptr <= min_ptr
         ptr = max_ptr if ptr > max_ptr
-        if (width = Unicode::DisplayWidth.of(remnant[0, ptr], 2, {}, emoji: true)) > col
+        if (width = display_with.of(remnant[0, ptr])) > col
           max_ptr = ptr - 1
         else
           min_ptr = ptr
