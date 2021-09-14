@@ -92,6 +92,18 @@ class JapaneseWrapTest < ActiveSupport::TestCase
       JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
+  test 'jisx4051 hanging 日本語' do
+    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+    assert_equal "君達のソー\nスコードは、\n全てRuby\non Railsが\nいただいた。",
+      JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051, hanging: true)
+    assert_equal "君達のソースコードは、\n全てRuby on Railsが\nいただいた。",
+      JapaneseWrap.text_wrap(text, col: 20, rule: :jisx4051, hanging: true)
+    assert_equal "君達のソースコードは、全てRuby on Rails\nがいただいた。",
+      JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051, hanging: true)
+    assert_equal '君達のソースコードは、全てRuby on Railsがいただいた。',
+      JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051, hanging: true)
+  end
+
   test 'search breakable jisx4051 Engrish' do
     text = '君達のソースコードは、全てRuby on Railsがいただいた。'
     assert_equal 6, JapaneseWrap.search_breakable_jisx4051(text, 6)

@@ -137,7 +137,7 @@ module JapaneseWrap
     buff
   end
 
-  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, **opts)
+  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false)
     if !col.positive? || rule == :none
       yield str
       return
@@ -169,15 +169,18 @@ module JapaneseWrap
            when :word_wrap
              search_breakable_word_wrap(remnant, min_ptr)
            when :jisx4051
-             search_breakable_jisx4051(remnant, min_ptr)
+             search_breakable_jisx4051(remnant, min_ptr, hanging: hanging)
            else
              logger.error "unknown rule: #{rule}"
              min_ptr
       end
 
-      # 左の余白は常に削る。
-      yield "#{remnant[0, ptr].rstrip}\n"
+      yield remnant[0, ptr].rstrip
       remnant = remnant[ptr, remnant.size - ptr]
+
+      break if remnant.empty? || remnant == "\n"
+
+      yield "\n"
     end
 
     yield remnant
@@ -206,9 +209,10 @@ module JapaneseWrap
     ptr
   end
 
-  def search_breakable_jisx4051(str, ptr, hanging: true)
-    ww_ptr = search_breakable_word_wrap(str, ptr)
-    cur_ptr = ww_ptr
+  def search_breakable_jisx4051(str, ptr, hanging: false)
+    ptr += 1 if hanging && HANGING_CHARS.include?(str[ptr])
+    ptr = search_breakable_word_wrap(str, ptr)
+    cur_ptr = ptr
     while cur_ptr.positive?
       if str[cur_ptr] != ' '
         cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false)
@@ -220,7 +224,7 @@ module JapaneseWrap
 
       cur_ptr -= 1
     end
-    ww_ptr
+    ptr
   end
 
   def search_forward_space(str, ptr)
