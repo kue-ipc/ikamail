@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby '>= 2.7.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.4'
 # Use sqlite3 as the database for Active Record
@@ -8,7 +10,7 @@ gem 'rails', '~> 6.1.4'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.4.4'
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 5.0'
 # Use Slim for HTML
 gem 'slim-rails'
 # Use SCSS for stylesheets
@@ -29,9 +31,12 @@ gem 'turbolinks', '~> 5'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bootsnap', '>= 1.4.4', require: false
 
-# auth
+# Cnofig
+gem 'config'
+
+# Auth
 gem 'devise'
 gem 'devise_ldap_authenticatable'
 gem 'pundit'
@@ -46,7 +51,7 @@ gem 'delayed_job_web'
 gem 'daemons'
 
 # i18n
-gem 'rails-i18n', '~> 6.0.0'
+gem 'rails-i18n'
 gem 'devise-i18n'
 gem 'i18n-active_record', require: 'i18n/active_record'
 
