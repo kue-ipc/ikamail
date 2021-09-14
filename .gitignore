@@ -29,7 +29,6 @@
 /config/master.key
 /config/credentials/*.key
 /config/credentials.yml.enc
-/config/ldap_production.yml
 
 /public/packs
 /public/packs-test

@@ -1,8 +1,8 @@
 # rubocop: disable Rails/HasManyOrHasOneDependent, Rails/InverseOf
 class LdapGroup < ActiveLdap::Base
-  ldap_mapping dn_attribute: configurations['ldap']['group']['dn'],
-    prefix: configurations['ldap']['group']['base'],
-    classes: configurations['ldap']['group']['classes']
+  ldap_mapping dn_attribute: Settings.ldap.group.dn,
+    prefix: Settings.ldap.group.ou,
+    classes: Settings.ldap.group.classes
 
   has_many :primary_users, class_name: 'LdapUser',
                            primary_key: 'gidNumber',

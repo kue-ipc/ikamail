@@ -1,46 +1,25 @@
 ## LDAP
-# auto settings
+# auto settings by config
 # DO NOT EDIT THIS IF YOU DO NOT UNDERSTAD IT.
-<%
-if Rails.env.production?
-  yaml_file = Rails.root.join('config', 'ldap_production.yml')
-  unless FileTest.file?(yaml_file)
-    warn 'Please create config/ldap_production.yml see .sapmle.'
-    raise 'Not found the LDAP config YAML file for production envrionment.'
-  end
-  config = YAML.safe_load(IO.read(yaml_file), [Symbol], [], true, yaml_file, symbolize_names: true)[:ldap]
-  config[:username] = Rails.application.credentials.dig(:ldap, :username)
-  config[:password] = Rails.application.credentials.dig(:ldap, :password)
-else
-  yaml_file = Rails.root.join('config', 'ldap_development_test.yml')
-  config = YAML.safe_load(IO.read(yaml_file), [Symbol], [], true, yaml_file, symbolize_names: true)[:ldap]
-end
-%>
-
-ldap: <%= config.to_json %>
 
 ## ActiveLdap
 active_ldap: &ACTIVE_LDAP
-  host: <%= config[:host].to_json %>
-  port: <%= config[:port].to_json %>
-  base: <%= config[:base].to_json %>
-<% if config[:auth] == :sipmle %>
+  host: <%= Settings.ldap.host.to_json %>
+  port: <%= Settings.ldap.port.to_json %>
+  base: <%= Settings.ldap.base.to_json %>
+<% if Settings.ldap.auth == 'simple' %>
   allow_anonymous: false
-  bind_dn: <%= config[:username].to_json %>
-  password: <%= config[:password].to_json %>
+  bind_dn: <%= (Rails.application.credentials.dig(:ldap, :username) || Settings.ldap.username).to_json %>
+  password: <%= (Rails.application.credentials.dig(:ldap, :password) || Settings.ldap.password).to_json %>
 <% else %>
   allow_anonymous: true
 <% end %>
   method: :<%=
-    case config[:encryption]
-    when 'simple_tls'
-      'ssl'
-    when 'start_tls'
-      'tls'
-    else
-      'plain'
-    end
-  %>
+    case Settings.ldap.encryption
+    when 'simple_tls' then 'ssl'
+    when 'start_tls' then 'tls'
+    else 'plain'
+    end %>
 
 development:
   <<: *ACTIVE_LDAP

@@ -1,8 +1,8 @@
 # rubocop: disable Rails/InverseOf
 class LdapUser < ActiveLdap::Base
-  ldap_mapping dn_attribute: configurations['ldap']['user']['dn'],
-    prefix: configurations['ldap']['user']['base'],
-    classes: configurations['ldap']['user']['classes']
+  ldap_mapping dn_attribute: Settings.ldap.user.dn,
+    prefix: Settings.ldap.user.ou,
+    classes: Settings.ldap.user.classes
 
   belongs_to :primary_group, class_name: 'LdapGroup',
                              primary_key: 'gidNumber',
