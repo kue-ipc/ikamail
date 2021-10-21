@@ -17,4 +17,4 @@ test:
 
 production:
   <<: *default
-  database: <%= (Settings.database.database || 'nodokan').to_json %>
+  database: <%= (Settings.database.database || 'ikamail').to_json %>
