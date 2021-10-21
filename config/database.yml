@@ -7,10 +7,6 @@ default: &default
   password: <%= (Rails.application.credentials.dig(:database, :password) || Settings.database.password).to_json %>
   host: <%= Settings.database.host.to_json %>
 
-  username: ikamail
-  password: pass+ikamail42
-  host: localhost
-
 development:
   <<: *default
   database: <%= (Settings.database.database || 'ikamail_development').to_json %>
