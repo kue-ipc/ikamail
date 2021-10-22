@@ -8,7 +8,7 @@ class LdapMailSyncJob < ApplicationJob
     CollectRecipientAllJob.perform_later
   end
 
-  def perform(*_args)
+  def perform
     sync_mail_groups
     sync_mail_users
     sync_mail_memberships

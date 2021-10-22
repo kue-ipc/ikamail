@@ -1,7 +1,7 @@
 class LdapUserSyncJob < ApplicationJob
   queue_as :default
 
-  def perform(*_args)
+  def perform
     sync_users
   end
 
