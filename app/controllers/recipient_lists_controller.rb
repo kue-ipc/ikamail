@@ -27,7 +27,7 @@ class RecipientListsController < ApplicationController
   def create
     @recipient_list = RecipientList.new(recipient_list_params)
     if @recipient_list.save
-      CollectRecipientJob.perform_later(@recipient_list.id)
+      CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list, notice: t_success_action(@recipient_list, :create)
     else
       render :new
@@ -38,7 +38,7 @@ class RecipientListsController < ApplicationController
   # PATCH/PUT /recipient_lists/1.json
   def update
     if @recipient_list.update(recipient_list_params)
-      CollectRecipientJob.perform_later(@recipient_list.id)
+      CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list, notice: t_success_action(@recipient_list, :update)
     else
       render :edit

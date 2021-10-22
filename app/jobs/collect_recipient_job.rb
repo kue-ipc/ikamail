@@ -3,8 +3,7 @@ require 'set'
 class CollectRecipientJob < ApplicationJob
   queue_as :default
 
-  def perform(recipient_list_id)
-    recipient_list = RecipientList.find(recipient_list_id)
+  def perform(recipient_list)
     # TODO: 1 + N 問題あり
     new_set = Set.new(recipient_list.mail_groups.flat_map(&:mail_user_ids))
     cur_set = Set.new(recipient_list.mail_user_ids)
