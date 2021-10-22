@@ -1,8 +1,7 @@
 class ReservedDeliveryJob < ApplicationJob
   queue_as :default
 
-  def perform(bulk_mail_id)
-    bulk_mail = BulkMail.find_by(id: bulk_mail_id)
+  def perform(bulk_mail)
     return if bulk_mail.nil?
     return unless bulk_mail.status_reserved?
     return if bulk_mail.reserved_at.after?(Time.current)

@@ -140,7 +140,7 @@ class BulkMailsController < ApplicationController
       else
         record_action_log
       end
-      ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail.id)
+      ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail)
       flash.notice = [*flash.notice, t(:reserve, scope: [:mail, :done_messages])]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :reserve)]
