@@ -14,7 +14,7 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails/1
   # GET /bulk_mails/1.json
   def show
-    @action_info = ActionInfo.new(current_status: @bulk_mail.status, datetime: Time.zone.now.since(1.hour))
+    @action_info = ActionInfo.new(current_status: @bulk_mail.status)
   end
 
   # GET /bulk_mails/new

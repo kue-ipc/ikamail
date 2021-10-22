@@ -24,9 +24,10 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
               strong = t(timing, scope: [:mail, :action_timing_messages, action])
           - if add_datetime
             .mb-3
+              - now = Time.current
               = f.label :datetime, t(action, scope: :actions) + '日時', class: 'form-label'
-              = f.datetime_field :datetime, second: false,
-                                   class: 'form-control', required: true, min: Time.now
+              = f.datetime_field :datetime, step: 60, class: 'form-control', required: true,
+                                 value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R')
           .mb-3
             = f.label :comment, ActionLog.human_attribute_name(:comment), class: 'form-label'
             = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
