@@ -21,6 +21,7 @@ table.table
         span.text-nowrap
           = t_attr(:delivered_at)
 
+  - just_a_year_ago = Time.current.prev_year
   tbody
     - @bulk_mails.each do |bulk_mail|
       tr
@@ -30,8 +31,17 @@ table.table
         td.text-nowrap = t(bulk_mail.status.intern, scope: [:mail, :statuses])
         td.text-nowrap = bulk_mail.user.username
         td = bulk_mail.template.name
-        td = l(bulk_mail.updated_at, format: :short)
-        td = (bulk_mail.delivered_at || bulk_mail.reserved_at)&.yield_self { |time| l(time, format: :short) }
+        td
+          - if bulk_mail.updated_at.after?(just_a_year_ago)
+            = l(bulk_mail.updated_at, format: :short)
+          - else
+            = l(bulk_mail.updated_at.to_date, format: :default)
+        td
+          - (bulk_mail.delivered_at || bulk_mail.reserved_at)&.yield_self do |time|
+            - if time.after?(just_a_year_ago)
+              = l(time, format: :short)
+            - else
+              = l(time.to_date, format: :default)
 
 = paginate @bulk_mails
 p
