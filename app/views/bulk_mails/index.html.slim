@@ -9,15 +9,17 @@ p
 table.table
   thead
     tr
-      th scope="col" = t_attr(:subject)
-      th scope="col" = t_attr(:status)
-      th scope="col" = t_attr(:user)
-      th scope="col" = t_attr(:template)
-      th scope="col" = t_attr(:updated_at)
+      th.text-nowrap scope="col" = t_attr(:subject)
+      th.text-nowrap scope="col" = t_attr(:status)
+      th.text-nowrap scope="col" = t_attr(:user)
+      th.text-nowrap scope="col" = t_attr(:template)
+      th.text-nowrap scope="col" = t_attr(:updated_at)
       th scope="col"
-        = t_attr(:reserved_at)
+        span.text-nowrap
+          = t_attr(:reserved_at)
         | /
-        = t_attr(:delivered_at)
+        span.text-nowrap
+          = t_attr(:delivered_at)
 
   tbody
     - @bulk_mails.each do |bulk_mail|
@@ -25,8 +27,8 @@ table.table
         td.position-relative
           = link_to bulk_mail, class: 'stretched-link'
             = bulk_mail.subject
-        td = t(bulk_mail.status.intern, scope: [:mail, :statuses])
-        td = bulk_mail.user.username
+        td.text-nowrap = t(bulk_mail.status.intern, scope: [:mail, :statuses])
+        td.text-nowrap = bulk_mail.user.username
         td = bulk_mail.template.name
         td = l(bulk_mail.updated_at, format: :short)
         td = (bulk_mail.delivered_at || bulk_mail.reserved_at)&.yield_self { |time| l(time, format: :short) }
