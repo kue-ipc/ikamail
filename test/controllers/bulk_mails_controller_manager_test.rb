@@ -526,6 +526,7 @@ class BulkMailsControllerManagerTest < BulkMailsControllerTest
     assert_equal '【一括メールシステム通知】配信中止', NKF.nkf('-J -w -m', mail.subject)
 
     assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
+    assert_nil BulkMail.find(@bulk_mail.id).reserved_at
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 

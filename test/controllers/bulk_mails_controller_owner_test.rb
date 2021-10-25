@@ -453,11 +453,12 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     assert_equal 'reserved', BulkMail.find(@bulk_mail.id).status
   end
 
-  test 'should NOT withdraw RESERVED' do
+  test 'should withdraw RESERVED' do
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
     assert_equal 'draft', BulkMail.find(@bulk_mail.id).status
+    assert_nil BulkMail.find(@bulk_mail.id).reserved_at
   end
 
   test 'should NOT approve RESERVED' do

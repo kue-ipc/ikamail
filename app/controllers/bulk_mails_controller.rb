@@ -83,7 +83,7 @@ class BulkMailsController < ApplicationController
   end
 
   def withdraw
-    if @bulk_mail.update(status: 'draft')
+    if @bulk_mail.update(status: 'draft', reserved_at: nil)
       record_action_log
       flash.notice = [*flash.notice, t(:withdraw, scope: [:mail, :done_messages])]
     else
@@ -122,7 +122,7 @@ class BulkMailsController < ApplicationController
   end
 
   def cancel
-    if @bulk_mail.update(status: 'pending')
+    if @bulk_mail.update(status: 'pending', reserved_at: nil)
       record_action_log
       send_notification_mail(to: @bulk_mail.user)
       flash.notice = [*flash.notice, t(:cancel, scope: [:mail, :done_messages])]
