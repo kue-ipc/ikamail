@@ -56,7 +56,10 @@ MariaDB 10.2.1 以下の場合は、インデックスサイズ拡張のため�
 ```
 git clone https://github.com/kue-ipc/ikamail.git
 cd ikamail
-bundle install --deployment --without development test
+bundle config set --local deployment 'true'
+bundle config set --local path 'vendor/bundle'
+bundle config set --local without 'development test'
+bundle install
 bundle exec rails yarn:install
 ```
 
@@ -100,7 +103,7 @@ flush privileges;
 RAILS_ENV=production bundle exec rails db:migrate
 ```
 
-あとは、scriptsにあるサンプルを参考にサービスに登録して、起動してください。production環境ではDelayedJobを有効にすることも忘れないでください。
+あとは、doc/scriptsにあるサンプルを参考にサービスに登録して、起動してください。production環境ではDelayedJobを有効にすることも忘れないでください。
 
 定期的な処理はwheneverでクーロン登録ができます。
 
