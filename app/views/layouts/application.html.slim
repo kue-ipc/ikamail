@@ -6,7 +6,7 @@ html
     title = t(:bulk_mail_system)
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload', media: 'all'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
     header.mb-2
@@ -23,12 +23,12 @@ html
                   = icon 'door-closed', roll: 'img', 'aria-label': 'Logout'
     .container-fluid
       .row
-        .col-12.col-md-3.col-xl-2.col-print-none
+        .col-12.col-md-3.col-xl-2.d-print-none
           - if user_signed_in?
             = render 'menu'
           - else
             p ログインしてください。
-        .col-12.col-md-9.col-xl-10.col-print-full
+        .col-12.col-md-9.col-xl-10
           main
             = yield :heading
             = render 'alert'

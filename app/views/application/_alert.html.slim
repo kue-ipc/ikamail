@@ -1,23 +1,24 @@
-noscript
-  .alert.alert-danger role="alert"
-    = t(:require_javascript, scope: :messages)
+section.alert-group.d-print-none
+  noscript
+    .alert.alert-danger role="alert"
+      = t(:require_javascript, scope: :messages)
 
-#require-modern-browser.d-none
-  .alert.alert-danger role="alert"
-    = t(:require_modern_browser, scope: :messages)
-javascript:
-  if (typeof globalThis === 'undefined')
-    document.getElementById('require-modern-browser').className = '';
+  #require-modern-browser.d-none
+    .alert.alert-danger role="alert"
+      = t(:require_modern_browser, scope: :messages)
+  javascript:
+    if (typeof globalThis === 'undefined')
+      document.getElementById('require-modern-browser').className = '';
 
-- if alert
-  - [*alert].each do |msg|
-    .alert.alert-danger.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
-      = icon 'exclamation-triangle-fill', class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Danger:'
-      = msg
-      button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
-- if notice
-  - [*notice].each do |msg|
-    .alert.alert-success.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
-      = icon 'check-circle-fill', class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Success:'
-      = msg
-      button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
+  - if alert
+    - [*alert].each do |msg|
+      .alert.alert-danger.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
+        = icon 'exclamation-triangle-fill', class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Danger:'
+        = msg
+        button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
+  - if notice
+    - [*notice].each do |msg|
+      .alert.alert-success.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
+        = icon 'check-circle-fill', class: ['flex-shrink-0', 'me-2'], role: 'img', 'aria-label': 'Success:'
+        = msg
+        button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
