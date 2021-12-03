@@ -3,8 +3,8 @@ class User < ApplicationRecord
   # :database_authenticatable or :ldap_authenticatable
   # Others available are:
   # :confirmable, :registerable, :recoverable, :validatable
-  # and :omniauthable, :lockable, :timeoutable, :trackable
-  devise :ldap_authenticatable, :rememberable
+  # and :omniauthable, :lockable, :trackable
+  devise :ldap_authenticatable, :rememberable, :timeoutable
 
   enum role: {user: 0, admin: 1}
 
