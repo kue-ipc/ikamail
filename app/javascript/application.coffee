@@ -10,9 +10,6 @@ turbolinks.start()
 
 # import 'channels'
 
-# Assets
-require 'bootstrap-icons/bootstrap-icons.svg'
-
 # Custom modules
 import 'src/bootstrap-trigger'
 import 'src/translation-index'
