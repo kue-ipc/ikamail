@@ -1,8 +1,8 @@
 database:
   # credentials
-  username: ikamail
+  username: admin
   # credentials
-  password: pass+ikamail42
+  password: admin_password
   host: localhost
   # database: <same database in development and production>
 ## Authorizations LDAP
