@@ -76,7 +76,7 @@ module ApplicationHelper
         yield recored.__send__(attr)
       end
     else
-      dt_dd_for(recored, attr, opts) do |value|
+      dt_dd_for(recored, attr, **opts) do |value|
         span_value_for(value, **opts)
       end
     end
@@ -170,7 +170,7 @@ module ApplicationHelper
     opts = {width: size, height: size, fill: 'currentColor'}.merge(opts)
     opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
     opts[:class] += ['bi']
-    tag.svg(opts) do
+    tag.svg(**opts) do
       tag.use('xlink:href': "#{asset_path ('bootstrap-icons/bootstrap-icons.svg')}\##{name}")
     end
   end
