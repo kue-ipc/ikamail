@@ -174,7 +174,7 @@ ja:
       waiting: 配信待ち
       delivering: 配信中
       delivered: 配信済み
-      failure: 失敗
+      failed: 失敗
       error: エラー
       waste: 廃棄済み
     timings:
@@ -271,6 +271,10 @@ ja:
     require_other_than_ie: |
       Internet Explorerに対応していません。
       Microsoft Edge、Mozilla Firefox、Google Chrome、Apple Safari等のモダンブラウザーを使用してください。
+    approval_pending_mail:
+      zero: "受付待ちの申込中メールはありません。"
+      one: "受付待ちの申込中メールがあります。"
+      other: "受付待ちの申込中メールが%{count}通あります。"
 
   time:
     formats:

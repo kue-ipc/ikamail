@@ -6,6 +6,14 @@ p = t(:dispaly_detail, scope: :messages, name: t_attr(:subject))
 p
   = link_to t(:new, scope: :actions), new_bulk_mail_path, class: 'btn btn-primary'
 
+- if @status
+  p
+    strong
+      => t(@status, scope: 'mail.statuses')
+    | のみ表示 (
+    = link_to 'クリア', bulk_mails_path(page: @bulk_mails.current_page)
+    | )
+
 table.table
   thead
     tr

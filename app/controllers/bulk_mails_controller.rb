@@ -8,7 +8,24 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
-    @bulk_mails = policy_scope(BulkMail).includes(:user, :template).order(updated_at: :desc).page(params[:page])
+    @bulk_mails = policy_scope(BulkMail).includes(:user, :template)
+    statuses = %w[
+      draft
+      pending
+      ready
+      reserved
+      waiting
+      delivering
+      delivered
+      waste
+      failed
+      error
+    ]
+    if statuses.include?(params[:status])
+      @status = params[:status]
+      @bulk_mails = @bulk_mails.where(status: @status)
+    end
+    @bulk_mails = @bulk_mails.order(updated_at: :desc).page(params[:page])
   end
 
   # GET /bulk_mails/1

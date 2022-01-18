@@ -1,4 +1,26 @@
 - content_for :heading
   h1 ダッシュボード
 
+- if @approval_pending_count.positive?
+  .alert.alert-warning.d-flex.align-items-center role="alert"
+    = octicon 'alert', width: 24, fill: 'currentColor', class: 'flex-shrink-0 me-2', role: 'img', 'aria-label': 'Warning:'
+    = t('messages.approval_pending_mail', count: @approval_pending_count)
+
 p 左のメニューから操作を選んでください。
+
+table.table
+  / thead
+  /   tr
+  /     th scope="col" = t('activerecord.attributes.bulk_mail.status')
+  /     th scope="col"
+  tbody
+    - @mail_counts.each do |status, count|
+      - if count.positive?
+        tr
+          td scope="row"
+            = link_to bulk_mails_path(status: status)
+              = t(status, scope: [:mail, :statuses])
+          td
+            = count.to_s
+            | 通
+
