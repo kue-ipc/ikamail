@@ -71,6 +71,10 @@ gem 'whenever', require: false
 gem 'unicode-display_width'
 gem 'unicode-emoji'
 
+# bootstrap
+gem 'bootstrap', '~> 5.1'
+gem 'bootstrap_form', '~> 5.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
