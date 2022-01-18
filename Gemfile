@@ -75,6 +75,10 @@ gem 'unicode-emoji'
 gem 'bootstrap', '~> 5.1'
 gem 'bootstrap_form', '~> 5.0'
 
+# octicons
+gem 'octicons'
+gem 'octicons_helper'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
