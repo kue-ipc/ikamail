@@ -2,23 +2,29 @@
   "name": "ikamail",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/plugin-transform-runtime": "^7.19.1",
+    "@babel/preset-env": "^7.19.3",
     "@popperjs/core": "^2.11.6",
     "@rails/actioncable": "~6.1.7",
     "@rails/activestorage": "~6.1.7",
     "@rails/ujs": "~6.1.7",
-    "@rails/webpacker": "6.0.0-rc.6",
+    "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.9.1",
     "coffee-loader": "^4.0.0",
     "coffeescript": "^2.7.0",
+    "compression-webpack-plugin": "^10.0.0",
+    "shakapacker": "6.5.2",
     "turbolinks": "^5.2.0",
     "webpack": "^5.74.0",
+    "webpack-assets-manifest": "^5.1.0",
     "webpack-cli": "^4.10.0"
   },
   "version": "0.1.0",
   "babel": {
     "presets": [
-      "./node_modules/@rails/webpacker/package/babel/preset.js"
+      "./node_modules/shakapacker/package/babel/preset.js"
     ]
   },
   "browserslist": [

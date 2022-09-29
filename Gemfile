@@ -15,8 +15,9 @@ gem 'puma', '~> 5.6'
 gem 'slim-rails'
 # Use SCSS for stylesheets
 gem 'sassc-rails'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '6.0.0.rc.6'
+# Transpile app-like JavaScript. From webpacker to shakapacker
+# https://github.com/shakacode/shakapacker
+gem 'shakapacker', '~> 6'
 # Turbolinks makes navigating your web application faster. Read more:
 #  https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
