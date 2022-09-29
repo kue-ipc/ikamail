@@ -24,7 +24,8 @@ module Iso2022jp
   def check_unconvertible_chars(str, strict: true)
     no_amp_str = str.gsub('&', '&amp;')
     conv_str = double_conv_jis(no_amp_str, fallback: :xml, cp932ext: !strict)
-    list = conv_str.scan(/&\#x(\h{1,6});/).map { |m| m[0].to_i(16).chr }
+    list = conv_str.scan(/&\#x(\h{1,6});/)
+      .map { |m| m[0].to_i(16).chr(Encoding::UTF_8) }
     list.concat(conv_str.scan(Regexp.union(NO_JIS_CHARS))) if strict
     list
   end
