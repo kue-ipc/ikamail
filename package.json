@@ -9,7 +9,7 @@
     "@rails/actioncable": "~6.1.7",
     "@rails/activestorage": "~6.1.7",
     "@rails/ujs": "~6.1.7",
-    "babel-loader": "^8.2.5",
+    "babel-loader": "^9.1.0",
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.9.1",
     "coffee-loader": "^4.0.0",
@@ -19,7 +19,7 @@
     "turbolinks": "^5.2.0",
     "webpack": "^5.74.0",
     "webpack-assets-manifest": "^5.1.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^5.0.1"
   },
   "version": "0.1.0",
   "babel": {
@@ -32,7 +32,7 @@
     "not IE 11"
   ],
   "devDependencies": {
-    "@webpack-cli/serve": "^1.7.0",
+    "@webpack-cli/serve": "^2.0.1",
     "webpack-dev-server": "^4.11.1"
   }
 }
