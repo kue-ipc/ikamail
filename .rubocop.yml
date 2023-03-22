@@ -108,6 +108,9 @@ Style/FrozenStringLiteralComment:
 Style/SymbolArray:
   MinSize: 8
 
+Style/FormatString:
+  format: precent
+
 # Bundler
 Bundler/OrderedGems:
   Enabled: false
