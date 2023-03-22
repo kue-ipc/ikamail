@@ -109,7 +109,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal [@bulk_mail.template.user.email], mail.to
-    assert_equal '【一括メールシステム通知】申込み', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal u8tomjis('【一括メールシステム通知】申込み'), mail.subject
 
     assert_equal 'pending', BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -369,7 +369,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     mail = ActionMailer::Base.deliveries.last
     assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
                  [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
-    assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal u8tomjis('【全】テスト全ユーザーオール'), mail.subject
 
     # メールのチェックが終わった時点で配送は完了している。
     assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
@@ -930,7 +930,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     mail = ActionMailer::Base.deliveries.last
     assert_equal @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
                  [@bulk_mail.template.user.email, @bulk_mail.user.email], mail.bcc
-    assert_equal '【全】テスト全ユーザーオール', NKF.nkf('-J -w -m', mail.subject)
+    assert_equal u8tomjis('【全】テスト全ユーザーオール'), mail.subject
 
     # メールのチェックが終わった時点で配送は完了している。
     assert_equal 'delivered', BulkMail.find(@bulk_mail.id).status
