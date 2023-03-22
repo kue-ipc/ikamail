@@ -109,7 +109,7 @@ Style/SymbolArray:
   MinSize: 8
 
 Style/FormatString:
-  format: precent
+  EnforcedStyle: percent
 
 # Bundler
 Bundler/OrderedGems:
