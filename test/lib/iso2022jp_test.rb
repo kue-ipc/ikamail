@@ -71,6 +71,17 @@ class Iso2022jpTest < ActiveSupport::TestCase
   C932EXT_COMPITABLE = '塚晴朗凞猪益礼神祥福靖精羽蘒諸逸都隆飯飼館鶴'
   C932EXT_COMPITABLE_NORMAL = C932EXT_COMPITABLE.unicode_normalize(:nfkc)
 
+  # 第一水準
+  JIS1L = '亜唖娃'
+  # 第二水準
+  JIS2L = '弌丐丕'
+  # 第三水準
+  JIS3L = '俱𠀋㐂'
+  # 第四水準
+  JIS4L = '𠂉丂丏'
+  # 記号
+  NO_JIS = '♡☕👨‍👩‍👧‍👦🗿'
+
   test 'normalize' do
     # same
     assert_equal SAMPLE_TEXT, Iso2022jp.normalize(SAMPLE_TEXT)
@@ -130,6 +141,11 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA)
     assert_equal [], Iso2022jp.check_unconvertible_chars(CP932EXT)
     assert_equal [], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(JIS1L)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(JIS2L)
+    assert_equal JIS3L.chars, Iso2022jp.check_unconvertible_chars(JIS3L)
+    assert_equal JIS4L.chars, Iso2022jp.check_unconvertible_chars(JIS4L)
+    assert_equal NO_JIS.chars, Iso2022jp.check_unconvertible_chars(NO_JIS)
   end
 
   test 'check_unconvertible_chars no cp932' do
@@ -146,6 +162,11 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA, cp932: false)
     assert_equal CP932EXT.chars, Iso2022jp.check_unconvertible_chars(CP932EXT, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(JIS1L, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(JIS2L, cp932: false)
+    assert_equal JIS3L.chars, Iso2022jp.check_unconvertible_chars(JIS3L, cp932: false)
+    assert_equal JIS4L.chars, Iso2022jp.check_unconvertible_chars(JIS4L, cp932: false)
+    assert_equal NO_JIS.chars, Iso2022jp.check_unconvertible_chars(NO_JIS, cp932: false)
   end
 
   test 'double_conv_jis' do
