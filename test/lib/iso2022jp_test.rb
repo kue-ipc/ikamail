@@ -69,7 +69,10 @@ class Iso2022jpTest < ActiveSupport::TestCase
 
   # 互換文字が存在するCP932拡張文字
   C932EXT_COMPITABLE = '塚晴朗凞猪益礼神祥福靖精羽蘒諸逸都隆飯飼館鶴'
-  C932EXT_COMPITABLE_NORMAL = C932EXT_COMPITABLE.unicode_normalize(:nfkc)
+  # 凞 と 蘒 以外は互換文字に標準化
+  C932EXT_COMPITABLE_NORMAL = '塚晴朗凞猪益礼神祥福靖精羽蘒諸逸都隆飯飼館鶴'
+
+  # "凞", "蘒"
 
   # 第一水準
   JIS1L = '亜唖娃'
@@ -161,7 +164,7 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA, cp932: false)
     assert_equal CP932EXT.chars, Iso2022jp.check_unconvertible_chars(CP932EXT, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE, cp932: false)
+    assert_equal %w[凞 蘒], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(JIS1L, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(JIS2L, cp932: false)
     assert_equal JIS3L.chars, Iso2022jp.check_unconvertible_chars(JIS3L, cp932: false)
