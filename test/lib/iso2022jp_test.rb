@@ -91,7 +91,7 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal ZEN_KATKANA, Iso2022jp.normalize(HAN_KATKANA)
     assert_equal FULLWIDTH_TILDE, Iso2022jp.normalize(WAVE_DASH)
     assert_equal FULLWIDTH_HYPHEN_MINUS, Iso2022jp.normalize(MINUS)
-    assert_equal C932EXT_COMPITABLE_NORMAL, Iso2022jp.normalize(MINC932EXT_COMPITABLEUS)
+    assert_equal C932EXT_COMPITABLE_NORMAL, Iso2022jp.normalize(C932EXT_COMPITABLE)
   end
 
   test 'normalize no x0201' do
@@ -113,7 +113,39 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal ZEN2_TEXT, Iso2022jp.normalize(ZEN2_TEXT_HAN, x0201: false)
     assert_equal FULLWIDTH_TILDE, Iso2022jp.normalize(WAVE_DASH, x0201: false)
     assert_equal FULLWIDTH_HYPHEN_MINUS, Iso2022jp.normalize(MINUS, x0201: false)
-    assert_equal C932EXT_COMPITABLE_NORMAL, Iso2022jp.normalize(MINC932EXT_COMPITABLEUS, x0201: false)
+    assert_equal C932EXT_COMPITABLE_NORMAL, Iso2022jp.normalize(C932EXT_COMPITABLE, x0201: false)
+  end
+
+  test 'check_unconvertible_chars' do
+    assert_equal [], Iso2022jp.check_unconvertible_chars(SAMPLE_TEXT)
+    assert_equal %w[｟ ｠], Iso2022jp.check_unconvertible_chars(ZEN_TEXT)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT)
+    assert_equal %w[￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT)
+    assert_equal %w[⦅ ⦆], Iso2022jp.check_unconvertible_chars(ZEN_TEXT_HAN)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT_ZEN)
+    assert_equal %w[￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT_HAN)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT_ZEN)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(CP932EXT)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE)
+  end
+
+  test 'check_unconvertible_chars no cp932' do
+    assert_equal [], Iso2022jp.check_unconvertible_chars(SAMPLE_TEXT, cp932: false)
+    assert_equal %w[＂ ＇ ｟ ｠], Iso2022jp.check_unconvertible_chars(ZEN_TEXT, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT, cp932: false)
+    assert_equal %w[￤ ￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT, cp932: false)
+    assert_equal %w[⦅ ⦆], Iso2022jp.check_unconvertible_chars(ZEN_TEXT_HAN, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT_ZEN, cp932: false)
+    assert_equal %w[￤ ￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT_HAN, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT_ZEN, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA, cp932: false)
+    assert_equal CP932EXT.chars, Iso2022jp.check_unconvertible_chars(CP932EXT, cp932: false)
+    assert_equal [], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE, cp932: false)
   end
 
   test 'double_conv_jis' do
@@ -130,33 +162,5 @@ class Iso2022jpTest < ActiveSupport::TestCase
 
   test 'double_conv_jis no cp932, no x0201' do
     assert_equal SAMPLE_TEXT, Iso2022jp.double_conv_jis(SAMPLE_TEXT, cp932: false, x0201: false)
-  end
-
-  test 'check_unconvertible_chars' do
-    assert_equal [], Iso2022jp.check_unconvertible_chars(SAMPLE_TEXT)
-    assert_equal %w[｟ ｠], Iso2022jp.check_unconvertible_chars(ZEN_TEXT)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT)
-    assert_equal %w[￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT)
-    assert_equal %w[⦅ ⦆], Iso2022jp.check_unconvertible_chars(ZEN_TEXT_HAN)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT_ZEN)
-    assert_equal %w[￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT_HAN)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT_ZEN)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA)
-  end
-
-  test 'check_unconvertible_chars no cp932' do
-    assert_equal [], Iso2022jp.check_unconvertible_chars(SAMPLE_TEXT, cp932: false)
-    assert_equal %w[＂ ＇ ｟ ｠], Iso2022jp.check_unconvertible_chars(ZEN_TEXT, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT, cp932: false)
-    assert_equal %w[￤ ￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT, cp932: false)
-    assert_equal %w[⦅ ⦆], Iso2022jp.check_unconvertible_chars(ZEN_TEXT_HAN, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT_ZEN, cp932: false)
-    assert_equal %w[￤ ￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT_HAN, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT_ZEN, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA, cp932: false)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA, cp932: false)
   end
 end
