@@ -27,6 +27,8 @@ module Iso2022jp
     str.tr!("\u3099\u309A", "\u309B\u309C")
     # 半角全角にある半角記号を全角文字にする
     str.gsub!(/[\uFFE8-\uFFEE]+/) { |s| s.unicode_normalize(:nfkc) }
+    # CJK互換漢字を標準化する
+    str.gsub!(/\p{In_CJK_Compatibility_Ideographs}+/) { |s| s.unicode_normalize(:nfkc) }
     # 他の領域にある半角文字を全角文字にする
     str.tr!(
       # ¢£¬‾¦¥₩
