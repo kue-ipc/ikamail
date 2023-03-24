@@ -25,54 +25,40 @@ class Iso2022jpTest < ActiveSupport::TestCase
     !aAあア亜！ａＡ
   TEXT
 
-  # def cp932ext
-  #   [
-  #     (0x8740..0x875D),
-  #     (0x875F..0x8775),
-  #     [0x877E],
-  #     (0x8780..0x878F),
-  #     (0x8790..0x879C),
-  #     (0xFA40..0xFA7E),
-  #     (0xFA80..0xFAFC),
-  #     (0xFB40..0xFB7E),
-  #     (0xFB80..0xFBFC),
-  #     (0xFC40..0xFC4B)
-  #   ].flat_map(&:to_a).reject do |n|
-  #     c = n.chr(Encoding::CP932).encode(Encoding::UTF_8)
-  #     if c.encode(Encoding::CP932).ord != n
-  #       puts 'OM 0x%04X U+%04X: %c' % [n, c.ord, c]
-  #       true
-  #     elsif (0xF900..0xFAF0).cover?(c.ord) && c.unicode_normalize(:nfkc) != c
-  #       puts 'CK 0x%04X U+%04X: %c' % [n, c.ord, c]
-  #       true
-  #     else
-  #       false
-  #     end
-  #   end.map { |n| n.chr(Encoding::CP932) }.join.encode(Encoding::UTF_8)
-  # end
+  def cp932ext
+    [
+      (0x8740..0x875D),
+      (0x875F..0x8775),
+      [0x877E],
+      (0x8780..0x878F),
+      (0x8790..0x879C),
+      (0xFA40..0xFA7E),
+      (0xFA80..0xFAFC),
+      (0xFB40..0xFB7E),
+      (0xFB80..0xFBFC),
+      (0xFC40..0xFC4B)
+    ].flat_map(&:to_a).select do |n|
+      n.chr(Encoding::CP932).encode(Encoding::UTF_8).encode(Encoding::CP932).ord == n
+    end.map { |n| n.chr(Encoding::CP932) }.join.encode(Encoding::UTF_8)
+  end
 
   # CP932拡張文字
-  # 別コード割り当てありと互換文字ありは除外(上記コード参照)
-  CP932EXT = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳' \
-             'ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ㍉㌔㌢㍍㌘㌧㌃㌶㍑㍗㌍㌦㌣㌫㍊㌻㎜㎝㎞㎎㎏㏄㎡' \
-             '㍻〝〟№㏍℡㊤㊥㊦㊧㊨㈱㈲㈹㍾㍽㍼∮∑∟⊿ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ￤＇＂' \
-             '纊褜鍈銈蓜俉炻昱棈鋹曻彅丨仡仼伀伃伹佖侒侊侚侔俍偀倢俿倞偆偰偂傔僴僘' \
-             '兊兤冝冾凬刕劜劦勀勛匀匇匤卲厓厲叝﨎咜咊咩哿喆坙坥垬埈埇﨏增墲夋奓奛' \
-             '奝奣妤妺孖寀甯寘寬尞岦岺峵崧嵓﨑嵂嵭嶸嶹巐弡弴彧德忞恝悅悊惞惕愠惲愑' \
-             '愷愰憘戓抦揵摠撝擎敎昀昕昻昉昮昞昤晥晗晙晳暙暠暲暿曺朎杦枻桒柀栁桄棏' \
-             '﨓楨﨔榘槢樰橫橆橳橾櫢櫤毖氿汜沆汯泚洄涇浯涖涬淏淸淲淼渹湜渧渼溿澈澵' \
-             '濵瀅瀇瀨炅炫焏焄煜煆煇燁燾犱犾猤獷玽珉珖珣珒琇珵琦琪琩琮瑢璉璟甁畯皂' \
-             '皜皞皛皦睆劯砡硎硤硺礰禔禛竑竧竫箞絈絜綷綠緖繒罇羡茁荢荿菇菶葈蒴蕓蕙' \
-             '蕫﨟薰﨡蠇裵訒訷詹誧誾諟諶譓譿賰賴贒赶﨣軏﨤遧郞鄕鄧釚釗釞釭釮釤釥鈆' \
-             '鈐鈊鈺鉀鈼鉎鉙鉑鈹鉧銧鉷鉸鋧鋗鋙鋐﨧鋕鋠鋓錥錡鋻﨨錞鋿錝錂鍰鍗鎤鏆鏞' \
-             '鏸鐱鑅鑈閒﨩隝隯霳霻靃靍靏靑靕顗顥餧馞驎髙髜魵魲鮏鮱鮻鰀鵰鵫鸙黑'
-
-  # 互換文字が存在するCP932拡張文字
-  C932EXT_COMPITABLE = '塚晴朗凞猪益礼神祥福靖精羽蘒諸逸都隆飯飼館鶴'
-  # 凞 と 蘒 以外は互換文字に標準化
-  C932EXT_COMPITABLE_NORMAL = '塚晴朗凞猪益礼神祥福靖精羽蘒諸逸都隆飯飼館鶴'
-
-  # "凞", "蘒"
+  # 別コード割り当てありは除外(上記コード参照)
+  CP932EXT =
+    '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳' \
+    'ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ㍉㌔㌢㍍㌘㌧㌃㌶㍑㍗㌍㌦㌣㌫㍊㌻㎜㎝㎞㎎㎏㏄㎡' \
+    '㍻〝〟№㏍℡㊤㊥㊦㊧㊨㈱㈲㈹㍾㍽㍼∮∑∟⊿ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ￤＇＂' \
+    '纊褜鍈銈蓜俉炻昱棈鋹曻彅丨仡仼伀伃伹佖侒侊侚侔俍偀倢俿倞偆偰偂傔僴僘' \
+    '兊兤冝冾凬刕劜劦勀勛匀匇匤卲厓厲叝﨎咜咊咩哿喆坙坥垬埈埇﨏塚增墲夋奓' \
+    '奛奝奣妤妺孖寀甯寘寬尞岦岺峵崧嵓﨑嵂嵭嶸嶹巐弡弴彧德忞恝悅悊惞惕愠惲' \
+    '愑愷愰憘戓抦揵摠撝擎敎昀昕昻昉昮昞昤晥晗晙晴晳暙暠暲暿曺朎朗杦枻桒柀' \
+    '栁桄棏﨓楨﨔榘槢樰橫橆橳橾櫢櫤毖氿汜沆汯泚洄涇浯涖涬淏淸淲淼渹湜渧渼' \
+    '溿澈澵濵瀅瀇瀨炅炫焏焄煜煆煇凞燁燾犱犾猤猪獷玽珉珖珣珒琇珵琦琪琩琮瑢' \
+    '璉璟甁畯皂皜皞皛皦益睆劯砡硎硤硺礰礼神祥禔福禛竑竧靖竫箞精絈絜綷綠緖' \
+    '繒罇羡羽茁荢荿菇菶葈蒴蕓蕙蕫﨟薰蘒﨡蠇裵訒訷詹誧誾諟諸諶譓譿賰賴贒赶' \
+    '﨣軏﨤逸遧郞都鄕鄧釚釗釞釭釮釤釥鈆鈐鈊鈺鉀鈼鉎鉙鉑鈹鉧銧鉷鉸鋧鋗鋙鋐' \
+    '﨧鋕鋠鋓錥錡鋻﨨錞鋿錝錂鍰鍗鎤鏆鏞鏸鐱鑅鑈閒隆﨩隝隯霳霻靃靍靏靑靕顗' \
+    '顥飯飼餧館馞驎髙髜魵魲鮏鮱鮻鰀鵰鵫鶴鸙黑'
 
   # 第一水準
   JIS1L = '亜唖娃'
@@ -105,7 +91,6 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal ZEN_KATKANA, Iso2022jp.normalize(HAN_KATKANA)
     assert_equal FULLWIDTH_TILDE, Iso2022jp.normalize(WAVE_DASH)
     assert_equal FULLWIDTH_HYPHEN_MINUS, Iso2022jp.normalize(MINUS)
-    assert_equal C932EXT_COMPITABLE_NORMAL, Iso2022jp.normalize(C932EXT_COMPITABLE)
   end
 
   test 'normalize no x0201' do
@@ -121,13 +106,13 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal ZEN_KATKANA, Iso2022jp.normalize(ZEN_KATKANA, x0201: false)
     assert_equal FULLWIDTH_TILDE, Iso2022jp.normalize(FULLWIDTH_TILDE, x0201: false)
     assert_equal FULLWIDTH_HYPHEN_MINUS, Iso2022jp.normalize(FULLWIDTH_HYPHEN_MINUS, x0201: false)
+    assert_equal CP932EXT, Iso2022jp.normalize(CP932EXT, x0201: false)
 
     # diff
     assert_equal HAN2_TEXT_ZEN, Iso2022jp.normalize(HAN2_TEXT, x0201: false)
     assert_equal ZEN2_TEXT, Iso2022jp.normalize(ZEN2_TEXT_HAN, x0201: false)
     assert_equal FULLWIDTH_TILDE, Iso2022jp.normalize(WAVE_DASH, x0201: false)
     assert_equal FULLWIDTH_HYPHEN_MINUS, Iso2022jp.normalize(MINUS, x0201: false)
-    assert_equal C932EXT_COMPITABLE_NORMAL, Iso2022jp.normalize(C932EXT_COMPITABLE, x0201: false)
   end
 
   test 'check_unconvertible_chars' do
@@ -143,7 +128,6 @@ class Iso2022jpTest < ActiveSupport::TestCase
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA)
     assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA)
     assert_equal [], Iso2022jp.check_unconvertible_chars(CP932EXT)
-    assert_equal [], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE)
     assert_equal [], Iso2022jp.check_unconvertible_chars(JIS1L)
     assert_equal [], Iso2022jp.check_unconvertible_chars(JIS2L)
     assert_equal JIS3L.chars, Iso2022jp.check_unconvertible_chars(JIS3L)
@@ -153,18 +137,21 @@ class Iso2022jpTest < ActiveSupport::TestCase
 
   test 'check_unconvertible_chars no cp932' do
     assert_equal [], Iso2022jp.check_unconvertible_chars(SAMPLE_TEXT, cp932: false)
+    # diff cp932
     assert_equal %w[＂ ＇ ｟ ｠], Iso2022jp.check_unconvertible_chars(ZEN_TEXT, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT, cp932: false)
+    # diff cp932
     assert_equal %w[￤ ￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT, cp932: false)
     assert_equal %w[⦅ ⦆], Iso2022jp.check_unconvertible_chars(ZEN_TEXT_HAN, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_TEXT_ZEN, cp932: false)
+    # diff cp932
     assert_equal %w[￤ ￦], Iso2022jp.check_unconvertible_chars(ZEN2_TEXT_HAN, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN2_TEXT_ZEN, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(HAN_KATKANA, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(ZEN_KATKANA, cp932: false)
+    # diff cp932
     assert_equal CP932EXT.chars, Iso2022jp.check_unconvertible_chars(CP932EXT, cp932: false)
-    assert_equal %w[凞 蘒], Iso2022jp.check_unconvertible_chars(C932EXT_COMPITABLE, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(JIS1L, cp932: false)
     assert_equal [], Iso2022jp.check_unconvertible_chars(JIS2L, cp932: false)
     assert_equal JIS3L.chars, Iso2022jp.check_unconvertible_chars(JIS3L, cp932: false)
