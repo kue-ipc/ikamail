@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_000627) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_07_24_060734) do
   create_table "action_logs", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
     t.bigint "user_id"
     t.integer "action", null: false
     t.text "comment"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["action"], name: "index_action_logs_on_action"
     t.index ["bulk_mail_id"], name: "index_action_logs_on_bulk_mail_id"
     t.index ["user_id"], name: "index_action_logs_on_user_id"
@@ -30,12 +29,12 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.integer "delivery_timing", null: false
     t.string "subject", null: false
     t.text "body", null: false
-    t.datetime "delivered_at"
+    t.datetime "delivered_at", precision: nil
     t.integer "number"
     t.integer "status", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "reserved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "reserved_at", precision: nil
     t.integer "wrap_col", default: 0, null: false
     t.integer "wrap_rule", default: 0, null: false
     t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
@@ -49,21 +48,21 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
     t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at", precision: nil
+    t.datetime "locked_at", precision: nil
+    t.datetime "failed_at", precision: nil
     t.string "locked_by"
     t.string "queue"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "mail_groups", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "display_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_mail_groups_on_name", unique: true
   end
 
@@ -78,8 +77,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.bigint "mail_user_id", null: false
     t.bigint "mail_group_id", null: false
     t.boolean "primary", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["mail_group_id"], name: "index_mail_memberships_on_mail_group_id"
     t.index ["mail_user_id"], name: "index_mail_memberships_on_mail_user_id"
   end
@@ -98,8 +97,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.integer "count", default: 0, null: false
     t.time "reserved_time", null: false
     t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_mail_templates_on_name", unique: true
     t.index ["recipient_list_id"], name: "index_mail_templates_on_recipient_list_id"
     t.index ["user_id"], name: "index_mail_templates_on_user_id"
@@ -109,8 +108,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.string "mail", null: false
     t.string "name", null: false
     t.string "display_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["mail"], name: "index_mail_users_on_mail", unique: true
     t.index ["name"], name: "index_mail_users_on_name", unique: true
   end
@@ -118,8 +117,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
   create_table "recipient_lists", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_recipient_lists_on_name", unique: true
   end
 
@@ -128,8 +127,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.bigint "mail_user_id", null: false
     t.boolean "included", default: false, null: false
     t.boolean "excluded", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["mail_user_id"], name: "index_recipients_on_mail_user_id"
     t.index ["recipient_list_id"], name: "index_recipients_on_recipient_list_id"
   end
@@ -140,8 +139,8 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.text "value"
     t.text "interpolations"
     t.boolean "is_proc", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -150,10 +149,10 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.string "fullname"
     t.integer "role", default: 0, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "remember_created_at"
+    t.datetime "remember_created_at", precision: nil
     t.string "remember_token"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
