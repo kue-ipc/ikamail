@@ -1,4 +1,4 @@
-class CreateTemplates < ActiveRecord::Migration[6.0]
+class CreateMailTemplates < ActiveRecord::Migration[6.0]
   def change
     create_table :mail_templates do |t|
       t.string :name, null: false
