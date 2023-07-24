@@ -4,25 +4,30 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 
 ユーザーのメールアドレス情報をLDAPから取得し、条件に一致するユーザーに対してメールを一括で送信します。
 
+## バージョン変更点
+
+互換性の無い変更
+*  0.5 -> 0.6
+    * TempalteモデルをMaliTemplateモデルに変更
+
 ## 環境
 
 * 言語
-    * Ruby 2.7 以上
-    * Node.js 14 以上 (アセットファイルコンパイル時のみ使用)
+    * Ruby 3.0 以上
+    * Node.js 18 以上 (アセットファイルコンパイル時のみ使用)
 
 * OS
-    * Ubuntu 20.04LTS
-    * Rocky Linux 8 （他互換ディストリビューション)
+    * Rocky Linux 9 (他互換ディストリビューション)
 
 * データベース
-    * MariaDB 10.3 以上 10.5 以上推奨
+    * MariaDB 10.5 以上
 
 * ブラウザ
     * Microsoft Edge
     * Mozilla Firefox
     * Apple Safari
     * Google Chrome
-    ※ Internet Explorerには対応していません。
+    ※ Internet Explorer には対応していません。
 
 ## OS設定
 
@@ -46,8 +51,6 @@ default-character-set = utf8mb4
 character-set-server = utf8mb4
 collation-server = utf8mb4_general_ci
 ```
-
-MariaDB 10.2.1 以下の場合は、インデックスサイズ拡張のためにInnoDBの設定が必要な場合があります。
 
 ## デプロイ
 
