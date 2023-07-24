@@ -9,6 +9,8 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 互換性の無い変更
 *  0.5 -> 0.6
     * TempalteモデルをMaliTemplateモデルに変更
+        ダンプしたsqlをdoc/rename_tbl.rbで変換してください。
+    * Rocky9をメインターゲットとする。
 
 ## 環境
 
