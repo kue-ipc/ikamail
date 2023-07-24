@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_08_18_000627) do
 
-  create_table "action_logs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "action_logs", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
     t.bigint "user_id"
     t.integer "action", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["user_id"], name: "index_action_logs_on_user_id"
   end
 
-  create_table "bulk_mails", charset: "utf8mb4", force: :cascade do |t|
+  create_table "bulk_mails", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "mail_template_id", null: false
     t.integer "delivery_timing", null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["user_id"], name: "index_bulk_mails_on_user_id"
   end
 
-  create_table "delayed_jobs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "delayed_jobs", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "mail_groups", charset: "utf8mb4", force: :cascade do |t|
+  create_table "mail_groups", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "display_name"
     t.datetime "created_at", precision: 6, null: false
@@ -67,14 +67,14 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["name"], name: "index_mail_groups_on_name", unique: true
   end
 
-  create_table "mail_groups_recipient_lists", charset: "utf8mb4", force: :cascade do |t|
+  create_table "mail_groups_recipient_lists", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "mail_group_id", null: false
     t.bigint "recipient_list_id", null: false
     t.index ["mail_group_id"], name: "index_mail_groups_recipient_lists_on_mail_group_id"
     t.index ["recipient_list_id"], name: "index_mail_groups_recipient_lists_on_recipient_list_id"
   end
 
-  create_table "mail_memberships", charset: "utf8mb4", force: :cascade do |t|
+  create_table "mail_memberships", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "mail_user_id", null: false
     t.bigint "mail_group_id", null: false
     t.boolean "primary", null: false
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["mail_user_id"], name: "index_mail_memberships_on_mail_user_id"
   end
 
-  create_table "mail_templates", charset: "utf8mb4", force: :cascade do |t|
+  create_table "mail_templates", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "enabled", default: true, null: false
     t.bigint "user_id", null: false
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["user_id"], name: "index_mail_templates_on_user_id"
   end
 
-  create_table "mail_users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "mail_users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "mail", null: false
     t.string "name", null: false
     t.string "display_name"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["name"], name: "index_mail_users_on_name", unique: true
   end
 
-  create_table "recipient_lists", charset: "utf8mb4", force: :cascade do |t|
+  create_table "recipient_lists", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["name"], name: "index_recipient_lists_on_name", unique: true
   end
 
-  create_table "recipients", charset: "utf8mb4", force: :cascade do |t|
+  create_table "recipients", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "recipient_list_id", null: false
     t.bigint "mail_user_id", null: false
     t.boolean "included", default: false, null: false
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.index ["recipient_list_id"], name: "index_recipients_on_recipient_list_id"
   end
 
-  create_table "translations", charset: "utf8mb4", force: :cascade do |t|
+  create_table "translations", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "locale"
     t.string "key"
     t.text "value"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_000627) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "username", null: false
     t.string "email", null: false
     t.string "fullname"
