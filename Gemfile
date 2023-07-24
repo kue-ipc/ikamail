@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '>= 2.7.0'
+ruby '>= 3.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7'
+gem 'rails', '~> 7.0.6'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 # Use mysql as the database for Active Record
@@ -17,7 +17,7 @@ gem 'slim-rails'
 gem 'sassc-rails'
 # Transpile app-like JavaScript. From webpacker to shakapacker
 # https://github.com/shakacode/shakapacker
-gem 'shakapacker', '~> 6'
+gem 'shakapacker', '~> 7'
 # Turbolinks makes navigating your web application faster. Read more:
 #  https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
