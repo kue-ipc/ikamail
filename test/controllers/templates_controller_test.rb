@@ -1,19 +1,19 @@
 require 'test_helper'
 
-class TemplatesControllerTest < ActionDispatch::IntegrationTest
+class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @template = templates(:all)
+    @mail_template = mail_templates(:all)
   end
 
-  class SignInAdmin < TemplatesControllerTest
+  class SignInAdmin < MailTemplatesControllerTest
     setup do
       sign_in users(:admin)
     end
 
     test 'should get index' do
-      get templates_url
+      get mail_templates_url
       assert_response :success
     end
 
@@ -22,177 +22,177 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should create template' do
-      assert_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: @template.body_footer,
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
+    test 'should create mail_template' do
+      assert_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
         }}
       end
 
-      assert_redirected_to template_url(Template.last)
+      assert_redirected_to mail_template_url(MailTemplate.last)
     end
 
-    test 'should create NOT template with uncovertible JIS from_name' do
-      assert_no_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: @template.body_footer,
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: "#{@template.from_name}😺",
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
-        }}
-      end
-
-      assert_response :success
-    end
-
-    test 'should create NOT template with uncovertible JIS subject_prefix' do
-      assert_no_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: @template.body_footer,
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: "#{@template.subject_prefix}😺",
-          user: {username: @template.user.username},
+    test 'should create NOT mail_template with uncovertible JIS from_name' do
+      assert_no_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: "#{@mail_template.from_name}😺",
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
         }}
       end
 
       assert_response :success
     end
 
-    test 'should create NOT template with uncovertible JIS subject_suffix' do
-      assert_no_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: @template.body_footer,
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: "#{@template.subject_suffix}😺",
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
+    test 'should create NOT mail_template with uncovertible JIS subject_prefix' do
+      assert_no_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: "#{@mail_template.subject_prefix}😺",
+          user: {username: @mail_template.user.username},
         }}
       end
 
       assert_response :success
     end
 
-    test 'should create NOT template with uncovertible JIS body_header' do
-      assert_no_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: @template.body_footer,
-          body_header: "#{@template.body_header}😺",
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
+    test 'should create NOT mail_template with uncovertible JIS subject_suffix' do
+      assert_no_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: "#{@mail_template.subject_suffix}😺",
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
         }}
       end
 
       assert_response :success
     end
 
-    test 'should create NOT template with uncovertible JIS body_footer' do
-      assert_no_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: "#{@template.body_footer}😺",
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
+    test 'should create NOT mail_template with uncovertible JIS body_header' do
+      assert_no_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: "#{@mail_template.body_header}😺",
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
         }}
       end
 
       assert_response :success
     end
 
-    test 'should show template' do
-      get template_url(@template)
+    test 'should create NOT mail_template with uncovertible JIS body_footer' do
+      assert_no_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: "#{@mail_template.body_footer}😺",
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
+        }}
+      end
+
+      assert_response :success
+    end
+
+    test 'should show mail_template' do
+      get mail_template_url(@mail_template)
       assert_response :success
     end
 
     test 'should get edit' do
-      get edit_template_url(@template)
+      get edit_template_url(@mail_template)
       assert_response :success
     end
 
-    test 'should update template' do
-      patch template_url(@template), params: {template: {
-        body_footer: @template.body_footer,
-        body_header: @template.body_header,
-        description: @template.description,
-        from_mail_address: @template.from_mail_address,
-        from_name: @template.from_name,
-        name: "#{@template.name}_alt",
-        recipient_list_id: @template.recipient_list_id,
-        reserved_time: @template.reserved_time,
-        subject_suffix: @template.subject_suffix,
-        subject_prefix: @template.subject_prefix,
-        user: {username: @template.user.username},
+    test 'should update mail_template' do
+      patch mail_template_url(@mail_template), params: {mail_template: {
+        body_footer: @mail_template.body_footer,
+        body_header: @mail_template.body_header,
+        description: @mail_template.description,
+        from_mail_address: @mail_template.from_mail_address,
+        from_name: @mail_template.from_name,
+        name: "#{@mail_template.name}_alt",
+        recipient_list_id: @mail_template.recipient_list_id,
+        reserved_time: @mail_template.reserved_time,
+        subject_suffix: @mail_template.subject_suffix,
+        subject_prefix: @mail_template.subject_prefix,
+        user: {username: @mail_template.user.username},
       }}
-      assert_redirected_to template_url(@template)
+      assert_redirected_to mail_template_url(@mail_template)
     end
 
-    test 'should NOT destroy template used' do
-      assert_no_difference('Template.count') do
-        delete template_url(@template)
+    test 'should NOT destroy mail_template used' do
+      assert_no_difference('MailTemplate.count') do
+        delete mail_template_url(@mail_template)
       end
 
-      assert_redirected_to templates_url
+      assert_redirected_to mail_templates_url
     end
 
-    test 'should destroy template NO used' do
-      assert_difference('Template.count', -1) do
-        delete template_url(templates(:no_used))
+    test 'should destroy mail_template NO used' do
+      assert_difference('MailTemplate.count', -1) do
+        delete mail_template_url(mail_templates(:no_used))
       end
 
-      assert_redirected_to templates_url
+      assert_redirected_to mail_templates_url
     end
   end
 
-  class SignInUser < TemplatesControllerTest
+  class SignInUser < MailTemplatesControllerTest
     setup do
       sign_in users(:user01)
     end
 
     test 'should get index' do
-      get templates_url
+      get mail_templates_url
       assert_response :success
     end
 
@@ -202,67 +202,67 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test 'should NOT create template' do
-      assert_no_difference('Template.count') do
+    test 'should NOT create mail_template' do
+      assert_no_difference('MailTemplate.count') do
         assert_raises(Pundit::NotAuthorizedError) do
-          post templates_url, params: {template: {
-            body_footer: @template.body_footer,
-            body_header: @template.body_header,
-            description: @template.description,
-            from_mail_address: @template.from_mail_address,
-            from_name: @template.from_name,
-            name: "#{@template.name}_alt",
-            recipient_list_id: @template.recipient_list_id,
-            reserved_time: @template.reserved_time,
-            subject_suffix: @template.subject_suffix,
-            subject_prefix: @template.subject_prefix,
-            user: {username: @template.user.username},
+          post mail_templates_url, params: {mail_template: {
+            body_footer: @mail_template.body_footer,
+            body_header: @mail_template.body_header,
+            description: @mail_template.description,
+            from_mail_address: @mail_template.from_mail_address,
+            from_name: @mail_template.from_name,
+            name: "#{@mail_template.name}_alt",
+            recipient_list_id: @mail_template.recipient_list_id,
+            reserved_time: @mail_template.reserved_time,
+            subject_suffix: @mail_template.subject_suffix,
+            subject_prefix: @mail_template.subject_prefix,
+            user: {username: @mail_template.user.username},
           }}
         end
       end
     end
 
-    test 'should show template' do
-      get template_url(@template)
+    test 'should show mail_template' do
+      get mail_template_url(@mail_template)
       assert_response :success
     end
 
     test 'should NOT get edit' do
       assert_raises(Pundit::NotAuthorizedError) do
-        get edit_template_url(@template)
+        get edit_template_url(@mail_template)
       end
     end
 
-    test 'should NOT update template' do
+    test 'should NOT update mail_template' do
       assert_raises(Pundit::NotAuthorizedError) do
-        patch template_url(@template), params: {template: {
-          body_footer: @template.body_footer,
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
+        patch mail_template_url(@mail_template), params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
         }}
       end
     end
 
-    test 'should NOT destroy template NO used' do
-      assert_no_difference('Template.count') do
+    test 'should NOT destroy mail_template NO used' do
+      assert_no_difference('MailTemplate.count') do
         assert_raises(Pundit::NotAuthorizedError) do
-          delete template_url(templates(:no_used))
+          delete mail_template_url(mail_templates(:no_used))
         end
       end
     end
   end
 
-  class Anonymous < TemplatesControllerTest
+  class Anonymous < MailTemplatesControllerTest
     test 'redirect to login INSTEAD OF get index' do
-      get templates_url
+      get mail_templates_url
       assert_redirected_to new_user_session_path
     end
 
@@ -271,56 +271,56 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF create template' do
-      assert_no_difference('Template.count') do
-        post templates_url, params: {template: {
-          body_footer: @template.body_footer,
-          body_header: @template.body_header,
-          description: @template.description,
-          from_mail_address: @template.from_mail_address,
-          from_name: @template.from_name,
-          name: "#{@template.name}_alt",
-          recipient_list_id: @template.recipient_list_id,
-          reserved_time: @template.reserved_time,
-          subject_suffix: @template.subject_suffix,
-          subject_prefix: @template.subject_prefix,
-          user: {username: @template.user.username},
+    test 'redirect to login INSTEAD OF create mail_template' do
+      assert_no_difference('MailTemplate.count') do
+        post mail_templates_url, params: {mail_template: {
+          body_footer: @mail_template.body_footer,
+          body_header: @mail_template.body_header,
+          description: @mail_template.description,
+          from_mail_address: @mail_template.from_mail_address,
+          from_name: @mail_template.from_name,
+          name: "#{@mail_template.name}_alt",
+          recipient_list_id: @mail_template.recipient_list_id,
+          reserved_time: @mail_template.reserved_time,
+          subject_suffix: @mail_template.subject_suffix,
+          subject_prefix: @mail_template.subject_prefix,
+          user: {username: @mail_template.user.username},
         }}
       end
 
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF show template' do
-      get template_url(@template)
+    test 'redirect to login INSTEAD OF show mail_template' do
+      get mail_template_url(@mail_template)
       assert_redirected_to new_user_session_path
     end
 
     test 'redirect to login INSTEAD OF get edit' do
-      get edit_template_url(@template)
+      get edit_template_url(@mail_template)
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF update template' do
-      patch template_url(@template), params: {template: {
-        body_footer: @template.body_footer,
-        body_header: @template.body_header,
-        description: @template.description,
-        from_mail_address: @template.from_mail_address,
-        from_name: @template.from_name,
-        name: "#{@template.name}_alt",
-        recipient_list_id: @template.recipient_list_id,
-        reserved_time: @template.reserved_time,
-        subject_suffix: @template.subject_suffix,
-        subject_prefix: @template.subject_prefix,
-        user: {username: @template.user.username},
+    test 'redirect to login INSTEAD OF update mail_template' do
+      patch mail_template_url(@mail_template), params: {mail_template: {
+        body_footer: @mail_template.body_footer,
+        body_header: @mail_template.body_header,
+        description: @mail_template.description,
+        from_mail_address: @mail_template.from_mail_address,
+        from_name: @mail_template.from_name,
+        name: "#{@mail_template.name}_alt",
+        recipient_list_id: @mail_template.recipient_list_id,
+        reserved_time: @mail_template.reserved_time,
+        subject_suffix: @mail_template.subject_suffix,
+        subject_prefix: @mail_template.subject_prefix,
+        user: {username: @mail_template.user.username},
       }}
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF destroy template NO used' do
-      assert_no_difference('Template.count', -1) do
-        delete template_url(templates(:no_used))
+    test 'redirect to login INSTEAD OF destroy mail_template NO used' do
+      assert_no_difference('MailTemplate.count', -1) do
+        delete mail_template_url(mail_templates(:no_used))
       end
 
       assert_redirected_to new_user_session_path

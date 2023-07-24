@@ -14,17 +14,17 @@ class BulkMailer < ApplicationMailer
   def all
     mail(
       subject: @bulk_mail.subject_all,
-      from: @bulk_mail.template.from,
-      bcc: @bulk_mail.template.recipient_list.applicable_mail_users.map(&:mail) |
-           [@bulk_mail.template.user.email, @bulk_mail.user.email]
+      from: @bulk_mail.mail_template.from,
+      bcc: @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
+           [@bulk_mail.mail_template.user.email, @bulk_mail.user.email]
     )
   end
 
   private def before_deliver_bulk_mail
     @bulk_mail = params[:bulk_mail]
-    @bulk_mail.template.with_lock do
-      @bulk_mail.template.increment!(:count)
-      mail_count = @bulk_mail.template.count
+    @bulk_mail.mail_template.with_lock do
+      @bulk_mail.mail_template.increment!(:count)
+      mail_count = @bulk_mail.mail_template.count
       @bulk_mail.update!(status: 'delivering', number: mail_count)
     end
     ActionLog.create(bulk_mail: @bulk_mail, action: 'start')

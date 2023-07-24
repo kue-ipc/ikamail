@@ -20,7 +20,7 @@ time = Time.current + 10.minutes
 100.times do |n|
     bulk_mail = BulkMail.create!(
         user: User.first,
-        template: Template.first,
+        mail_template: MailTemplate.first,
         delivery_timing: :reserved,
         subject: "test#{n}",
         body: "test#{n}\n",

@@ -24,11 +24,11 @@ class AdminController < ApplicationController
 
     @begin_time = Time.zone.local(@year, 4, 1, 0, 0, 0)
     @end_time = @begin_time.since(1.year)
-    @template_statistics = Template.all.map do |template|
+    @mail_template_statistics = MailTemplate.all.map do |mail_template|
       [
-        template.id,
+        mail_template.id,
         {
-          name: template.name,
+          name: mail_template.name,
           count: 0,
         }
       ]
@@ -36,7 +36,7 @@ class AdminController < ApplicationController
     BulkMail.where(status: 'delivered')
       .where(delivered_at: @begin_time...@end_time)
       .find_each do |bulk_mail|
-      @template_statistics[bulk_mail.template_id].tap { |data| data[:count] += 1 }
+      @mail_template_statistics[bulk_mail.mail_template_id].tap { |data| data[:count] += 1 }
     end
   end
 

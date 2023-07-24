@@ -1,13 +1,13 @@
-- if @template.errors.any?
+- if @mail_template.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
       = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
-          count: @template.errors.count, model: @template.model_name.human
+          count: @mail_template.errors.count, model: @mail_template.model_name.human
     ul.list-group.list-group-flush.text-danger
-      - @template.errors.full_messages.each do |message|
+      - @mail_template.errors.full_messages.each do |message|
         li.list-group-item = message
 
-= form_for @template do |f|
+= form_for @mail_template do |f|
   .mb-3
     = f.label :name, class: 'form-label'
     = f.text_field :name, class: 'form-control'
@@ -19,7 +19,7 @@
       = f.check_box :enabled, class: 'form-check-input'
       = f.label :enabled, class: 'form-check-label'
   .mb-3
-    = f.label :recipient_list_id, @template.class.human_attribute_name(:recipient_list), class: 'form-label'
+    = f.label :recipient_list_id, @mail_template.class.human_attribute_name(:recipient_list), class: 'form-label'
     = f.collection_select :recipient_list_id, RecipientList.all, :id, :name,
       {prompt: true}, {class: 'form-select'}
   .mb-3
@@ -47,8 +47,8 @@
     = f.label :reserved_time, class: 'form-label'
     = f.time_field :reserved_time, class: 'form-control'
   .mb-3
-    = f.fields_for (@template.user || current_user) do |user|
-      = user.label :username, @template.class.human_attribute_name(:user), class: 'form-label'
+    = f.fields_for (@mail_template.user || current_user) do |user|
+      = user.label :username, @mail_template.class.human_attribute_name(:user), class: 'form-label'
       = user.text_field :username, class: 'form-control', disabled: !current_user.admin?
   .actions = f.submit class: 'btn btn-primary'
 

@@ -8,7 +8,7 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails
   # GET /bulk_mails.json
   def index
-    @bulk_mails = policy_scope(BulkMail).includes(:user, :template)
+    @bulk_mails = policy_scope(BulkMail).includes(:user, :mail_template)
     statuses = %w[
       draft
       pending
@@ -89,7 +89,7 @@ class BulkMailsController < ApplicationController
   def apply
     if @bulk_mail.update(status: 'pending')
       record_action_log
-      send_notification_mail(to: @bulk_mail.template.user)
+      send_notification_mail(to: @bulk_mail.mail_template.user)
       flash.notice = [*flash.notice, t(:apply, scope: [:mail, :done_messages])]
       timing_message = t(@bulk_mail.delivery_timing, scope: [:mail, :done_timing_messages, :apply])
       flash.notice = [*flash.notice, timing_message] if timing_message.present?
@@ -118,7 +118,7 @@ class BulkMailsController < ApplicationController
       if @bulk_mail.delivery_timing_immediate?
         deliver(auto: true)
       elsif @bulk_mail.delivery_timing_reserved?
-        reserve(auto: true, reserved_at: @bulk_mail.template.next_reserved_datetime)
+        reserve(auto: true, reserved_at: @bulk_mail.mail_template.next_reserved_datetime)
       end
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :approve)]
@@ -211,7 +211,7 @@ class BulkMailsController < ApplicationController
   end
 
   private def bulk_mail_params
-    params.require(:bulk_mail).permit(:template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule)
+    params.require(:bulk_mail).permit(:mail_template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule)
   end
 
   private def action_info_params

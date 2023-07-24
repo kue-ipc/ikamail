@@ -187,7 +187,7 @@ ja:
       mail_user: メールユーザー
       mail_group: メールグループ
       bulk_mail: メール
-      template: テンプレート
+      mail_template: テンプレート
       recipient_list: 宛先リスト
       recipient: 宛先
     attributes:
@@ -198,9 +198,9 @@ ja:
         applicable_mail_users: 対象ユーザー
         included_mail_users: 含めるユーザー
         excluded_mail_users: 除外するユーザー
-        templates: 利用しているテンプレート
+        mail_templates: 利用しているテンプレート
       bulk_mail:
-        template: テンプレート
+        mail_template: テンプレート
         delivery_timing: 配信タイミング
         subject: 題名
         body: 本文
@@ -214,7 +214,7 @@ ja:
         wrap_col: 折り返し桁数
         wrap_rule: 折り返し規則
         word_wrap: 折り返し
-      template:
+      mail_template:
         name: テンプレート名
         enabled: 有効
         recipient_list: 宛先

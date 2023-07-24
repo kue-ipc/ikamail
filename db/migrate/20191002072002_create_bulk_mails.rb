@@ -2,7 +2,7 @@ class CreateBulkMails < ActiveRecord::Migration[6.0]
   def change
     create_table :bulk_mails do |t|
       t.belongs_to :user, null: false, foreign_key: true
-      t.belongs_to :template, null: false, foreign_key: true
+      t.belongs_to :mail_template, null: false, foreign_key: true
 
       t.integer :delivery_timing, null: false
       t.string :subject, null: false

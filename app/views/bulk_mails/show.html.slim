@@ -13,20 +13,20 @@
 dl
   = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_suffix]
   = dt_dd_for @bulk_mail, :status, format: :translate, scope: [:mail, :statuses]
-  = dt_dd_for @bulk_mail, :template do |template|
-    = link_to template.name, template
+  = dt_dd_for @bulk_mail, :mail_template do |mail_template|
+    = link_to mail_template.name, mail_template
     br
-    =< ::Template.human_attribute_name(:recipient_list)
+    =< ::MailTemplate.human_attribute_name(:recipient_list)
     | :
-    =<> link_to template.recipient_list.name, template.recipient_list
+    =<> link_to mail_template.recipient_list.name, mail_template.recipient_list
     | |
-    =<> ::Template.human_attribute_name(:reserved_time)
+    =<> ::MailTemplate.human_attribute_name(:reserved_time)
     | :
-    =<> l(template.reserved_time, format: :time)
+    =<> l(mail_template.reserved_time, format: :time)
     | |
-    =<> ::Template.human_attribute_name(:user)
+    =<> ::MailTemplate.human_attribute_name(:user)
     | :
-    =<> template.user.name
+    =<> mail_template.user.name
   = dt_dd_for @bulk_mail, :body_wrap, format: :mail_body,
                           around: [@bulk_mail.body_header, @bulk_mail.body_footer]
   = dt_dd_tag t(:word_wrap, scope: [:activerecord, :attributes, :bulk_mail]) do

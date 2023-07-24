@@ -20,7 +20,7 @@ table.table
       th.text-nowrap scope="col" = t_attr(:subject)
       th.text-nowrap scope="col" = t_attr(:status)
       th.text-nowrap scope="col" = t_attr(:user)
-      th.text-nowrap scope="col" = t_attr(:template)
+      th.text-nowrap scope="col" = t_attr(:mail_template)
       th.text-nowrap scope="col" = t_attr(:updated_at)
       th scope="col"
         span.text-nowrap
@@ -38,7 +38,7 @@ table.table
             = bulk_mail.subject
         td.text-nowrap = t(bulk_mail.status.intern, scope: [:mail, :statuses])
         td.text-nowrap = bulk_mail.user.username
-        td = bulk_mail.template.name
+        td = bulk_mail.mail_template.name
         td
           - if bulk_mail.updated_at.after?(just_a_year_ago)
             = l(bulk_mail.updated_at, format: :short)

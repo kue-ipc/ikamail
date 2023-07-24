@@ -82,7 +82,7 @@ dl
         span.badge.bg-danger
           = @recipient_list.excluded_mail_users.size
 
-  = dt_dd_for @recipient_list, :templates
+  = dt_dd_for @recipient_list, :mail_templates
 
 
 - if recipient_list_policy.edit?

@@ -31,12 +31,12 @@ class BulkMail < ApplicationRecord
     jisx4051: 2,
   }, _prefix: true
 
-  belongs_to :template
+  belongs_to :mail_template
   belongs_to :user
   has_many :action_logs, dependent: :destroy
 
   validates :user, presence: true
-  validates :template, presence: true
+  validates :mail_template, presence: true
 
   validates :delivery_timing, presence: true
   validates :subject, presence: true, length: {maximum: 255}, charcode: true
@@ -66,31 +66,31 @@ class BulkMail < ApplicationRecord
   end
 
   def subject_prefix
-    return '' if template.subject_prefix.blank?
+    return '' if mail_template.subject_prefix.blank?
 
-    Mustache.render(template.subject_prefix, individual_values)
+    Mustache.render(mail_template.subject_prefix, individual_values)
   end
 
   def subject_suffix
-    return '' if template.subject_suffix.blank?
+    return '' if mail_template.subject_suffix.blank?
 
-    Mustache.render(template.subject_suffix, individual_values)
+    Mustache.render(mail_template.subject_suffix, individual_values)
   end
 
   def body_header
-    return '' if template.body_header.blank?
+    return '' if mail_template.body_header.blank?
 
     text_wrap(
-      Mustache.render(template.body_header, individual_values),
+      Mustache.render(mail_template.body_header, individual_values),
       col: wrap_col, rule: wrap_rule.intern
     )
   end
 
   def body_footer
-    return '' if template.body_footer.blank?
+    return '' if mail_template.body_footer.blank?
 
     text_wrap(
-      Mustache.render(template.body_footer, individual_values),
+      Mustache.render(mail_template.body_footer, individual_values),
       col: wrap_col, rule: wrap_rule.intern
     )
   end
@@ -102,7 +102,7 @@ class BulkMail < ApplicationRecord
       number: number_str,
       number_zen: number_str.tr('0-9', '０-９'),
       number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
-      name: template.name,
+      name: mail_template.name,
       datetime: I18n.l(datetime, format: :datetime),
       date: I18n.l(datetime, format: :date),
       time: I18n.l(datetime, format: :time),

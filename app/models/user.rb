@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :fullname, allow_blank: true, length: {maximum: 255}
 
-  has_many :templates, dependent: :restrict_with_exception
+  has_many :mail_templates, dependent: :restrict_with_exception
   has_many :bulk_mails, dependent: :restrict_with_exception
 
   def ldap_before_save

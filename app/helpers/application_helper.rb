@@ -43,8 +43,8 @@ module ApplicationHelper
       label: t_menu_action(:index, model: :bulk_mail, count: 2),
     }
     list << {
-      path: templates_path,
-      label: t_menu_action(:index, model: :template, count: 2),
+      path: mail_templates_path,
+      label: t_menu_action(:index, model: :mail_template, count: 2),
     }
     list << {
       path: recipient_lists_path,
@@ -115,7 +115,7 @@ module ApplicationHelper
         end
         list_html
       end
-    when BulkMail, MailGroup, MailUser, RecipientList, Template
+    when BulkMail, MailGroup, MailUser, RecipientList, MailTemplate
       link_to(value.to_s, value)
     else
       content_tag('span', value.to_s, class: '')

@@ -1,53 +1,53 @@
 - content_for :heading
   h1 = t_title(:showing, count: 1)
 
-- if @template.errors.any?
+- if @mail_template.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
       = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
-          count: @template.errors.count, model: @template.model_name.human
+          count: @mail_template.errors.count, model: @mail_template.model_name.human
     ul.list-group.list-group-flush.text-danger
-      - @template.errors.full_messages.each do |message|
+      - @mail_template.errors.full_messages.each do |message|
         li.list-group-item = message
 
 dl
-  = dt_dd_for @template, :name
-  = dt_dd_for @template, :description
-  = dt_dd_for @template, :enabled
-  = dt_dd_for @template, :recipient_list
-  = dt_dd_for @template, :from_name
-  = dt_dd_for @template, :from_mail_address
-  = dt_dd_for @template, :subject_prefix
-  = dt_dd_for @template, :subject_suffix
-  = dt_dd_for @template, :body_header, format: :mail_body
-  = dt_dd_for @template, :body_footer, format: :mail_body
-  = dt_dd_for @template, :count do |count|
-    - if policy(@template).update?
-      =<> link_to count_template_path(@template, count: count - 1),
+  = dt_dd_for @mail_template, :name
+  = dt_dd_for @mail_template, :description
+  = dt_dd_for @mail_template, :enabled
+  = dt_dd_for @mail_template, :recipient_list
+  = dt_dd_for @mail_template, :from_name
+  = dt_dd_for @mail_template, :from_mail_address
+  = dt_dd_for @mail_template, :subject_prefix
+  = dt_dd_for @mail_template, :subject_suffix
+  = dt_dd_for @mail_template, :body_header, format: :mail_body
+  = dt_dd_for @mail_template, :body_footer, format: :mail_body
+  = dt_dd_for @mail_template, :count do |count|
+    - if policy(@mail_template).update?
+      =<> link_to count_template_path(@mail_template, count: count - 1),
                   method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &minus;
       span.badge.bg-primary = count
-      =<> link_to count_template_path(@template, count: count + 1),
+      =<> link_to count_template_path(@mail_template, count: count + 1),
                   method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &plus;
-      =<> link_to t(:reset, scope: :actions), count_template_path(@template, count: 0),
+      =<> link_to t(:reset, scope: :actions), count_template_path(@mail_template, count: 0),
                   data: {confirm: t(:corfirm_reset, scope: :messages)},
                   method: :patch, class: 'btn btn-warning btn-sm', role: 'button'
     - else
       span.badge.bg-primary = count
 
-  = dt_dd_for @template, :reserved_time, format: :time
-  = dt_dd_for @template, :user
+  = dt_dd_for @mail_template, :reserved_time, format: :time
+  = dt_dd_for @mail_template, :user
 
 p
-  - template_policy = policy(@template)
-  - if template_policy.edit?
-    =<> link_to t(:edit, scope: :actions), edit_template_path(@template), class: 'btn btn-primary'
-  - if template_policy.destroy?
-    =<> link_to t(:destroy, scope: :actions), @template,
+  - mail_template_policy = policy(@mail_template)
+  - if mail_template_policy.edit?
+    =<> link_to t(:edit, scope: :actions), edit_template_path(@mail_template), class: 'btn btn-primary'
+  - if mail_template_policy.destroy?
+    =<> link_to t(:destroy, scope: :actions), @mail_template,
                 data: {confirm: t(:corfirm_destroy, scope: :messages)}, method: :delete, class: 'btn btn-danger'
 
 hr
 p
-  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), templates_path,
+  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), mail_templates_path,
             class: 'btn btn-secondary'

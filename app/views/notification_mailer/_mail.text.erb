@@ -1,5 +1,5 @@
 <%= BulkMail.human_attribute_name(:subject) %>: <%= @bulk_mail.subject %>
-<%= BulkMail.human_attribute_name(:template) %>: <%= @bulk_mail.template.name %>
+<%= BulkMail.human_attribute_name(:mail_template) %>: <%= @bulk_mail.mail_template.name %>
 <%= BulkMail.human_attribute_name(:delivery_timing) %>: <%= t(@bulk_mail.delivery_timing, scope: [:mail, :timings]) %>
 <%= BulkMail.human_attribute_name(:user) %>: <%= @bulk_mail.user.name %>
 <% if @comment.present? %>

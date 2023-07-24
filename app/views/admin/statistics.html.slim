@@ -22,7 +22,7 @@ table.table
       th テンプレート名
       th 件数
   tbody
-    - @template_statistics.each_value do |data|
+    - @mail_template_statistics.each_value do |data|
       tr
         td = data[:name]
         td = data[:count]

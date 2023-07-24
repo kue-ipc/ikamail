@@ -2,7 +2,7 @@
 
 mail:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: immediate
   subject: "テスト全ユーザー"
   body: |+
@@ -12,7 +12,7 @@ mail:
 
 draft:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -22,7 +22,7 @@ draft:
 
 pending:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -32,7 +32,7 @@ pending:
 
 pending_immediate:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: immediate
   subject: "テスト全ユーザー"
   body: |+
@@ -42,7 +42,7 @@ pending_immediate:
 
 pending_reserved:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: reserved
   subject: "テスト全ユーザー"
   body: |+
@@ -52,7 +52,7 @@ pending_reserved:
 
 pending_manual:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -62,7 +62,7 @@ pending_manual:
 
 ready:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -74,7 +74,7 @@ ready:
 
 reserved:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -85,7 +85,7 @@ reserved:
 
 waiting:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -95,7 +95,7 @@ waiting:
 
 delivering:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -106,7 +106,7 @@ delivering:
 
 delivered:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -118,7 +118,7 @@ delivered:
 
 waste:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -129,7 +129,7 @@ waste:
 
 failed:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+
@@ -140,7 +140,7 @@ failed:
 
 error:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: immediate
   subject: "テスト全ユーザー"
   body: |+
@@ -151,7 +151,7 @@ error:
 
 error_no_number:
   user: user01
-  template: all
+  mail_template: all
   delivery_timing: manual
   subject: "テスト全ユーザー"
   body: |+

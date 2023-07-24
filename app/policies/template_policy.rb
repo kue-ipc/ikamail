@@ -1,4 +1,4 @@
-class TemplatePolicy < ApplicationPolicy
+class MailTemplatePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.admin?

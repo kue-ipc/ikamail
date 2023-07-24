@@ -2,8 +2,8 @@ class ResetCountTemplateJob < ApplicationJob
   queue_as :default
 
   def perform
-    Template.find_each do |template|
-      template.update(count: 0)
+    MailTemplate.find_each do |mail_template|
+      mail_template.update(count: 0)
     end
   end
 end

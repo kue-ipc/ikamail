@@ -1,13 +1,13 @@
 module BulkMailsHelper
-  def template_to_hash(templates)
-    templates.map do |template|
+  def mail_template_to_hash(mail_templates)
+    mail_templates.map do |mail_template|
       [
-        template.id,
+        mail_template.id,
         {
-          name: template.name,
-          user: template.user.name,
-          recipient_list: template.recipient_list.name,
-          reserved_time: l(template.reserved_time, format: :time),
+          name: mail_template.name,
+          user: mail_template.user.name,
+          recipient_list: mail_template.recipient_list.name,
+          reserved_time: l(mail_template.reserved_time, format: :time),
         }
       ]
     end.to_h

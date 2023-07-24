@@ -1,77 +1,77 @@
-class TemplatesController < ApplicationController
+class MailTemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy, :count]
   before_action :authorize_template, only: [:index, :new, :create]
 
-  # GET /templates
-  # GET /templates.json
+  # GET /mail_templates
+  # GET /mail_templates.json
   def index
-    @templates = policy_scope(Template).order(:name).page(params[:page])
+    @mail_templates = policy_scope(MailTemplate).order(:name).page(params[:page])
   end
 
-  # GET /templates/1
-  # GET /templates/1.json
+  # GET /mail_templates/1
+  # GET /mail_templates/1.json
   def show
   end
 
-  # GET /templates/new
+  # GET /mail_templates/new
   def new
-    @template = Template.new
-    @template.reserved_time = '12:00'
+    @mail_template = MailTemplate.new
+    @mail_template.reserved_time = '12:00'
   end
 
-  # GET /templates/1/edit
+  # GET /mail_templates/1/edit
   def edit
   end
 
-  # POST /templates
-  # POST /templates.json
+  # POST /mail_templates
+  # POST /mail_templates.json
   def create
-    @template = Template.new(template_params)
-    @template.user ||= current_user
+    @mail_template = MailTemplate.new(mail_template_params)
+    @mail_template.user ||= current_user
 
-    if @template.save
-      redirect_to @template, notice: t_success_action(@template, :create)
+    if @mail_template.save
+      redirect_to @mail_template, notice: t_success_action(@mail_template, :create)
     else
       render :new
     end
   end
 
-  # PATCH/PUT /templates/1
-  # PATCH/PUT /templates/1.json
+  # PATCH/PUT /mail_templates/1
+  # PATCH/PUT /mail_templates/1.json
   def update
-    if @template.update(template_params)
-      redirect_to @template, notice: t_success_action(@template, :update)
+    if @mail_template.update(mail_template_params)
+      redirect_to @mail_template, notice: t_success_action(@mail_template, :update)
     else
       render :edit
     end
   end
 
-  # DELETE /templates/1
-  # DELETE /templates/1.json
+  # DELETE /mail_templates/1
+  # DELETE /mail_templates/1.json
   def destroy
-    @template.destroy
-    redirect_to templates_url, notice: t_success_action(@template, :destroy)
+    @mail_template.destroy
+    redirect_to mail_templates_url, notice: t_success_action(@mail_template, :destroy)
   end
 
   def count
-    if @template.update(count_params)
-      redirect_to @template, notice: t_success_action(@template, :update)
+    if @mail_template.update(count_params)
+      redirect_to @mail_template, notice: t_success_action(@mail_template, :update)
     else
       render :edit
     end
   end
 
   private def set_template
-    @template = Template.find(params[:id])
-    authorize @template
+    @mail_template = MailTemplate.find(params[:id])
+    authorize @mail_template
   end
 
   private def authorize_template
-    authorize Template
+    authorize MailTemplate
   end
 
-  private def template_params
-    permitted = params.require(:template).permit(
+  private def mail_template_params
+    permitted = params.require(:mail_template).permit(
       :name, :recipient_list_id,
       :from_name, :from_mail_address,
       :subject_prefix, :subject_suffix,

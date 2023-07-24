@@ -1,6 +1,6 @@
 require 'iso2022jp'
 
-class Template < ApplicationRecord
+class MailTemplate < ApplicationRecord
   include Iso2022jp
 
   belongs_to :recipient_list

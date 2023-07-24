@@ -1,6 +1,6 @@
 class RecipientList < ApplicationRecord
   has_and_belongs_to_many :mail_groups # rubocop: disable Rails/HasAndBelongsToMany
-  has_many :templates, dependent: :restrict_with_error
+  has_many :mail_templates, dependent: :restrict_with_error
 
   has_many :recipients, dependent: :destroy
   has_many :applicable_recipients, -> { where(excluded: false) }, class_name: 'Recipient', inverse_of: :recipient_list
