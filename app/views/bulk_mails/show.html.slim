@@ -16,15 +16,15 @@ dl
   = dt_dd_for @bulk_mail, :mail_template do |mail_template|
     = link_to mail_template.name, mail_template
     br
-    =< ::MailTemplate.human_attribute_name(:recipient_list)
+    =< MailTemplate.human_attribute_name(:recipient_list)
     | :
     =<> link_to mail_template.recipient_list.name, mail_template.recipient_list
     | |
-    =<> ::MailTemplate.human_attribute_name(:reserved_time)
+    =<> MailTemplate.human_attribute_name(:reserved_time)
     | :
     =<> l(mail_template.reserved_time, format: :time)
     | |
-    =<> ::MailTemplate.human_attribute_name(:user)
+    =<> MailTemplate.human_attribute_name(:user)
     | :
     =<> mail_template.user.name
   = dt_dd_for @bulk_mail, :body_wrap, format: :mail_body,
