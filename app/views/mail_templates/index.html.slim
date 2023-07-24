@@ -5,7 +5,7 @@ p = t(:dispaly_detail, scope: :messages, name: t_attr(:name))
 
 - if current_user.admin?
   p
-    = link_to t(:new, scope: :actions), new_template_path, class: 'btn btn-primary'
+    = link_to t(:new, scope: :actions), new_mail_template_path, class: 'btn btn-primary'
 
 table.table
   thead

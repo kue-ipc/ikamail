@@ -1,6 +1,6 @@
 class MailTemplatesController < ApplicationController
-  before_action :set_template, only: [:show, :edit, :update, :destroy, :count]
-  before_action :authorize_template, only: [:index, :new, :create]
+  before_action :set_mail_template, only: [:show, :edit, :update, :destroy, :count]
+  before_action :authorize_mail_template, only: [:index, :new, :create]
 
   # GET /mail_templates
   # GET /mail_templates.json
@@ -61,12 +61,12 @@ class MailTemplatesController < ApplicationController
     end
   end
 
-  private def set_template
+  private def set_mail_template
     @mail_template = MailTemplate.find(params[:id])
     authorize @mail_template
   end
 
-  private def authorize_template
+  private def authorize_mail_template
     authorize MailTemplate
   end
 

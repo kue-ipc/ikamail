@@ -18,7 +18,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should get new' do
-      get new_template_url
+      get new_mail_template_url
       assert_response :success
     end
 
@@ -148,7 +148,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should get edit' do
-      get edit_template_url(@mail_template)
+      get edit_mail_template_url(@mail_template)
       assert_response :success
     end
 
@@ -198,7 +198,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test 'should NOT get new' do
       assert_raises(Pundit::NotAuthorizedError) do
-        get new_template_url
+        get new_mail_template_url
       end
     end
 
@@ -229,7 +229,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test 'should NOT get edit' do
       assert_raises(Pundit::NotAuthorizedError) do
-        get edit_template_url(@mail_template)
+        get edit_mail_template_url(@mail_template)
       end
     end
 
@@ -267,7 +267,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'redirect to login INSTEAD OF get new' do
-      get new_template_url
+      get new_mail_template_url
       assert_redirected_to new_user_session_path
     end
 
@@ -297,7 +297,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'redirect to login INSTEAD OF get edit' do
-      get edit_template_url(@mail_template)
+      get edit_mail_template_url(@mail_template)
       assert_redirected_to new_user_session_path
     end
 

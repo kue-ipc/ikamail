@@ -23,14 +23,14 @@ dl
   = dt_dd_for @mail_template, :body_footer, format: :mail_body
   = dt_dd_for @mail_template, :count do |count|
     - if policy(@mail_template).update?
-      =<> link_to count_template_path(@mail_template, count: count - 1),
+      =<> link_to count_mail_template_path(@mail_template, count: count - 1),
                   method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &minus;
       span.badge.bg-primary = count
-      =<> link_to count_template_path(@mail_template, count: count + 1),
+      =<> link_to count_mail_template_path(@mail_template, count: count + 1),
                   method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &plus;
-      =<> link_to t(:reset, scope: :actions), count_template_path(@mail_template, count: 0),
+      =<> link_to t(:reset, scope: :actions), count_mail_template_path(@mail_template, count: 0),
                   data: {confirm: t(:corfirm_reset, scope: :messages)},
                   method: :patch, class: 'btn btn-warning btn-sm', role: 'button'
     - else
@@ -42,7 +42,7 @@ dl
 p
   - mail_template_policy = policy(@mail_template)
   - if mail_template_policy.edit?
-    =<> link_to t(:edit, scope: :actions), edit_template_path(@mail_template), class: 'btn btn-primary'
+    =<> link_to t(:edit, scope: :actions), edit_mail_template_path(@mail_template), class: 'btn btn-primary'
   - if mail_template_policy.destroy?
     =<> link_to t(:destroy, scope: :actions), @mail_template,
                 data: {confirm: t(:corfirm_destroy, scope: :messages)}, method: :delete, class: 'btn btn-danger'
