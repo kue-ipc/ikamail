@@ -89,7 +89,6 @@ GEM
       actionpack (>= 6.0)
       activemodel (>= 6.0)
     builder (3.2.4)
-    byebug (11.1.3)
     capybara (3.39.2)
       addressable
       matrix
@@ -108,6 +107,9 @@ GEM
     crass (1.0.6)
     daemons (1.4.1)
     date (3.3.3)
+    debug (1.8.0)
+      irb (>= 1.5.0)
+      reline (>= 0.3.1)
     deep_merge (1.2.2)
     delayed_job (4.1.11)
       activesupport (>= 3.0, < 8.0)
@@ -195,6 +197,9 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n-active_record (1.1.0)
       i18n (>= 0.5.0)
+    io-console (0.6.0)
+    irb (1.7.4)
+      reline (>= 0.3.6)
     json (2.6.3)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -209,9 +214,9 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
-    listen (3.0.8)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
+    listen (3.8.0)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     locale (2.1.3)
     loofah (2.21.3)
       crass (~> 1.0.2)
@@ -225,14 +230,14 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    minitest (5.18.1)
+    minitest (5.19.0)
     msgpack (1.7.2)
     mustache (1.1.1)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     mysql2 (0.5.5)
     nenv (0.3.0)
-    net-imap (0.3.6)
+    net-imap (0.3.7)
       date
       net-protocol
     net-ldap (0.18.0)
@@ -248,10 +253,10 @@ GEM
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    octicons (19.4.0)
-    octicons_helper (19.4.0)
+    octicons (19.5.0)
+    octicons_helper (19.5.0)
       actionview
-      octicons (= 19.4.0)
+      octicons (= 19.5.0)
       railties
     orm_adapter (0.5.0)
     parallel (1.23.0)
@@ -265,18 +270,13 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.10.1)
-      byebug (~> 11.0)
-      pry (>= 0.13, < 0.15)
-    pry-rails (0.3.9)
-      pry (>= 0.10.4)
     public_suffix (5.0.3)
     puma (5.6.6)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.7.1)
-    rack (2.2.7)
+    rack (2.2.8)
     rack-protection (3.0.6)
       rack
     rack-proxy (0.7.6)
@@ -320,11 +320,13 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.8.1)
+    reline (0.3.7)
+      io-console (~> 0.5)
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.5)
-    rubocop (1.54.2)
+    rexml (3.2.6)
+    rubocop (1.55.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -332,7 +334,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.28.0, < 2.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.29.0)
@@ -376,10 +378,6 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 6.0, != 5.0.0)
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -413,27 +411,27 @@ GEM
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
     websocket (1.2.9)
-    websocket-driver (0.7.5)
+    websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.10)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
   activeldap
-  bootsnap (>= 1.4.4)
+  bootsnap
   bootstrap (~> 5.1)
   bootstrap_form (~> 5.0)
-  byebug
-  capybara (>= 2.15)
+  capybara
   config
   daemons
+  debug
   delayed_job_active_record
   delayed_job_web
   devise
@@ -443,15 +441,12 @@ DEPENDENCIES
   guard-minitest
   i18n-active_record
   kaminari
-  listen (>= 3.0.5, < 3.2)
   mail-iso-2022-jp
   mustache (~> 1.0)
   mysql2 (>= 0.4.4)
   net-ldap
   octicons
   octicons_helper
-  pry-byebug
-  pry-rails
   puma (~> 5.6)
   pundit
   rails (~> 7.0.6)
@@ -462,13 +457,11 @@ DEPENDENCIES
   selenium-webdriver
   shakapacker (~> 7)
   slim-rails
-  spring
-  spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
   unicode-display_width
   unicode-emoji
-  web-console (>= 3.3.0)
+  web-console
   webdrivers
   whenever
 
