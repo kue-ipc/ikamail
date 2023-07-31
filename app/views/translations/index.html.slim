@@ -18,7 +18,7 @@ hr
 
 - @translations.each do |translation|
   - form_id = "form-#{translation.key}"
-  = form_with model: translation, scope: 'translation', remote: true,
+  = form_with model: translation, scope: 'translation', local: false,
       url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)),
       id: form_id, class: 'form-translation', data: {key: translation.key} do |f|
     = f.hidden_field :locale, id: "#{form_id}-locale"
