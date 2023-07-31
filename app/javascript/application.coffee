@@ -13,9 +13,11 @@ turbolinks.start()
 # Custom modules
 import 'src/bootstrap-trigger'
 import 'src/translation-index'
-import BulkMailTextArea from 'src/bulk-mail-textarea'
-import TemplateInfo from 'src/template-info'
+import bulkMailTextArea from 'src/bulk-mail-textarea'
+import templateInfo from 'src/template-info'
+import multiselect from 'src/multiselect'
 
 document.addEventListener 'turbolinks:load', ->
-  BulkMailTextArea()
-  TemplateInfo()
+  bulkMailTextArea()
+  templateInfo()
+  multiselect()
