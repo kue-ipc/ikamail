@@ -5,22 +5,18 @@
 
 hr
 
-/ = form_tag search_mail_users_path, method: :get
-/   = text_field_tag :query, @query
-/   = submit_tag '検索', name: nil
+- if @mail_user
+  dl
+    = dt_dd_for @mail_user, :name do |value|
+      - if current_user.admin?
+        = link_to(value, @mail_user)
+      - else
+        = value
+    = dt_dd_for @mail_user, :display_name
+    = dt_dd_for @mail_user, :mail
+    - if current_user.admin?
+      = dt_dd_for @mail_user, :mail_groups
+    = dt_dd_for @mail_user, :applicable_recipient_lists
 
-
-/ table.table.table-sm
-/   thead
-/     tr
-/       th = t_attr(:name)
-/       th = t_attr(:display_name)
-/       th = t_attr(:mail)
-
-/   tbody
-/     - @mail_users.each do |mail_user|
-/       tr
-/         td.position-relative
-/           = link_to mail_user.name, mail_user, class: 'stretched-link'
-/         td = mail_user.display_name
-/         td = mail_user.mail
+- else
+  p = t('messages.not_found_mail_user')

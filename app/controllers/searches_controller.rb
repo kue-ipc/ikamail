@@ -4,6 +4,7 @@ class SearchesController < ApplicationController
   # GET /search/new
   # GET /search/new.json
   def new
+    @query = ''
   end
 
   # POST /search
