@@ -35,10 +35,9 @@ dl
         = bootstrap_form_tag url: mail_users_recipient_list_path(@recipient_list, 'included'), method: :post do |f|
           .row
             .col-auto
-              = f.text_field :name, required: true,
-                              placeholder: MailUser.human_attribute_name(:name),
-                              label: MailUser.human_attribute_name(:name), hide_label: true,
-                              control_class: 'form-control form-control-sm'
+              = f.text_field :name, control_class: 'form-control form-control-sm', required: true,
+                  placeholder: MailUser.human_attribute_name(:name),
+                  label: MailUser.human_attribute_name(:name), hide_label: true
             .col-auto
               = f.submit t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
             .col-auto
@@ -66,19 +65,22 @@ dl
 
     = dt_dd_tag RecipientList.human_attribute_name(:excluded_mail_users)
       - if recipient_policy.create?
-        = form_tag mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post
+        = bootstrap_form_tag url: mail_users_recipient_list_path(@recipient_list, 'excluded'), method: :post do |f|
           .row
             .col-auto
-              .mb-2.me-2
-                = label_tag :name, MailUser.human_attribute_name(:name), class: 'visually-hidden'
-                = text_field_tag :name, nil, class: 'form-control form-control-sm', required: true,
-                                placeholder: MailUser.human_attribute_name(:name)
+              = f.text_field :name, control_class: 'form-control form-control-sm', required: true,
+                  placeholder: MailUser.human_attribute_name(:name),
+                  label: MailUser.human_attribute_name(:name), hide_label: true
             .col-auto
-              = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
+              = f.submit t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
             .col-auto
               = link_to '一覧のダウンロード',
                   mail_users_recipient_list_path(@recipient_list, :excluded, page: 'all', format: 'txt'),
                   class: 'btn btn-secondary btn-sm', download: "除外するユーザー一覧[#{@recipient_list.name}].txt"
+            .col-auto
+              = f.button '一覧のアップロード', name: 'upload', class: 'btn btn-warning btn-sm'
+              = f.file_field :file, class: 'visually-hidden', accept: '.txt,text/plain', wrapper: false
+
       - if recipient_policy.index?
         ul.list-inline.mb-0
           - @recipient_list.excluded_mail_users.each do |mail_user|
