@@ -59,8 +59,5 @@ Rails.application.routes.draw do
   end
 
   resource :search, only: [:new, :create]
-  # # get 'search', to: 'mail_users#show'
-  # # post 'search', to: 'mail_users#show'
-  # get 'searches/new'
-  # get 'searches/create'
+  get '/search' => redirect('/search/new')
 end

@@ -9,10 +9,6 @@
 p 左のメニューから操作を選んでください。
 
 table.table
-  / thead
-  /   tr
-  /     th scope="col" = t('activerecord.attributes.bulk_mail.status')
-  /     th scope="col"
   tbody
     - @mail_counts.each do |status, count|
       - if count.positive?

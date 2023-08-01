@@ -50,6 +50,10 @@ module ApplicationHelper
       path: recipient_lists_path,
       label: t_menu_action(:index, model: :recipient_list, count: 2),
     }
+    list << {
+      path: new_search_path,
+      label: t_menu_action(:search, model: :mail_user, count: 1),
+    }
     if current_user.admin?
       list << {
         path: mail_users_path,
