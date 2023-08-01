@@ -16,8 +16,10 @@ import 'src/translation-index'
 import bulkMailTextArea from 'src/bulk-mail-textarea'
 import templateInfo from 'src/template-info'
 import multiselect from 'src/multiselect'
+import uploadButton from 'src/upload-button'
 
 document.addEventListener 'turbolinks:load', ->
   bulkMailTextArea()
   templateInfo()
   multiselect()
+  uploadButton()
