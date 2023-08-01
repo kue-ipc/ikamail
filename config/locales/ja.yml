@@ -5,6 +5,7 @@ ja:
     editing: "%{model}の編集"
     new: "%{model}の新規作成"
     showing: "%{model}の情報"
+    search: "%{model}の検索"
 
   menu:
     paths:
@@ -43,6 +44,7 @@ ja:
     fail: 失敗
     error: エラー
     start: 開始
+    search: 検索
 
   do_actions:
     close: 閉じる
@@ -239,6 +241,7 @@ ja:
         mail: メールアドレス
         mail_groups: グループ
         applicable_recipient_lists: 対象宛先リスト
+        name_or_mail: ユーザー名またはメールアドレス
       mail_group:
         name: グループ名
         display_name: 名前

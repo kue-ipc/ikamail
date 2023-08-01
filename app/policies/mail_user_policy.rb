@@ -4,4 +4,8 @@ class MailUserPolicy < ApplicationPolicy
       scope.all
     end
   end
+
+  def search?
+    true
+  end
 end

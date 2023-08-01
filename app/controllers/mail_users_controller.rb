@@ -21,21 +21,6 @@ class MailUsersController < ApplicationController
   def show
   end
 
-  # # POST /search/mail_users
-  # # POST /search/mail_users.json
-  # def search
-  #   authorize MailUser
-  #   @query = search_params[:query] || ''
-  #   if @query.present?
-  #     @mail_users = MailUser.where('name LIKE ?', "#{@query}%")
-  #       .or(MailUser.where('display_name LIKE ?', "#{@query}%"))
-  #       .or(MailUser.where('mail LIKE ?', "#{@query}%"))
-  #       .order(:name).limit(10)
-  #   else
-  #     @mail_users = MailUser.none
-  #   end
-  # end
-
   # Use callbacks to share common setup or constraints between actions.
   private def set_mail_user
     @mail_user = MailUser.find(params[:id])

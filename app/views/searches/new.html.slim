@@ -1,0 +1,32 @@
+- content_for :heading
+  h1 = t_title(:search, model: :mail_user, count: 1)
+
+== render 'form'
+
+/ h1 Searches#new
+/ p Find me in app/views/searches/new.html.slim
+
+/ - content_for :heading
+/   h1 ユーザー検索
+
+/ p 10ユーザーしか検索せん。
+
+/ = form_tag search_mail_users_path, method: :get
+/   = text_field_tag :query, @query
+/   = submit_tag '検索', name: nil
+
+
+/ table.table.table-sm
+/   thead
+/     tr
+/       th = t_attr(:name)
+/       th = t_attr(:display_name)
+/       th = t_attr(:mail)
+
+/   tbody
+/     - @mail_users.each do |mail_user|
+/       tr
+/         td.position-relative
+/           = link_to mail_user.name, mail_user, class: 'stretched-link'
+/         td = mail_user.display_name
+/         td = mail_user.mail
