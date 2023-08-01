@@ -41,6 +41,10 @@ dl
                                 placeholder: MailUser.human_attribute_name(:name)
             .col-auto
               = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
+            .col-auto
+              = link_to '一覧のダウンロード',
+                  mail_users_recipient_list_path(@recipient_list, :included, page: 'all', format: 'txt'),
+                  class: 'btn btn-secondary btn-sm', download: "含めるユーザー一覧[#{@recipient_list.name}].txt"
       - if recipient_policy.index?
         ul.list-inline.mb-0
           - @recipient_list.included_mail_users.each do |mail_user|
@@ -67,6 +71,10 @@ dl
                                 placeholder: MailUser.human_attribute_name(:name)
             .col-auto
               = submit_tag t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
+            .col-auto
+              = link_to '一覧のダウンロード',
+                  mail_users_recipient_list_path(@recipient_list, :excluded, page: 'all', format: 'txt'),
+                  class: 'btn btn-secondary btn-sm', download: "除外するユーザー一覧[#{@recipient_list.name}].txt"
       - if recipient_policy.index?
         ul.list-inline.mb-0
           - @recipient_list.excluded_mail_users.each do |mail_user|

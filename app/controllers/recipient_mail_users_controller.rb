@@ -4,7 +4,7 @@ class RecipientMailUsersController < ApplicationController
   before_action :set_mail_user, only: [:destroy]
 
   # GET /recipient_lists/1/mail_users/included
-  # GET /recipient_lists/1/mail_users/included
+  # GET /recipient_lists/1/mail_users/included.json
   def index
     all_mail_users =
       case @type
