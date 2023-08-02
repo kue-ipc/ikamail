@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_24_060734) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_043226) do
   create_table "action_logs", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
     t.bigint "user_id"
@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_060734) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "collected", default: false, null: false
     t.index ["name"], name: "index_recipient_lists_on_name", unique: true
   end
 
