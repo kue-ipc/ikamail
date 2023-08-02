@@ -4,8 +4,8 @@
 - if @recipient_list.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
-          count: @recipient_list.errors.count, model: @recipient_list.model_name.human
+      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+          count: @recipient_list.errors.count, model: @recipient_list.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @recipient_list.errors.full_messages.each do |message|
         li.list-group-item = message
@@ -22,7 +22,7 @@ dl
       = @recipient_list.applicable_mail_users.size
     - if recipient_policy.index?
       =< link_to t('actions.index'), mail_users_recipient_list_path(@recipient_list, 'applicable'),
-           class: 'btn btn-link btn-sm'
+                 class: 'btn btn-link btn-sm'
 
   - if current_user.admin?
     = dt_dd_tag RecipientList.human_attribute_name(:mail_groups)
@@ -35,27 +35,27 @@ dl
       = bootstrap_form_tag url: mail_users_recipient_list_path(@recipient_list, :included), method: :post do |f|
         .row
           .col-auto.mb-2
-            =< link_to '#collapse-included-mail-users', role: 'button',
-              'data-bs-toggle': 'collapse', 'aria-expanded': 'true', 'aria-controls': 'collapse-included-mail-users' do
+            =< link_to '#collapse-included-mail-users', role: 'button', 'data-bs-toggle': 'collapse',
+                       'aria-expanded': 'true', 'aria-controls': 'collapse-included-mail-users' do
               span.badge.bg-success
                 = @recipient_list.included_mail_users.size
           .col-auto.mb-2
             =< link_to t('actions.download_list'),
-                mail_users_recipient_list_path(@recipient_list, :included, page: 'all', format: 'txt'),
-                class: 'btn btn-secondary btn-sm',
-                download: "#{RecipientList.human_attribute_name(:included_mail_users)}[#{@recipient_list.name}].txt"
+                       mail_users_recipient_list_path(@recipient_list, :included, page: 'all', format: 'txt'),
+                       class: 'btn btn-secondary btn-sm',
+                       download: "#{RecipientList.human_attribute_name(:included_mail_users)}" \
+                                 "[#{@recipient_list.name}].txt"
           .col-auto.mb-2
             = f.text_field :name, control_class: 'form-control form-control-sm', required: true,
-                placeholder: MailUser.human_attribute_name(:name),
-                wrapper: false,
-                append: f.submit(t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm')
+                           placeholder: MailUser.human_attribute_name(:name), wrapper: false,
+                           append: f.submit(t('actions.add'), name: nil, class: 'btn btn-primary btn-sm')
           .col-auto.mb-2
             = f.button t('actions.bulk_add'), name: 'upload', class: 'btn btn-warning btn-sm'
             = f.file_field :file, class: 'visually-hidden', accept: '.txt,text/plain', wrapper: false
           .col-auto.mb-2
             = link_to t('actions.delete_all'), mail_users_recipient_list_path(@recipient_list, :included),
-                data: {confirm: t(:corfirm_all_destroy, scope: :messages)},
-                method: :delete, class: 'btn btn-danger btn-sm'
+                      data: {confirm: t('messages.corfirm_all_destroy')}, method: :delete,
+                      class: 'btn btn-danger btn-sm'
       #collapse-included-mail-users.collapse
         ul.list-inline.mb-0
           - @recipient_list.included_mail_users.each do |mail_user|
@@ -77,13 +77,13 @@ dl
                   placeholder: MailUser.human_attribute_name(:name),
                   label: MailUser.human_attribute_name(:name), hide_label: true
             .col-auto
-              = f.submit t(:add, scope: :actions), name: nil, class: 'btn btn-primary btn-sm'
+              = f.submit t('actions.add'), name: nil, class: 'btn btn-primary btn-sm'
             .col-auto
               = f.button t('actions.bulk_add'), name: 'upload', class: 'btn btn-warning btn-sm'
               = f.file_field :file, class: 'visually-hidden', accept: '.txt,text/plain', wrapper: false
             .col-auto
               = link_to t('actions.delete_all'), mail_users_recipient_list_path(@recipient_list, :excluded),
-                  data: {confirm: t(:corfirm_all_destroy, scope: :messages)},
+                  data: {confirm: t('messages.corfirm_all_destroy')},
                   method: :delete, class: 'btn btn-danger btn-sm'
             .col-auto
               = link_to '一覧のダウンロード',
@@ -98,7 +98,7 @@ dl
               - if recipient_policy.destroy?
                 small.px-1.rounded-3.ms-1.border.boder-dark
                   =< link_to '', mail_user_recipient_list_path(@recipient_list, 'excluded', mail_user),
-                      data: {confirm: t(:corfirm_destroy, scope: :messages)},
+                      data: {confirm: t('messages.corfirm_destroy')},
                       method: :delete,
                       class: 'btn-close'
       - else
@@ -107,15 +107,14 @@ dl
 
   = dt_dd_for @recipient_list, :mail_templates
 
-
 - if recipient_list_policy.edit?
-  =<> link_to t(:edit, scope: :actions), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
+  =<> link_to t('actions.edit'), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
 
 - if recipient_list_policy.destroy?
-  =<> link_to t(:destroy, scope: :actions), @recipient_list,
-              data: { confirm: t(:corfirm_destroy, scope: :messages) }, method: :delete, class: 'btn btn-danger'
+  =<> link_to t('actions.destroy'), @recipient_list,
+              data: {confirm: t('messages.corfirm_destroy')}, method: :delete, class: 'btn btn-danger'
 
 hr
 p
-  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), recipient_lists_path,
+  = link_to t('links.back_to', name: t('actions.index')), recipient_lists_path,
             class: 'btn btn-secondary'
