@@ -81,6 +81,10 @@ dl
               = f.button '一括追加', name: 'upload', class: 'btn btn-warning btn-sm'
               = f.file_field :file, class: 'visually-hidden', accept: '.txt,text/plain', wrapper: false
             .col-auto
+              = link_to '全削除', mail_users_recipient_list_path(@recipient_list, 'excluded'),
+                        data: {confirm: t(:corfirm_all_destroy, scope: :messages)},
+                        method: :delete, class: 'btn btn-danger btn-sm'
+            .col-auto
               = link_to '一覧のダウンロード',
                   mail_users_recipient_list_path(@recipient_list, :excluded, page: 'all', format: 'txt'),
                   class: 'btn btn-secondary btn-sm', download: "除外するユーザー一覧[#{@recipient_list.name}].txt"
