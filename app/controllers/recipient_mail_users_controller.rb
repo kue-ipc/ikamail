@@ -1,7 +1,6 @@
 class RecipientMailUsersController < ApplicationController
   before_action :set_recipient_list
   before_action :set_type
-  before_action :set_mail_user, only: [:destroy]
 
   # GET /recipient_lists/1/mail_users/included
   # GET /recipient_lists/1/mail_users/included.json
@@ -41,33 +40,42 @@ class RecipientMailUsersController < ApplicationController
 
     Recipient.transaction do
       mail_users = MailUser.where(name: names).or(MailUser.where(mail: names))
-      Recipient.where(recipient_list: @recipient_list, mail_user: mail_users, @type => true).count
-      Recipient.where(recipient_list: @recipient_list, mail_user: mail_users, @type => false).update(@type => true)
-
+      Recipient.where(recipient_list: @recipient_list, mail_user: mail_users, @type => false).update!(@type => true)
       mail_users.eager_load(:recipient_lists).where.not(recipient_lists: @recipient_list).find_each do |mail_user|
-        Recipient.create(recipient_list: @recipient_list, mail_user: mail_user, @type => true)
+        Recipient.create!(recipient_list: @recipient_list, mail_user: mail_user, @type => true)
       end
     end
 
-    redirect_to @recipient_list, notice: t('messages.add_mail_user_to_recipient_list')
+    redirect_to @recipient_list,
+      notice: t('messages.success_action', model: t('activerecord.models.mail_user'), action: t('actions.add'))
+  rescue StandardError
+    redirect_to @recipient_list,
+      alert: t('messages.failure_action', model: t('activerecord.models.mail_user'), action: t('actions.add'))
   end
 
   # DELETE /recipient_lists/1/mail_users/included/1
   # DELETE /recipient_lists/1/mail_users/included/1.json
   def destroy
-    @recipient = Recipient.find_by(recipient_list: @recipient_list, mail_user: @mail_user)
-
     if ['included', 'excluded'].exclude?(@type)
-      redirect_to @recipient_list, alert: '指定のリストからユーザーは削除できません。'
-    elsif @recipient
-      @recipient.update(@type => false)
-      if !@recipient.included && !@recipient.excluded &&
-         (@mail_user.mail_groups & @recipient_list.mail_groups).empty?
-        @recipient.destroy
-      end
-      redirect_to @recipient_list, notice: '指定のリストからユーザーを削除しました。'
+      redirect_to @recipient_list, alert: t('messages.cannot_remove_mail_user_to_recipient_list')
+      return
+    end
+
+    recipients = Recipient.where(recipient_list: @recipient_list, @type => true)
+    recipients = Recipient.where(mail_user_id: params[:mail_user_id]) if params[:mail_user_id]
+
+    if recipients.count.zero?
+      redirect_to @recipient_list, notice: t('messages.no_mail_user_in_recipent_list')
+      return
+    end
+
+    if recipients.update(@type => false)
+      CollectRecipientJob.perform_later(@recipient_list)
+      redirect_to @recipient_list,
+        notice: t('messages.success_action', model: t('activerecord.models.mail_user'), action: t('actions.delete'))
     else
-      redirect_to @recipient_list, alert: 'ユーザーはリストに含まれていません。'
+      redirect_to @recipient_list,
+        alert: t('messages.failure_action', model: t('activerecord.models.mail_user'), action: t('actions.delete'))
     end
   end
 

@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get 'mail_users/:type', to: 'recipient_mail_users#index', as: 'mail_users'
       post 'mail_users/:type', to: 'recipient_mail_users#create'
       delete 'mail_users/:type/:mail_user_id', to: 'recipient_mail_users#destroy', as: 'mail_user'
+      delete 'mail_users/:type', to: 'recipient_mail_users#destroy'
     end
   end
 

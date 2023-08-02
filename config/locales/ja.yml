@@ -256,6 +256,7 @@ ja:
     content_of_action: "%{action}内容"
     corfirm_destroy: "本当に削除してもよろしいですか？"
     corfirm_reset: "本当にリセットしてもよろしいですか？"
+    corfirm_all_destroy: "本当に全てを削除してもよろしいですか？"
     error_prohibited_action:
       zero: "%{model}を%{action}することができません。"
       one: "エラーにより%{model}を%{action}することができません。"
@@ -280,9 +281,12 @@ ja:
       one: "受付待ちの申込中メールがあります。"
       other: "受付待ちの申込中メールが%{count}通あります。"
     not_found_mail_user: "ユーザーが見つかりませんでした。"
-    cannot_add_mail_user_to_recipient_list: "リストにユーザーを追加できません。"
+    cannot_add_mail_user_to_recipient_list: "このリストにユーザーを追加できません。"
     no_mail_user_name: "ユーザー名がありません。"
     add_mail_user_to_recipient_list: "リストにユーザーを追加しました。"
+    fail_to_add_mail_user_to_recipient_list: "リストへのユーザー追加できませんでした。。"
+    cannot_remove_mail_user_to_recipient_list: "このリストからユーザーを削除できません。"
+    no_mail_user_in_recipent_list: "リストにユーザーがいません。"
 
   time:
     formats:
