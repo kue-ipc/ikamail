@@ -49,7 +49,7 @@ ja:
     bulk_add: 一括追加
     delete_all: 全削除
     download_list: リストのダウンロード
-
+    collect: 収集
 
   do_actions:
     close: 閉じる
@@ -291,6 +291,7 @@ ja:
     fail_to_add_mail_user_to_recipient_list: "リストへのユーザー追加できませんでした。。"
     cannot_remove_mail_user_to_recipient_list: "このリストからユーザーを削除できません。"
     no_mail_user_in_recipent_list: "リストにユーザーがいません。"
+    unaggregated: 未集計
 
   time:
     formats:

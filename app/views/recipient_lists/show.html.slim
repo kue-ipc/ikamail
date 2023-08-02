@@ -20,21 +20,21 @@ dl
   = dt_dd_for @recipient_list, :description
 
   = dt_dd_tag RecipientList.human_attribute_name(:applicable_mail_users)
-    span.badge.bg-primary
-      = @recipient_list.applicable_mail_users.size
+    - if @recipient_list.collected?
+      span.badge.bg-primary
+        = @recipient_list.applicable_mail_users.size
+    - else
+      span.badge.bg-primary
+        = t('messages.unaggregated')
     - if recipient_policy.index?
       =< link_to t('actions.index'), mail_users_recipient_list_path(@recipient_list, 'applicable'),
                  class: 'btn btn-link btn-sm'
 
   - if mail_group_policy.index?
-    = dt_dd_tag RecipientList.human_attribute_name(:mail_groups)
-      ul.list-inline.mb-0
-        - @recipient_list.mail_groups.each do |mail_group|
-          li.list-inline-item.border.border-primary.rounded.px-1.mb-1
-            = "#{mail_group.display_name} (#{mail_group.name})"
+    = dt_dd_for @recipient_list, :mail_groups
 
   - if recipient_policy.index?
-    - [:included, :excluded].each do |type|
+    - {included: 'success', excluded: 'danger'}.each do |type, color|
       ruby:
         attr_name = "#{type}_mail_users".intern
         attr_human_name = RecipientList.human_attribute_name(attr_name)
@@ -45,7 +45,7 @@ dl
             .col-auto.mb-2
               =< link_to "##{collapse_id}", role: 'button', 'data-bs-toggle': 'collapse',
                          'aria-expanded': 'true', 'aria-controls': collapse_id do
-                span.badge.bg-success
+                span class="badge bg-#{color}"
                   = @recipient_list.__send__(attr_name).size
             .col-auto.mb-2
               =< link_to t('actions.download_list'),
@@ -68,7 +68,7 @@ dl
         .collapse id=collapse_id
           ul.list-inline.mb-0
             - @recipient_list.__send__(attr_name).find_each do |mail_user|
-              li.list-inline-item.border.border-success.rounded.px-1.mb-1
+              li class="list-inline-item border border-#{color} rounded px-1 mb-1"
                 = "#{mail_user.display_name} (#{mail_user.name})"
                 - if recipient_policy.destroy?
                   small.px-1.rounded-3.ms-1.border.boder-dark
