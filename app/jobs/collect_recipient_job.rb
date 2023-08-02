@@ -8,8 +8,10 @@ class CollectRecipientJob < ApplicationJob
     # 最新のBulkMailを取得する
     recipient_list = RecipientList.find(recipient_list.id)
     return if recipient_list.nil?
+    # 二重実行をしない
+    return if recipient_list.collected
 
-    Recipient.transaction do
+    recipient_list.with_lock do
       new_set = Set.new(recipient_list.mail_groups.flat_map(&:mail_user_ids))
       cur_set = Set.new(recipient_list.mail_user_ids)
 
@@ -22,6 +24,7 @@ class CollectRecipientJob < ApplicationJob
       (new_set - cur_set).each do |mail_user_id|
         recipient_list.recipients.create!(mail_user_id: mail_user_id)
       end
+      recipient_list.update!(collected: true)
     end
   end
 end

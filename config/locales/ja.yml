@@ -46,6 +46,10 @@ ja:
     error: エラー
     start: 開始
     search: 検索
+    bulk_add: 一括追加
+    delete_all: 全削除
+    download_list: リストのダウンロード
+
 
   do_actions:
     close: 閉じる
@@ -220,7 +224,7 @@ ja:
       mail_template:
         name: テンプレート名
         enabled: 有効
-        recipient_list: 宛先
+        recipient_list: 宛先リスト
         count: カウント
         reserved_time: 定時配信時刻
         from_name: 送信元の名前

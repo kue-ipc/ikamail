@@ -5,11 +5,13 @@ import * as bootstrap from 'bootstrap'
 bootstrapComponentSelectors = [
   {component: bootstrap.Popover,   selector: '[data-bs-toggle="popover"]'}
   {component: bootstrap.Tooltip,   selector: '[data-bs-toggle="tooltip"]'}
+  {component: bootstrap.Collapse,  selector: '[data-bs-toggle="collapse"]'}
 ]
 
 document.addEventListener 'turbolinks:load', ->
   for {component, selector} in bootstrapComponentSelectors
     for el in document.querySelectorAll selector
       new component(el)
+      console.debug("bootstrap component: #{component.name}")
 
 globalThis.bootstrap = bootstrap
