@@ -52,17 +52,19 @@ dl
                          mail_users_recipient_list_path(@recipient_list, type, page: 'all', format: 'txt'),
                          class: 'btn btn-secondary btn-sm',
                          download: "#{attr_human_name}[#{@recipient_list.name}].txt"
-            .col-auto.mb-2
-              = f.text_field :name, control_class: 'form-control form-control-sm', required: true,
-                             placeholder: MailUser.human_attribute_name(:name), wrapper: false,
-                             append: f.submit(t('actions.add'), name: nil, class: 'btn btn-primary btn-sm')
-            .col-auto.mb-2
-              = f.button t('actions.bulk_add'), name: 'upload', class: 'btn btn-warning btn-sm'
-              = f.file_field :file, class: 'visually-hidden', accept: '.txt,text/plain', wrapper: false
-            .col-auto.mb-2
-              = link_to t('actions.delete_all'), mail_users_recipient_list_path(@recipient_list, type),
-                        data: {confirm: t('messages.corfirm_all_destroy')}, method: :delete,
-                        class: 'btn btn-danger btn-sm'
+            - if recipient_policy.create?
+              .col-auto.mb-2
+                = f.text_field :name, control_class: 'form-control form-control-sm', required: true,
+                              placeholder: MailUser.human_attribute_name(:name), wrapper: false,
+                              append: f.submit(t('actions.add'), name: nil, class: 'btn btn-primary btn-sm')
+              .col-auto.mb-2
+                = f.button t('actions.bulk_add'), name: 'upload', class: 'btn btn-warning btn-sm'
+                = f.file_field :file, class: 'visually-hidden', accept: '.txt,text/plain', wrapper: false
+            - if recipient_policy.destroy?
+              .col-auto.mb-2
+                = link_to t('actions.delete_all'), mail_users_recipient_list_path(@recipient_list, type),
+                          data: {confirm: t('messages.corfirm_all_destroy')}, method: :delete,
+                          class: 'btn btn-danger btn-sm'
         .collapse id=collapse_id
           ul.list-inline.mb-0
             - @recipient_list.__send__(attr_name).find_each do |mail_user|
