@@ -28,19 +28,15 @@ class RecipientMailUsersController < ApplicationController
   # POST /recipient_lists/1/mail_users/included.json
   def create
     if ['included', 'excluded'].exclude?(@type)
-      redirect_to @recipient_list, alert: t('messages.cannot_add_mail_user_to_recipient_list')
-      return
+      return redirect_to @recipient_list, alert: t('messages.cannot_add_mail_user_to_recipient_list')
     end
 
     names = names_params
-    if names.empty?
-      redirect_to @recipient_list, alert: t('messages.no_mail_user_name')
-      return
-    end
+    return redirect_to @recipient_list, alert: t('messages.no_mail_user_name') if names.empty?
 
     Recipient.transaction do
       mail_users = MailUser.where(name: names).or(MailUser.where(mail: names))
-      Recipient.where(recipient_list: @recipient_list, mail_user: mail_users, @type => false).update!(@type => true)
+      @recipient_list.recipients.where(mail_user: mail_users, @type => false).update!(@type => true)
       mail_users.eager_load(:recipient_lists).where.not(recipient_lists: @recipient_list).find_each do |mail_user|
         Recipient.create!(recipient_list: @recipient_list, mail_user: mail_user, @type => true)
       end
@@ -61,8 +57,8 @@ class RecipientMailUsersController < ApplicationController
       return
     end
 
-    recipients = Recipient.where(recipient_list: @recipient_list, @type => true)
-    recipients = Recipient.where(mail_user_id: params[:mail_user_id]) if params[:mail_user_id]
+    recipients = @recipient_list.recipients.where(@type => true)
+    recipients = recipients.where(mail_user_id: params[:mail_user_id]) if params[:mail_user_id]
 
     if recipients.count.zero?
       redirect_to @recipient_list, notice: t('messages.no_mail_user_in_recipent_list')
