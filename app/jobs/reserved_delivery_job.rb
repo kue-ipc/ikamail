@@ -10,8 +10,10 @@ class ReservedDeliveryJob < ApplicationJob
     # 予約時間以降ではない場合は、終了する。ただし、1分の猶予を持つようにする。
     return unless bulk_mail.reserved_at&.<=(Time.current.since(1.minute))
 
-    unless bulk_mail.update(status: 'waiting')
-      raise ActiveRecord::RecordNotDestroyed, 'Failed to update bulk mail status on ReservedDeliveryJob'
+    bulk_mail.with_lock do
+      raise 'BulkMail status is not waiting.' unless BulkMail.where(id: bulk_mail.id).pick(:status) == 'waiting'
+
+      bulk_mail.update!(status: 'waiting')
     end
 
     ActionLog.create(bulk_mail: bulk_mail, action: 'deliver', comment: 'reserved')
