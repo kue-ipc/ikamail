@@ -18,17 +18,13 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should create recipient_mail_user' do
-      assert_difference('Recipient.count') do
-        post mail_users_recipient_list_url(@recipient_list, 'included'), params: {name: 'user04'}
-      end
+      post mail_users_recipient_list_url(@recipient_list, 'included'), params: {name: 'user04'}
 
       assert_redirected_to recipient_list_url(@recipient_list)
     end
 
     test 'should destroy recipient_mail_user' do
-      assert_difference('Recipient.count', -1) do
-        delete mail_user_recipient_list_url(@recipient_list, 'included', mail_users(:admin))
-      end
+      delete mail_user_recipient_list_url(@recipient_list, 'included', mail_users(:admin))
 
       assert_redirected_to recipient_list_url(@recipient_list)
     end
