@@ -100,6 +100,7 @@ group :development do
 
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'slim_lint'
 
   gem 'guard'
   gem 'guard-minitest'
