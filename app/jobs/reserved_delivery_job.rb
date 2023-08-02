@@ -11,8 +11,6 @@ class ReservedDeliveryJob < ApplicationJob
     return unless bulk_mail.reserved_at&.<=(Time.current.since(1.minute))
 
     bulk_mail.with_lock do
-      raise 'BulkMail status is not waiting.' unless BulkMail.where(id: bulk_mail.id).pick(:status) == 'waiting'
-
       bulk_mail.update!(status: 'waiting')
     end
 
