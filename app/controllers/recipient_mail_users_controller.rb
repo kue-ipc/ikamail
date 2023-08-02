@@ -5,23 +5,13 @@ class RecipientMailUsersController < ApplicationController
   # GET /recipient_lists/1/mail_users/included
   # GET /recipient_lists/1/mail_users/included.json
   def index
-    all_mail_users =
-      case @type
-      when 'applicable'
-        @recipient_list.applicable_mail_users
-      when 'included'
-        @recipient_list.included_mail_users
-      when 'excluded'
-        @recipient_list.excluded_mail_users
-      end&.order(:name)
-
-    @mail_users = if params[:page] == 'all'
-      all_mail_users&.page(nil)&.per(all_mail_users&.count)
-    else
-      all_mail_users&.page(params[:page])
+    unless [:applicable, :included, :excluded].include?(@type)
+      return redirect_to @recipient_list, alert: t('messages.not_found_recipient_list_type')
     end
 
-    flash.alert = '指定のリストはありません。' if @mail_users.nil?
+    @attr_name = "#{@type}_mail_users".intern
+    @mail_users = @recipient_list.__send__(@attr_name).order(:name)
+    @mail_users = @mail_users.page(params[:page]) if params[:page] != 'all'
   end
 
   # POST /recipient_lists/1/mail_users/included
@@ -77,11 +67,10 @@ class RecipientMailUsersController < ApplicationController
 
   private def set_recipient_list
     @recipient_list = RecipientList.find(params[:id])
-    authorize @recipient_list
   end
 
   private def set_type
-    @type = params[:type]
+    @type = params[:type].intern
     authorize Recipient
   end
 

@@ -35,7 +35,6 @@ dl
     - {included: 'success', excluded: 'danger'}.each do |type, color|
       ruby:
         attr_name = "#{type}_mail_users".intern
-        attr_human_name = RecipientList.human_attribute_name(attr_name)
         collapse_id = "collapse-#{attr_name.to_s.gsub('_', '-')}"
       = dt_dd_for @recipient_list, attr_name do |mail_users|
         = bootstrap_form_tag url: mail_users_recipient_list_path(@recipient_list, type), method: :post do |f|
@@ -50,7 +49,7 @@ dl
               =< link_to t('actions.download_list'),
                          mail_users_recipient_list_path(@recipient_list, type, page: 'all', format: 'txt'),
                          class: 'btn btn-secondary btn-sm',
-                         download: "#{attr_human_name}[#{@recipient_list.name}].txt"
+                         download: file_name(@recipient_list, attr: attr_name, format: 'txt')
             - if recipient_policy.create?
               .col-auto.mb-2
                 = f.text_field :name, control_class: 'form-control form-control-sm', required: true,

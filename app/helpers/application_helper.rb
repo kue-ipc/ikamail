@@ -178,4 +178,12 @@ module ApplicationHelper
       tag.use('xlink:href': "#{asset_path ('bootstrap-icons/bootstrap-icons.svg')}\##{name}")
     end
   end
+
+  def file_name(obj, attr: nil, format: 'txt')
+    model = obj.class.model_name.i18n_key
+    str = "#{t_model(model)}[#{obj.name}]"
+    str += t_attr(attr, model: model) if attr
+    str += ".#{format}"
+    str
+  end
 end
