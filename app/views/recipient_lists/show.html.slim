@@ -19,13 +19,11 @@ dl
   = dt_dd_for @recipient_list, :name
   = dt_dd_for @recipient_list, :description
 
-  = dt_dd_tag RecipientList.human_attribute_name(:applicable_mail_users)
+  = dt_dd_for @recipient_list, :applicable_mail_users do |mail_users|
     - if @recipient_list.collected?
-      span.badge.bg-primary
-        = @recipient_list.applicable_mail_users.size
+      span.badge.bg-primary = mail_users.size
     - else
-      span.badge.bg-primary
-        = t('messages.unaggregated')
+      span.badge.bg-primary = t('messages.unaggregated')
     - if recipient_policy.index?
       =< link_to t('actions.index'), mail_users_recipient_list_path(@recipient_list, 'applicable'),
                  class: 'btn btn-link btn-sm'
@@ -39,14 +37,15 @@ dl
         attr_name = "#{type}_mail_users".intern
         attr_human_name = RecipientList.human_attribute_name(attr_name)
         collapse_id = "collapse-#{attr_name.to_s.gsub('_', '-')}"
-      = dt_dd_tag attr_human_name
+      = dt_dd_for @recipient_list, attr_name do |mail_users|
         = bootstrap_form_tag url: mail_users_recipient_list_path(@recipient_list, type), method: :post do |f|
           .row
             .col-auto.mb-2
-              =< link_to "##{collapse_id}", role: 'button', 'data-bs-toggle': 'collapse',
-                         'aria-expanded': 'true', 'aria-controls': collapse_id do
-                span class="badge bg-#{color}"
-                  = @recipient_list.__send__(attr_name).size
+              span class="badge bg-#{color}"
+                = mail_users.size
+              =< link_to t('actions.index'), "##{collapse_id}", role: 'button', 'data-bs-toggle': 'collapse',
+                         'aria-expanded': 'false', 'aria-controls': collapse_id,
+                         class: 'btn btn-link btn-sm'
             .col-auto.mb-2
               =< link_to t('actions.download_list'),
                          mail_users_recipient_list_path(@recipient_list, type, page: 'all', format: 'txt'),
@@ -67,7 +66,7 @@ dl
                           class: 'btn btn-danger btn-sm'
         .collapse id=collapse_id
           ul.list-inline.mb-0
-            - @recipient_list.__send__(attr_name).find_each do |mail_user|
+            - mail_users.find_each do |mail_user|
               li class="list-inline-item border border-#{color} rounded px-1 mb-1"
                 = "#{mail_user.display_name} (#{mail_user.name})"
                 - if recipient_policy.destroy?
@@ -79,12 +78,13 @@ dl
 
   = dt_dd_for @recipient_list, :mail_templates
 
-- if recipient_list_policy.edit?
-  =<> link_to t('actions.edit'), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
+p
+  - if recipient_list_policy.edit?
+    =<> link_to t('actions.edit'), edit_recipient_list_path(@recipient_list), class: 'btn btn-primary'
 
-- if recipient_list_policy.destroy?
-  =<> link_to t('actions.destroy'), @recipient_list,
-              data: {confirm: t('messages.corfirm_destroy')}, method: :delete, class: 'btn btn-danger'
+  - if recipient_list_policy.destroy?
+    =<> link_to t('actions.destroy'), @recipient_list,
+                data: {confirm: t('messages.corfirm_destroy')}, method: :delete, class: 'btn btn-danger'
 
 hr
 p
