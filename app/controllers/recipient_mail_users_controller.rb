@@ -28,18 +28,28 @@ class RecipientMailUsersController < ApplicationController
   # POST /recipient_lists/1/mail_users/included
   # POST /recipient_lists/1/mail_users/included.json
   def create
-    @mail_user = MailUser.find_by(name_params)
-
     if ['included', 'excluded'].exclude?(@type)
-      redirect_to @recipient_list, alert: '指定のリストにユーザーは追加できません。'
-    elsif @mail_user
-      @recipient = Recipient.find_or_create_by(recipient_list: @recipient_list, mail_user: @mail_user)
-      @recipient.update(@type => true)
-
-      redirect_to @recipient_list, notice: '指定のリストにユーザーを追加しました。'
-    else
-      redirect_to @recipient_list, alert: '該当する名前のユーザーはいません。'
+      redirect_to @recipient_list, alert: t('messages.cannot_add_mail_user_to_recipient_list')
+      return
     end
+
+    names = names_params
+    if names.empty?
+      redirect_to @recipient_list, alert: t('messages.no_mail_user_name')
+      return
+    end
+
+    Recipient.transaction do
+      mail_users = MailUser.where(name: names).or(MailUser.where(mail: names))
+      Recipient.where(recipient_list: @recipient_list, mail_user: mail_users, @type => true).count
+      Recipient.where(recipient_list: @recipient_list, mail_user: mail_users, @type => false).update(@type => true)
+
+      mail_users.eager_load(:recipient_lists).where.not(recipient_lists: @recipient_list).find_each do |mail_user|
+        Recipient.create(recipient_list: @recipient_list, mail_user: mail_user, @type => true)
+      end
+    end
+
+    redirect_to @recipient_list, notice: t('messages.add_mail_user_to_recipient_list')
   end
 
   # DELETE /recipient_lists/1/mail_users/included/1
@@ -75,7 +85,11 @@ class RecipientMailUsersController < ApplicationController
     @mail_user = MailUser.find(params[:mail_user_id])
   end
 
-  private def name_params
-    params.permit(:name)
+  private def names_params
+    if params[:file]
+      params[:file].read
+    else
+      params[:name] || ''
+    end.split(/[\s,\ufeff]/).map(&:strip).select(&:present?)
   end
 end

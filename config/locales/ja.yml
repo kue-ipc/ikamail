@@ -280,6 +280,9 @@ ja:
       one: "受付待ちの申込中メールがあります。"
       other: "受付待ちの申込中メールが%{count}通あります。"
     not_found_mail_user: "ユーザーが見つかりませんでした。"
+    cannot_add_mail_user_to_recipient_list: "リストにユーザーを追加できません。"
+    no_mail_user_name: "ユーザー名がありません。"
+    add_mail_user_to_recipient_list: "リストにユーザーを追加しました。"
 
   time:
     formats:
