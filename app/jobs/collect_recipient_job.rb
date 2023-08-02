@@ -3,21 +3,25 @@ require 'set'
 class CollectRecipientJob < ApplicationJob
   queue_as :default
 
+  # TODO: 1 + N 問題あり
   def perform(recipient_list)
-    # TODO: 1 + N 問題あり
-    new_set = Set.new(recipient_list.mail_groups.flat_map(&:mail_user_ids))
-    cur_set = Set.new(recipient_list.mail_user_ids)
+    # 最新のBulkMailを取得する
+    recipient_list = RecipientList.find(recipient_list.id)
+    return if recipient_list.nil?
 
-    # 新しい集合にないものを削除
-    (cur_set - new_set).each do |mail_user_id|
-      recipient = recipient_list.recipients.where(mail_user_id: mail_user_id).first
-      # フラグ付きは除外
-      recipient.destroy if recipient && !recipient.included && !recipient.excluded
-    end
+    Recipient.transaction do
+      new_set = Set.new(recipient_list.mail_groups.flat_map(&:mail_user_ids))
+      cur_set = Set.new(recipient_list.mail_user_ids)
 
-    # 現在の集合にないものを作成
-    (new_set - cur_set).each do |mail_user_id|
-      recipient_list.recipients.create(mail_user_id: mail_user_id)
+      # 新しい集合にないものを削除
+      recipient_list.recipients
+        .where(mail_user_id: (cur_set - new_set).to_a, included: false, excluded: false)
+        .find_each(&:destroy!)
+
+      # 現在の集合にないものを作成
+      (new_set - cur_set).each do |mail_user_id|
+        recipient_list.recipients.create!(mail_user_id: mail_user_id)
+      end
     end
   end
 end

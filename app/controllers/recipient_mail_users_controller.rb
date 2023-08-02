@@ -48,7 +48,7 @@ class RecipientMailUsersController < ApplicationController
 
     redirect_to @recipient_list,
       notice: t('messages.success_action', model: t('activerecord.models.mail_user'), action: t('actions.add'))
-  rescue StandardError
+  rescue ActiveRecord::ActiveRecordError
     redirect_to @recipient_list,
       alert: t('messages.failure_action', model: t('activerecord.models.mail_user'), action: t('actions.add'))
   end
