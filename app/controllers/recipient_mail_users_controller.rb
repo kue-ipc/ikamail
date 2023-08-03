@@ -17,32 +17,52 @@ class RecipientMailUsersController < ApplicationController
   # POST /recipient_lists/1/mail_users/included
   # POST /recipient_lists/1/mail_users/included.json
   def create
-    if ['included', 'excluded'].exclude?(@type)
+    if [:included, :excluded].exclude?(@type)
       return redirect_to @recipient_list, alert: t('messages.cannot_add_mail_user_to_recipient_list')
     end
 
     names = names_params
     return redirect_to @recipient_list, alert: t('messages.no_mail_user_name') if names.empty?
 
+    count = 0
     Recipient.transaction do
       mail_users = MailUser.where(name: names).or(MailUser.where(mail: names))
-      @recipient_list.recipients.where(mail_user: mail_users, @type => false).update!(@type => true)
-      mail_users.eager_load(:recipient_lists).where.not(recipient_lists: @recipient_list).find_each do |mail_user|
-        Recipient.create!(recipient_list: @recipient_list, mail_user: mail_user, @type => true)
-      end
+      pp @recipient_list.recipients.where(mail_user: mail_users, @type => false).update!(@type => true)
+      # mail_users.eager_load(:recipient_lists).where.not(recipient_lists: @recipient_list).find_each do |mail_user|
+      #   pp mail_user
+      #   @recipient_list.recipients.create!({mail_user: mail_user, @type => true})
+      #   count += 1
+      # end
     end
 
+    remaining_names = Set.new(names)
+    @recipient_list.mail_users.each do |mail_user|
+      remaining_names.delete(mail_user.name)
+      remaining_names.delete(mail_user.mail)
+    end
+
+    alert =
+      if remaining_names.empty?
+        nil
+      else
+        "#{t('messages.not_found_mail_user')}: #{remaining_names.join(', ')}"
+      end
+
     redirect_to @recipient_list,
-      notice: t('messages.success_action', model: t('activerecord.models.mail_user'), action: t('actions.add'))
-  rescue ActiveRecord::ActiveRecordError
+      notice: t('messages.success_action', model: t('activerecord.models.mail_user'), action: t('actions.add')),
+      alert: alert
+  rescue ActiveRecord::ActiveRecordError => e
     redirect_to @recipient_list,
-      alert: t('messages.failure_action', model: t('activerecord.models.mail_user'), action: t('actions.add'))
+      alert: [
+        t('messages.failure_action', model: t('activerecord.models.mail_user'), action: t('actions.add')),
+        e.message,
+      ]
   end
 
   # DELETE /recipient_lists/1/mail_users/included/1
   # DELETE /recipient_lists/1/mail_users/included/1.json
   def destroy
-    if ['included', 'excluded'].exclude?(@type)
+    if [:included, :excluded].exclude?(@type)
       redirect_to @recipient_list, alert: t('messages.cannot_remove_mail_user_to_recipient_list')
       return
     end
