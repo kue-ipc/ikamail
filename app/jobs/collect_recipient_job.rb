@@ -24,7 +24,7 @@ class CollectRecipientJob < ApplicationJob
       (new_set - cur_set).each do |mail_user_id|
         recipient_list.recipients.create!(mail_user_id: mail_user_id)
       end
-      # recipient_list.update!(collected: true)
+      recipient_list.update!(collected: true)
     end
   end
 end

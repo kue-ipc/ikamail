@@ -293,6 +293,7 @@ ja:
     no_mail_user_in_recipent_list: "リストにユーザーがいません。"
     unaggregated: 未集計
     not_found_recipient_list_type: "指定のリストはありません。"
+    no_mail_user_to_add: "追加すべきユーザーはいませんでした。。"
 
   time:
     formats:
