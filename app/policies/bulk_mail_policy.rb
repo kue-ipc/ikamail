@@ -25,14 +25,14 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def update?
-    record.status_draft? && writable? ||
-      record.status_pending? && manageable?
+    (record.status_draft? && writable?) ||
+      (record.status_pending? && manageable?)
   end
 
   def destroy?
-    record.status_draft? && writable? ||
-      record.status_pending? && manageable? ||
-      record.status_error? && record.number.nil? && writable?
+    (record.status_draft? && writable?) ||
+      (record.status_pending? && manageable?) ||
+      (record.status_error? && record.number.nil? && writable?)
   end
 
   def apply?
@@ -60,13 +60,13 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def deliver?
-    record.status_ready? && record.delivery_timing_manual? && writable? ||
-      record.status_failed? && writable?
+    (record.status_ready? && record.delivery_timing_manual? && writable?) ||
+      (record.status_failed? && writable?)
   end
 
   def discard?
-    record.status_failed? && writable? ||
-      record.status_error? && writable?
+    (record.status_failed? && writable?) ||
+      (record.status_error? && writable?)
   end
 
   private def owned?

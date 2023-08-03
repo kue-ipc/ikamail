@@ -104,13 +104,13 @@ module JapaneseWrap
     *SMALL_KANA,
     *SMALL_KANA_HALFWIDTH,
     *SOUND_MARKS,
-    *SOUND_MARKS_HALFWIDTH,
+    *SOUND_MARKS_HALFWIDTH
   ]).freeze
 
   NOT_ENDING_CHARS = Set.new([
     *OPENING_BRACKETS,
     *OPENING_BRACKETS_FULLWIDTH,
-    *OPENING_BRACKETS_HALFWIDTH,
+    *OPENING_BRACKETS_HALFWIDTH
   ]).freeze
 
   HANGING_CHARS = Set.new([
@@ -119,7 +119,7 @@ module JapaneseWrap
     *FULL_STOPS_HALFWIDTH,
     *COMMAS,
     *COMMAS_FULLWIDTH,
-    *COMMAS_HALFWIDTH,
+    *COMMAS_HALFWIDTH
   ]).freeze
 
   ASCII_CHARS = Set.new("\u0020".."\u007E").freeze
@@ -164,15 +164,15 @@ module JapaneseWrap
       end
 
       ptr = case rule
-           when :force
-             min_ptr
-           when :word_wrap
-             search_breakable_word_wrap(remnant, min_ptr)
-           when :jisx4051
-             search_breakable_jisx4051(remnant, min_ptr, hanging: hanging)
-           else
-             logger.error "unknown rule: #{rule}"
-             min_ptr
+            when :force
+              min_ptr
+            when :word_wrap
+              search_breakable_word_wrap(remnant, min_ptr)
+            when :jisx4051
+              search_breakable_jisx4051(remnant, min_ptr, hanging: hanging)
+            else
+              logger.error "unknown rule: #{rule}"
+              min_ptr
       end
 
       yield remnant[0, ptr].rstrip

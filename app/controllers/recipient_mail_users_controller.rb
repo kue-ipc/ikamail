@@ -64,7 +64,7 @@ class RecipientMailUsersController < ApplicationController
   rescue ActiveRecord::ActiveRecordError => e
     redirect_to @recipient_list, alert: [
       t('messages.failure_action', model: t('activerecord.models.mail_user'), action: t('actions.add')),
-      e.message,
+      e.message
     ]
   end
 

@@ -5,12 +5,12 @@ class LdapGroup < ActiveLdap::Base
     classes: Settings.ldap.group.classes
 
   has_many :primary_users, class_name: 'LdapUser',
-                           primary_key: 'gidNumber',
-                           foreign_key: 'gidNumber'
+    primary_key: 'gidNumber',
+    foreign_key: 'gidNumber'
 
   has_many :users, class_name: 'LdapUser',
-                   primary_key: 'uid',
-                   wrap: 'memberUid'
+    primary_key: 'uid',
+    wrap: 'memberUid'
 
   def name
     self[dn_attribute]

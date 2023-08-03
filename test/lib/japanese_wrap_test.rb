@@ -248,13 +248,13 @@ class JapaneseWrapTest < ActiveSupport::TestCase
   end
 
   test '強制切断' do
-    text = "abcdefghijklmnopqrstvwxyz0123456789"
+    text = 'abcdefghijklmnopqrstvwxyz0123456789'
     assert_equal "abcdefgh\nijklmnop\nqrstvwxy\nz0123456\n789", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
 
-    text = "「「「「「「「「「「「「「「「「「「"
+    text = '「「「「「「「「「「「「「「「「「「'
     assert_equal "「「「「\n「「「「\n「「「「\n「「「「\n「「", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
 
-    text = "」」」」」」」」」」」」」」」」」」」"
+    text = '」」」」」」」」」」」」」」」」」」」'
     assert_equal "」」」」\n」」」」\n」」」」\n」」」」\n」」」", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
   end
 

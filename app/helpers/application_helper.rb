@@ -31,7 +31,7 @@ module ApplicationHelper
     if current_user.admin?
       list << {
         path: admin_root_path,
-        label: t(:admin_root, scope: [:menu, :paths]),
+        label: t('menu.paths.admin_root'),
       }
     end
     list << {
@@ -89,9 +89,9 @@ module ApplicationHelper
   def span_value_for(value, **opts)
     case value
     when nil
-      content_tag('span', opts[:blank_alt] || t(:none, scope: :values), class: 'font-italic text-muted')
+      content_tag('span', opts[:blank_alt] || t('values.none'), class: 'font-italic text-muted')
     when '', [], {}
-      content_tag('span', opts[:blank_alt] || t(:empty, scope: :values), class: 'font-italic text-muted')
+      content_tag('span', opts[:blank_alt] || t('values.empty'), class: 'font-italic text-muted')
     when String
       case opts[:format]
       when :mail_body
@@ -175,7 +175,7 @@ module ApplicationHelper
     opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
     opts[:class] += ['bi']
     tag.svg(**opts) do
-      tag.use('xlink:href': "#{asset_path ('bootstrap-icons/bootstrap-icons.svg')}\##{name}")
+      tag.use('xlink:href': "#{asset_path('bootstrap-icons/bootstrap-icons.svg')}##{name}")
     end
   end
 

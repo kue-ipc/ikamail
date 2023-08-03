@@ -22,7 +22,7 @@ class LdapMailSyncJobTest < ActiveJob::TestCase
 
     assert_equal ['admin'].sort, admin_users
     assert_equal ['user01', 'user02'].sort, staff_users
-    assert_equal %w[user01 user03 user04 user05 user06].sort, user_users.reject { |name| name.start_with?('test') }
+    assert_equal(%w[user01 user03 user04 user05 user06].sort, user_users.reject { |name| name.start_with?('test') })
   end
 
   test 'enqueu collect all recipients after sync' do

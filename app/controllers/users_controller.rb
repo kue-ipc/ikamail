@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /admin/users/1.json
   def update
     if current_user == @user
-      redirect_to admin_users_path, alert: t(:cannot_modify_own, scope: :messages)
+      redirect_to admin_users_path, alert: t('messages.cannot_modify_own')
     elsif @user.update(update_user_params)
       redirect_to admin_users_path, notice: t_success_action(@user, :update)
     else

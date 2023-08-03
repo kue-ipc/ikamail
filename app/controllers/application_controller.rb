@@ -16,15 +16,13 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, unless: :devise_controller?
 
   def t_success_action(model, action)
-    t(:success_action,
-      scope: [:messages],
+    t('messages.success_action',
       model: model.model_name.human,
       action: t(action, scope: :actions))
   end
 
   def t_failure_action(model, action)
-    t(:failure_action,
-      scope: [:messages],
+    t('messages.failure_action',
       model: model.model_name.human,
       action: t(action, scope: :actions))
   end
