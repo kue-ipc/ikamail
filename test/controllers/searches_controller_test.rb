@@ -19,7 +19,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should create search' do
-      post search_url, params: {query: 'user01'}
+      post search_url, params: {search: {query: 'user01'}}
       assert_response :success
     end
   end
