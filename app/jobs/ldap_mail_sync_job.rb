@@ -18,7 +18,7 @@ class LdapMailSyncJob < ApplicationJob
     mail_group_remains = Set.new(MailGroup.all.map(&:name))
 
     LdapGroup.all.each do |group|
-      name = group.name
+      name = group.name.downcase
       mail_group_remains.delete(name)
       MailGroup.find_or_create_by(name: name).update(display_name: group.display_name)
     end
@@ -36,10 +36,10 @@ class LdapMailSyncJob < ApplicationJob
       # ignore user who dose not have mail addresses
       next unless user.mail
 
-      name = user.name
+      name = user.name.downcase
       mail_user_remains.delete(name)
       mail_user = MailUser.find_or_initialize_by(name: name)
-      mail_user.mail = user.mail
+      mail_user.mail = user.mail.downcase
       mail_user.display_name = user.display_name
       mail_user.save
     end
@@ -53,8 +53,8 @@ class LdapMailSyncJob < ApplicationJob
   private def sync_mail_memberships
     MailGroup.find_each do |group|
       ldap_group = LdapGroup.find_dn(group.name)
-      group.primary_users = MailUser.where(name: ldap_group.primary_users.map(&:name)).all
-      group.secondary_users = MailUser.where(name: ldap_group.users.map(&:name)).all
+      group.primary_users = MailUser.where(name: ldap_group.primary_users.map(&:name).map(&:downcase)).all
+      group.secondary_users = MailUser.where(name: ldap_group.users.map(&:name).map(&:downcase)).all
     end
   end
 end

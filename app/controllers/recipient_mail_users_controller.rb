@@ -113,6 +113,6 @@ class RecipientMailUsersController < ApplicationController
       params[:file].read
     else
       params[:name] || ''
-    end.split(/[\s,\ufeff]/).map(&:strip).select(&:present?)
+    end.split(/[\s,\ufeff]/).map(&:strip).select(&:present?).map(&:downcase)
   end
 end

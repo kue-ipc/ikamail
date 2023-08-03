@@ -10,7 +10,7 @@ class SearchesController < ApplicationController
   # POST /search
   # POST /eserch.json
   def create
-    @query = search_params[:query] || ''
+    @query = search_params[:query]&.downcase || ''
     @mail_user = if @query.present?
       if @query.include?('@')
         MailUser.find_by(mail: @query)

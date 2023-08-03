@@ -28,7 +28,7 @@ class User < ApplicationRecord
   end
 
   def ldap_mail
-    ldap_entry&.[]('mail')&.first
+    ldap_entry&.[]('mail')&.first&.downcase
   end
 
   def ldap_display_name
