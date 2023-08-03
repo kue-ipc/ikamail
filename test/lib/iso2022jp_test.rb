@@ -2,28 +2,26 @@ require 'test_helper'
 require 'iso2022jp'
 
 class Iso2022jpTest < ActiveSupport::TestCase
-  ASCII_TEXT = (0x20..0x7F).map { |n| n.chr(Encoding::UTF_8) }.join
-  ZEN_TEXT = (0xFF01..0xFF60).map { |n| n.chr(Encoding::UTF_8) }.join
-  HAN_TEXT = (0xFF61..0xFF9F).map { |n| n.chr(Encoding::UTF_8) }.join
-  ZEN2_TEXT = (0xFFE0..0xFFE6).map { |n| n.chr(Encoding::UTF_8) }.join
-  HAN2_TEXT = (0xFFE8..0xFFEE).map { |n| n.chr(Encoding::UTF_8) }.join
+  ASCII_TEXT = (0x20..0x7F).map { |n| n.chr(Encoding::UTF_8) }.join.freeze
+  ZEN_TEXT = (0xFF01..0xFF60).map { |n| n.chr(Encoding::UTF_8) }.join.freeze
+  HAN_TEXT = (0xFF61..0xFF9F).map { |n| n.chr(Encoding::UTF_8) }.join.freeze
+  ZEN2_TEXT = (0xFFE0..0xFFE6).map { |n| n.chr(Encoding::UTF_8) }.join.freeze
+  HAN2_TEXT = (0xFFE8..0xFFEE).map { |n| n.chr(Encoding::UTF_8) }.join.freeze
 
-  ZEN_TEXT_HAN = ZEN_TEXT.unicode_normalize(:nfkc)
-  HAN_TEXT_ZEN = HAN_TEXT.unicode_normalize(:nfkc).tr("\u3099\u309A", "\u309B\u309C")
-  ZEN2_TEXT_HAN = ZEN2_TEXT.unicode_normalize(:nfkc)
-  HAN2_TEXT_ZEN = HAN2_TEXT.unicode_normalize(:nfkc)
+  ZEN_TEXT_HAN = ZEN_TEXT.unicode_normalize(:nfkc).freeze
+  HAN_TEXT_ZEN = HAN_TEXT.unicode_normalize(:nfkc).tr("\u3099\u309A", "\u309B\u309C").freeze
+  ZEN2_TEXT_HAN = ZEN2_TEXT.unicode_normalize(:nfkc).freeze
+  HAN2_TEXT_ZEN = HAN2_TEXT.unicode_normalize(:nfkc).freeze
 
-  HAN_KATKANA = 'ｱｶｻﾀﾅﾊﾏﾔﾗﾜｶﾞｻﾞﾀﾞﾊﾞﾊﾟｳﾞﾝ'
-  ZEN_KATKANA = 'アカサタナハマヤラワガザダバパヴン'
+  HAN_KATKANA = -'ｱｶｻﾀﾅﾊﾏﾔﾗﾜｶﾞｻﾞﾀﾞﾊﾞﾊﾟｳﾞﾝ'
+  ZEN_KATKANA = -'アカサタナハマヤラワガザダバパヴン'
 
-  WAVE_DASH = "\u301C"
-  FULLWIDTH_TILDE = "\uFF5E"
-  MINUS = "\u2212"
-  FULLWIDTH_HYPHEN_MINUS = "\uFF0D"
+  WAVE_DASH = -"\u301C"
+  FULLWIDTH_TILDE = -"\uFF5E"
+  MINUS = -"\u2212"
+  FULLWIDTH_HYPHEN_MINUS = -"\uFF0D"
 
-  SAMPLE_TEXT = <<~TEXT
-    !aAあア亜！ａＡ
-  TEXT
+  SAMPLE_TEXT = -'!aAあア亜！ａＡ'
 
   def cp932ext
     [
@@ -37,14 +35,14 @@ class Iso2022jpTest < ActiveSupport::TestCase
       (0xFB40..0xFB7E),
       (0xFB80..0xFBFC),
       (0xFC40..0xFC4B),
-    ].flat_map(&:to_a).select do |n|
-      n.chr(Encoding::CP932).encode(Encoding::UTF_8).encode(Encoding::CP932).ord == n
-    end.map { |n| n.chr(Encoding::CP932) }.join.encode(Encoding::UTF_8)
+    ].flat_map(&:to_a)
+      .select { |n| n.chr(Encoding::CP932).encode(Encoding::UTF_8).encode(Encoding::CP932).ord == n }
+      .map { |n| n.chr(Encoding::CP932) }.join.encode(Encoding::UTF_8)
   end
 
   # CP932拡張文字
   # 別コード割り当てありは除外(上記コード参照)
-  CP932EXT =
+  CP932EXT = -
     '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳' \
     'ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ㍉㌔㌢㍍㌘㌧㌃㌶㍑㍗㌍㌦㌣㌫㍊㌻㎜㎝㎞㎎㎏㏄㎡' \
     '㍻〝〟№㏍℡㊤㊥㊦㊧㊨㈱㈲㈹㍾㍽㍼∮∑∟⊿ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ￤＇＂' \
@@ -61,15 +59,15 @@ class Iso2022jpTest < ActiveSupport::TestCase
     '顥飯飼餧館馞驎髙髜魵魲鮏鮱鮻鰀鵰鵫鶴鸙黑'
 
   # 第一水準
-  JIS1L = '亜唖娃'
+  JIS1L = -'亜唖娃'
   # 第二水準
-  JIS2L = '弌丐丕'
+  JIS2L = -'弌丐丕'
   # 第三水準
-  JIS3L = '俱𠀋㐂'
+  JIS3L = -'俱𠀋㐂'
   # 第四水準
-  JIS4L = '𠂉丂丏'
+  JIS4L = -'𠂉丂丏'
   # 記号
-  NO_JIS = '♡☕👨‍👩‍👧‍👦🗿'
+  NO_JIS = -'♡☕👨‍👩‍👧‍👦🗿'
 
   test 'normalize' do
     # same

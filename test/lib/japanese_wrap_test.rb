@@ -143,27 +143,21 @@ class JapaneseWrapTest < ActiveSupport::TestCase
 
   test 'ギリシャ文字とキリル文字' do
     list = ['α', 'д']
-    # デフォルト幅 2
     list.each do |char|
-      text = "前文#{char}後文"
+      # デフォルト幅 2
+      text = -"前文#{char}後文"
       assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
       assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051)
       assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
       assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051)
-    end
 
-    # 幅1
-    list.each do |char|
-      text = "前文#{char}後文"
+      # 幅1
       assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051, ambiguous: 1)
       assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051, ambiguous: 1)
       assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051, ambiguous: 1)
       assert_equal "前文#{char}後\n文", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051, ambiguous: 1)
-    end
 
-    # 幅2
-    list.each do |char|
-      text = "前文#{char}後文"
+      # 幅2
       assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051, ambiguous: 2)
       assert_equal "前文\n#{char}後\n文", JapaneseWrap.text_wrap(text, col: 5, rule: :jisx4051, ambiguous: 2)
       assert_equal "前文#{char}\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051, ambiguous: 2)

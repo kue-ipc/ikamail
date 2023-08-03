@@ -127,6 +127,7 @@ module JapaneseWrap
   FULLWIDTH_CHARS = Set.new([*("\uFF01".."\uFF60"), *("\uFFE0".."\uFFE6")])
   HALFWIDTH_CHARS = Set.new([*("\uFF61".."\uFF9F"), *("\uFFE8".."\uFFEE")])
 
+  # 長いテキストを折り返す。
   def text_wrap(str, **opts)
     buff = String.new(encoding: 'UTF-8')
     str.each_line do |line|
@@ -137,55 +138,70 @@ module JapaneseWrap
     buff
   end
 
+  # 折り返しした行をブロックに渡す。ブロックがない場合はEnumeratorを返す。
+  # == 引数
+  # str:: 折り返す文字列
+  # col:: 1行にはいる列の数。つまり、一行の長さ。
+  # rule:: 折り返しのルール、:none, :force, :word_wrap, :jisx4051
+  # ambiguous:: Unicodeで幅がAmbiguousとなっている文字(ギリシャ文字)の幅
+  # hanging:: 句点等のぶら下げを有効にする。
   def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false)
-    if !col.positive? || rule == :none
-      yield str
-      return
-    end
+    return enum_for(__method__, str, col: col, rule: rule, ambiguous: ambiguous, hanging: hanging) unless block_given?
+    return yield str if !col.positive? || rule == :none
 
     display_with = Unicode::DisplayWidth.new(ambiguous: ambiguous, emoji: true)
-
     remnant = str.dup
 
-    while (width = display_with.of(remnant)) > col
-      min_ptr = 0
-      max_ptr = remnant.size
-      ptr = max_ptr
+    until remnant.empty?
+      min_ptr = calc_ptr(remnant, col, display_with)
+      ptr = search_breakable(remnant, min_ptr, rule: rule, hanging: hanging)
 
-      while min_ptr < max_ptr
-        ptr = col * ptr / width
-        ptr = min_ptr + 1 if ptr <= min_ptr
-        ptr = max_ptr if ptr > max_ptr
-        if (width = display_with.of(remnant[0, ptr])) > col
-          max_ptr = ptr - 1
-        else
-          min_ptr = ptr
-        end
+      if ptr < remnant.size
+        yield "#{remnant[0, ptr].rstrip}\n"
+        remnant = remnant[ptr, remnant.size - ptr]
+      else
+        yield remnant
+        break
       end
-
-      ptr = case rule
-            when :force
-              min_ptr
-            when :word_wrap
-              search_breakable_word_wrap(remnant, min_ptr)
-            when :jisx4051
-              search_breakable_jisx4051(remnant, min_ptr, hanging: hanging)
-            else
-              logger.error "unknown rule: #{rule}"
-              min_ptr
-      end
-
-      yield remnant[0, ptr].rstrip
-      remnant = remnant[ptr, remnant.size - ptr]
-
-      break if remnant.empty? || remnant == "\n"
-
-      yield "\n"
     end
-
-    yield remnant
   end
 
+  # 長さに収まる文字列の位置
+  def calc_ptr(str, col, display_with)
+    min_ptr = 0
+    max_ptr = str.size
+    ptr = max_ptr
+    width = display_with.of(str)
+    while min_ptr < max_ptr
+      ptr = col * ptr / width
+      ptr = min_ptr + 1 if ptr <= min_ptr
+      ptr = max_ptr if ptr > max_ptr
+      width = display_with.of(str[0, ptr])
+      if width > col
+        max_ptr = ptr - 1
+      else
+        min_ptr = ptr
+      end
+    end
+    min_ptr
+  end
+
+  # 改行可能な場所を探す。
+  def search_breakable(str, ptr, rule: :force, hanging: false)
+    case rule
+    when :force
+      ptr
+    when :word_wrap
+      search_breakable_word_wrap(str, ptr)
+    when :jisx4051
+      search_breakable_jisx4051(str, ptr, hanging: hanging)
+    else
+      logger.error "unknown rule: #{rule}"
+      ptr
+    end
+  end
+
+  # 英単語のワードラップ
   def search_breakable_word_wrap(str, ptr, forward: true)
     # 続きが空白の場合は、空白が終わりまで前進する
     if forward
@@ -193,8 +209,8 @@ module JapaneseWrap
       return fw_ptr if fw_ptr
     end
 
-    # 続きが非単語の場合は即座に終了
-    return ptr unless check_word_char(str[ptr])
+    # 続きが非単語かつASCIIではない場合は即座に終了
+    return ptr if !check_word_char(str[ptr]) && str[ptr] !~ /[[:ascii:]]/
 
     # 単語区切りを見つける
     cur_ptr = ptr
@@ -209,6 +225,7 @@ module JapaneseWrap
     ptr
   end
 
+  # JIS X 4051に基づく改行
   def search_breakable_jisx4051(str, ptr, hanging: false)
     ptr += 1 if hanging && HANGING_CHARS.include?(str[ptr])
     ptr = search_breakable_word_wrap(str, ptr)
@@ -237,41 +254,9 @@ module JapaneseWrap
   end
 
   def check_word_char(chr)
-    # 非常に簡易的に欧文文字だけを対象とする
-    chr =~ /[\u0021-\u2000]/
+    # ラテン文字のみを対象とする
+    chr =~ /[[:word:]&&[\p{Latin}]]/
+    # ギリシャ文字、コプト文字、キリル文字のみを対象とする
+    # chr =~ /[[:word:]&&[\p{Latin}\p{Greek}\p{Coptic}\p{Cyrillic}]]/
   end
-
-  # def search_backward_word(str, pt, lb_rule: false)
-  #   cur_pt = pt
-  #   pre_word = (str[cur_pt] =~ /[\u0020-\u2000]/)
-  #   while cur_pt.positive?
-  #     case str[cur_pt - 1]
-  #     when /\s/, '-'
-  #       # 空白の場合は禁則処理を無視して切断
-  #       return cur_pt
-  #     when '-'
-  #       # '-' 区切りは次の文字の禁則だけ考慮
-  #       return cur_pt if !lb_rule && NOT_STARTING_CHARS.include?(str[cur_pt])
-  #     when /[\u0020-\u2000]/
-  #       unless pre_word
-  #         return cur_pt if !lb_rule && NOT_STARTING_CHARS.include?(str[cur_pt])
-  #       end
-
-  #       pre_word = true
-  #     else
-  #       if rule == :word_wrap
-  #         break
-  #       end
-
-  #       if !NOT_STARTING_CHARS.include?(remnant[pt]) &&
-  #         !NOT_ENDING_CHARS.include?(remnant[pt - 1])
-  #         break
-  #       end
-  #     end
-  #     cur_pt -= 1
-  #   end
-
-  #   # 区切り場所が見つからない場合は、強制切断
-  #   pt
-  # end
 end
