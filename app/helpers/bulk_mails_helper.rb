@@ -8,7 +8,7 @@ module BulkMailsHelper
           user: mail_template.user.name,
           recipient_list: mail_template.recipient_list.name,
           reserved_time: l(mail_template.reserved_time, format: :time),
-        }
+        },
       ]
     end.to_h
   end

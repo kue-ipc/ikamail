@@ -104,13 +104,13 @@ module JapaneseWrap
     *SMALL_KANA,
     *SMALL_KANA_HALFWIDTH,
     *SOUND_MARKS,
-    *SOUND_MARKS_HALFWIDTH
+    *SOUND_MARKS_HALFWIDTH,
   ]).freeze
 
   NOT_ENDING_CHARS = Set.new([
     *OPENING_BRACKETS,
     *OPENING_BRACKETS_FULLWIDTH,
-    *OPENING_BRACKETS_HALFWIDTH
+    *OPENING_BRACKETS_HALFWIDTH,
   ]).freeze
 
   HANGING_CHARS = Set.new([
@@ -119,7 +119,7 @@ module JapaneseWrap
     *FULL_STOPS_HALFWIDTH,
     *COMMAS,
     *COMMAS_FULLWIDTH,
-    *COMMAS_HALFWIDTH
+    *COMMAS_HALFWIDTH,
   ]).freeze
 
   ASCII_CHARS = Set.new("\u0020".."\u007E").freeze

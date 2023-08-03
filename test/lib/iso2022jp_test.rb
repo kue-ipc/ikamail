@@ -36,7 +36,7 @@ class Iso2022jpTest < ActiveSupport::TestCase
       (0xFA80..0xFAFC),
       (0xFB40..0xFB7E),
       (0xFB80..0xFBFC),
-      (0xFC40..0xFC4B)
+      (0xFC40..0xFC4B),
     ].flat_map(&:to_a).select do |n|
       n.chr(Encoding::CP932).encode(Encoding::UTF_8).encode(Encoding::CP932).ord == n
     end.map { |n| n.chr(Encoding::CP932) }.join.encode(Encoding::UTF_8)

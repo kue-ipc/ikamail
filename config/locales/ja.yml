@@ -50,6 +50,9 @@ ja:
     delete_all: 全削除
     download_list: リストのダウンロード
     collect: 収集
+    start: 開始
+    sync: 同期
+    ldap_sync: LDAP同期
 
   do_actions:
     close: 閉じる
@@ -77,7 +80,10 @@ ja:
     finish: 完了する
     fail: 失敗する
     error: エラーになる
+    collect: 収集する
     start: 開始する
+    download: ダウンロードする
+    sync: 同期する
 
   links:
     back_to: "%{name}に戻る"
