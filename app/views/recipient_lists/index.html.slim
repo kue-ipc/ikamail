@@ -11,14 +11,18 @@ table.table
   thead
     tr
       th scope="col" = t_attr :name
-      th scope="col" = "#{t_attr(:applicable_mail_users)}数"
+      th scope="col" = t_attr :applicable_mail_users
       th scope="col" = t_attr :description
   tbody
     - @recipient_lists.each do |recipient_list|
       tr
         td.position-relative
           = link_to recipient_list.name, recipient_list, class: 'stretched-link'
-        td = recipient_list.applicable_mail_users.size
+        td
+          - if recipient_list.collected?
+            = recipient_list.applicable_mail_users.size
+          - else
+            = t('messages.unaggregated')
         td = recipient_list.description
 
 = paginate @recipient_lists

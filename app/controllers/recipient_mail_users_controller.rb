@@ -55,7 +55,8 @@ class RecipientMailUsersController < ApplicationController
       return
     end
 
-    if recipients.update(@type => false)
+    if recipients.update({@type => false})
+      @recipient_list.update(collected: false)
       CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list,
         notice: t('messages.success_action', model: t('activerecord.models.mail_user'), action: t('actions.delete'))
