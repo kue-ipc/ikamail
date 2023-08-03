@@ -5,7 +5,7 @@ class CreateTranslations < ActiveRecord::Migration[6.0]
       t.string :key
       t.text   :value
       t.text   :interpolations
-      t.boolean :is_proc, default: false
+      t.boolean :is_proc, default: false # rubocop: disable Rails/ThreeStateBooleanColumn
 
       t.timestamps
     end

@@ -80,7 +80,7 @@ module JapaneseWrap
     ‥‥
     〳〵
     〴〵
-  ]
+  ].freeze
 
   NOT_STARTING_CHARS = Set.new([
     *CLOSING_BRACKETS,
