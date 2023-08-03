@@ -81,7 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_004435) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mail_group_id"], name: "index_mail_memberships_on_mail_group_id"
-    t.index ["mail_user_id", "mail_group_id"], name: "index_mail_memberships_on_mail_user_id_and_mail_group_id", unique: true
+    t.index ["mail_user_id", "mail_group_id"], name: "index_mail_memberships_on_mail_user_id_and_mail_group_id"
     t.index ["mail_user_id"], name: "index_mail_memberships_on_mail_user_id"
   end
 
