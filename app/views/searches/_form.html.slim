@@ -1,6 +1,6 @@
-= bootstrap_form_tag url: search_path, method: :post, class: 'mb-3' do |f|
-  = f.search_field :query, value: @query, label: t('activerecord.attributes.mail_user.name_or_mail'), required: true,
-      autofocus: true
+= bootstrap_form_with url: search_path, scope: :search, method: :post, class: 'mb-3' do |f|
+  = f.search_field :query, value: @query, label: MailUser.human_attribute_name(:name_or_mail),
+    required: true, autofocus: true
   = f.primary t('actions.search')
 
 p = t('descriptions.search_form')
