@@ -1,6 +1,6 @@
 # 一括メールシステム ikamail
 
-ikamail は組織内に一括でメールを送信するためのシステムです。(作成中)
+ikamail は組織内に一括でメールを送信するためのシステムです。
 
 ユーザーのメールアドレス情報をLDAPから取得し、条件に一致するユーザーに対してメールを一括で送信します。
 
@@ -102,7 +102,7 @@ grant all privileges on ikamail.* to ikamail@'localhost';
 flush privileges;
 ```
 
-データベースの順ができたら、データベースをマイグレーションしてください。
+データベースの準備ができたら、データベースをマイグレーションしてください。
 
 ```
 RAILS_ENV=production bundle exec rails db:migrate
