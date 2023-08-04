@@ -3,7 +3,8 @@
 
 - if @approval_pending_count.positive?
   .alert.alert-warning.d-flex.align-items-center role="alert"
-    = octicon 'alert', width: 24, fill: 'currentColor', class: 'flex-shrink-0 me-2', role: 'img', 'aria-label': 'Warning:'
+    = octicon 'alert', width: 24, fill: 'currentColor', class: 'flex-shrink-0 me-2', role: 'img',
+              'aria-label': 'Warning:'
     = t('messages.approval_pending_mail', count: @approval_pending_count)
 
 p 左のメニューから操作を選んでください。
@@ -19,4 +20,3 @@ table.table
           td
             = count.to_s
             | 通
-

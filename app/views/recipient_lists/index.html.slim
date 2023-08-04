@@ -1,11 +1,11 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p = t(:dispaly_detail, scope: :messages, name: t_attr(:name))
+p = t('messages.dispaly_detail', name: t_attr(:name))
 
 - if current_user.admin?
   p
-    = link_to t(:new, scope: :actions), new_recipient_list_path, class: 'btn btn-primary'
+    = link_to t('actions.new'), new_recipient_list_path, class: 'btn btn-primary'
 
 table.table
   thead

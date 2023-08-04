@@ -4,8 +4,8 @@
 - if @mail_template.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
-          count: @mail_template.errors.count, model: @mail_template.model_name.human
+      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+          count: @mail_template.errors.count, model: @mail_template.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @mail_template.errors.full_messages.each do |message|
         li.list-group-item = message
@@ -30,8 +30,8 @@ dl
       =<> link_to count_mail_template_path(@mail_template, count: count + 1),
                   method: :patch, class: 'btn btn-light btn-sm', role: 'button'
         | &plus;
-      =<> link_to t(:reset, scope: :actions), count_mail_template_path(@mail_template, count: 0),
-                  data: {confirm: t(:corfirm_reset, scope: :messages)},
+      =<> link_to t('actions.reset'), count_mail_template_path(@mail_template, count: 0),
+                  data: {confirm: t('messages.corfirm_reset')},
                   method: :patch, class: 'btn btn-warning btn-sm', role: 'button'
     - else
       span.badge.bg-primary = count
@@ -42,12 +42,11 @@ dl
 p
   - mail_template_policy = policy(@mail_template)
   - if mail_template_policy.edit?
-    =<> link_to t(:edit, scope: :actions), edit_mail_template_path(@mail_template), class: 'btn btn-primary'
+    =<> link_to t('actions.edit'), edit_mail_template_path(@mail_template), class: 'btn btn-primary'
   - if mail_template_policy.destroy?
-    =<> link_to t(:destroy, scope: :actions), @mail_template,
-                data: {confirm: t(:corfirm_destroy, scope: :messages)}, method: :delete, class: 'btn btn-danger'
+    =<> link_to t('actions.destroy'), @mail_template,
+                data: {confirm: t('messages.corfirm_destroy')}, method: :delete, class: 'btn btn-danger'
 
 hr
 p
-  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), mail_templates_path,
-            class: 'btn btn-secondary'
+  = link_to t('links.back_to', name: t('actions.index')), mail_templates_path, class: 'btn btn-secondary'

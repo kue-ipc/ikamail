@@ -1,10 +1,10 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p = t(:dispaly_detail, scope: :messages, name: t_attr(:subject))
+p = t('messages.dispaly_detail', name: t_attr(:subject))
 
 p
-  = link_to t(:new, scope: :actions), new_bulk_mail_path, class: 'btn btn-primary'
+  = link_to t('actions.new'), new_bulk_mail_path, class: 'btn btn-primary'
 
 - if @status
   p
@@ -45,7 +45,7 @@ table.table
           - else
             = l(bulk_mail.updated_at.to_date, format: :default)
         td
-          - (bulk_mail.delivered_at || bulk_mail.reserved_at)&.yield_self do |time|
+          - (bulk_mail.delivered_at || bulk_mail.reserved_at)&.then do |time|
             - if time.after?(just_a_year_ago)
               = l(time, format: :short)
             - else

@@ -15,7 +15,7 @@ h2
         = f.label :remember_me, class: 'form-check-label'
     .actions
       = f.submit t('.sign_in'), id: 'login-submit', class: 'btn btn-primary', disabled: true
-= render "devise/shared/links"
+= render 'devise/shared/links'
 
 javascript:
   if (typeof globalThis !== 'undefined')

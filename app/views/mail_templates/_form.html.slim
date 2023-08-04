@@ -1,8 +1,8 @@
 - if @mail_template.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
-          count: @mail_template.errors.count, model: @mail_template.model_name.human
+      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+          count: @mail_template.errors.count, model: @mail_template.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @mail_template.errors.full_messages.each do |message|
         li.list-group-item = message
@@ -47,7 +47,7 @@
     = f.label :reserved_time, class: 'form-label'
     = f.time_field :reserved_time, class: 'form-control'
   .mb-3
-    = f.fields_for (@mail_template.user || current_user) do |user|
+    = f.fields_for(@mail_template.user || current_user) do |user|
       = user.label :username, @mail_template.class.human_attribute_name(:user), class: 'form-label'
       = user.text_field :username, class: 'form-control', disabled: !current_user.admin?
   .actions = f.submit class: 'btn btn-primary'

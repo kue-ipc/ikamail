@@ -5,5 +5,4 @@
 
 hr
 p
-  = link_to t(:back_to, scope: :links, name: t(:index, scope: :actions)), mail_templates_path,
-            class: 'btn btn-secondary'
+  = link_to t('links.back_to', name: t('actions.index')), mail_templates_path, class: 'btn btn-secondary'

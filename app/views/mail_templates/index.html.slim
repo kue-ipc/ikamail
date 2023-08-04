@@ -1,11 +1,11 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p = t(:dispaly_detail, scope: :messages, name: t_attr(:name))
+p = t('messages.dispaly_detail', name: t_attr(:name))
 
 - if current_user.admin?
   p
-    = link_to t(:new, scope: :actions), new_mail_template_path, class: 'btn btn-primary'
+    = link_to t('actions.new'), new_mail_template_path, class: 'btn btn-primary'
 
 table.table
   thead
@@ -22,7 +22,7 @@ table.table
           = link_to mail_template.name, mail_template, class: 'stretched-link'
           - unless mail_template.enabled
             span
-              = t(:disabled, scope: :values)
+              = t('values.disabled')
         td.position-relative
           = link_to mail_template.recipient_list.name, mail_template.recipient_list, class: 'stretched-link'
         td = mail_template.reserved_time.strftime('%H:%M')

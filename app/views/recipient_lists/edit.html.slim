@@ -5,5 +5,4 @@
 
 hr
 p
-  = link_to t(:back_to, scope: :links, name: t(:show, scope: :actions)), @recipient_list,
-            class: 'btn btn-secondary'
+  = link_to t('links.back_to', name: t('actions.show')), @recipient_list, class: 'btn btn-secondary'

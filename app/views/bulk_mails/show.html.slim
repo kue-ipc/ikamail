@@ -4,8 +4,8 @@
 - if @bulk_mail.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t :error_prohibited_action, scope: :messages, action: t(controller.action_name, scope: :actions),
-          count: @bulk_mail.errors.count, model: @bulk_mail.model_name.human
+      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+          count: @bulk_mail.errors.count, model: @bulk_mail.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @bulk_mail.errors.full_messages.each do |message|
         li.list-group-item = message
@@ -27,9 +27,8 @@ dl
     =<> MailTemplate.human_attribute_name(:user)
     | :
     =<> mail_template.user.name
-  = dt_dd_for @bulk_mail, :body_wrap, format: :mail_body,
-                          around: [@bulk_mail.body_header, @bulk_mail.body_footer]
-  = dt_dd_tag t(:word_wrap, scope: [:activerecord, :attributes, :bulk_mail]) do
+  = dt_dd_for @bulk_mail, :body_wrap, format: :mail_body, around: [@bulk_mail.body_header, @bulk_mail.body_footer]
+  = dt_dd_tag BulkMail.human_attribute_name(:word_wrap) do
     = t('helpers.wrap_cols', count: @bulk_mail.wrap_col)
     - if @bulk_mail.wrap_col.positive?
       = t(@bulk_mail.wrap_rule, scope: [:helpers, :wrap_rules])
@@ -43,44 +42,44 @@ dl
   - bulk_mail_policy = policy(@bulk_mail)
 
   - if bulk_mail_policy.edit?
-    =<> link_to t(:edit, scope: [:actions]), edit_bulk_mail_path(@bulk_mail), class: 'btn btn-primary'
+    =<> link_to t('actions.edit'), edit_bulk_mail_path(@bulk_mail), class: 'btn btn-primary'
 
   - if bulk_mail_policy.apply?
     = render partial: 'action', locals: {action: :apply, url: apply_bulk_mail_path(@bulk_mail),
-                                        comment_required: false, level: 'primary',
-                                        timing: @bulk_mail.delivery_timing}
+                                         comment_required: false, level: 'primary',
+                                         timing: @bulk_mail.delivery_timing,}
 
   - if bulk_mail_policy.withdraw?
     = render partial: 'action', locals: {action: :withdraw, url: withdraw_bulk_mail_path(@bulk_mail),
-                                        comment_required: true, level: 'warning'}
+                                         comment_required: true, level: 'warning',}
 
   - if bulk_mail_policy.approve?
     = render partial: 'action', locals: {action: :approve, url: approve_bulk_mail_path(@bulk_mail),
-                                        comment_required: false, level: 'primary'}
+                                         comment_required: false, level: 'primary',}
 
   - if bulk_mail_policy.reject?
     = render partial: 'action', locals: {action: :reject, url: reject_bulk_mail_path(@bulk_mail),
-                                        comment_required: true, level: 'warning'}
+                                         comment_required: true, level: 'warning',}
 
   - if bulk_mail_policy.deliver?
     = render partial: 'action', locals: {action: :deliver, url: deliver_bulk_mail_path(@bulk_mail),
-                                        comment_required: false, level: 'primary'}
+                                         comment_required: false, level: 'primary',}
 
   - if bulk_mail_policy.reserve?
     = render partial: 'action', locals: {action: :reserve, url: reserve_bulk_mail_path(@bulk_mail),
-                                        add_datetime: true, level: 'secondary'}
+                                         add_datetime: true, level: 'secondary',}
 
   - if bulk_mail_policy.cancel?
     = render partial: 'action', locals: {action: :cancel, url: cancel_bulk_mail_path(@bulk_mail),
-                                        comment_required: true, level: 'warning'}
+                                         comment_required: true, level: 'warning',}
 
   - if bulk_mail_policy.discard?
     = render partial: 'action', locals: {action: :discard, url: discard_bulk_mail_path(@bulk_mail),
-                                        comment_required: false, level: 'danger'}
+                                         comment_required: false, level: 'danger',}
 
   - if bulk_mail_policy.destroy?
-    =<> link_to t(:destroy, scope: [:actions]), @bulk_mail,
-      class: 'btn btn-danger', data: { confirm: t(:corfirm_destroy, scope: [:messages]) }, method: :delete
+    =<> link_to t('actions.destroy'), @bulk_mail,
+      class: 'btn btn-danger', data: {confirm: t('messages.corfirm_destroy')}, method: :delete
 
 .mail-histroy.d-print-none
   hr

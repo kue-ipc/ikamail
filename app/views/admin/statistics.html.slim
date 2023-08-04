@@ -15,7 +15,6 @@ p
   | |
   =< link_to "#{@year + 1}年度", admin_statistics_path(year: @year + 1)
 
-
 table.table
   thead
     tr
@@ -26,4 +25,3 @@ table.table
       tr
         td = data[:name]
         td = data[:count]
-

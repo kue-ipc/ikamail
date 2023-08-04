@@ -1,13 +1,14 @@
-- comment_required = false unless local_assigns.has_key?(:comment_required)
-- level = 'primary' unless local_assigns.has_key?(:level)
-- add_datetime = false unless local_assigns.has_key?(:add_datetime)
-- timing = false unless local_assigns.has_key?(:timing)
-
+ruby:
+  comment_required = false unless local_assigns.key?(:comment_required)
+  level = 'primary' unless local_assigns.key?(:level)
+  add_datetime = false unless local_assigns.key?(:add_datetime)
+  timing = false unless local_assigns.key?(:timing)
 
 button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-target="#action-#{action}-modal"
   = t(action, scope: :actions)
 
-.modal.fade id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label" aria-hidden="true"
+.modal.fade[id="action-#{action}-modal" tabindex="-1" role="dialog" aria-labelledby="action-#{action}-modal-label"
+            aria-hidden="true"]
   .modal-dialog role="document"
     .modal-content
       = form_with model: @action_info, url: url, method: :put do |f|
@@ -25,7 +26,7 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
           - if add_datetime
             .mb-3
               - now = Time.current
-              = f.label :datetime, t(action, scope: :actions) + '日時', class: 'form-label'
+              = f.label :datetime, "#{t(action, scope: :actions)}日時", class: 'form-label'
               = f.datetime_field :datetime, step: 60, class: 'form-control', required: true,
                                  value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R')
           .mb-3
