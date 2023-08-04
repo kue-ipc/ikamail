@@ -1,16 +1,13 @@
 module BulkMailsHelper
   def mail_template_to_hash(mail_templates)
-    mail_templates.map do |mail_template|
-      [
-        mail_template.id,
-        {
-          name: mail_template.name,
-          user: mail_template.user.name,
-          recipient_list: mail_template.recipient_list.name,
-          reserved_time: l(mail_template.reserved_time, format: :time),
-        },
-      ]
-    end.to_h
+    mail_templates.to_h do |mail_template|
+      [mail_template.id, {
+        name: mail_template.name,
+        user: mail_template.user.name,
+        recipient_list: mail_template.recipient_list.name,
+        reserved_time: l(mail_template.reserved_time, format: :time),
+      },]
+    end
   end
 
   def wrap_col_collection

@@ -42,9 +42,11 @@ class UsersController < ApplicationController
   # PUT /admin/users/sync
   def sync
     if LdapUserSyncJob.perform_later
-      redirect_to admin_users_path, notice: 'LDAP同期を開始しました。'
+      redirect_to admin_users_path,
+        notice: t('messages.success_action', model: t('actions.ldap_sync'), action: t('actions.start'))
     else
-      redirect_to admin_users_path, alert: 'LDAP同期を開始できませんでした。'
+      redirect_to admin_users_path,
+        alert: t('messages.failure_action', model: t('actions.ldap_sync'), action: t('actions.start'))
     end
   end
 

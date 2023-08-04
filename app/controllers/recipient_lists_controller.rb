@@ -49,9 +49,9 @@ class RecipientListsController < ApplicationController
   # DELETE /recipient_lists/1.json
   def destroy
     if @recipient_list.destroy
-      redirect_to recipient_lists_url, notice: 'Recipient list was successfully destroyed.'
+      redirect_to recipient_lists_url, notice: t_success_action(@recipient_list, :destroy)
     else
-      flash.alert = '削除できませんでした。'
+      flash.alert = t_failure_action(@recipient_list, :destroy)
       render :show
     end
   end

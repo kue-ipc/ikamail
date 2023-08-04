@@ -16,8 +16,6 @@ class RecipientMailUsersController < ApplicationController
 
   # POST /recipient_lists/1/mail_users/included
   # POST /recipient_lists/1/mail_users/included.json
-  # rubocop: disable Metrics/MethodLength
-  # rubocop: disable Metrics/AbcSize
   def create
     if [:included, :excluded].exclude?(@type)
       return redirect_to @recipient_list, alert: t('messages.cannot_add_mail_user_to_recipient_list')
@@ -26,32 +24,11 @@ class RecipientMailUsersController < ApplicationController
     names = names_params
     return redirect_to @recipient_list, alert: t('messages.no_mail_user_name') if names.empty?
 
-    count = 0
-    Recipient.transaction do
-      MailUser.eager_load(:recipients).where(name: names).or(MailUser.where(mail: names)).find_each do |mail_user|
-        recipient = mail_user.recipients.to_a.find { |r| r.recipient_list_id == @recipient_list.id }
-        if recipient.nil?
-          mail_user.recipients.create!({recipient_list: @recipient_list, @type => true})
-          count += 1
-        elsif !recipient.__send__(@type)
-          recipient.update!(@type => true)
-          count += 1
-        end
-      end
-    end
+    count = create_or_update_for_type(names)
 
-    remaining_names = Set.new(names)
-    @recipient_list.mail_users.each do |mail_user|
-      remaining_names.delete(mail_user.name)
-      remaining_names.delete(mail_user.mail)
-    end
+    remaining_names = not_included_names(names, @recipient_list.mail_users)
 
-    alert =
-      if remaining_names.empty?
-        nil
-      else
-        "#{t('messages.not_found_mail_user')}: #{remaining_names.join(', ')}"
-      end
+    alert = ("#{t('messages.not_found_mail_user')}: #{remaining_names.join(', ')}" unless remaining_names.empty?)
 
     notice =
       if count.zero?
@@ -114,5 +91,31 @@ class RecipientMailUsersController < ApplicationController
     else
       params[:name] || ''
     end.split(/[\s,\ufeff]/).map(&:strip).select(&:present?).map(&:downcase)
+  end
+
+  private def create_or_update_for_type(names)
+    count = 0
+    Recipient.transaction do
+      MailUser.eager_load(:recipients).where(name: names).or(MailUser.where(mail: names)).find_each do |mail_user|
+        recipient = mail_user.recipients.to_a.find { |r| r.recipient_list_id == @recipient_list.id }
+        if recipient.nil?
+          mail_user.recipients.create!({recipient_list: @recipient_list, @type => true})
+          count += 1
+        elsif !recipient.__send__(@type)
+          recipient.update!(@type => true)
+          count += 1
+        end
+      end
+    end
+    count
+  end
+
+  private def not_included_names(names, mail_users)
+    remaining_names = Set.new(names)
+    mail_users.each do |mail_user|
+      remaining_names.delete(mail_user.name)
+      remaining_names.delete(mail_user.mail)
+    end
+    remaining_names.to_a
   end
 end

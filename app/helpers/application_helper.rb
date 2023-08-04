@@ -93,36 +93,48 @@ module ApplicationHelper
     when '', [], {}
       content_tag('span', opts[:blank_alt] || t('values.empty'), class: 'font-italic text-muted')
     when String
-      case opts[:format]
-      when :mail_body
-        mail_body_tag(value, **opts)
-      when :translate
-        span_text_tag(t(value, scope: opts[:scope]), **opts)
-      else
-        span_text_tag(value, **opts)
-      end
+      span_string_for(value, **opts)
     when Time, Date, DateTime, ActiveSupport::TimeWithZone
       content_tag('span', l(value, format: opts[:format]))
     when true, false
-      if value
-        bs_icon('toggle-on')
-      else
-        bs_icon('toggle-off')
-      end
+      span_bool_for(value, **opts)
     when Enumerable
-      content_tag('ul', class: 'list-inline mb-0') do
-        list_html = sanitize('')
-        value.each do |v|
-          list_html += content_tag('li', class: 'list-inline-item border border-primary rounded px-1 mb-1') do
-            span_value_for(v, **opts)
-          end
-        end
-        list_html
-      end
+      span_enum_for(value, **opts)
     when BulkMail, MailGroup, MailUser, RecipientList, MailTemplate
       link_to(value.to_s, value)
     else
       content_tag('span', value.to_s, class: '')
+    end
+  end
+
+  def span_string_for(value, **opts)
+    case opts[:format]
+    when :mail_body
+      mail_body_tag(value, **opts)
+    when :translate
+      span_text_tag(t(value, scope: opts[:scope]), **opts)
+    else
+      span_text_tag(value, **opts)
+    end
+  end
+
+  def span_bool_for(value, **_opts)
+    if value
+      bs_icon('toggle-on')
+    else
+      bs_icon('toggle-off')
+    end
+  end
+
+  def span_enum_for(value, **opts)
+    content_tag('ul', class: 'list-inline mb-0') do
+      list_html = sanitize('')
+      value.each do |v|
+        list_html += content_tag('li', class: 'list-inline-item border border-primary rounded px-1 mb-1') do
+          span_value_for(v, **opts)
+        end
+      end
+      list_html
     end
   end
 

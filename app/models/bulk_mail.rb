@@ -35,8 +35,11 @@ class BulkMail < ApplicationRecord
   belongs_to :user
   has_many :action_logs, dependent: :destroy
 
+  # NOTE: `presence: true`を外すとテストに失敗する。
+  # rubocop: disable Rails/RedundantPresenceValidationOnBelongsTo
   validates :user, presence: true
   validates :mail_template, presence: true
+  # rubocop: enable Rails/RedundantPresenceValidationOnBelongsTo
 
   validates :delivery_timing, presence: true
   validates :subject, presence: true, length: {maximum: 255}, charcode: true

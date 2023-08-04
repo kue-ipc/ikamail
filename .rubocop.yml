@@ -114,6 +114,9 @@ Style/SymbolArray:
 Style/FormatString:
   EnforcedStyle: percent
 
+Style/OneLineConditional:
+  AlwaysCorrectToMultiline: true
+
 # Bundler
 Bundler/OrderedGems:
   Enabled: false
