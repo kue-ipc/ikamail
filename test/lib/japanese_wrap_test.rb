@@ -258,4 +258,19 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
   end
+
+  test 'ハイフネーション' do
+    text = 'abc def-ghi lmn'
+    assert_equal "abc\ndef-\nghi\nlmn", JapaneseWrap.text_wrap(text, col: 4, rule: :word_wrap)
+    assert_equal "abc\ndef-\nghi\nlmn", JapaneseWrap.text_wrap(text, col: 5, rule: :word_wrap)
+    assert_equal "abc\ndef-\nghi\nlmn", JapaneseWrap.text_wrap(text, col: 6, rule: :word_wrap)
+    assert_equal "abc\ndef-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 7, rule: :word_wrap)
+    assert_equal "abc def-\nghi lmn", JapaneseWrap.text_wrap(text, col: 8, rule: :word_wrap)
+    assert_equal "abc def-\nghi lmn", JapaneseWrap.text_wrap(text, col: 9, rule: :word_wrap)
+    assert_equal "abc def-\nghi lmn", JapaneseWrap.text_wrap(text, col: 9, rule: :word_wrap)
+    assert_equal "abc def-\nghi lmn", JapaneseWrap.text_wrap(text, col: 10, rule: :word_wrap)
+    assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 11, rule: :word_wrap)
+    assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 12, rule: :word_wrap)
+    assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 13, rule: :word_wrap)
+  end
 end
