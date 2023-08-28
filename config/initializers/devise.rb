@@ -145,7 +145,7 @@ Devise.setup do |config|
   # access will be blocked just in the third day.
   # You can also set it to nil, which will allow the user to access the website
   # without confirming their account.
-  # Default is 0.days, meaning the user cannot access the website without
+  # Default is 0.days, meaning the user cannot acce/home/vagrant/ikamail/app/mailersss the website without
   # confirming their account.
   # config.allow_unconfirmed_access_for = 2.days
 

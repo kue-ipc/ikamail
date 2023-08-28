@@ -359,6 +359,12 @@ ja:
         システム内で不具合が発生している可能性があります。
         メール内容とともにシステム管理者にお問い合わせください。
 
+  admin_mailer:
+    job_failure:
+      subject: 【一括メールシステム管理通知】ジョブ失敗
+      message: |
+        一括メールシステムで、下記のジョブが失敗しました。
+
   views:
     pagination:
       first: "&laquo; 最初"

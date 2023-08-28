@@ -13,7 +13,7 @@ OUは作成済みのためuser_group.ldifのみldapadd
 初期設定
 
 DNS ドメイン名: example.jp
-組織名: exapmle
+組織名: example
 管理者パスワード: admin_password
 
 ou.ldifとuser_group.ldifをldapadd
