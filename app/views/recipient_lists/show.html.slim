@@ -17,7 +17,7 @@ ruby:
 
 dl
   = dt_dd_for @recipient_list, :name
-  = dt_dd_for @recipient_list, :description
+  = dt_dd_for @recipient_list, :description, pre: true
 
   = dt_dd_for @recipient_list, :applicable_mail_users do |mail_users|
     - if @recipient_list.collected?

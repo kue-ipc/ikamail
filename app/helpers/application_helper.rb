@@ -144,11 +144,15 @@ module ApplicationHelper
     end
   end
 
-  def span_text_tag(value, around: nil, **_)
+  def span_text_tag(value, around: nil, pre: false, **_)
     if around.present?
       content_tag('span', around[0], class: 'text-muted') +
-        content_tag('span', value) +
+        span_text_tag(value, around: nil, pre: pre) +
         content_tag('span', around[1], class: 'text-muted')
+    elsif pre
+      # rubocop: disable Rails/OutputSafety
+      content_tag('span', value.split(/\R/).map { |s| h(s) }.join(tag.br).html_safe)
+      # rubocop: enable Rails/OutputSafety
     else
       content_tag('span', value)
     end
