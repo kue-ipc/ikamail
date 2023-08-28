@@ -23,11 +23,7 @@ export default templateInfo = ->
       for el in nameEls
         el.textContent = selected.name
       for el in recipientListEls
-        el.textContent =
-          if selected.recipient_list_description
-            "#{selected.recipient_list} (#{selected.recipient_list_description})"
-          else
-            selected.recipient_list
+        el.textContent = selected.recipient_list
       for el in userEls
         el.textContent = selected.user
       for el in reservedTimeEls

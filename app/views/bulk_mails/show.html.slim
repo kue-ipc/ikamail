@@ -27,6 +27,8 @@ dl
     =<> MailTemplate.human_attribute_name(:user)
     | :
     =<> mail_template.user.name
+    .border.rounded.bg-light
+      = span_text_tag(mail_template.description, pre: true)
   = dt_dd_for @bulk_mail, :body_wrap, format: :mail_body, around: [@bulk_mail.body_header, @bulk_mail.body_footer]
   = dt_dd_tag BulkMail.human_attribute_name(:word_wrap) do
     = t('helpers.wrap_cols', count: @bulk_mail.wrap_col)
