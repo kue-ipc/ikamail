@@ -19,31 +19,30 @@ export default templateInfo = ->
     if /^\d+$/.test(selectedId)
       selected = list[selectedId]
       for el in descriptionEls
-        el.innerText = selected.description || '\u00a0'
+        el.innerText = selected.description
       for el in nameEls
-        el.innerText = selected.name
+        el.textContent = selected.name
       for el in recipientListEls
-        el.innerText =
+        el.textContent =
           if selected.recipient_list_description
             "#{selected.recipient_list} (#{selected.recipient_list_description})"
           else
             selected.recipient_list
-
       for el in userEls
-        el.innerText = selected.user
+        el.textContent = selected.user
       for el in reservedTimeEls
-        el.innerText = selected.reserved_time
+        el.textContent = selected.reserved_time
     else
       for el in descriptionEls
-        el.innerText = '\u00a0'
+        el.innerText = ''
       for el in nameEls
-        el.innerText = '-'
+        el.textContent = '-'
       for el in recipientListEls
-        el.innerText = '-'
+        el.textContent = '-'
       for el in userEls
-        el.innerText = '-'
+        el.textContent = '-'
       for el in reservedTimeEls
-        el.innerText = '-'
+        el.textContent = '-'
 
   targetEl.addEventListener 'change', changeSelect
   changeSelect()
