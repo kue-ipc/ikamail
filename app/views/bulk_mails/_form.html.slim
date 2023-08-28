@@ -19,15 +19,17 @@
       span.template-info-recipient-list<>
         | -
       | |
-      =<> MailTemplate.human_attribute_name(:reserved_time)
+      =< MailTemplate.human_attribute_name(:reserved_time)
       | :
       span.template-info-reserved-time<>
         | -
       | |
-      =<> MailTemplate.human_attribute_name(:user)
+      =< MailTemplate.human_attribute_name(:user)
       | :
       span.template-info-user<
         | -
+    p.border.rounded.bg-light.template-info-description
+        | &nbsp;
   .mb-3
     = f.label :delivery_timing, class: 'form-label'
     - BulkMail.delivery_timings.each_key do |timing|
