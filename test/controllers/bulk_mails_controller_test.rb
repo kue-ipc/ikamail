@@ -208,7 +208,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'redirect to login INSTEAD OF apply bulk_mail' do
-      put apply_bulk_mail_url(@bulk_mail), params: {action_info: @action_info_params}
+      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
       assert_equal 'draft', BulkMail.find(@bulk_mail.id).status
       assert_redirected_to new_user_session_path
     end
