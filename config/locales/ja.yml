@@ -233,6 +233,7 @@ ja:
         name: テンプレート名
         enabled: 有効
         recipient_list: 宛先リスト
+        recipient_list_id: 宛先リスト
         count: カウント
         reserved_time: 定時配信時刻
         from_name: 送信元の名前
