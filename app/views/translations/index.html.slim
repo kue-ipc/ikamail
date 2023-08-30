@@ -18,7 +18,7 @@ hr
 
 - @translations.each do |translation|
   - form_id = "form-#{translation.key}"
-  = form_with model: translation, scope: 'translation', local: false,
+  = bootstrap_form_with model: translation, scope: 'translation', local: false,
       url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)),
       id: form_id, class: 'form-translation', data: {key: translation.key} do |f|
     = f.hidden_field :locale, id: "#{form_id}-locale"
@@ -28,9 +28,10 @@ hr
         small
           = translation.key.split('.').join(' ')
       .col-md-8.mb-1
-        = f.text_area :value, id: "#{form_id}-value", class: 'form-control', rows: (translation.value.size / 40.0).ceil
+        = f.text_area :value, id: "#{form_id}-value", rows: (translation.value.size / 40.0).ceil,
+          wrapper: false
       .col-md-2.mb-1
-        = f.submit '適用', id: "#{form_id}-submit", class: 'btn btn-primary', disabled: true
+        = f.primary '適用', id: "#{form_id}-submit", disabled: true
         - if translation.new_record?
           =< link_to 'リセット', '#',
             id: "#{form_id}-delete", class: 'btn btn-warning disabled d-none', 'area-disabled': true,
