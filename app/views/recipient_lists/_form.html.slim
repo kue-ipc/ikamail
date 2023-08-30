@@ -10,7 +10,7 @@
 = bootstrap_form_with model: @recipient_list do |f|
   = f.text_field :name
   = f.text_area :description, rows: 3
-  = f.collection_select :mail_group_ids, MailGroup.all, :id, :display_name,
+  = f.collection_select :mail_group_ids, policy_scope(MailGroup).order(:display_name), :id, :display_name,
     {help: t('messages.can_select_multi_groups')},
     {multiple: true, size: [10, MailGroup.count].min}
   .actions
