@@ -209,6 +209,7 @@ ja:
         name: リスト名
         description: 説明
         mail_groups: 対象グループ
+        mail_group_ids: 対象グループ
         applicable_mail_users: 対象ユーザー
         included_mail_users: 含めるユーザー
         excluded_mail_users: 除外するユーザー
@@ -313,6 +314,7 @@ ja:
     unaggregated: 未集計
     not_found_recipient_list_type: "指定のリストはありません。"
     no_mail_user_to_add: "追加すべきユーザーはいませんでした。。"
+    can_select_multi_groups: クリックで複数選択することができます。対象となるグループをすべて選択してください。
 
   time:
     formats:
