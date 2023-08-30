@@ -215,7 +215,7 @@ class BulkMailsController < ApplicationController
   end
 
   private def action_info_params
-    params.require(:action_info).permit(:comment, :current_status, :datetime)
+    params.require(:bulk_mail).require(:action_info).permit(:comment, :current_status, :datetime)
   end
 
   private def action_comment

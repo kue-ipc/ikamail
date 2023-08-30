@@ -11,26 +11,27 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
             aria-hidden="true"]
   .modal-dialog role="document"
     .modal-content
-      = bootstrap_form_with model: @action_info, url: url, method: :put do |f|
-        = f.hidden_field :current_status
-        .modal-header
-          h5.modal-title id="action-#{action}-modal-label"
-            | メールの
-            = t(action, scope: :actions)
-          button.btn-close type="button" data-bs-dismiss="modal" aria-label=t('do_actions.close')
-        .modal-body
-          p = t(action, scope: [:mail, :action_messages])
-          - if timing
-            p
-              strong = t(timing, scope: [:mail, :action_timing_messages, action])
-          - if add_datetime
-            - now = Time.current
-            = f.datetime_field :datetime, step: 60, required: true,
-                                value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R'),
-                                label: "#{t(action, scope: :actions)} #{ActionInfo.human_attribute_name(:datetime)}"
-          = f.text_area :comment, rows: 10, required: comment_required,
-                        help: comment_required && t('messages.comment_required')
-        .modal-footer
-          = f.submit t(action, scope: :do_actions), class: "btn btn-#{level}"
-          button.btn.btn-secondary type="button" data-bs-dismiss="modal"
-            = t('do_actions.close')
+      = bootstrap_form_with model: @bulk_mail, url: url, method: :put do |form|
+        = form.fields @action_info do |f|
+          = f.hidden_field :current_status
+          .modal-header
+            h5.modal-title id="action-#{action}-modal-label"
+              | メールの
+              = t(action, scope: :actions)
+            button.btn-close type="button" data-bs-dismiss="modal" aria-label=t('do_actions.close')
+          .modal-body
+            p = t(action, scope: [:mail, :action_messages])
+            - if timing
+              p
+                strong = t(timing, scope: [:mail, :action_timing_messages, action])
+            - if add_datetime
+              - now = Time.current
+              = f.datetime_field :datetime, step: 60, required: true,
+                                  value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R'),
+                                  label: "#{t(action, scope: :actions)} #{ActionInfo.human_attribute_name(:datetime)}"
+            = f.text_area :comment, rows: 10, required: comment_required,
+                          help: comment_required && t('messages.comment_required')
+          .modal-footer
+            = f.submit t(action, scope: :do_actions), class: "btn btn-#{level}"
+            button.btn.btn-secondary type="button" data-bs-dismiss="modal"
+              = t('do_actions.close')

@@ -7,12 +7,11 @@
       - @bulk_mail.errors.full_messages.each do |message|
         li.list-group-item = message
 
-= form_for @bulk_mail do |f|
+= bootstrap_form_with model: @bulk_mail do |f|
   .mb-3
-    = f.label :mail_template_id, t_attr(:mail_template), class: 'form-label'
     = f.collection_select :mail_template_id, policy_scope(MailTemplate).where(enabled: true).order(:name), :id, :name,
-      {prompt: true},
-      {class: 'form-select', required: true}
+                          {prompt: true, wrapper_class: false},
+                          {required: true}
     .form-text
       =< MailTemplate.human_attribute_name(:recipient_list)
       | :
@@ -29,37 +28,22 @@
       span.template-info-user<
         | -
     p.border.rounded.bg-light.template-info-description
-  .mb-3
-    = f.label :delivery_timing, class: 'form-label'
+  = f.form_group :delivery_timing, label: {text: t_attr(:delivery_timing)} do
     - BulkMail.delivery_timings.each_key do |timing|
-      .form-check
-        = f.radio_button :delivery_timing, timing, required: true, class: 'form-check-input'
-        = f.label "delivery_timing_#{timing}", class: 'form-check-label'
-          = t timing, scope: [:mail, :timings]
-          | :
-          =< t timing, scope: [:descriptions, :timings]
-  .mb-3
-    = f.label :subject, class: 'form-label'
-    = f.text_field :subject, class: 'form-control'
-  .mb-3
-    = f.label :body, class: 'form-label'
-    = f.text_area :body, class: 'form-control font-monospace scroll-y', rows: 20
-  .field.row
+      = f.radio_button :delivery_timing, timing, required: true,
+        label: "#{t(timing, scope: 'mail.timings')}: #{t(timing, scope: 'descriptions.timings')}"
+  = f.text_field :subject
+  = f.text_area :body, class: 'font-monospace scroll-y', rows: 20
+  .row.mb-3
     .col-auto
-      = f.select :wrap_col, wrap_col_collection, {}, \
-        class: 'form-select'
+      = f.select :wrap_col, wrap_col_collection, wrapper_class: false
     .col-auto
-      = f.select :wrap_rule, wrap_rule_collection, {}, \
-        class: 'form-select'
-  small.form-text.text-muted
-    = t('descriptions.word_wrap')
-
-  .mb-3
-    = fields @action_info do |field|
-      = field.hidden_field :current_status
-      = field.label :comment, "#{ActionLog.human_attribute_name(:comment)} #{t('values.optional')}",
-          class: 'form-label'
-      = field.text_area :comment, rows: 3, class: 'form-control'
+      = f.select :wrap_rule, wrap_rule_collection, wrapper_class: false
+    small.form-text.text-muted
+      = t('descriptions.word_wrap')
+  = f.fields @action_info do |field|
+    = field.hidden_field :current_status
+    = field.text_area :comment, rows: 3, label: "#{ActionLog.human_attribute_name(:comment)} #{t('values.optional')}"
   .actions = f.submit class: 'btn btn-primary'
 
 #template-info.d-none[data-list=h(mail_template_to_hash(MailTemplate.all).to_json)

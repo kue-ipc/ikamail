@@ -215,6 +215,7 @@ ja:
         mail_templates: 利用しているテンプレート
       bulk_mail:
         mail_template: テンプレート
+        mail_template_id: テンプレート
         delivery_timing: 配信タイミング
         subject: 題名
         body: 本文
