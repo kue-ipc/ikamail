@@ -203,6 +203,7 @@ ja:
       mail_template: テンプレート
       recipient_list: 宛先リスト
       recipient: 宛先
+      action_log: 実行ログ
     attributes:
       recipient_list:
         name: リスト名
@@ -259,9 +260,19 @@ ja:
         mail_users: 所属ユーザー
         recipient_lists: 含まれる宛先リスト
 
+  activemodel:
+    models:
+      action_info: 実行情報
+    attributes:
+      action_info:
+        comment: コメント
+        cerrent_status: 現在の状態
+        datetime: 日時
+
   messages:
     comment: コメント
     comment_of_action: "%{action}時のコメント"
+    comment_required: コメントは必須です。
     content: 内容
     content_of_action: "%{action}内容"
     corfirm_destroy: "本当に削除してもよろしいですか？"

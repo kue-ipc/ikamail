@@ -11,7 +11,7 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
             aria-hidden="true"]
   .modal-dialog role="document"
     .modal-content
-      = form_with model: @action_info, url: url, method: :put do |f|
+      = bootstrap_form_with model: @action_info, url: url, method: :put do |f|
         = f.hidden_field :current_status
         .modal-header
           h5.modal-title id="action-#{action}-modal-label"
@@ -24,17 +24,12 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
             p
               strong = t(timing, scope: [:mail, :action_timing_messages, action])
           - if add_datetime
-            .mb-3
-              - now = Time.current
-              = f.label :datetime, "#{t(action, scope: :actions)}日時", class: 'form-label'
-              = f.datetime_field :datetime, step: 60, class: 'form-control', required: true,
-                                 value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R')
-          .mb-3
-            = f.label :comment, ActionLog.human_attribute_name(:comment), class: 'form-label'
-            = f.text_area :comment, class: 'form-control', rows: 10, required: comment_required
-            - if comment_required
-              small.form-text.text-muted
-                | コメントは必須です。
+            - now = Time.current
+            = f.datetime_field :datetime, step: 60, required: true,
+                                value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R'),
+                                label: "#{t(action, scope: :actions)} #{ActionInfo.human_attribute_name(:datetime)}"
+          = f.text_area :comment, rows: 10, required: comment_required,
+                        help: comment_required && t('messages.comment_required')
         .modal-footer
           = f.submit t(action, scope: :do_actions), class: "btn btn-#{level}"
           button.btn.btn-secondary type="button" data-bs-dismiss="modal"
