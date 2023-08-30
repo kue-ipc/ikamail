@@ -210,12 +210,17 @@ class BulkMailsController < ApplicationController
     authorize BulkMail
   end
 
+  private def all_params
+    params.require(:bulk_mail)
+      .permit(:mail_template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule, action_info: {})
+  end
+
   private def bulk_mail_params
-    params.require(:bulk_mail).permit(:mail_template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule)
+    all_params.except(:action_info)
   end
 
   private def action_info_params
-    params.require(:bulk_mail).require(:action_info).permit(:comment, :current_status, :datetime)
+    all_params.require(:action_info).permit(:comment, :current_status, :datetime)
   end
 
   private def action_comment
