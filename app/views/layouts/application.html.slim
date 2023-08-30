@@ -18,8 +18,9 @@ html
               li.nav-item.px-1
                 = link_to current_user.name, user_path, class: 'nav-link'
               li.nav-item.px-1
-                = link_to destroy_user_session_path, method: :delete, class: 'nav-link py-1', title: 'ログアウト',
-                          'data-bs-toggle': 'tooltip', 'data-bs-placement': 'left' do
+                = link_to destroy_user_session_path, method: :delete, class: 'nav-link py-1',
+                  title: t('devise.sessions.destroy.sign_out'),
+                  data: {'bs-toggle': 'tooltip', 'bs-placement': 'left'} do
                   = octicon 'sign-out', height: 24, fill: 'currentColor', roll: 'img', 'aria-label': 'Logout'
     .container-fluid
       .row
@@ -27,7 +28,7 @@ html
           - if user_signed_in?
             = render 'menu'
           - else
-            p ログインしてください。
+            = link_to t('devise.sessions.new.sign_in'), new_user_session_path
         .col-12.col-md-9.col-xl-10
           main
             = yield :heading

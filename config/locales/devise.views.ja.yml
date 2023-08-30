@@ -115,6 +115,8 @@ ja:
         sign_in: ログイン
       signed_in: ログインしました。
       signed_out: ログアウトしました。
+      destroy:
+        sign_out: ログアウト
     shared:
       links:
         back: 戻る
