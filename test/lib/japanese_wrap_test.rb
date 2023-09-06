@@ -273,4 +273,11 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 12, rule: :word_wrap)
     assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 13, rule: :word_wrap)
   end
+
+  test 'emtpy' do
+    text = "\n\n\n\n"
+    assert_equal "\n\n\n\n", JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal "\n\n\n\n", JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal "\n\n\n\n", JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+  end
 end

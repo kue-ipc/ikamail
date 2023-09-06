@@ -148,6 +148,7 @@ module JapaneseWrap
   def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false)
     return enum_for(__method__, str, col: col, rule: rule, ambiguous: ambiguous, hanging: hanging) unless block_given?
     return yield str if !col.positive? || rule == :none
+    return yield str if str =~ /^$/
 
     display_with = Unicode::DisplayWidth.new(ambiguous: ambiguous, emoji: true)
     remnant = str.dup
@@ -173,7 +174,11 @@ module JapaneseWrap
     ptr = max_ptr
     width = display_with.of(str)
     while min_ptr < max_ptr
-      ptr = col * ptr / width
+      ptr = if width.zero?
+        ptr + 1
+      else
+        col * ptr / width
+      end
       ptr = min_ptr + 1 if ptr <= min_ptr
       ptr = max_ptr if ptr > max_ptr
       width = display_with.of(str[0, ptr])
