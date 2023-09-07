@@ -145,8 +145,12 @@ module JapaneseWrap
   # rule:: 折り返しのルール、:none, :force, :word_wrap, :jisx4051
   # ambiguous:: Unicodeで幅がAmbiguousとなっている文字(ギリシャ文字)の幅
   # hanging:: 句点等のぶら下げを有効にする。
-  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false)
-    return enum_for(__method__, str, col: col, rule: rule, ambiguous: ambiguous, hanging: hanging) unless block_given?
+  # word_break:: 改行できる文字、:normal, :keep_all, :break_all, :ascii, :latin
+  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false, word_break: :normal)
+    unless block_given?
+      return enum_for(__method__, str, col: col, rule: rule, ambiguous: ambiguous, hanging: hanging,
+        word_break: word_break)
+    end
     return yield str if !col.positive? || rule == :none
     return yield str if str =~ /^$/
 
@@ -155,7 +159,7 @@ module JapaneseWrap
 
     until remnant.empty?
       min_ptr = calc_ptr(remnant, col, display_with)
-      ptr = search_breakable(remnant, min_ptr, rule: rule, hanging: hanging)
+      ptr = search_breakable(remnant, min_ptr, rule: rule, hanging: hanging, word_break: word_break)
 
       if ptr < remnant.size
         yield "#{remnant[0, ptr].rstrip}\n"
@@ -192,21 +196,21 @@ module JapaneseWrap
   end
 
   # 改行可能な場所を探す。
-  def search_breakable(str, ptr, rule: :force, hanging: false)
+  def search_breakable(str, ptr, rule: :force, hanging: false, word_break: :normal)
     case rule
     when :none, :force
       ptr
     when :word_wrap
-      search_breakable_word_wrap(str, ptr)
+      search_breakable_word_wrap(str, ptr, word_break: word_break)
     when :jisx4051
-      search_breakable_jisx4051(str, ptr, hanging: hanging)
+      search_breakable_jisx4051(str, ptr, hanging: hanging, word_break: word_break)
     else
       raise ArgumentError, "unknown rule: #{rule}"
     end
   end
 
   # 英単語のワードラップ
-  def search_breakable_word_wrap(str, ptr, forward: true)
+  def search_breakable_word_wrap(str, ptr, forward: true, word_break: :normal)
     # 続きが空白の場合は、空白が終わりまで前進する
     if forward
       fw_ptr = search_forward_space(str, ptr)
@@ -214,13 +218,13 @@ module JapaneseWrap
     end
 
     # 続きが非単語かつASCIIではない場合は即座に終了
-    return ptr if !check_word_char(str[ptr]) && str[ptr] !~ /[[:ascii:]]/
+    return ptr if !check_word_char(str[ptr], word_break: word_break) && str[ptr] !~ /[[:ascii:]]/
 
     # 単語区切りを見つける
     cur_ptr = ptr
     while cur_ptr.positive?
       # 非単語で終わっていれば終了
-      return cur_ptr unless check_word_char(str[cur_ptr - 1])
+      return cur_ptr unless check_word_char(str[cur_ptr - 1], word_break: word_break)
 
       cur_ptr -= 1
     end
@@ -230,13 +234,13 @@ module JapaneseWrap
   end
 
   # JIS X 4051に基づく改行
-  def search_breakable_jisx4051(str, ptr, hanging: false)
+  def search_breakable_jisx4051(str, ptr, hanging: false, word_break: :normal)
     ptr += 1 if hanging && HANGING_CHARS.include?(str[ptr])
-    ptr = search_breakable_word_wrap(str, ptr)
+    ptr = search_breakable_word_wrap(str, ptr, word_break: word_break)
     cur_ptr = ptr
     while cur_ptr.positive?
       if str[cur_ptr] != ' '
-        cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false)
+        cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false, word_break: word_break)
         if NOT_STARTING_CHARS.exclude?(str[cur_ptr]) &&
            NOT_ENDING_CHARS.exclude?(str[cur_ptr - 1])
           return cur_ptr
@@ -257,10 +261,21 @@ module JapaneseWrap
     ptr
   end
 
-  def check_word_char(chr)
-    # ラテン文字のみを対象とする
-    chr =~ /[[:word:]&&[\p{Latin}]]/
-    # ギリシャ文字、コプト文字、キリル文字のみを対象とする
-    # chr =~ /[[:word:]&&[\p{Latin}\p{Greek}\p{Coptic}\p{Cyrillic}]]/
+  def check_word_char(chr, word_break: :normal)
+    chr =~
+      case word_break
+      when :normal
+        /[[:word:]&&[^\p{Han}\p{Hiragana}\p{Katakana}\p{Hangul}]]/
+      when :keep_all
+        /[[:word:]]/
+      when :break_all
+        /./
+      when :ascii
+        /\w/
+      when :latin
+        /[[:word:]&&[\p{Latin}]]/
+      else
+        raise ArgumentError, "unknown word_break: #{word_break}"
+      end
   end
 end

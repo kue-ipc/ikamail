@@ -14,12 +14,12 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     　聞いて、メロスは激怒した。「呆れた王だ。生かして置けぬ。」
   TEXT
 
-  test 'sapmle text same none rule' do
+  test 'ルール無し' do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
   end
 
-  test 'sapmle text same col 0' do
+  test '0文字' do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :force)
@@ -27,7 +27,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :jisx4051)
   end
 
-  test 'sapmle text same col too many' do
+  test '長い行' do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :force)
@@ -35,7 +35,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :jisx4051)
   end
 
-  test 'sapmle text diff other rules' do
+  test 'ルールあり' do
     text = SAMPLE_TEXT
     assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
     assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
@@ -302,7 +302,23 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 13, rule: :word_wrap)
   end
 
-  test 'empty text' do
+  test 'word_break' do
+    text = "abcd1234 αβγδ1234 あいうえ 亜伊宇江\n"
+    assert_equal "abcd1234\nαβγδ1234 あ\nいうえ 亜伊\n宇江\n",
+      JapaneseWrap.text_wrap(text, col: 12, rule: :jisx4051, ambiguous: 1, word_break: :normal)
+    assert_equal "abcd1234\nαβγδ1234\nあいうえ\n亜伊宇江\n",
+      JapaneseWrap.text_wrap(text, col: 12, rule: :jisx4051, ambiguous: 1, word_break: :keep_all)
+    assert_equal "abcd1234 αβγ\nδ1234 あいう\nえ 亜伊宇江\n",
+      JapaneseWrap.text_wrap(text, col: 12, rule: :jisx4051, ambiguous: 1, word_break: :break_all)
+    assert_equal "abcd1234 αβγ\nδ1234 あいう\nえ 亜伊宇江\n",
+      JapaneseWrap.text_wrap(text, col: 12, rule: :jisx4051, ambiguous: 1, word_break: :ascii)
+    assert_equal "abcd1234 αβγ\nδ1234 あいう\nえ 亜伊宇江\n",
+      JapaneseWrap.text_wrap(text, col: 12, rule: :jisx4051, ambiguous: 1, word_break: :latin)
+  end
+
+  ## 空文字列や空行等
+
+  test '空文字列' do
     text = ''
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
@@ -310,7 +326,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test 'emtpy line' do
+  test '空行' do
     text = "\n" * 80
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
@@ -323,7 +339,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test 'one char line' do
+  test '一文字行' do
     text = "a\n" * 80
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
@@ -334,9 +350,16 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+    text = " \n" * 80
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test 'minus col not change' do
+  ## イレギュラー
+
+  test '負の文字数' do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :force)
@@ -344,7 +367,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :jisx4051)
   end
 
-  test 'raise unknown rule' do
+  test '不明なルール' do
     text = SAMPLE_TEXT
     assert_raise ArgumentError do
       assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :japanese)
