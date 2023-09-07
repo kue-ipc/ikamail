@@ -194,15 +194,14 @@ module JapaneseWrap
   # 改行可能な場所を探す。
   def search_breakable(str, ptr, rule: :force, hanging: false)
     case rule
-    when :force
+    when :none, :force
       ptr
     when :word_wrap
       search_breakable_word_wrap(str, ptr)
     when :jisx4051
       search_breakable_jisx4051(str, ptr, hanging: hanging)
     else
-      logger.error "unknown rule: #{rule}"
-      ptr
+      raise ArgumentError, "unknown rule: #{rule}"
     end
   end
 

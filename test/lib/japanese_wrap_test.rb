@@ -14,6 +14,34 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     　聞いて、メロスは激怒した。「呆れた王だ。生かして置けぬ。」
   TEXT
 
+  test 'sapmle text same none rule' do
+    text = SAMPLE_TEXT
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+  end
+
+  test 'sapmle text same col 0' do
+    text = SAMPLE_TEXT
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :jisx4051)
+  end
+
+  test 'sapmle text same col too many' do
+    text = SAMPLE_TEXT
+    assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :jisx4051)
+  end
+
+  test 'sapmle text diff other rules' do
+    text = SAMPLE_TEXT
+    assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+  end
+
   test 'force Engrish' do
     text = 'All your code are belong to us.'
     assert_equal "All your c\node are be\nlong to us\n.", JapaneseWrap.text_wrap(text, col: 10, rule: :force)
@@ -274,10 +302,52 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 13, rule: :word_wrap)
   end
 
-  test 'emtpy' do
-    text = "\n\n\n\n"
-    assert_equal "\n\n\n\n", JapaneseWrap.text_wrap(text, col: 80, rule: :force)
-    assert_equal "\n\n\n\n", JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
-    assert_equal "\n\n\n\n", JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+  test 'empty text' do
+    text = ''
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+  end
+
+  test 'emtpy line' do
+    text = "\n" * 80
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+    text = "\r\n" * 80
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+  end
+
+  test 'one char line' do
+    text = "a\n" * 80
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+    text = "あ\n" * 80
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+  end
+
+  test 'minus col not change' do
+    text = SAMPLE_TEXT
+    assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :none)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :force)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :word_wrap)
+    assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :jisx4051)
+  end
+
+  test 'raise unknown rule' do
+    text = SAMPLE_TEXT
+    assert_raise ArgumentError do
+      assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :japanese)
+    end
   end
 end
