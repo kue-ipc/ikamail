@@ -1,9 +1,7 @@
-## LDAP
-# auto settings by config
-# DO NOT EDIT THIS IF YOU DO NOT UNDERSTAD IT.
-
-# devise_ldap_authenticatable
-authorizations: &AUTHORIZATIONS
+## devise_ldap_authenticatable
+# Can not use yaml aliases
+<% %w[development test production].each do |env| %>
+<%= env %>:
   host: <%= Settings.ldap.host.to_json %>
   port: <%= Settings.ldap.port.to_json %>
   attribute: <%= Settings.ldap.user.dn.to_json %>
@@ -26,14 +24,4 @@ authorizations: &AUTHORIZATIONS
     objectClass: <%= Settings.ldap.user.classes.to_json %>
   require_attribute_presence:
     mail: true
-
-## Environment
-
-development:
-  <<: *AUTHORIZATIONS
-
-test:
-  <<: *AUTHORIZATIONS
-
-production:
-  <<: *AUTHORIZATIONS
+<% end %>

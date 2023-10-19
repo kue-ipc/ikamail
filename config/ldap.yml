@@ -1,9 +1,7 @@
-## LDAP
-# auto settings by config
-# DO NOT EDIT THIS IF YOU DO NOT UNDERSTAD IT.
-
 ## ActiveLdap
-active_ldap: &ACTIVE_LDAP
+# Can not use yaml aliases
+<% %w[development test production].each do |env| %>
+<%= env %>:
   host: <%= Settings.ldap.host.to_json %>
   port: <%= Settings.ldap.port.to_json %>
   base: <%= Settings.ldap.base.to_json %>
@@ -20,12 +18,4 @@ active_ldap: &ACTIVE_LDAP
     when 'start_tls' then 'tls'
     else 'plain'
     end %>
-
-development:
-  <<: *ACTIVE_LDAP
-
-test:
-  <<: *ACTIVE_LDAP
-
-production:
-  <<: *ACTIVE_LDAP
+<% end %>
