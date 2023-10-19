@@ -27,7 +27,7 @@ authorizations: &AUTHORIZATIONS
   require_attribute_presence:
     mail: true
 
-    ## Environment
+## Environment
 
 development:
   <<: *AUTHORIZATIONS
