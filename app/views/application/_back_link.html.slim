@@ -1,0 +1,5 @@
+- color = local_assigns[:color] || "secondary"
+- link_name = local_assigns[:name]&.then { t("links.back_to", name: _1) } || t("links.back")
+hr
+div
+  = link_to link_name, back_link, class: "btn btn-#{color}"

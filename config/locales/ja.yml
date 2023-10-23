@@ -86,8 +86,10 @@ ja:
     sync: 同期する
 
   links:
+    forward: 進む
+    back: 戻る
+    forward_to: "%{name}に進む"
     back_to: "%{name}に戻る"
-    go_to: "%{name}に進む"
 
   mail:
     action_messages:

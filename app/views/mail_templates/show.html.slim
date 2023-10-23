@@ -39,7 +39,7 @@ dl
   = dt_dd_for @mail_template, :reserved_time, format: :time
   = dt_dd_for @mail_template, :user
 
-p
+div
   - mail_template_policy = policy(@mail_template)
   - if mail_template_policy.edit?
     =<> link_to t('actions.edit'), edit_mail_template_path(@mail_template), class: 'btn btn-primary'
@@ -48,5 +48,5 @@ p
                   data: {turbo_confirm: t('messages.corfirm_destroy')}, method: :delete, class: 'btn btn-danger'
 
 hr
-p
+div
   = link_to t('links.back_to', name: t('actions.index')), mail_templates_path, class: 'btn btn-secondary'
