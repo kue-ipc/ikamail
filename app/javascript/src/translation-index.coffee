@@ -55,7 +55,7 @@ class TranslationForm
   updatedRecord: (_path, _value) ->
     @disableSubmit()
 
-document.addEventListener 'turbolinks:load', ->
+document.addEventListener 'turbo:load', ->
   formMap = new Map
 
   for form in document.getElementsByClassName('form-translation')

@@ -10,7 +10,7 @@ import templateInfo from './src/template-info.coffee'
 import multiselect from './src/multiselect.coffee'
 import uploadButton from './src/upload-button.coffee'
 
-document.addEventListener 'turbolinks:load', ->
+document.addEventListener 'turbo:load', ->
   bulkMailTextArea()
   templateInfo()
   multiselect()

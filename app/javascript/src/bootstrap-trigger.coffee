@@ -8,7 +8,7 @@ bootstrapComponentSelectors = [
   {component: bootstrap.Collapse,  selector: '[data-bs-toggle="collapse"]'}
 ]
 
-document.addEventListener 'turbolinks:load', ->
+document.addEventListener 'turbo:load', ->
   for {component, selector} in bootstrapComponentSelectors
     for el in document.querySelectorAll selector
       new component(el)
