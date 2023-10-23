@@ -16,7 +16,7 @@ class MailTemplatesController < ApplicationController
   # GET /mail_templates/new
   def new
     @mail_template = MailTemplate.new
-    @mail_template.reserved_time = '12:00'
+    @mail_template.reserved_time = "12:00"
   end
 
   # GET /mail_templates/1/edit

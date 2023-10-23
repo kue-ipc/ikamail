@@ -1,4 +1,4 @@
-require 'active_ldap/association/has_many_wrap'
+require "active_ldap/association/has_many_wrap"
 
 module ActiveLdap
   module Association

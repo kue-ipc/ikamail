@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /admin/users/1.json
   def update
     if current_user == @user
-      redirect_to admin_users_path, alert: t('messages.cannot_modify_own')
+      redirect_to admin_users_path, alert: t("messages.cannot_modify_own")
     elsif @user.update(update_user_params)
       redirect_to admin_users_path, notice: t_success_action(@user, :update)
     else
@@ -43,10 +43,10 @@ class UsersController < ApplicationController
   def sync
     if LdapUserSyncJob.perform_later
       redirect_to admin_users_path,
-        notice: t('messages.success_action', model: t('actions.ldap_sync'), action: t('actions.start'))
+        notice: t("messages.success_action", model: t("actions.ldap_sync"), action: t("actions.start"))
     else
       redirect_to admin_users_path,
-        alert: t('messages.failure_action', model: t('actions.ldap_sync'), action: t('actions.start'))
+        alert: t("messages.failure_action", model: t("actions.ldap_sync"), action: t("actions.start"))
     end
   end
 

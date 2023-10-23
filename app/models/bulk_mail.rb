@@ -1,6 +1,6 @@
-require 'mustache'
-require 'iso2022jp'
-require 'japanese_wrap'
+require "mustache"
+require "iso2022jp"
+require "japanese_wrap"
 
 class BulkMail < ApplicationRecord
   include Iso2022jp
@@ -68,19 +68,19 @@ class BulkMail < ApplicationRecord
   end
 
   def subject_prefix
-    return '' if mail_template.subject_prefix.blank?
+    return "" if mail_template.subject_prefix.blank?
 
     Mustache.render(mail_template.subject_prefix, individual_values)
   end
 
   def subject_suffix
-    return '' if mail_template.subject_suffix.blank?
+    return "" if mail_template.subject_suffix.blank?
 
     Mustache.render(mail_template.subject_suffix, individual_values)
   end
 
   def body_header
-    return '' if mail_template.body_header.blank?
+    return "" if mail_template.body_header.blank?
 
     text_wrap(
       Mustache.render(mail_template.body_header, individual_values),
@@ -89,7 +89,7 @@ class BulkMail < ApplicationRecord
   end
 
   def body_footer
-    return '' if mail_template.body_footer.blank?
+    return "" if mail_template.body_footer.blank?
 
     text_wrap(
       Mustache.render(mail_template.body_footer, individual_values),
@@ -102,8 +102,8 @@ class BulkMail < ApplicationRecord
     datetime = delivered_at || Time.current
     @individual_values ||= {
       number: number_str,
-      number_zen: number_str.tr('0-9', '０-９'),
-      number_kan: number_str.tr('0-9', '〇一ニ三四五六七八九'),
+      number_zen: number_str.tr("0-9", "０-９"),
+      number_kan: number_str.tr("0-9", "〇一ニ三四五六七八九"),
       name: mail_template.name,
       datetime: I18n.l(datetime, format: :datetime),
       date: I18n.l(datetime, format: :date),

@@ -31,7 +31,7 @@ module ApplicationHelper
     if current_user.admin?
       list << {
         path: admin_root_path,
-        label: t('menu.paths.admin_root'),
+        label: t("menu.paths.admin_root"),
       }
     end
     list << {
@@ -68,9 +68,9 @@ module ApplicationHelper
   end
 
   def dt_dd_tag(term, &block)
-    content_tag('div', class: 'row border-bottom mb-2 pb-2') do
-      content_tag('dt', term, class: 'col-sm-6 col-md-4 col-xl-2') +
-        content_tag('dd', class: 'col-sm-6 col-md-8 col-xl-10 mb-0', &block)
+    content_tag("div", class: "row border-bottom mb-2 pb-2") do
+      content_tag("dt", term, class: "col-sm-6 col-md-4 col-xl-2") +
+        content_tag("dd", class: "col-sm-6 col-md-8 col-xl-10 mb-0", &block)
     end
   end
 
@@ -89,13 +89,13 @@ module ApplicationHelper
   def span_value_for(value, **opts)
     case value
     when nil
-      content_tag('span', opts[:blank_alt] || t('values.none'), class: 'font-italic text-muted')
-    when '', [], {}
-      content_tag('span', opts[:blank_alt] || t('values.empty'), class: 'font-italic text-muted')
+      content_tag("span", opts[:blank_alt] || t("values.none"), class: "font-italic text-muted")
+    when "", [], {}
+      content_tag("span", opts[:blank_alt] || t("values.empty"), class: "font-italic text-muted")
     when String
       span_string_for(value, **opts)
     when Time, Date, DateTime, ActiveSupport::TimeWithZone
-      content_tag('span', l(value, format: opts[:format]))
+      content_tag("span", l(value, format: opts[:format]))
     when true, false
       span_bool_for(value, **opts)
     when Enumerable
@@ -103,7 +103,7 @@ module ApplicationHelper
     when BulkMail, MailGroup, MailUser, RecipientList, MailTemplate
       link_to(value.to_s, value)
     else
-      content_tag('span', value.to_s, class: '')
+      content_tag("span", value.to_s, class: "")
     end
   end
 
@@ -120,17 +120,17 @@ module ApplicationHelper
 
   def span_bool_for(value, **_opts)
     if value
-      bs_icon('toggle-on')
+      bs_icon("toggle-on")
     else
-      bs_icon('toggle-off')
+      bs_icon("toggle-off")
     end
   end
 
   def span_enum_for(value, **opts)
-    content_tag('ul', class: 'list-inline mb-0') do
-      list_html = sanitize('')
+    content_tag("ul", class: "list-inline mb-0") do
+      list_html = sanitize("")
       value.each do |v|
-        list_html += content_tag('li', class: 'list-inline-item border border-primary rounded px-1 mb-1') do
+        list_html += content_tag("li", class: "list-inline-item border border-primary rounded px-1 mb-1") do
           span_value_for(v, **opts)
         end
       end
@@ -139,46 +139,46 @@ module ApplicationHelper
   end
 
   def mail_body_tag(value, **opts)
-    content_tag('pre', value, class: 'border rounded mb-0 mail-body line-76-80') do
+    content_tag("pre", value, class: "border rounded mb-0 mail-body line-76-80") do
       span_text_tag(value, **opts)
     end
   end
 
   def span_text_tag(value, around: nil, pre: false, **_)
     if around.present?
-      content_tag('span', around[0], class: 'text-muted') +
+      content_tag("span", around[0], class: "text-muted") +
         span_text_tag(value, around: nil, pre: pre) +
-        content_tag('span', around[1], class: 'text-muted')
+        content_tag("span", around[1], class: "text-muted")
     elsif pre
       # rubocop: disable Rails/OutputSafety
-      content_tag('span', value.split(/\R/).map { |s| h(s) }.join(tag.br).html_safe)
+      content_tag("span", value.split(/\R/).map { |s| h(s) }.join(tag.br).html_safe)
       # rubocop: enable Rails/OutputSafety
     else
-      content_tag('span', value)
+      content_tag("span", value)
     end
   end
 
   def html_month(time)
-    time.strftime('%Y-%m')
+    time.strftime("%Y-%m")
   end
 
   def html_date(time)
-    time.strftime('%Y-%m-%d')
+    time.strftime("%Y-%m-%d")
   end
 
   def html_time(time, second: true)
     if second
-      time.strftime('%H:%M:%S')
+      time.strftime("%H:%M:%S")
     else
-      time.strftime('%H:%M')
+      time.strftime("%H:%M")
     end
   end
 
   def html_datetime_local(time, second: true)
     if second
-      time.strftime('%Y-%m-%dT%H:%M:%S')
+      time.strftime("%Y-%m-%dT%H:%M:%S")
     else
-      time.strftime('%Y-%m-%dT%H:%M')
+      time.strftime("%Y-%m-%dT%H:%M")
     end
   end
 
@@ -187,15 +187,15 @@ module ApplicationHelper
   end
 
   def bs_icon(name, size: 24, **opts)
-    opts = {width: size, height: size, fill: 'currentColor'}.merge(opts)
+    opts = {width: size, height: size, fill: "currentColor"}.merge(opts)
     opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
-    opts[:class] += ['bi']
+    opts[:class] += ["bi"]
     tag.svg(**opts) do
-      tag.use('xlink:href': "#{asset_path('bootstrap-icons/bootstrap-icons.svg')}##{name}")
+      tag.use("xlink:href": "#{asset_path('bootstrap-icons/bootstrap-icons.svg')}##{name}")
     end
   end
 
-  def file_name(obj, attr: nil, format: 'txt')
+  def file_name(obj, attr: nil, format: "txt")
     model = obj.class.model_name.i18n_key
     str = "#{t_model(model)}[#{obj.name}]"
     str += t_attr(attr, model: model) if attr

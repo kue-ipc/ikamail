@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'japanese_wrap'
+require "test_helper"
+require "japanese_wrap"
 
 class JapaneseWrapTest < ActiveSupport::TestCase
   SAMPLE_TEXT = <<~TEXT.freeze
@@ -14,12 +14,12 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     　聞いて、メロスは激怒した。「呆れた王だ。生かして置けぬ。」
   TEXT
 
-  test 'ルール無し' do
+  test "ルール無し" do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
   end
 
-  test '0文字' do
+  test "0文字" do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :force)
@@ -27,7 +27,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0, rule: :jisx4051)
   end
 
-  test '長い行' do
+  test "長い行" do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :force)
@@ -35,39 +35,39 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: text.size * 3, rule: :jisx4051)
   end
 
-  test 'ルールあり' do
+  test "ルールあり" do
     text = SAMPLE_TEXT
     assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
     assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
     assert_not_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test 'force Engrish' do
-    text = 'All your code are belong to us.'
+  test "force Engrish" do
+    text = "All your code are belong to us."
     assert_equal "All your c\node are be\nlong to us\n.", JapaneseWrap.text_wrap(text, col: 10, rule: :force)
     assert_equal "All your code are be\nlong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :force)
-    assert_equal 'All your code are belong to us.', JapaneseWrap.text_wrap(text, col: 40, rule: :force)
-    assert_equal 'All your code are belong to us.', JapaneseWrap.text_wrap(text, col: 80, rule: :force)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :force)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :force)
   end
 
-  test 'word wrap Engrish' do
-    text = 'All your code are belong to us.'
+  test "word wrap Engrish" do
+    text = "All your code are belong to us."
     assert_equal "All your\ncode are\nbelong to\nus.", JapaneseWrap.text_wrap(text, col: 10, rule: :word_wrap)
     assert_equal "All your code are\nbelong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :word_wrap)
-    assert_equal 'All your code are belong to us.', JapaneseWrap.text_wrap(text, col: 40, rule: :word_wrap)
-    assert_equal 'All your code are belong to us.', JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :word_wrap)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
   end
 
-  test 'jisx4051 Engrish' do
-    text = 'All your code are belong to us.'
+  test "jisx4051 Engrish" do
+    text = "All your code are belong to us."
     assert_equal "All your\ncode are\nbelong to\nus.", JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051)
     assert_equal "All your code are\nbelong to us.", JapaneseWrap.text_wrap(text, col: 20, rule: :jisx4051)
-    assert_equal 'All your code are belong to us.', JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051)
-    assert_equal 'All your code are belong to us.', JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051)
+    assert_equal "All your code are belong to us.", JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test 'search breakable word wrap Engrish' do
-    text = 'All your code are belong to us.'
+  test "search breakable word wrap Engrish" do
+    text = "All your code are belong to us."
     assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 10)
     assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 11)
     assert_equal 9, JapaneseWrap.search_breakable_word_wrap(text, 12)
@@ -84,56 +84,56 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal 80, JapaneseWrap.search_breakable_word_wrap(text, 80)
   end
 
-  test 'force 日本語' do
-    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+  test "force 日本語" do
+    text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal "君達のソー\nスコードは\n、全てRuby\n on Rails\nがいただい\nた。",
       JapaneseWrap.text_wrap(text, col: 10, rule: :force)
     assert_equal "君達のソースコードは\n、全てRuby on Rails\nがいただいた。",
       JapaneseWrap.text_wrap(text, col: 20, rule: :force)
     assert_equal "君達のソースコードは、全てRuby on Rails\nがいただいた。",
       JapaneseWrap.text_wrap(text, col: 40, rule: :force)
-    assert_equal '君達のソースコードは、全てRuby on Railsがいただいた。',
+    assert_equal "君達のソースコードは、全てRuby on Railsがいただいた。",
       JapaneseWrap.text_wrap(text, col: 80, rule: :force)
   end
 
-  test 'word wrap 日本語' do
-    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+  test "word wrap 日本語" do
+    text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal "君達のソー\nスコードは\n、全てRuby\non Railsが\nいただいた\n。",
       JapaneseWrap.text_wrap(text, col: 10, rule: :word_wrap)
     assert_equal "君達のソースコードは\n、全てRuby on Rails\nがいただいた。",
       JapaneseWrap.text_wrap(text, col: 20, rule: :word_wrap)
     assert_equal "君達のソースコードは、全てRuby on Rails\nがいただいた。",
       JapaneseWrap.text_wrap(text, col: 40, rule: :word_wrap)
-    assert_equal '君達のソースコードは、全てRuby on Railsがいただいた。',
+    assert_equal "君達のソースコードは、全てRuby on Railsがいただいた。",
       JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
   end
 
-  test 'jisx4051 日本語' do
-    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+  test "jisx4051 日本語" do
+    text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal "君達のソー\nスコード\nは、全て\nRuby on\nRailsがい\nただいた。",
       JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051)
     assert_equal "君達のソースコード\nは、全てRuby on\nRailsがいただいた。",
       JapaneseWrap.text_wrap(text, col: 20, rule: :jisx4051)
     assert_equal "君達のソースコードは、全てRuby on Rails\nがいただいた。",
       JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051)
-    assert_equal '君達のソースコードは、全てRuby on Railsがいただいた。',
+    assert_equal "君達のソースコードは、全てRuby on Railsがいただいた。",
       JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test 'jisx4051 hanging 日本語' do
-    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+  test "jisx4051 hanging 日本語" do
+    text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal "君達のソー\nスコードは、\n全てRuby\non Railsが\nいただいた。",
       JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051, hanging: true)
     assert_equal "君達のソースコードは、\n全てRuby on Railsが\nいただいた。",
       JapaneseWrap.text_wrap(text, col: 20, rule: :jisx4051, hanging: true)
     assert_equal "君達のソースコードは、全てRuby on Rails\nがいただいた。",
       JapaneseWrap.text_wrap(text, col: 40, rule: :jisx4051, hanging: true)
-    assert_equal '君達のソースコードは、全てRuby on Railsがいただいた。',
+    assert_equal "君達のソースコードは、全てRuby on Railsがいただいた。",
       JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051, hanging: true)
   end
 
-  test 'search breakable jisx4051 Engrish' do
-    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+  test "search breakable jisx4051 Engrish" do
+    text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal 6, JapaneseWrap.search_breakable_jisx4051(text, 6)
     assert_equal 6, JapaneseWrap.search_breakable_jisx4051(text, 7)
     assert_equal 8, JapaneseWrap.search_breakable_jisx4051(text, 8) # 行頭禁則文字「ー」
@@ -161,16 +161,16 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal 80, JapaneseWrap.search_breakable_jisx4051(text, 80)
   end
 
-  test '1倍幅サロゲートペア' do
+  test "1倍幅サロゲートペア" do
     # UTF-8で処理するため、U+10000以上も一つの文字として処理される。
-    text = '𠮷田の𠮷は土に口です。'
+    text = "𠮷田の𠮷は土に口です。"
     assert_equal "𠮷田の\n𠮷は土\nに口で\nす。", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
     assert_equal "𠮷田の\n𠮷は土\nに口で\nす。", JapaneseWrap.text_wrap(text, col: 7, rule: :jisx4051)
     assert_equal "𠮷田の𠮷\nは土に口\nです。", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
   end
 
-  test 'ギリシャ文字とキリル文字' do
-    list = ['α', 'д']
+  test "ギリシャ文字とキリル文字" do
+    list = ["α", "д"]
     list.each do |char|
       # デフォルト幅 2
       text = -"前文#{char}後文"
@@ -196,8 +196,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
   # 行頭禁止
   # 行末禁止
 
-  test '複雑な組み合わせ: 行末禁止の後の空白' do
-    text = '前文  」後文'
+  test "複雑な組み合わせ: 行末禁止の後の空白" do
+    text = "前文  」後文"
     assert_equal "前\n文\n」\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前\n文\n」後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前\n文  」\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -205,8 +205,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文  」後\n文", JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051)
   end
 
-  test '複雑な組み合わせ: 行末禁止のあとの空白' do
-    text = '前文「  後文'
+  test "複雑な組み合わせ: 行末禁止のあとの空白" do
+    text = "前文「  後文"
     assert_equal "前\n文\n「\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前文\n「\n後文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前文「\n後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -214,8 +214,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文「  後\n文", JapaneseWrap.text_wrap(text, col: 10, rule: :jisx4051)
   end
 
-  test '複雑な組み合わせ: 囲まれた空白' do
-    text = '前文「    」後文'
+  test "複雑な組み合わせ: 囲まれた空白" do
+    text = "前文「    」後文"
     assert_equal "前\n文\n「\n」\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前文\n「\n」後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前文\n「\n」後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -225,8 +225,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文「    」後\n文", JapaneseWrap.text_wrap(text, col: 14, rule: :jisx4051)
   end
 
-  test '複雑な組み合わせ: 囲まれた単語' do
-    text = '前文「word」後文'
+  test "複雑な組み合わせ: 囲まれた単語" do
+    text = "前文「word」後文"
     assert_equal "前\n文\n「\nwo\nr\nd\n」\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前文\n「\nwor\nd」\n後文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前文\n「word\n」後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -236,8 +236,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文「word」後\n文", JapaneseWrap.text_wrap(text, col: 14, rule: :jisx4051)
   end
 
-  test '複雑な組み合わせ: 始まり括弧の連続' do
-    text = '前文「「「「後文'
+  test "複雑な組み合わせ: 始まり括弧の連続" do
+    text = "前文「「「「後文"
     assert_equal "前\n文\n「\n「\n「\n「\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前文\n「「\n「「\n後文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前文\n「「「\n「後文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -247,8 +247,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文「「「「後\n文", JapaneseWrap.text_wrap(text, col: 14, rule: :jisx4051)
   end
 
-  test '複雑な組み合わせ: 終わり括弧の連続' do
-    text = '前文」」」」後文'
+  test "複雑な組み合わせ: 終わり括弧の連続" do
+    text = "前文」」」」後文"
     assert_equal "前\n文\n」\n」\n」\n」\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前\n文」\n」」\n」後\n文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前\n文」」\n」」後\n文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -258,8 +258,8 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文」」」」後\n文", JapaneseWrap.text_wrap(text, col: 14, rule: :jisx4051)
   end
 
-  test '複雑な組み合わせ: 括弧の連続' do
-    text = '前文「」「」後文'
+  test "複雑な組み合わせ: 括弧の連続" do
+    text = "前文「」「」後文"
     assert_equal "前\n文\n「\n」\n「\n」\n後\n文", JapaneseWrap.text_wrap(text, col: 2, rule: :jisx4051)
     assert_equal "前文\n「」\n「」\n後文", JapaneseWrap.text_wrap(text, col: 4, rule: :jisx4051)
     assert_equal "前文\n「」\n「」後\n文", JapaneseWrap.text_wrap(text, col: 6, rule: :jisx4051)
@@ -269,26 +269,26 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "前文「」「」後\n文", JapaneseWrap.text_wrap(text, col: 14, rule: :jisx4051)
   end
 
-  test '強制切断' do
-    text = 'abcdefghijklmnopqrstvwxyz0123456789'
+  test "強制切断" do
+    text = "abcdefghijklmnopqrstvwxyz0123456789"
     assert_equal "abcdefgh\nijklmnop\nqrstvwxy\nz0123456\n789", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
 
-    text = '「「「「「「「「「「「「「「「「「「'
+    text = "「「「「「「「「「「「「「「「「「「"
     assert_equal "「「「「\n「「「「\n「「「「\n「「「「\n「「", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
 
-    text = '」」」」」」」」」」」」」」」」」」」'
+    text = "」」」」」」」」」」」」」」」」」」」"
     assert_equal "」」」」\n」」」」\n」」」」\n」」」」\n」」」", JapaneseWrap.text_wrap(text, col: 8, rule: :jisx4051)
   end
 
-  test 'not wrap 日本語' do
-    text = '君達のソースコードは、全てRuby on Railsがいただいた。'
+  test "not wrap 日本語" do
+    text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal text, JapaneseWrap.text_wrap(text, col: 0)
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
   end
 
-  test 'ハイフネーション' do
-    text = 'abc def-ghi lmn'
+  test "ハイフネーション" do
+    text = "abc def-ghi lmn"
     assert_equal "abc\ndef-\nghi\nlmn", JapaneseWrap.text_wrap(text, col: 4, rule: :word_wrap)
     assert_equal "abc\ndef-\nghi\nlmn", JapaneseWrap.text_wrap(text, col: 5, rule: :word_wrap)
     assert_equal "abc\ndef-\nghi\nlmn", JapaneseWrap.text_wrap(text, col: 6, rule: :word_wrap)
@@ -302,7 +302,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal "abc def-ghi\nlmn", JapaneseWrap.text_wrap(text, col: 13, rule: :word_wrap)
   end
 
-  test 'word_break' do
+  test "word_break" do
     text = "abcd1234 αβγδ1234 あいうえ 亜伊宇江\n"
     assert_equal "abcd1234\nαβγδ1234 あ\nいうえ 亜伊\n宇江\n",
       JapaneseWrap.text_wrap(text, col: 12, rule: :jisx4051, ambiguous: 1, word_break: :normal)
@@ -318,15 +318,15 @@ class JapaneseWrapTest < ActiveSupport::TestCase
 
   ## 空文字列や空行等
 
-  test '空文字列' do
-    text = ''
+  test "空文字列" do
+    text = ""
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :word_wrap)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test '空行' do
+  test "空行" do
     text = "\n" * 80
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
@@ -339,7 +339,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :jisx4051)
   end
 
-  test '一文字行' do
+  test "一文字行" do
     text = "a\n" * 80
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :force)
@@ -359,7 +359,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
 
   ## イレギュラー
 
-  test '負の文字数' do
+  test "負の文字数" do
     text = SAMPLE_TEXT
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :none)
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :force)
@@ -367,7 +367,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal text, JapaneseWrap.text_wrap(text, col: -1, rule: :jisx4051)
   end
 
-  test '不明なルール' do
+  test "不明なルール" do
     text = SAMPLE_TEXT
     assert_raise ArgumentError do
       assert_equal text, JapaneseWrap.text_wrap(text, col: 80, rule: :japanese)

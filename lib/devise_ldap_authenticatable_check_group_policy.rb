@@ -5,8 +5,8 @@
 # * config.ldap_check_group_policy = :or
 #     A user must belgons to all groups.
 
-require 'devise'
-require 'devise_ldap_authenticatable'
+require "devise"
+require "devise_ldap_authenticatable"
 
 module Devise
   mattr_accessor :ldap_check_group_policy
@@ -38,9 +38,9 @@ module Devise
                            @check_group_membership_without_admin
 
         case Devise.ldap_check_group_policy
-        when :and, /\Aand\z/i, '&', '&&'
+        when :and, /\Aand\z/i, "&", "&&"
           in_required_groups_and?
-        when :or, /\Aor\z/i, '|', '||'
+        when :or, /\Aor\z/i, "|", "||"
           in_required_groups_or?
         else
           DeviseLdapAuthenticatable::Logger.send(

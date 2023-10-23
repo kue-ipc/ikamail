@@ -1,7 +1,7 @@
-ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
 
-require 'rails/test_help'
+require "rails/test_help"
 
 module ActiveSupport
   class TestCase
@@ -16,20 +16,20 @@ module ActiveSupport
 end
 
 # nkf helper
-require 'nkf'
+require "nkf"
 
 def u8tojis(str)
-  NKF.nkf('-W -j', str).force_encoding(Encoding::US_ASCII)
+  NKF.nkf("-W -j", str).force_encoding(Encoding::US_ASCII)
 end
 
 def u8tomjis(str)
-  NKF.nkf('-W -j -M', str).force_encoding(Encoding::US_ASCII)
+  NKF.nkf("-W -j -M", str).force_encoding(Encoding::US_ASCII)
 end
 
 def jistou8(str)
-  NKF.nkf('-J -w', str)
+  NKF.nkf("-J -w", str)
 end
 
 def mjistou8(str)
-  NKF.nkf('-J -w -m', str)
+  NKF.nkf("-J -w -m", str)
 end

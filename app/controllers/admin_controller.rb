@@ -8,15 +8,15 @@ class AdminController < ApplicationController
   def ldap_sync
     if LdapMailSyncJob.perform_later
       redirect_to admin_root_path,
-        notice: t('messages.success_action', model: t('actions.ldap_sync'), action: t('actions.start'))
+        notice: t("messages.success_action", model: t("actions.ldap_sync"), action: t("actions.start"))
     else
       redirect_to admin_root_path,
-        alert: t('messages.failure_action', model: t('actions.ldap_sync'), action: t('actions.start'))
+        alert: t("messages.failure_action", model: t("actions.ldap_sync"), action: t("actions.start"))
     end
   end
 
   def statistics
-    @year = params.permit(:year)['year']&.to_i || Time.current.then do |time|
+    @year = params.permit(:year)["year"]&.to_i || Time.current.then do |time|
       if time.month <= 3
         time.year - 1
       else
@@ -29,7 +29,7 @@ class AdminController < ApplicationController
     @mail_template_statistics = MailTemplate.all.to_h do |mail_template|
       [mail_template.id, {name: mail_template.name, count: 0}]
     end
-    BulkMail.where(status: 'delivered')
+    BulkMail.where(status: "delivered")
       .where(delivered_at: @begin_time...@end_time)
       .find_each do |bulk_mail|
       @mail_template_statistics[bulk_mail.mail_template_id].tap { |data| data[:count] += 1 }

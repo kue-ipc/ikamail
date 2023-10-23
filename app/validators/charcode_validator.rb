@@ -1,4 +1,4 @@
-require 'iso2022jp'
+require "iso2022jp"
 
 class CharcodeValidator < ActiveModel::EachValidator
   include Iso2022jp

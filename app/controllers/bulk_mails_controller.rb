@@ -39,7 +39,7 @@ class BulkMailsController < ApplicationController
     @bulk_mail = BulkMail.new
     @action_info = ActionInfo.new
     @bulk_mail.wrap_col = 76
-    @bulk_mail.wrap_rule = 'jisx4051'
+    @bulk_mail.wrap_rule = "jisx4051"
   end
 
   # GET /bulk_mails/1/edit
@@ -51,12 +51,12 @@ class BulkMailsController < ApplicationController
   # POST /bulk_mails.json
   def create
     @bulk_mail = BulkMail.new(bulk_mail_params)
-    @bulk_mail.status = 'draft'
+    @bulk_mail.status = "draft"
     @bulk_mail.user = current_user
     if @bulk_mail.save
       record_action_log
       redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :create) +
-                                      t('mail.done_messages.create')
+                                      t("mail.done_messages.create")
     else
       @action_info.current_status = nil
       render :new
@@ -69,7 +69,7 @@ class BulkMailsController < ApplicationController
     if @bulk_mail.update(bulk_mail_params)
       record_action_log
       redirect_to @bulk_mail, notice: t_success_action(@bulk_mail, :update) +
-                                      t('mail.done_messages.update')
+                                      t("mail.done_messages.update")
     else
       render :edit
     end
@@ -87,10 +87,10 @@ class BulkMailsController < ApplicationController
   # PUT /bulk_mails/1/{action}
 
   def apply
-    if @bulk_mail.update(status: 'pending')
+    if @bulk_mail.update(status: "pending")
       record_action_log
       send_notification_mail(to: @bulk_mail.mail_template.user)
-      flash.notice = [*flash.notice, t('mail.done_messages.apply')]
+      flash.notice = [*flash.notice, t("mail.done_messages.apply")]
       timing_message = t(@bulk_mail.delivery_timing, scope: [:mail, :done_timing_messages, :apply])
       flash.notice = [*flash.notice, timing_message] if timing_message.present?
     else
@@ -100,9 +100,9 @@ class BulkMailsController < ApplicationController
   end
 
   def withdraw
-    if @bulk_mail.update(status: 'draft', reserved_at: nil)
+    if @bulk_mail.update(status: "draft", reserved_at: nil)
       record_action_log
-      flash.notice = [*flash.notice, t('mail.done_messages.withdraw')]
+      flash.notice = [*flash.notice, t("mail.done_messages.withdraw")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :withdraw)]
     end
@@ -110,10 +110,10 @@ class BulkMailsController < ApplicationController
   end
 
   def approve
-    if @bulk_mail.update(status: 'ready')
+    if @bulk_mail.update(status: "ready")
       record_action_log
       send_notification_mail(to: @bulk_mail.user)
-      flash.notice = [*flash.notice, t('mail.done_messages.approve')]
+      flash.notice = [*flash.notice, t("mail.done_messages.approve")]
 
       if @bulk_mail.delivery_timing_immediate?
         deliver(auto: true)
@@ -128,10 +128,10 @@ class BulkMailsController < ApplicationController
   end
 
   def reject
-    if @bulk_mail.update(status: 'draft')
+    if @bulk_mail.update(status: "draft")
       record_action_log
       send_notification_mail(to: @bulk_mail.user)
-      flash.notice = [*flash.notice, t('mail.done_messages.reject')]
+      flash.notice = [*flash.notice, t("mail.done_messages.reject")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :reject)]
     end
@@ -139,10 +139,10 @@ class BulkMailsController < ApplicationController
   end
 
   def cancel
-    if @bulk_mail.update(status: 'pending', reserved_at: nil)
+    if @bulk_mail.update(status: "pending", reserved_at: nil)
       record_action_log
       send_notification_mail(to: @bulk_mail.user)
-      flash.notice = [*flash.notice, t('mail.done_messages.cancel')]
+      flash.notice = [*flash.notice, t("mail.done_messages.cancel")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :cancel)]
     end
@@ -151,14 +151,14 @@ class BulkMailsController < ApplicationController
 
   def reserve(auto: false, reserved_at: nil)
     reserved_at ||= @action_info.datetime
-    if @bulk_mail.update(status: 'reserved', reserved_at: reserved_at)
+    if @bulk_mail.update(status: "reserved", reserved_at: reserved_at)
       if auto
-        record_action_log(user: nil, action: 'reserve', comment: 'auto')
+        record_action_log(user: nil, action: "reserve", comment: "auto")
       else
         record_action_log
       end
       ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail)
-      flash.notice = [*flash.notice, t('mail.done_messages.reserve')]
+      flash.notice = [*flash.notice, t("mail.done_messages.reserve")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :reserve)]
     end
@@ -166,14 +166,14 @@ class BulkMailsController < ApplicationController
   end
 
   def deliver(auto: false)
-    if @bulk_mail.update(status: 'waiting')
+    if @bulk_mail.update(status: "waiting")
       if auto
-        record_action_log(user: nil, action: 'deliver', comment: 'auto')
+        record_action_log(user: nil, action: "deliver", comment: "auto")
       else
         record_action_log
       end
       BulkMailer.with(bulk_mail: @bulk_mail).all.deliver_later
-      flash.notice = [*flash.notice, t('mail.done_messages.deliver')]
+      flash.notice = [*flash.notice, t("mail.done_messages.deliver")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :deliver)]
     end
@@ -181,9 +181,9 @@ class BulkMailsController < ApplicationController
   end
 
   def discard
-    if @bulk_mail.update(status: 'waste')
+    if @bulk_mail.update(status: "waste")
       record_action_log
-      flash.notice = [*flash.notice, t('mail.done_messages.discard')]
+      flash.notice = [*flash.notice, t("mail.done_messages.discard")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :discard)]
     end
@@ -229,7 +229,7 @@ class BulkMailsController < ApplicationController
 
   private def record_action_log(user: current_user, action: action_name, comment: action_comment)
     action_log = ActionLog.create(bulk_mail: @bulk_mail, user: user, action: action, comment: comment)
-    flash.alert = [*flash.alert, t('messages.failure_record_action_log')] unless action_log
+    flash.alert = [*flash.alert, t("messages.failure_record_action_log")] unless action_log
     action_log
   end
 
@@ -239,7 +239,7 @@ class BulkMailsController < ApplicationController
     mailer = NotificationMailer.with(to: to, bulk_mail: @bulk_mail, comment: @action_info.comment)
       .send("mail_#{action}")
       .deliver_later
-    flash.alert = [*flash.alert, t('messages.failure_send_notification_mail')] unless mailer
+    flash.alert = [*flash.alert, t("messages.failure_send_notification_mail")] unless mailer
     mailer
   end
 end

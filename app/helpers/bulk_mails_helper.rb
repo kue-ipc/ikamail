@@ -12,7 +12,7 @@ module BulkMailsHelper
   end
 
   def wrap_col_collection
-    [0, 76, 80].map { |num| [t('helpers.wrap_cols', count: num), num] }
+    [0, 76, 80].map { |num| [t("helpers.wrap_cols", count: num), num] }
   end
 
   def wrap_rule_collection

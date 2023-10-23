@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class MailGroupsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -12,12 +12,12 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:admin)
     end
 
-    test 'should get index' do
+    test "should get index" do
       get mail_groups_url
       assert_response :success
     end
 
-    test 'should show mail_group' do
+    test "should show mail_group" do
       get mail_group_url(@mail_group)
       assert_response :success
     end
@@ -28,13 +28,13 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test 'should get index' do
+    test "should get index" do
       assert_raises(Pundit::NotAuthorizedError) do
         get mail_groups_url
       end
     end
 
-    test 'should show mail_group' do
+    test "should show mail_group" do
       assert_raises(Pundit::NotAuthorizedError) do
         get mail_group_url(@mail_group)
       end
@@ -42,12 +42,12 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Anonymous < MailGroupsControllerTest
-    test 'redirect to login INSTEAD OF get index' do
+    test "redirect to login INSTEAD OF get index" do
       get mail_groups_url
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF show mail_group' do
+    test "redirect to login INSTEAD OF show mail_group" do
       get mail_group_url(@mail_group)
       assert_redirected_to new_user_session_path
     end

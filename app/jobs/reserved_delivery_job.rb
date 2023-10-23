@@ -11,10 +11,10 @@ class ReservedDeliveryJob < ApplicationJob
     return unless bulk_mail.reserved_at&.<=(Time.current.since(1.minute))
 
     bulk_mail.with_lock do
-      bulk_mail.update!(status: 'waiting')
+      bulk_mail.update!(status: "waiting")
     end
 
-    ActionLog.create(bulk_mail: bulk_mail, action: 'deliver', comment: 'reserved')
+    ActionLog.create(bulk_mail: bulk_mail, action: "deliver", comment: "reserved")
     BulkMailer.with(bulk_mail: bulk_mail).all.deliver_later
   end
 end

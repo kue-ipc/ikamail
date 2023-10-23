@@ -1,4 +1,4 @@
-require 'i18n/backend/active_record'
+require "i18n/backend/active_record"
 
 Translation = I18n::Backend::ActiveRecord::Translation
 

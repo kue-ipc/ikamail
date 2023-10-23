@@ -5,6 +5,6 @@
 
 if $0 == __FILE__
   ARGF.each_line do |line|
-    print line.gsub('template', 'mail_template')
+    print line.gsub("template", "mail_template")
   end
 end

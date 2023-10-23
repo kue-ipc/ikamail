@@ -4,7 +4,7 @@ class TranslationsController < ApplicationController
   before_action :authorize_translation, only: [:index, :create]
 
   def index
-    @translations = all_translations([], I18n.t('.', locale: @locale),
+    @translations = all_translations([], I18n.t(".", locale: @locale),
       translations_to_hash(Translation.locale(@locale)))
   end
 
@@ -50,7 +50,7 @@ class TranslationsController < ApplicationController
   private def all_translations(key, value, db)
     case value
     when String
-      full_key = key.join('.')
+      full_key = key.join(".")
       db[full_key] || Translation.new(
         locale: @locale,
         key: full_key,

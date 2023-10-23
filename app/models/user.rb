@@ -28,12 +28,12 @@ class User < ApplicationRecord
   end
 
   def ldap_mail
-    ldap_entry&.[]('mail')&.first&.downcase
+    ldap_entry&.[]("mail")&.first&.downcase
   end
 
   def ldap_display_name
     ldap_entry&.[]("displayName;lang-#{I18n.default_locale}")&.first ||
-      ldap_entry&.[]('displayName')&.first
+      ldap_entry&.[]("displayName")&.first
   end
 
   def sync_ldap!

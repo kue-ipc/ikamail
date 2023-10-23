@@ -6,12 +6,12 @@
 module Iso2022jp
   # EUC-JPに変化された文字が来る場合があるため、UTF-8にしてから処理すること
   FB_PROCS = {
-    skip: ->(_) { '' },
-    html: ->(c) { '&#%d;' % c.encode(Encoding::UTF_8).ord },
-    xml: ->(c) { '&#x%X;' % c.encode(Encoding::UTF_8).ord },
+    skip: ->(_) { "" },
+    html: ->(c) { "&#%d;" % c.encode(Encoding::UTF_8).ord },
+    xml: ->(c) { "&#x%X;" % c.encode(Encoding::UTF_8).ord },
     perl: ->(c) { '\\x{%X}' % c.encode(Encoding::UTF_8).ord },
-    java: ->(c) { c.encode(Encoding::UTF_16LE).unpack('v*').map { |n| '\\u%04X' % n }.join },
-    subchar: ->(_) { '?' },
+    java: ->(c) { c.encode(Encoding::UTF_16LE).unpack("v*").map { |n| '\\u%04X' % n }.join },
+    subchar: ->(_) { "?" },
   }.freeze
 
   module_function # rubocop:disable Style/AccessModifierDeclarations
@@ -44,7 +44,7 @@ module Iso2022jp
   end
 
   def check_unconvertible_chars(str, cp932: true)
-    no_amp_str = str.gsub('&', '&amp;')
+    no_amp_str = str.gsub("&", "&amp;")
     conv_str = double_conv_jis(no_amp_str, fallback: :xml, cp932: cp932)
 
     conv_str.scan(/&\#x(\h{1,6});/).map { |m| m[0].to_i(16).chr(Encoding::UTF_8) }
@@ -55,7 +55,7 @@ module Iso2022jp
   # x0201: JIS X 0201(半角カタカナ) を JIS X 0208(全角カタカナ) に変換する
   def double_conv_jis(str, fallback: :skip, cp932: true, x0201: true)
     fb_proc = FB_PROCS[fallback]
-    raise ArgumentError, 'invalid fallback' unless fb_proc
+    raise ArgumentError, "invalid fallback" unless fb_proc
 
     # 標準化
     str = normalize(str, x0201: x0201)

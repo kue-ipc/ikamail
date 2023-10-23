@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
@@ -13,59 +13,59 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:admin)
     end
 
-    test 'should get index' do
+    test "should get index" do
       get admin_users_url
       assert_response :success
     end
 
-    test 'should create user' do
-      assert_difference('User.count') do
+    test "should create user" do
+      assert_difference("User.count") do
         post admin_users_url, params: {user: {
-          username: 'user04',
+          username: "user04",
         }}
       end
       assert_redirected_to admin_users_url
-      assert_equal 'ユーザーを登録しました。', flash[:notice]
+      assert_equal "ユーザーを登録しました。", flash[:notice]
     end
 
-    test 'should NOT create existed user' do
-      assert_no_difference('User.count') do
+    test "should NOT create existed user" do
+      assert_no_difference("User.count") do
         post admin_users_url, params: {user: {
-          username: 'user01',
+          username: "user01",
         }}
       end
       assert_redirected_to admin_users_url
-      assert_equal 'ユーザーを登録することができません。', flash[:alert]
+      assert_equal "ユーザーを登録することができません。", flash[:alert]
     end
 
-    test 'should show user' do
+    test "should show user" do
       get admin_user_url(@user)
       assert_response :success
     end
 
-    test 'should update user' do
-      patch admin_user_url(@user), params: {user: {role: 'admin'}}
+    test "should update user" do
+      patch admin_user_url(@user), params: {user: {role: "admin"}}
       assert User.find(@user.id).admin?
       assert_redirected_to admin_users_url
-      assert_equal 'ユーザーを更新しました。', flash[:notice]
+      assert_equal "ユーザーを更新しました。", flash[:notice]
     end
 
-    test 'should NOT update own user' do
-      patch admin_user_url(users(:admin)), params: {user: {role: 'user'}}
+    test "should NOT update own user" do
+      patch admin_user_url(users(:admin)), params: {user: {role: "user"}}
       assert User.find(users(:admin).id).admin?
       assert_redirected_to admin_users_url
-      assert_equal '自分自身の情報は変更できません。', flash[:alert]
+      assert_equal "自分自身の情報は変更できません。", flash[:alert]
     end
 
-    test 'should sync user' do
+    test "should sync user" do
       assert_enqueued_with(job: LdapUserSyncJob) do
         put sync_admin_users_url
       end
       assert_redirected_to admin_users_url
-      assert_equal 'LDAP同期を開始しました。', flash[:notice]
+      assert_equal "LDAP同期を開始しました。", flash[:notice]
     end
 
-    test 'should get own user' do
+    test "should get own user" do
       get user_url
       assert_response :success
     end
@@ -76,35 +76,35 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test 'should NOT get index' do
+    test "should NOT get index" do
       assert_raises(Pundit::NotAuthorizedError) do
         get admin_users_url
       end
     end
 
-    test 'should NOT create user' do
-      assert_no_difference('User.count') do
+    test "should NOT create user" do
+      assert_no_difference("User.count") do
         assert_raises(Pundit::NotAuthorizedError) do
           post admin_users_url, params: {user: {
-            username: 'user04',
+            username: "user04",
           }}
         end
       end
     end
 
-    test 'should NOT show user' do
+    test "should NOT show user" do
       assert_raises(Pundit::NotAuthorizedError) do
         get admin_user_url(@user)
       end
     end
 
-    test 'should NOT update user' do
+    test "should NOT update user" do
       assert_raises(Pundit::NotAuthorizedError) do
-        patch admin_user_url(@user), params: {user: {role: 'admin'}}
+        patch admin_user_url(@user), params: {user: {role: "admin"}}
       end
     end
 
-    test 'should NOT sync user' do
+    test "should NOT sync user" do
       assert_no_enqueued_jobs do
         assert_raises(Pundit::NotAuthorizedError) do
           put sync_admin_users_url
@@ -112,45 +112,45 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test 'should get own user' do
+    test "should get own user" do
       get user_url
       assert_response :success
     end
   end
 
   class Anonymous < UsersControllerTest
-    test 'redirect to login INSTEAD OF get index' do
+    test "redirect to login INSTEAD OF get index" do
       get admin_users_url
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF create user' do
-      assert_no_difference('User.count') do
+    test "redirect to login INSTEAD OF create user" do
+      assert_no_difference("User.count") do
         post admin_users_url, params: {user: {
-          username: 'user04',
+          username: "user04",
         }}
       end
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF show user' do
+    test "redirect to login INSTEAD OF show user" do
       get admin_user_url(@user)
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF update user' do
-      patch admin_user_url(@user), params: {user: {role: 'admin'}}
+    test "redirect to login INSTEAD OF update user" do
+      patch admin_user_url(@user), params: {user: {role: "admin"}}
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF sync user' do
+    test "redirect to login INSTEAD OF sync user" do
       assert_no_enqueued_jobs do
         put sync_admin_users_url
       end
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login instead of get own user' do
+    test "redirect to login instead of get own user" do
       get user_url
       assert_redirected_to new_user_session_path
     end

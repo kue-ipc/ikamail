@@ -1,4 +1,4 @@
-require 'set'
+require "set"
 
 class CollectRecipientJob < ApplicationJob
   queue_as :default

@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -12,18 +12,18 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:admin)
     end
 
-    test 'should get index' do
+    test "should get index" do
       get mail_templates_url
       assert_response :success
     end
 
-    test 'should get new' do
+    test "should get new" do
       get new_mail_template_url
       assert_response :success
     end
 
-    test 'should create mail_template' do
-      assert_difference('MailTemplate.count') do
+    test "should create mail_template" do
+      assert_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
@@ -42,8 +42,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to mail_template_url(MailTemplate.last)
     end
 
-    test 'should create NOT mail_template with uncovertible JIS from_name' do
-      assert_no_difference('MailTemplate.count') do
+    test "should create NOT mail_template with uncovertible JIS from_name" do
+      assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
@@ -62,8 +62,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should create NOT mail_template with uncovertible JIS subject_prefix' do
-      assert_no_difference('MailTemplate.count') do
+    test "should create NOT mail_template with uncovertible JIS subject_prefix" do
+      assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
@@ -82,8 +82,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should create NOT mail_template with uncovertible JIS subject_suffix' do
-      assert_no_difference('MailTemplate.count') do
+    test "should create NOT mail_template with uncovertible JIS subject_suffix" do
+      assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
@@ -102,8 +102,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should create NOT mail_template with uncovertible JIS body_header' do
-      assert_no_difference('MailTemplate.count') do
+    test "should create NOT mail_template with uncovertible JIS body_header" do
+      assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: "#{@mail_template.body_header}😺",
@@ -122,8 +122,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should create NOT mail_template with uncovertible JIS body_footer' do
-      assert_no_difference('MailTemplate.count') do
+    test "should create NOT mail_template with uncovertible JIS body_footer" do
+      assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: "#{@mail_template.body_footer}😺",
           body_header: @mail_template.body_header,
@@ -142,17 +142,17 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test 'should show mail_template' do
+    test "should show mail_template" do
       get mail_template_url(@mail_template)
       assert_response :success
     end
 
-    test 'should get edit' do
+    test "should get edit" do
       get edit_mail_template_url(@mail_template)
       assert_response :success
     end
 
-    test 'should update mail_template' do
+    test "should update mail_template" do
       patch mail_template_url(@mail_template), params: {mail_template: {
         body_footer: @mail_template.body_footer,
         body_header: @mail_template.body_header,
@@ -169,16 +169,16 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to mail_template_url(@mail_template)
     end
 
-    test 'should NOT destroy mail_template used' do
-      assert_no_difference('MailTemplate.count') do
+    test "should NOT destroy mail_template used" do
+      assert_no_difference("MailTemplate.count") do
         delete mail_template_url(@mail_template)
       end
 
       assert_redirected_to mail_templates_url
     end
 
-    test 'should destroy mail_template NO used' do
-      assert_difference('MailTemplate.count', -1) do
+    test "should destroy mail_template NO used" do
+      assert_difference("MailTemplate.count", -1) do
         delete mail_template_url(mail_templates(:no_used))
       end
 
@@ -191,19 +191,19 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test 'should get index' do
+    test "should get index" do
       get mail_templates_url
       assert_response :success
     end
 
-    test 'should NOT get new' do
+    test "should NOT get new" do
       assert_raises(Pundit::NotAuthorizedError) do
         get new_mail_template_url
       end
     end
 
-    test 'should NOT create mail_template' do
-      assert_no_difference('MailTemplate.count') do
+    test "should NOT create mail_template" do
+      assert_no_difference("MailTemplate.count") do
         assert_raises(Pundit::NotAuthorizedError) do
           post mail_templates_url, params: {mail_template: {
             body_footer: @mail_template.body_footer,
@@ -222,18 +222,18 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test 'should show mail_template' do
+    test "should show mail_template" do
       get mail_template_url(@mail_template)
       assert_response :success
     end
 
-    test 'should NOT get edit' do
+    test "should NOT get edit" do
       assert_raises(Pundit::NotAuthorizedError) do
         get edit_mail_template_url(@mail_template)
       end
     end
 
-    test 'should NOT update mail_template' do
+    test "should NOT update mail_template" do
       assert_raises(Pundit::NotAuthorizedError) do
         patch mail_template_url(@mail_template), params: {mail_template: {
           body_footer: @mail_template.body_footer,
@@ -251,8 +251,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    test 'should NOT destroy mail_template NO used' do
-      assert_no_difference('MailTemplate.count') do
+    test "should NOT destroy mail_template NO used" do
+      assert_no_difference("MailTemplate.count") do
         assert_raises(Pundit::NotAuthorizedError) do
           delete mail_template_url(mail_templates(:no_used))
         end
@@ -261,18 +261,18 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Anonymous < MailTemplatesControllerTest
-    test 'redirect to login INSTEAD OF get index' do
+    test "redirect to login INSTEAD OF get index" do
       get mail_templates_url
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF get new' do
+    test "redirect to login INSTEAD OF get new" do
       get new_mail_template_url
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF create mail_template' do
-      assert_no_difference('MailTemplate.count') do
+    test "redirect to login INSTEAD OF create mail_template" do
+      assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: {mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
@@ -291,17 +291,17 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF show mail_template' do
+    test "redirect to login INSTEAD OF show mail_template" do
       get mail_template_url(@mail_template)
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF get edit' do
+    test "redirect to login INSTEAD OF get edit" do
       get edit_mail_template_url(@mail_template)
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF update mail_template' do
+    test "redirect to login INSTEAD OF update mail_template" do
       patch mail_template_url(@mail_template), params: {mail_template: {
         body_footer: @mail_template.body_footer,
         body_header: @mail_template.body_header,
@@ -318,8 +318,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to new_user_session_path
     end
 
-    test 'redirect to login INSTEAD OF destroy mail_template NO used' do
-      assert_no_difference('MailTemplate.count', -1) do
+    test "redirect to login INSTEAD OF destroy mail_template NO used" do
+      assert_no_difference("MailTemplate.count", -1) do
         delete mail_template_url(mail_templates(:no_used))
       end
 

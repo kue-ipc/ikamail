@@ -1,5 +1,5 @@
 class NotificationMailer < ApplicationMailer
-  default charset: 'ISO-2022-JP'
+  default charset: "ISO-2022-JP"
 
   before_action :mail_params
 

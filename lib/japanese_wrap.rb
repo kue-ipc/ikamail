@@ -8,7 +8,7 @@
 # * 濁音・半濁音を行頭禁止文字に含める。
 # * 合字である「ㇷ゚ U+31F7 U+309A」を考慮しないが、実質行頭禁止になる。
 
-require 'set'
+require "set"
 
 module JapaneseWrap
   module_function # rubocop:disable Style/AccessModifierDeclarations
@@ -129,7 +129,7 @@ module JapaneseWrap
 
   # 長いテキストを折り返す。
   def text_wrap(str, **opts)
-    buff = String.new(encoding: 'UTF-8')
+    buff = String.new(encoding: "UTF-8")
     str.each_line do |line|
       each_wrap(line, **opts) do |part|
         buff << part
@@ -239,7 +239,7 @@ module JapaneseWrap
     ptr = search_breakable_word_wrap(str, ptr, word_break: word_break)
     cur_ptr = ptr
     while cur_ptr.positive?
-      if str[cur_ptr] != ' '
+      if str[cur_ptr] != " "
         cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false, word_break: word_break)
         if NOT_STARTING_CHARS.exclude?(str[cur_ptr]) &&
            NOT_ENDING_CHARS.exclude?(str[cur_ptr - 1])

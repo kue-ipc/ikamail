@@ -1,7 +1,7 @@
-require 'test_helper'
+require "test_helper"
 
 class CollectRecipientJobTest < ActiveJob::TestCase
-  test 'collect recipient' do
+  test "collect recipient" do
     CollectRecipientJob.perform_now(recipient_lists(:all))
     all_recp = RecipientList.find(recipient_lists(:all).id)
     assert_includes all_recp.applicable_mail_users, mail_users(:admin)

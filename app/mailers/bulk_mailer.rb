@@ -1,7 +1,7 @@
 class BulkMailer < ApplicationMailer
-  layout 'empty_mailer'
+  layout "empty_mailer"
 
-  default charset: 'ISO-2022-JP'
+  default charset: "ISO-2022-JP"
 
   before_action :before_deliver_bulk_mail
   after_action :after_deliver_bulk_mail
@@ -25,14 +25,14 @@ class BulkMailer < ApplicationMailer
     @bulk_mail.mail_template.with_lock do
       @bulk_mail.mail_template.increment!(:count) # rubocop: disable Rails/SkipsModelValidations
       mail_count = @bulk_mail.mail_template.count
-      @bulk_mail.update!(status: 'delivering', number: mail_count)
+      @bulk_mail.update!(status: "delivering", number: mail_count)
     end
-    ActionLog.create(bulk_mail: @bulk_mail, action: 'start')
+    ActionLog.create(bulk_mail: @bulk_mail, action: "start")
   end
 
   private def after_deliver_bulk_mail
-    @bulk_mail.update(status: 'delivered', delivered_at: Time.zone.now)
-    ActionLog.create(bulk_mail: @bulk_mail, action: 'finish')
+    @bulk_mail.update(status: "delivered", delivered_at: Time.zone.now)
+    ActionLog.create(bulk_mail: @bulk_mail, action: "finish")
     NotificationMailer.with(to: @bulk_mail.user, bulk_mail: @bulk_mail).mail_finish.deliver_later
   end
 end

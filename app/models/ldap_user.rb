@@ -4,26 +4,26 @@ class LdapUser < ActiveLdap::Base
     prefix: Settings.ldap.user.ou,
     classes: Settings.ldap.user.classes
 
-  belongs_to :primary_group, class_name: 'LdapGroup',
-    primary_key: 'gidNumber',
-    foreign_key: 'gidNumber'
+  belongs_to :primary_group, class_name: "LdapGroup",
+    primary_key: "gidNumber",
+    foreign_key: "gidNumber"
 
-  belongs_to :groups, class_name: 'LdapGroup',
-    primary_key: 'uid',
-    many: 'memberUid'
+  belongs_to :groups, class_name: "LdapGroup",
+    primary_key: "uid",
+    many: "memberUid"
 
   def name
     self[dn_attribute]
   end
 
   def display_name
-    case self['displayName']
+    case self["displayName"]
     when nil then name
-    when String then self['displayName']
+    when String then self["displayName"]
     when Array
       lang = "lang-#{I18n.default_locale}"
       lang_desc = name
-      self['displayName'].each do |desc|
+      self["displayName"].each do |desc|
         if desc.is_a?(String)
           lang_desc = desc
         elsif desc[lang].is_a?(String)
@@ -32,8 +32,8 @@ class LdapUser < ActiveLdap::Base
         end
       end
       lang_desc
-    when Hash then self['description'].values.first
-    else self['displayName'].to_s
+    when Hash then self["description"].values.first
+    else self["displayName"].to_s
     end
   end
 

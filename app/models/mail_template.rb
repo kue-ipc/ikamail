@@ -1,4 +1,4 @@
-require 'iso2022jp'
+require "iso2022jp"
 
 class MailTemplate < ApplicationRecord
   include Iso2022jp
