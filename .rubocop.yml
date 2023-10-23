@@ -117,6 +117,9 @@ Style/FormatString:
 Style/OneLineConditional:
   AlwaysCorrectToMultiline: true
 
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
 # Bundler
 Bundler/OrderedGems:
   Enabled: false
