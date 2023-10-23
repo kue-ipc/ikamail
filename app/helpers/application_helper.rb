@@ -191,7 +191,7 @@ module ApplicationHelper
     opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
     opts[:class] += ["bi"]
     tag.svg(**opts) do
-      tag.use("xlink:href": "#{asset_path('bootstrap-icons/bootstrap-icons.svg')}##{name}")
+      tag.use("xlink:href": "#{asset_path('bootstrap-icons.svg')}##{name}")
     end
   end
 
