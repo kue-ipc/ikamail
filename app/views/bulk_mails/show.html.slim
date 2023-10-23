@@ -80,8 +80,8 @@ dl
                                          comment_required: false, level: 'danger',}
 
   - if bulk_mail_policy.destroy?
-    =<> link_to t('actions.destroy'), @bulk_mail,
-      class: 'btn btn-danger', data: {confirm: t('messages.corfirm_destroy')}, method: :delete
+    =<> button_to t('actions.destroy'), @bulk_mail,
+      class: 'btn btn-danger', data: {turbo_confirm: t('messages.corfirm_destroy')}, method: :delete
 
 .mail-histroy.d-print-none
   hr

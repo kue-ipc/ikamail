@@ -22,9 +22,11 @@ table.table.table-sm
               = check_box_tag "admin_#{user.id}", '1', user.admin?, disabled: true, class: 'form-check-input'
               = label_tag "admin_#{user.id}", '', class: 'form-check-label'
           - else
-            = link_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}), method: :patch
+            // TODO
+            = button_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}), method: :patch,
+                        class: "btn btn-link"
               .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="クリックして変更"
-                = check_box_tag "admin_#{user.id}", '1', user.admin?, class: 'form-check-input'
+                = check_box_tag "admin_#{user.id}", '1', user.admin?, disabled: true, class: 'form-check-input'
                 = label_tag "admin_#{user.id}", '', class: 'form-check-label'
 
 = paginate @users
@@ -49,4 +51,4 @@ p
 p
   | LDAPとの同期を行うには下記のボタンから行ってください。同期には時間がかかる場合があります。
 p
-  = link_to 'LDAP同期', sync_admin_users_path, method: :put, class: 'btn btn-primary'
+  = button_to 'LDAP同期', sync_admin_users_path, method: :put, class: 'btn btn-primary'
