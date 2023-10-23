@@ -1,22 +1,14 @@
-# Ralis component
-import ujs from '@rails/ujs'
-ujs.start()
-
-import turbolinks from 'turbolinks'
-turbolinks.start()
-
-# import * as activestorage from '@rails/activestorage'
-# activestorage.start()
-
-# import 'channels'
+# Entry point for the build script in your package.json
+import "@hotwired/turbo-rails"
+import "./controllers"
 
 # Custom modules
-import 'src/bootstrap-trigger'
-import 'src/translation-index'
-import bulkMailTextArea from 'src/bulk-mail-textarea'
-import templateInfo from 'src/template-info'
-import multiselect from 'src/multiselect'
-import uploadButton from 'src/upload-button'
+import './src/bootstrap-trigger.coffee'
+import './src/translation-index.coffee'
+import bulkMailTextArea from './src/bulk-mail-textarea.coffee'
+import templateInfo from './src/template-info.coffee'
+import multiselect from './src/multiselect.coffee'
+import uploadButton from './src/upload-button.coffee'
 
 document.addEventListener 'turbolinks:load', ->
   bulkMailTextArea()

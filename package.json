@@ -9,6 +9,7 @@
     "bootstrap-icons": "^1.11.1",
     "coffeescript": "^2.7.0",
     "esbuild": "^0.19.5",
+    "esbuild-coffeescript": "^2.2.0",
     "sass": "^1.69.4"
   },
   "version": "0.1.0",
@@ -16,7 +17,7 @@
     "defaults"
   ],
   "scripts": {
-    "build:css": "sass ./app/assets/stylesheets/application.sass:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets"
+    "build": "node esbuild.build.mjs",
+    "build:css": "sass ./app/assets/stylesheets/application.sass:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   }
 }
