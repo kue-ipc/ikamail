@@ -1,9 +1,9 @@
 h2
-  = t('.resend_unlock_instructions')
+  = t(".resend_unlock_instructions")
 
 = bootstrap_form_with model: resource, as: resource_name, url: unlock_path(resource_name), html: {method: :post} do |f|
-  = render 'devise/shared/error_messages', resource: resource
-  = f.email_field :email, autofocus: true, autocomplete: 'email'
+  = render "devise/shared/error_messages", resource: resource
+  = f.email_field :email, autofocus: true, autocomplete: "email"
   .actions
-    = f.primary t('.resend_unlock_instructions')
-= render 'devise/shared/links'
+    = f.primary t(".resend_unlock_instructions")
+= render "devise/shared/links"

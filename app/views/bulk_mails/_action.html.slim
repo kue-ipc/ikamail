@@ -1,6 +1,6 @@
 ruby:
   comment_required = false unless local_assigns.key?(:comment_required)
-  level = 'primary' unless local_assigns.key?(:level)
+  level = "primary" unless local_assigns.key?(:level)
   add_datetime = false unless local_assigns.key?(:add_datetime)
   timing = false unless local_assigns.key?(:timing)
 
@@ -18,7 +18,7 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
             h5.modal-title id="action-#{action}-modal-label"
               | メールの
               = t(action, scope: :actions)
-            button.btn-close type="button" data-bs-dismiss="modal" aria-label=t('do_actions.close')
+            button.btn-close type="button" data-bs-dismiss="modal" aria-label=t("do_actions.close")
           .modal-body
             p = t(action, scope: [:mail, :action_messages])
             - if timing
@@ -27,11 +27,11 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
             - if add_datetime
               - now = Time.current
               = f.datetime_field :datetime, step: 60, required: true,
-                                  value: now.since(1.hour).strftime('%FT%R'), min: now.strftime('%FT%R'),
+                                  value: now.since(1.hour).strftime("%FT%R"), min: now.strftime("%FT%R"),
                                   label: "#{t(action, scope: :actions)} #{ActionInfo.human_attribute_name(:datetime)}"
             = f.text_area :comment, rows: 10, required: comment_required,
-                          help: comment_required && t('messages.comment_required')
+                          help: comment_required && t("messages.comment_required")
           .modal-footer
             = f.submit t(action, scope: :do_actions), class: "btn btn-#{level}"
             button.btn.btn-secondary type="button" data-bs-dismiss="modal"
-              = t('do_actions.close')
+              = t("do_actions.close")

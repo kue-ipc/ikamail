@@ -1,7 +1,7 @@
 - content_for :heading
   h1 = t_title(:search, model: :mail_user, count: 1)
 
-== render 'form'
+== render "form"
 
 hr
 
@@ -19,4 +19,4 @@ hr
     = dt_dd_for @mail_user, :applicable_recipient_lists
 
 - else
-  p = t('messages.not_found_mail_user')
+  p = t("messages.not_found_mail_user")

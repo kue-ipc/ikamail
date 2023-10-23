@@ -2,16 +2,16 @@
   h1 管理メニュー
 
 div
-  = button_to 'LDAP同期', admin_ldap_sync_path, method: :put, class: 'btn btn-link'
+  = button_to "LDAP同期", admin_ldap_sync_path, method: :put, class: "btn btn-link"
 
 div
-  = link_to 'ジョブ状態', '/admin/delayed_job', target: '_blank', rel: 'noopener', class: 'btn btn-link'
+  = link_to "ジョブ状態", "/admin/delayed_job", target: "_blank", rel: "noopener", class: "btn btn-link"
 
 div
-  = link_to 'ログインユーザー一覧', admin_users_path, class: 'btn btn-link'
+  = link_to "ログインユーザー一覧", admin_users_path, class: "btn btn-link"
 
 div
-  = link_to '翻訳管理', admin_translations_path, class: 'btn btn-link'
+  = link_to "翻訳管理", admin_translations_path, class: "btn btn-link"
 
 div
-  = link_to '統計', admin_statistics_path, class: 'btn btn-link'
+  = link_to "統計", admin_statistics_path, class: "btn btn-link"

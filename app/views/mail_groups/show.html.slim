@@ -6,7 +6,7 @@ dl
   = dt_dd_for @mail_group, :display_name
   = dt_dd_for @mail_group, :mail_users do |mail_users|
     = mail_users.count
-    =< link_to '一覧表示', mail_group_mail_users_path(@mail_group), class: 'btn btn-link btn-sm'
+    =< link_to "一覧表示", mail_group_mail_users_path(@mail_group), class: "btn btn-link btn-sm"
   = dt_dd_for @mail_group, :recipient_lists
 
-=< link_to '一覧に戻る', mail_groups_path
+=< link_to "一覧に戻る", mail_groups_path

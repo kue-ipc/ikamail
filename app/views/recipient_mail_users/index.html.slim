@@ -2,23 +2,23 @@
   h1 = t_title(:listing, model: :recipient, count: 2)
 
 p
-  = link_to t('links.back_to', name: RecipientList.model_name.human), @recipient_list
+  = link_to t("links.back_to", name: RecipientList.model_name.human), @recipient_list
 
 p
   => @recipient_list.name
   | /
   =< RecipientList.human_attribute_name(@attr_name)
 
-p = t(@type, scope: 'descriptions.recipient_list')
+p = t(@type, scope: "descriptions.recipient_list")
 
 - if @type == :applicable && !@recipient_list.collected?
   p.text-danger この宛先リストは未集計です。バックグラウンドの集計が完了するまで、ユーザーのリストは正しくありません。しばらくたってから、ページを更新してください。
 
 p
-  = link_to t('actions.download_list'),
-            mail_users_recipient_list_path(@recipient_list, @type, page: 'all', format: 'csv'),
-            class: 'btn btn-primary',
-            download: file_name(@recipient_list, attr: @attr_name, format: 'csv')
+  = link_to t("actions.download_list"),
+            mail_users_recipient_list_path(@recipient_list, @type, page: "all", format: "csv"),
+            class: "btn btn-primary",
+            download: file_name(@recipient_list, attr: @attr_name, format: "csv")
 p.small
   | ファイルはCSV UTF-8 with BOMです。Excel 2016以上で文字化けせずに開くことができます。
 
@@ -37,11 +37,11 @@ p.small
       - @mail_users.each do |mail_user|
         tr
           td.position-relative
-            = link_to mail_user.name, mail_user, class: 'stretched-link'
+            = link_to mail_user.name, mail_user, class: "stretched-link"
           td = mail_user.display_name
           td = mail_user.mail
 
-  - if params[:page] != 'all'
+  - if params[:page] != "all"
     = paginate @mail_users
     p
       = page_entries_info @mail_users

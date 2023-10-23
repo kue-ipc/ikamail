@@ -13,21 +13,21 @@ table.table.table-sm
     - @users.each do |user|
       tr
         td.position-relative
-          = link_to user.username, admin_user_path(user), class: 'stretched-link'
+          = link_to user.username, admin_user_path(user), class: "stretched-link"
         td = user.fullname
         td = user.email
         td
           - if current_user == user
             .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="自分自身は変更不可"
-              = check_box_tag "admin_#{user.id}", '1', user.admin?, disabled: true, class: 'form-check-input'
-              = label_tag "admin_#{user.id}", '', class: 'form-check-label'
+              = check_box_tag "admin_#{user.id}", "1", user.admin?, disabled: true, class: "form-check-input"
+              = label_tag "admin_#{user.id}", "", class: "form-check-label"
           - else
             // TODO
             = button_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}), method: :patch,
                         class: "btn btn-link"
               .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="クリックして変更"
-                = check_box_tag "admin_#{user.id}", '1', user.admin?, disabled: true, class: 'form-check-input'
-                = label_tag "admin_#{user.id}", '', class: 'form-check-label'
+                = check_box_tag "admin_#{user.id}", "1", user.admin?, disabled: true, class: "form-check-input"
+                = label_tag "admin_#{user.id}", "", class: "form-check-label"
 
 = paginate @users
 p
@@ -42,13 +42,13 @@ p
   = bootstrap_form_with model: User.new, url: admin_users_path do |f|
     .row
       .col-auto
-        = f.text_field :username, class: 'form-control-sm me-2', required: true,
+        = f.text_field :username, class: "form-control-sm me-2", required: true,
                       placeholder: User.human_attribute_name(:username), hide_label: true
       .col-auto
-        = f.submit class: 'btn btn-primary btn-sm'
-          = t('actions.register')
+        = f.submit class: "btn btn-primary btn-sm"
+          = t("actions.register")
 
 p
   | LDAPとの同期を行うには下記のボタンから行ってください。同期には時間がかかる場合があります。
 p
-  = button_to 'LDAP同期', sync_admin_users_path, method: :put, class: 'btn btn-primary'
+  = button_to "LDAP同期", sync_admin_users_path, method: :put, class: "btn btn-primary"

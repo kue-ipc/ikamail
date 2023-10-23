@@ -4,7 +4,7 @@
 - if @mail_template.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+      = t("messages.error_prohibited_action", action: t(controller.action_name, scope: :actions),
           count: @mail_template.errors.count, model: @mail_template.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @mail_template.errors.full_messages.each do |message|
@@ -24,15 +24,15 @@ dl
   = dt_dd_for @mail_template, :count do |count|
     - if policy(@mail_template).update?
       =<> button_to count_mail_template_path(@mail_template, count: count - 1),
-                    method: :patch, class: 'btn btn-light btn-sm', role: 'button'
+                    method: :patch, class: "btn btn-light btn-sm", role: "button"
         | &minus;
       span.badge.bg-primary = count
       =<> button_to count_mail_template_path(@mail_template, count: count + 1),
-                    method: :patch, class: 'btn btn-light btn-sm', role: 'button'
+                    method: :patch, class: "btn btn-light btn-sm", role: "button"
         | &plus;
-      =<> button_to t('actions.reset'), count_mail_template_path(@mail_template, count: 0),
-                    data: {turbo_confirm: t('messages.corfirm_reset')},
-                    method: :patch, class: 'btn btn-warning btn-sm', role: 'button'
+      =<> button_to t("actions.reset"), count_mail_template_path(@mail_template, count: 0),
+                    data: {turbo_confirm: t("messages.corfirm_reset")},
+                    method: :patch, class: "btn btn-warning btn-sm", role: "button"
     - else
       span.badge.bg-primary = count
 
@@ -42,11 +42,11 @@ dl
 div
   - mail_template_policy = policy(@mail_template)
   - if mail_template_policy.edit?
-    =<> link_to t('actions.edit'), edit_mail_template_path(@mail_template), class: 'btn btn-primary'
+    =<> link_to t("actions.edit"), edit_mail_template_path(@mail_template), class: "btn btn-primary"
   - if mail_template_policy.destroy?
-    =<> button_to t('actions.destroy'), @mail_template,
-                  data: {turbo_confirm: t('messages.corfirm_destroy')}, method: :delete, class: 'btn btn-danger'
+    =<> button_to t("actions.destroy"), @mail_template,
+                  data: {turbo_confirm: t("messages.corfirm_destroy")}, method: :delete, class: "btn btn-danger"
 
 hr
 div
-  = link_to t('links.back_to', name: t('actions.index')), mail_templates_path, class: 'btn btn-secondary'
+  = link_to t("links.back_to", name: t("actions.index")), mail_templates_path, class: "btn btn-secondary"

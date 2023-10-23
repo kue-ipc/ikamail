@@ -1,7 +1,7 @@
 - if @mail_template.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+      = t("messages.error_prohibited_action", action: t(controller.action_name, scope: :actions),
           count: @mail_template.errors.count, model: @mail_template.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @mail_template.errors.full_messages.each do |message|
@@ -16,13 +16,13 @@
   = f.email_field :from_mail_address
   = f.text_field :subject_prefix
   = f.text_field :subject_suffix
-  = f.text_area :body_header, class: 'font-monospace'
-  = f.text_area :body_footer, class: 'font-monospace'
+  = f.text_area :body_header, class: "font-monospace"
+  = f.text_area :body_footer, class: "font-monospace"
   = f.number_field :count
   = f.time_field :reserved_time
   = f.fields_for(@mail_template.user || current_user) do |user|
     = user.text_field :username, disabled: !current_user.admin?, label: t_attr(:user)
-  .actions = f.submit class: 'btn btn-primary'
+  .actions = f.submit class: "btn btn-primary"
 
 hr
 

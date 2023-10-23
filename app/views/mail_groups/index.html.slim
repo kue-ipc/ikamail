@@ -16,10 +16,10 @@ table.table.table-sm
     - @mail_groups.each do |mail_group|
       tr
         td.position-relative
-          = link_to mail_group.name, mail_group, class: 'stretched-link'
+          = link_to mail_group.name, mail_group, class: "stretched-link"
         td = mail_group.display_name
         td.position-relative
-          = link_to mail_group.mail_users.count, mail_group_mail_users_path(mail_group), class: 'stretched-link'
+          = link_to mail_group.mail_users.count, mail_group_mail_users_path(mail_group), class: "stretched-link"
 
 = paginate @mail_groups
 p

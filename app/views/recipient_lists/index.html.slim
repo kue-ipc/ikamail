@@ -1,11 +1,11 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p = t('messages.dispaly_detail', name: t_attr(:name))
+p = t("messages.dispaly_detail", name: t_attr(:name))
 
 - if current_user.admin?
   p
-    = link_to t('actions.new'), new_recipient_list_path, class: 'btn btn-primary'
+    = link_to t("actions.new"), new_recipient_list_path, class: "btn btn-primary"
 
 table.table
   thead
@@ -17,12 +17,12 @@ table.table
     - @recipient_lists.each do |recipient_list|
       tr
         td.position-relative
-          = link_to recipient_list.name, recipient_list, class: 'stretched-link'
+          = link_to recipient_list.name, recipient_list, class: "stretched-link"
         td
           - if recipient_list.collected?
             = recipient_list.applicable_mail_users.size
           - else
-            = t('messages.unaggregated')
+            = t("messages.unaggregated")
         td = recipient_list.description
 
 = paginate @recipient_lists

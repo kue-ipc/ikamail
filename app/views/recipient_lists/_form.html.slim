@@ -1,7 +1,7 @@
 - if @recipient_list.errors.any?
   #error_explanation.card.border-danger.mb-2
     .card-header
-      = t('messages.error_prohibited_action', action: t(controller.action_name, scope: :actions),
+      = t("messages.error_prohibited_action", action: t(controller.action_name, scope: :actions),
           count: @recipient_list.errors.count, model: @recipient_list.model_name.human)
     ul.list-group.list-group-flush.text-danger
       - @recipient_list.errors.full_messages.each do |message|
@@ -11,7 +11,7 @@
   = f.text_field :name
   = f.text_area :description, rows: 3
   = f.collection_select :mail_group_ids, policy_scope(MailGroup).order(:display_name), :id, :display_name,
-    {help: t('messages.can_select_multi_groups')},
+    {help: t("messages.can_select_multi_groups")},
     {multiple: true, size: [10, MailGroup.count].min}
   .actions
     = f.primary

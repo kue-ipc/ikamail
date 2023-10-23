@@ -1,8 +1,8 @@
 - content_for :heading
   h1 = t_title(:editing, count: 1)
 
-== render 'form'
+== render "form"
 
 hr
 p
-  = link_to t('links.back_to', name: t('actions.show')), @mail_template, class: 'btn btn-secondary'
+  = link_to t("links.back_to", name: t("actions.show")), @mail_template, class: "btn btn-secondary"

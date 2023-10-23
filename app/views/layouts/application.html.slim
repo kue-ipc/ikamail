@@ -12,27 +12,27 @@ html
     header.mb-2
       nav.navbar.navbar-light.bg-light
         .container-fluid
-          = link_to t(:bulk_mail_system), '/', class: 'navbar-brand'
+          = link_to t(:bulk_mail_system), "/", class: "navbar-brand"
           - if user_signed_in?
             ul.navbar-nav.flex-row
               li.nav-item.px-1
-                = link_to current_user.name, user_path, class: 'nav-link'
+                = link_to current_user.name, user_path, class: "nav-link"
               li.nav-item.px-1
-                = button_to destroy_user_session_path, method: :delete, class: 'nav-link py-1',
-                  title: t('devise.sessions.destroy.sign_out'),
-                  data: {'bs-toggle': 'tooltip', 'bs-placement': 'left'} do
-                  = octicon 'sign-out', height: 24, fill: 'currentColor', roll: 'img', 'aria-label': 'Logout'
+                = button_to destroy_user_session_path, method: :delete, class: "nav-link py-1",
+                  title: t("devise.sessions.destroy.sign_out"),
+                  data: {"bs-toggle": "tooltip", "bs-placement": "left"} do
+                  = octicon "sign-out", height: 24, fill: "currentColor", roll: "img", "aria-label": "Logout"
     .container-fluid
       .row
         .col-12.col-md-3.col-xl-2.d-print-none
           - if user_signed_in?
-            = render 'menu'
+            = render "menu"
           - else
-            = link_to t('devise.sessions.new.sign_in'), new_user_session_path
+            = link_to t("devise.sessions.new.sign_in"), new_user_session_path
         .col-12.col-md-9.col-xl-10
           main
             = yield :heading
-            = render 'alert'
+            = render "alert"
             = yield
     footer.mt-2
       hr

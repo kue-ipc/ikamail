@@ -1,17 +1,17 @@
 - content_for :heading
   h1 = t_title(:listing, count: 2)
 
-p = t('messages.dispaly_detail', name: t_attr(:subject))
+p = t("messages.dispaly_detail", name: t_attr(:subject))
 
 p
-  = link_to t('actions.new'), new_bulk_mail_path, class: 'btn btn-primary'
+  = link_to t("actions.new"), new_bulk_mail_path, class: "btn btn-primary"
 
 - if @status
   p
     strong
-      => t(@status, scope: 'mail.statuses')
+      => t(@status, scope: "mail.statuses")
     | のみ表示 (
-    = link_to 'クリア', bulk_mails_path(page: @bulk_mails.current_page)
+    = link_to "クリア", bulk_mails_path(page: @bulk_mails.current_page)
     | )
 
 table.table
@@ -34,7 +34,7 @@ table.table
     - @bulk_mails.each do |bulk_mail|
       tr
         td.position-relative
-          = link_to bulk_mail, class: 'stretched-link'
+          = link_to bulk_mail, class: "stretched-link"
             = bulk_mail.subject
         td.text-nowrap = t(bulk_mail.status.intern, scope: [:mail, :statuses])
         td.text-nowrap = bulk_mail.user.username
