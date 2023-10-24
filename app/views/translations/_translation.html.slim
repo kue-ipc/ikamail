@@ -12,9 +12,10 @@
       .col-md-8.mb-1
         = f.text_area :value, id: "#{form_id}-value", rows: (translation.value.size / 40.0).ceil, wrapper: false
       .col-md-2.mb-1
-        = f.primary t("actions.save"), id: "#{form_id}-submit"
+        = f.primary t("actions.save"), id: "#{form_id}-submit", disabled: true
         =< f.button t("actions.reset"), id: "#{form_id}-reset", class: "btn btn-warning", name: "reset", type: "reset",
-          data: {confirm: t("messages.confirm_restore_default")}
+          data: {confirm: t("messages.confirm_restore_default")},
+          disabled: translation.new_record?
 
   - unless translation.new_record?
     =< button_to t("actions.reset"), admin_translation_path(translation),
