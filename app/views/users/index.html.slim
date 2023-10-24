@@ -18,16 +18,14 @@ table.table.table-sm
         td = user.email
         td
           - if current_user == user
-            .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="自分自身は変更不可"
-              = check_box_tag "admin_#{user.id}", "1", user.admin?, disabled: true, class: "form-check-input"
-              = label_tag "admin_#{user.id}", "", class: "form-check-label"
+            .btn.btn-link.py-0
+              span data-bs-toggle="tooltip" data-bs-placement="left" title="自分自身は変更不可"
+                = span_bool_for user.admin?
           - else
-            // TODO
-            = button_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}), method: :patch,
-                        class: "btn btn-link"
-              .form-check.form-switch data-bs-toggle="tooltip" data-bs-placement="left" title="クリックして変更"
-                = check_box_tag "admin_#{user.id}", "1", user.admin?, disabled: true, class: "form-check-input"
-                = label_tag "admin_#{user.id}", "", class: "form-check-label"
+            = button_to admin_user_path(user, params: {user: {role: (user.admin? ? :user : :admin)}}),
+                        method: :patch, class: "btn btn-link py-0"
+              span data-bs-toggle="tooltip" data-bs-placement="left" title="クリックして変更"
+                = span_bool_for user.admin?
 
 = paginate @users
 p

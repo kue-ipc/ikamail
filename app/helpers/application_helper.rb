@@ -118,11 +118,11 @@ module ApplicationHelper
     end
   end
 
-  def span_bool_for(value, **_opts)
+  def span_bool_for(value, **opts)
     if value
-      bs_icon("toggle-on")
+      octicon("check-circle-fill", class: "text-success", **opts)
     else
-      bs_icon("toggle-off")
+      octicon("x-circle-fill", class: "text-danger", **opts)
     end
   end
 
@@ -184,15 +184,6 @@ module ApplicationHelper
 
   def html_datetime_zone(time)
     time.xmlschema
-  end
-
-  def bs_icon(name, size: 24, **opts)
-    opts = {width: size, height: size, fill: "currentColor"}.merge(opts)
-    opts[:class] = opts[:class].to_s.split unless opts[:class].is_a?(Array)
-    opts[:class] += ["bi"]
-    tag.svg(**opts) do
-      tag.use("xlink:href": "#{asset_path('bootstrap-icons.svg')}##{name}")
-    end
   end
 
   def file_name(obj, attr: nil, format: "txt")
