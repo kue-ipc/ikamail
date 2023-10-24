@@ -3,12 +3,24 @@ class TranslationForm
     @form = form
     @key = @form.dataset.key.toString()
     @form_id = @form.id
-    @value_input = document.getElementById("#{@form_id}-value")
+    @method = @form._method?.value ? @form.method
+    @value_input = @form['translation[value]']
+
     @submit_button = document.getElementById("#{@form_id}-submit")
-    @delete_link = document.getElementById("#{@form_id}-delete")
+    @reset_button = document.getElementById("#{@form_id}-reset")
+    @delete_button = document.getElementById("#{@form_id}-delete")
 
     @value_input.addEventListener 'input', =>
       @enableSubmit()
+
+    @form.addEventListener 'reset', (e) =>
+      unless window.confirm(@reset_button.dataset.confirm)
+        e.preventDefault()
+        return
+
+      if @method == "patch"
+        e.preventDefault()
+        @delete_button.click()
 
   enableSubmit: ->
     @submit_button.disabled = false
@@ -56,10 +68,5 @@ class TranslationForm
     @disableSubmit()
 
 document.addEventListener 'turbo:load', ->
-  formMap = new Map
-
   for form in document.getElementsByClassName('form-translation')
-    tForm = new TranslationForm(form)
-    formMap.set(tForm.key, tForm)
-
-  window.TRANSLATION_FORM_MAP = formMap
+    new TranslationForm(form)

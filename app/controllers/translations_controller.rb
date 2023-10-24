@@ -42,7 +42,11 @@ class TranslationsController < ApplicationController
   def destroy
     if @translation.destroy
       I18n.backend.reload!
-      @translation = I18n.t(@translation.key, locale: @translation.locale)
+      @translation = Translation.new(
+        locale: @translation.locale,
+        key: @translation.key,
+        value: I18n.t(@translation.key, locale: @translation.locale)
+      )
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
