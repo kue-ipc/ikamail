@@ -6,12 +6,15 @@ class TranslationsController < ApplicationController
     @q = Translation.ransack(params[:q])
     @locale = I18n.default_locale
     @q.locale_eq = @locale
+    @q.sorts = "key desc" if @q.sorts.empty?
     all = all_translations(
       [],
       I18n.t(".", locale: @locale),
       translations_to_hash(@q.result),
       @q,
-      local: @locale)
+      local: @locale
+    )
+    all.reverse! if @q.sorts.find { |sort| sort.name == "key" }&.dir&.==("asc")
     @translations = Kaminari.paginate_array(all).page(params[:page])
   end
 

@@ -30,6 +30,14 @@ p
       = link_to "リセット", admin_translations_path, class: "btn btn-outline-secondary"
 hr
 
+.row.mb-1
+  .col-md-2.mb-1
+    = sort_link(@q, :key)
+      | キー
+  .col-md-8.mb-1
+    | 値
+  .col-md-2.mb-1
+
 - @translations.each do |translation|
   - form_id = "form-#{translation.key}"
   = bootstrap_form_with model: translation, scope: "translation", local: false,
