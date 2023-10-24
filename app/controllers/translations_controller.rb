@@ -4,8 +4,11 @@ class TranslationsController < ApplicationController
   before_action :authorize_translation, only: [:index, :create]
 
   def index
-    @translations = all_translations([], I18n.t(".", locale: @locale),
+    @q = Translation.ransack(params[:q])
+
+    all = all_translations([], I18n.t(".", locale: @locale),
       translations_to_hash(Translation.locale(@locale)))
+    @translations = Kaminari.paginate_array(all).page(params[:page])
   end
 
   def create

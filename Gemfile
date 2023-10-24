@@ -109,6 +109,9 @@ gem "bootstrap_form", "~> 5.3"
 gem "octicons"
 gem "octicons_helper"
 
+# search
+gem "ransack"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]

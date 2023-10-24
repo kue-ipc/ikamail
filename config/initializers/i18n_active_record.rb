@@ -2,6 +2,11 @@ require "i18n/backend/active_record"
 
 Translation = I18n::Backend::ActiveRecord::Translation
 
+# for ransack
+def Translation.ransackable_attributes(auth_object = nil)
+  ["key", "locale", "value"]
+end
+
 begin
   if Translation.table_exists?
     I18n.backend = I18n::Backend::ActiveRecord.new

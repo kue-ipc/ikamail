@@ -14,6 +14,20 @@ p
     | メッセージによっては改行は無視されるか空白に置き換えられます。
     | 下記には使用されていないものが含まれます。
 
+= search_form_for @q, url: admin_translations_path do |f|
+  .row.g3.mb-3
+    / .col-4.col-xl-2
+    /   = f.label :locale_eq, "言語", class: "form-label"
+    /   = f.search_field :locale_eq
+    .col-4.col-xl-2
+      = f.label :key_matches, "キー", class: "form-label"
+      = f.search_field :key_matches, class: "form-control"
+    .col-4.col-xl-2
+      = f.label :value_matches, "値", class: "form-label"
+      = f.search_field :value_matches, class: "form-control"
+    .col-4.d-flex.align-items-end
+      = f.submit class: "btn btn-primary me-1"
+      = link_to "リセット", admin_translations_path, class: "btn btn-outline-secondary"
 hr
 
 - @translations.each do |translation|
@@ -40,3 +54,7 @@ hr
           =< button_to "リセット", admin_translation_path(translation),
             id: "#{form_id}-delete", class: "btn btn-warning", "area-disabled": false,
             data: {turbo_confirm: "デフォルトに戻しますか？"}, method: :delete, remote: true
+
+= paginate @translations
+p
+  = page_entries_info @translations, entry_name: '翻訳' 
