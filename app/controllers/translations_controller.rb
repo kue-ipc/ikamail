@@ -1,13 +1,17 @@
 class TranslationsController < ApplicationController
-  before_action :set_locale
   before_action :set_translation, only: [:update, :destroy]
   before_action :authorize_translation, only: [:index, :create]
 
   def index
     @q = Translation.ransack(params[:q])
-
-    all = all_translations([], I18n.t(".", locale: @locale),
-      translations_to_hash(Translation.locale(@locale)))
+    @locale = I18n.default_locale
+    @q.locale_eq = @locale
+    all = all_translations(
+      [],
+      I18n.t(".", locale: @locale),
+      translations_to_hash(@q.result),
+      @q,
+      local: @locale)
     @translations = Kaminari.paginate_array(all).page(params[:page])
   end
 
@@ -29,10 +33,6 @@ class TranslationsController < ApplicationController
     I18n.backend.reload!
   end
 
-  private def set_locale
-    @locale = I18n.default_locale
-  end
-
   private def set_translation
     @translation = Translation.find(params[:id])
     authorize @translation
@@ -50,18 +50,22 @@ class TranslationsController < ApplicationController
     list.index_by(&:key)
   end
 
-  private def all_translations(key, value, db)
+  private def all_translations(key, value, db, query, local: I18n.default_locale)
     case value
     when String
       full_key = key.join(".")
+
+      return if query.key_matches && !full_key.include?(query.key_matches)
+      return if query.value_matches && !value.include?(query.value_matches)
+
       db[full_key] || Translation.new(
-        locale: @locale,
+        locale: local,
         key: full_key,
         value: value
       )
     when Hash
       value.each_key.sort.map do |c_key|
-        all_translations(key + [c_key], value[c_key], db)
+        all_translations(key + [c_key], value[c_key], db, query, local: local)
       end.compact.flatten
     end
   end
