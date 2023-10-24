@@ -22,18 +22,31 @@ class TranslationsController < ApplicationController
     t_params = translation_params
     @translation = Translation.find_or_initialize_by(locale: t_params[:locale], key: t_params[:key])
     @translation.value = t_params[:value]
-    @translation.save
-    I18n.backend.reload!
+    if @translation.save
+      I18n.backend.reload!
+      render :show, status: :created
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
   def update
-    @translation.update(value: translation_params[:value])
-    I18n.backend.reload!
+    if @translation.update(value: translation_params[:value])
+      I18n.backend.reload!
+      render :show, status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    @translation.destroy
-    I18n.backend.reload!
+    if @translation.destroy
+      I18n.backend.reload!
+      @translation = I18n.t(@translation.key, locale: @translation.locale)
+      render :show, status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private def set_translation

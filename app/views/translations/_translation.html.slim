@@ -1,23 +1,24 @@
-- form_id = "form-#{translation.key}"
-= bootstrap_form_with model: translation, scope: "translation", local: false,
-    url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)),
-    id: form_id, class: "form-translation", data: {key: translation.key} do |f|
-  = f.hidden_field :locale, id: "#{form_id}-locale"
-  = f.hidden_field :key, id: "#{form_id}-key"
-  .row.mb-1
-    .col-md-2.mb-1
-      small
-        = translation.key.split(".").join(" ")
-    .col-md-8.mb-1
-      = f.text_area :value, id: "#{form_id}-value", rows: (translation.value.size / 40.0).ceil,
-        wrapper: false
-    .col-md-2.mb-1
-      = f.primary t("actions.save"), id: "#{form_id}-submit", disabled: true
-      - if translation.new_record?
-        =< button_to t("actions.reset"), "#",
-          id: "#{form_id}-delete", class: "btn btn-warning disabled d-none", "area-disabled": true,
-          data: {turbo_confirm: t("messages.confirm_restore_default")}, method: :delete, remote: true
-      - else
-        =< button_to t("actions.reset"), admin_translation_path(translation),
-          id: "#{form_id}-delete", class: "btn btn-warning", "area-disabled": false,
-          data: {turbo_confirm: t("messages.confirm_restore_default")}, method: :delete, remote: true
+= turbo_frame_tag "translation_#{translation.key}" do
+  - form_id = "form-#{translation.key}"
+  = bootstrap_form_with model: translation, scope: "translation",
+      url: (translation.new_record? ? admin_translations_path : admin_translation_path(translation)),
+      id: form_id, class: "form-translation", data: {key: translation.key} do |f|
+    = f.hidden_field :locale, id: "#{form_id}-locale"
+    = f.hidden_field :key, id: "#{form_id}-key"
+    .row.mb-1
+      .col-md-2.mb-1
+        small
+          = translation.key.split(".").join(" ")
+      .col-md-8.mb-1
+        = f.text_area :value, id: "#{form_id}-value", rows: (translation.value.size / 40.0).ceil,
+          wrapper: false
+      .col-md-2.mb-1
+        = f.primary t("actions.save"), id: "#{form_id}-submit", disabled: true
+        / - if translation.new_record?
+        /   =< button_to t("actions.reset"), "#",
+        /     id: "#{form_id}-delete", class: "btn btn-warning disabled d-none", "area-disabled": true,
+        /     data: {turbo_confirm: t("messages.confirm_restore_default")}, method: :delete, remote: true
+        / - else
+        /   =< button_to t("actions.reset"), admin_translation_path(translation),
+        /     id: "#{form_id}-delete", class: "btn btn-warning", "area-disabled": false,
+        /     data: {turbo_confirm: t("messages.confirm_restore_default")}, method: :delete, remote: true
