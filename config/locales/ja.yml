@@ -206,6 +206,7 @@ ja:
       recipient_list: 宛先リスト
       recipient: 宛先
       action_log: 実行ログ
+      i18n/backend/active_record/translation: 翻訳
     attributes:
       recipient_list:
         name: リスト名
@@ -264,6 +265,12 @@ ja:
         display_name: 名前
         mail_users: 所属ユーザー
         recipient_lists: 含まれる宛先リスト
+      i18n/backend/active_record/translation:
+        locale: 言語
+        key: キー
+        value: 値
+        interpolations: 式展開
+        is_proc: プロック
 
   activemodel:
     models:
@@ -283,6 +290,7 @@ ja:
     corfirm_destroy: "本当に削除してもよろしいですか？"
     corfirm_reset: "本当にリセットしてもよろしいですか？"
     corfirm_all_destroy: "本当に全てを削除してもよろしいですか？"
+    confirm_restore_default: "デフォルトに戻しますか？"
     error_prohibited_action:
       zero: "%{model}を%{action}することができません。"
       one: "エラーにより%{model}を%{action}することができません。"

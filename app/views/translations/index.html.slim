@@ -17,25 +17,24 @@ p
 = search_form_for @q, url: admin_translations_path do |f|
   .row.g3.mb-3
     / .col-4.col-xl-2
-    /   = f.label :locale_eq, "言語", class: "form-label"
+    /   = f.label :locale_eq, Translation.human_attribute_name(:locale), class: "form-label"
     /   = f.search_field :locale_eq, class: "form-control"
     .col-4.col-xl-2
-      = f.label :key_matches, "キー", class: "form-label"
+      = f.label :key_matches, Translation.human_attribute_name(:key), class: "form-label"
       = f.search_field :key_matches, class: "form-control"
     .col-4.col-xl-2
-      = f.label :value_matches, "値", class: "form-label"
+      = f.label :value_matches, Translation.human_attribute_name(:value), class: "form-label"
       = f.search_field :value_matches, class: "form-control"
     .col-4.d-flex.align-items-end
       = f.submit class: "btn btn-primary me-1"
-      = link_to "リセット", admin_translations_path, class: "btn btn-outline-secondary"
+      = link_to t("actions.reset"), admin_translations_path, class: "btn btn-outline-secondary"
 hr
 
 .row.mb-1
   .col-md-2.mb-1
     = sort_link(@q, :key)
-      | キー
   .col-md-8.mb-1
-    | 値
+    = Translation.human_attribute_name(:value)
   .col-md-2.mb-1
 
 - @translations.each do |translation|
@@ -53,16 +52,17 @@ hr
         = f.text_area :value, id: "#{form_id}-value", rows: (translation.value.size / 40.0).ceil,
           wrapper: false
       .col-md-2.mb-1
-        = f.primary "適用", id: "#{form_id}-submit", disabled: true
+        = f.primary t("actions.save"), id: "#{form_id}-submit", disabled: true
         - if translation.new_record?
-          =< button_to "リセット", "#",
+          =< button_to t("actions.reset"), "#",
             id: "#{form_id}-delete", class: "btn btn-warning disabled d-none", "area-disabled": true,
-            data: {turbo_confirm: "デフォルトに戻しますか？"}, method: :delete, remote: true
+            data: {turbo_confirm: t("messages.confirm_restore_default")}, method: :delete, remote: true
         - else
-          =< button_to "リセット", admin_translation_path(translation),
+          =< button_to t("actions.reset"), admin_translation_path(translation),
             id: "#{form_id}-delete", class: "btn btn-warning", "area-disabled": false,
-            data: {turbo_confirm: "デフォルトに戻しますか？"}, method: :delete, remote: true
+            data: {turbo_confirm: t("messages.confirm_restore_default")}, method: :delete, remote: true
 
 = paginate @translations
 p
-  = page_entries_info @translations, entry_name: '翻訳' 
+  = page_entries_info @translations, entry_name: Translation.model_name.human
+
