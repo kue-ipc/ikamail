@@ -52,7 +52,10 @@ class TranslationForm
       @reset_button.disabled = true
     , 0
 
-# FIXME: これだと毎回適用さるため、リセットが何度も聞いてしまう。
-document.addEventListener 'turbo:frame-load', ->
+document.addEventListener 'turbo:load', ->
   for form in document.getElementsByClassName('form-translation')
+    new TranslationForm(form)
+
+document.addEventListener 'turbo:frame-load', (e) ->
+  for form in e.target.getElementsByClassName('form-translation')
     new TranslationForm(form)
