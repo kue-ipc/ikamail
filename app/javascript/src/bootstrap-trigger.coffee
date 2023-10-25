@@ -8,10 +8,8 @@ bootstrapComponentSelectors = [
   {component: bootstrap.Collapse,  selector: '[data-bs-toggle="collapse"]'}
 ]
 
-document.addEventListener 'turbo:load', ->
+export default bootstrapTriger = (root = document) ->
   for {component, selector} in bootstrapComponentSelectors
-    for el in document.querySelectorAll selector
-      new component(el)
+    for el in root.querySelectorAll selector
       console.debug("bootstrap component: #{component.name}")
-
-globalThis.bootstrap = bootstrap
+      new component(el)

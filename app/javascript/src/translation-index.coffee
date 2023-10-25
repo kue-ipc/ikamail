@@ -52,10 +52,6 @@ class TranslationForm
       @reset_button.disabled = true
     , 0
 
-document.addEventListener 'turbo:load', ->
-  for form in document.getElementsByClassName('form-translation')
-    new TranslationForm(form)
-
-document.addEventListener 'turbo:frame-load', (e) ->
-  for form in e.target.getElementsByClassName('form-translation')
+export default translationIndex = (root = document) ->
+  for form in root.getElementsByClassName('form-translation')
     new TranslationForm(form)

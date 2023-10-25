@@ -1,6 +1,7 @@
-export default multiselect = ->
-  for el in document.getElementsByTagName('select')
+export default multiselect = (root = document) ->
+  for el in root.getElementsByTagName('select')
     if el.multiple
+      console.debug "mulit select: #{el.id}"
       for optEl in el.getElementsByTagName('option')
         optEl.addEventListener 'mousedown', (e) ->
           e.preventDefault()

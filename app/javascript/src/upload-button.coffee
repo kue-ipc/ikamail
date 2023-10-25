@@ -1,5 +1,5 @@
-export default uploadButton = ->
-  for form in document.forms
+export default uploadButton = (root = document) ->
+  for form in root.getElementsByTagName('FORM')
     uploadButton = null
     fileInput = null
     for el in form.elements
@@ -9,6 +9,7 @@ export default uploadButton = ->
         fileInput = el
 
     if uploadButton? && fileInput?
+      console.debug "upload button"
       addUploadEvent(form, uploadButton, fileInput)
 
 addUploadEvent = (form, uploadButton, fileInput) ->

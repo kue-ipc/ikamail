@@ -1,10 +1,12 @@
-export default templateInfo = ->
+export default templateInfo = (root = document)->
+  # TODO: turbo-frame対応
+  #       離れているtemplate-infoは更新されないから、それを含めて作り直すこと
+  return if root != document
+
   templateInfoEl = document.getElementById('template-info')
   return unless templateInfoEl?
 
-  list = JSON.parse(templateInfoEl.getAttribute('data-list'))
-  console.log list
-  target = templateInfoEl.getAttribute('data-target')
+  console.debug "template info"
 
   descriptionEls = document.getElementsByClassName('template-info-description')
   nameEls = document.getElementsByClassName('template-info-name')
@@ -12,7 +14,8 @@ export default templateInfo = ->
   userEls = document.getElementsByClassName('template-info-user')
   reservedTimeEls = document.getElementsByClassName('template-info-reserved-time')
 
-  targetEl = document.getElementById(target)
+  list = JSON.parse(templateInfoEl.getAttribute('data-list'))
+  targetEl = document.getElementById(templateInfoEl.getAttribute('data-target'))
 
   changeSelect = ->
     selectedId = targetEl.value

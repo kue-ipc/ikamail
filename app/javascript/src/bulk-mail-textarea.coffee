@@ -1,10 +1,22 @@
-export default bulkMailTextArea = ->
+
+checkParentChild = (parent, child) ->
+  if !child?
+    false
+  else if parent == child
+    true
+  else
+    checkParentChild(parent, child.parentElement)
+
+export default bulkMailTextArea = (root = document) ->
   idPrefix = 'bulk_mail_'
   bodyEl = document.getElementById("#{idPrefix}body")
   colEl = document.getElementById("#{idPrefix}wrap_col")
   ruleEl = document.getElementById("#{idPrefix}wrap_rule")
 
   return unless bodyEl? && colEl? && ruleEl?
+  return if root != document && !checkParentChild(root, bodyEl)
+
+  console.debug 'bulk mail text area'
 
   setStyleBody = ->
     col = parseInt(colEl.value)
