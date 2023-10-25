@@ -12,7 +12,7 @@ class TranslationsController < ApplicationController
       I18n.t(".", locale: @locale),
       translations_to_hash(@q.result),
       @q,
-      local: @locale
+      locale: @locale
     )
     all.reverse! if @q.sorts.find { |sort| sort.name == "key" }&.dir&.==("asc")
     @translations = Kaminari.paginate_array(all).page(params[:page])
@@ -70,7 +70,7 @@ class TranslationsController < ApplicationController
     list.index_by(&:key)
   end
 
-  private def all_translations(key, value, db, query, local: I18n.default_locale)
+  private def all_translations(key, value, db, query, locale: I18n.default_locale)
     case value
     when String
       full_key = key.join(".")
@@ -79,13 +79,13 @@ class TranslationsController < ApplicationController
       return if query.value_matches && value.exclude?(query.value_matches)
 
       db[full_key] || Translation.new(
-        locale: local,
+        locale: locale,
         key: full_key,
         value: value
       )
     when Hash
       value.each_key.sort.map do |c_key|
-        all_translations(key + [c_key], value[c_key], db, query, local: local)
+        all_translations(key + [c_key], value[c_key], db, query, locale: locale)
       end.compact.flatten
     end
   end
