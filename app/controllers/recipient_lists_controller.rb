@@ -5,7 +5,7 @@ class RecipientListsController < ApplicationController
   # GET /recipient_lists
   # GET /recipient_lists.json
   def index
-    @recipient_lists = RecipientList.all.order(:name).page(params[:page])
+    @recipient_lists = RecipientList.order(:name).page(params[:page])
   end
 
   # GET /recipient_lists/1

@@ -75,8 +75,8 @@ class TranslationsController < ApplicationController
     when String
       full_key = key.join(".")
 
-      return if query.key_matches && !full_key.include?(query.key_matches)
-      return if query.value_matches && !value.include?(query.value_matches)
+      return if query.key_matches && full_key.exclude?(query.key_matches)
+      return if query.value_matches && value.exclude?(query.value_matches)
 
       db[full_key] || Translation.new(
         locale: local,

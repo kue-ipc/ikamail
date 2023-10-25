@@ -6,7 +6,7 @@ class LdapUserSyncJob < ApplicationJob
   end
 
   private def sync_users
-    User.where(deleted: false).each do |user|
+    User.where(deleted: false).find_each do |user|
       if user.ldap_entry
         user.sync_ldap!
       else

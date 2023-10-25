@@ -17,7 +17,7 @@ class LdapMailSyncJob < ApplicationJob
   private def sync_mail_groups
     mail_group_remains = Set.new(MailGroup.all.map(&:name))
 
-    LdapGroup.all.each do |group|
+    LdapGroup.all.each do |group| # rubocop: disable Rails/FindEach
       name = group.name.downcase
       mail_group_remains.delete(name)
       MailGroup.find_or_create_by(name: name).update(display_name: group.display_name)
@@ -32,7 +32,7 @@ class LdapMailSyncJob < ApplicationJob
   private def sync_mail_users
     mail_user_remains = Set.new(MailUser.all.map(&:name))
 
-    LdapUser.all.each do |user|
+    LdapUser.all.each do |user| # rubocop: disable Rails/FindEach
       # ignore user who dose not have mail addresses
       next unless user.mail
 

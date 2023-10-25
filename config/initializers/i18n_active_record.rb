@@ -3,7 +3,7 @@ require "i18n/backend/active_record"
 Translation = I18n::Backend::ActiveRecord::Translation
 
 # for ransack
-def Translation.ransackable_attributes(auth_object = nil)
+def Translation.ransackable_attributes(_auth_object = nil)
   ["key", "locale", "value"]
 end
 
