@@ -7,7 +7,7 @@
       - @mail_template.errors.full_messages.each do |message|
         li.list-group-item = message
 
-= bootstrap_form_with model: @mail_template do |f|
+= bootstrap_form_with model: @mail_template, data: {turbo: false} do |f|
   = f.text_field :name
   = f.text_area :description
   = f.check_box :enabled, switch: true

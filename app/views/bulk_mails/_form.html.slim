@@ -7,7 +7,7 @@
       - @bulk_mail.errors.full_messages.each do |message|
         li.list-group-item = message
 
-= bootstrap_form_with model: @bulk_mail do |f|
+= bootstrap_form_with model: @bulk_mail, data: {turbo: false} do |f|
   .mb-3
     = f.collection_select :mail_template_id, policy_scope(MailTemplate).where(enabled: true).order(:name), :id, :name,
                           {prompt: true, wrapper_class: false},

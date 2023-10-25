@@ -7,7 +7,7 @@
       - @recipient_list.errors.full_messages.each do |message|
         li.list-group-item = message
 
-= bootstrap_form_with model: @recipient_list do |f|
+= bootstrap_form_with model: @recipient_list, data: {turbo: false} do |f|
   = f.text_field :name
   = f.text_area :description, rows: 3
   = f.collection_select :mail_group_ids, policy_scope(MailGroup).order(:display_name), :id, :display_name,

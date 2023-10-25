@@ -43,6 +43,11 @@ class RecipientMailUsersController < ApplicationController
       t("messages.failure_action", model: t("activerecord.models.mail_user"), action: t("actions.add")),
       e.message,
     ]
+  rescue EncodingError => e
+    redirect_to @recipient_list, alert: [
+      t("messages.failure_action", model: t("activerecord.models.mail_user"), action: t("actions.add")),
+      t("messages.not_utf8"),
+    ]
   end
 
   # DELETE /recipient_lists/1/mail_users/included/1
@@ -87,7 +92,9 @@ class RecipientMailUsersController < ApplicationController
 
   private def names_params
     if params[:file]
-      params[:file].read
+      params[:file].read.force_encoding(Encoding::UTF_8).tap do |data|
+        raise EncodingError, "Invalid encoding" unless data.valid_encoding?
+      end
     else
       params[:name] || ""
     end.split(/[\s,\ufeff]/).map(&:strip).select(&:present?).map(&:downcase)

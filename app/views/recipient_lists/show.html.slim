@@ -59,10 +59,15 @@ dl
                 = f.button t("actions.bulk_add"), name: "upload", class: "btn btn-warning btn-sm"
                 = f.file_field :file, class: "visually-hidden", accept: ".txt,text/plain", wrapper: false
             - if recipient_policy.destroy?
+              / TODO: インラインスクリプトを使わない方法に変えるべき
               .col-auto.mb-2
-                = button_to t("actions.delete_all"), mail_users_recipient_list_path(@recipient_list, type),
-                          data: {turbo_confirm: t("messages.corfirm_all_destroy")}, method: :delete,
-                          class: "btn btn-danger btn-sm"
+                = link_to t("actions.delete_all"), "#", class: "btn btn-danger btn-sm",
+                  onclick: "document.getElementById('#{attr_name}-delete-all-button').click();return false;"
+        - if recipient_policy.destroy?
+          = button_to t("actions.delete_all"), mail_users_recipient_list_path(@recipient_list, type),
+                    data: {turbo_confirm: t("messages.corfirm_all_destroy")}, method: :delete,
+                    id: "#{attr_name}-delete-all-button",
+                    form_class: "d-none"
         .collapse id=collapse_id
           ul.list-inline.mb-0
             - mail_users.find_each do |mail_user|
@@ -74,6 +79,8 @@ dl
                       data: {turbo_confirm: t("messages.corfirm_destroy")},
                       method: :delete,
                       class: "btn-close"
+
+
 
   = dt_dd_for @recipient_list, :mail_templates
 
