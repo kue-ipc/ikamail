@@ -1,8 +1,0 @@
-(() => {
-  const id = <%== @translation.id.to_json %>;
-  const key = <%== @translation.key.to_json %>;
-  const value = <%== I18n.t(@translation.key).to_json %>;
-  const path = <%== admin_translation_path(@translation).to_json %>;
-  window.TRANSLATION_FORM_MAP.get(key).createdRecord(path, value);
-  console.log(`create ${id} ${key}`);
-})();

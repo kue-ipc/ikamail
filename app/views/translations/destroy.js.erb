@@ -1,8 +1,0 @@
-(() => {
-  const id = <%== @translation.id.to_json %>;
-  const key = <%== @translation.key.to_json %>;
-  const value = <%== I18n.t(@translation.key).to_json %>;
-  const path = <%== admin_translations_path.to_json %>;
-  console.log(`destroy ${id} ${key}`);
-  window.TRANSLATION_FORM_MAP.get(key).destroiedRecord(path, value);
-})();
