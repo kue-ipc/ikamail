@@ -43,7 +43,7 @@ class RecipientMailUsersController < ApplicationController
       t("messages.failure_action", model: t("activerecord.models.mail_user"), action: t("actions.add")),
       e.message,
     ]
-  rescue EncodingError => e
+  rescue EncodingError
     redirect_to @recipient_list, alert: [
       t("messages.failure_action", model: t("activerecord.models.mail_user"), action: t("actions.add")),
       t("messages.not_utf8"),
