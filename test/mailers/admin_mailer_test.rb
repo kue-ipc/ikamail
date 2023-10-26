@@ -7,7 +7,7 @@ class AdminMailerTest < ActionMailer::TestCase
     assert_equal ["admin@example.jp"], mail.to
     assert_equal ["no-reply@example.jp"], mail.from
 
-    assert_match <<~MESSAGE.gsub(/\R/, "\r\n"), mail.body.encoded
+    assert_equal <<~MESSAGE.gsub(/\R/, "\r\n"), mail.body.encoded
       一括メールシステムで、下記のジョブが失敗しました。
 
       Job: job
