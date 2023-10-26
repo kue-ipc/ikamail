@@ -11,7 +11,7 @@ button<> class="btn btn-#{level}" type="button" data-bs-toggle="modal" data-bs-t
             aria-hidden="true"]
   .modal-dialog role="document"
     .modal-content
-      = bootstrap_form_with model: @bulk_mail, url: url, method: :put do |form|
+      = bootstrap_form_with model: @bulk_mail, url: url, method: :put, data: {turbo: false} do |form|
         = form.fields @action_info do |f|
           = f.hidden_field :current_status
           .modal-header
