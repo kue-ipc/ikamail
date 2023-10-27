@@ -22,10 +22,12 @@ class BulkMailer < ApplicationMailer
 
   private def before_deliver_bulk_mail
     @bulk_mail = params[:bulk_mail]
-    @bulk_mail.mail_template.with_lock do
-      @bulk_mail.mail_template.increment!(:count) # rubocop: disable Rails/SkipsModelValidations
-      mail_count = @bulk_mail.mail_template.count
-      @bulk_mail.update!(status: "delivering", number: mail_count)
+    if @bulk_mail.number.nil?
+      @bulk_mail.mail_template.with_lock do
+        @bulk_mail.mail_template.increment!(:count) # rubocop: disable Rails/SkipsModelValidations
+        mail_count = @bulk_mail.mail_template.count
+        @bulk_mail.update!(status: "delivering", number: mail_count)
+      end
     end
     ActionLog.create(bulk_mail: @bulk_mail, action: "start")
   end
