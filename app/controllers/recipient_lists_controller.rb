@@ -51,8 +51,10 @@ class RecipientListsController < ApplicationController
     if @recipient_list.destroy
       redirect_to recipient_lists_url, notice: t_success_action(@recipient_list, :destroy)
     else
-      flash.alert = t_failure_action(@recipient_list, :destroy)
-      render :show
+      redirect_to @recipient_list, alert: [
+        t_failure_action(@recipient_list, :destroy),
+        *@recipient_list.errors.messages.fetch(:base, []),
+      ]
     end
   end
 

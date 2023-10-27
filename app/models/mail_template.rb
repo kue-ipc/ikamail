@@ -5,7 +5,7 @@ class MailTemplate < ApplicationRecord
 
   belongs_to :recipient_list
   belongs_to :user
-  has_many :bulk_mail, dependent: :restrict_with_error
+  has_many :bulk_mails, dependent: :restrict_with_error
 
   validates :from_name, allow_blank: true, length: {maximum: 255}, charcode: true
   validates :from_mail_address, presence: true, length: {maximum: 255}

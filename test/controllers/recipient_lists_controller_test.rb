@@ -57,7 +57,7 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
       assert_no_difference("RecipientList.count") do
         delete recipient_list_url(@recipient_list)
       end
-      assert_response :success
+      assert_redirected_to recipient_list_url(@recipient_list)
     end
 
     test "should destroy ALONE recipient_list" do

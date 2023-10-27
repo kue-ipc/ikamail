@@ -249,6 +249,7 @@ ja:
         body_footer: 本文の後文
         description: 説明
         user: 受付担当者
+        bulk_mails: 紐づけられたメール
       action_log:
         comment: コメント
       user:

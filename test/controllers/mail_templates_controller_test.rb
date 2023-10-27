@@ -174,7 +174,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
         delete mail_template_url(@mail_template)
       end
 
-      assert_redirected_to mail_templates_url
+      assert_redirected_to mail_template_url(@mail_template)
     end
 
     test "should destroy mail_template NO used" do

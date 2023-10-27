@@ -49,8 +49,14 @@ class MailTemplatesController < ApplicationController
   # DELETE /mail_templates/1
   # DELETE /mail_templates/1.json
   def destroy
-    @mail_template.destroy
-    redirect_to mail_templates_url, notice: t_success_action(@mail_template, :destroy)
+    if @mail_template.destroy
+      redirect_to mail_templates_url, notice: t_success_action(@mail_template, :destroy)
+    else
+      redirect_to @mail_template, alert: [
+        t_failure_action(@mail_template, :destroy),
+        *@mail_template.errors.messages.fetch(:base, []),
+      ]
+    end
   end
 
   def count
