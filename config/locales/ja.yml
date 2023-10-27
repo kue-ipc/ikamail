@@ -233,6 +233,7 @@ ja:
         wrap_col: 折り返し桁数
         wrap_rule: 折り返し規則
         word_wrap: 折り返し
+        reservation_number: 予約番号
       mail_template:
         name: テンプレート名
         enabled: 有効

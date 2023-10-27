@@ -385,6 +385,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     end
 
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
+    assert_not_nil BulkMail.find(@bulk_mail.id).reservation_number
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 
@@ -1182,7 +1183,7 @@ class BulkMailsControllerOwnerTest < BulkMailsControllerTest
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
 
-  ## error no numebr ##
+  ## error no number ##
   test "should destroy ERROR NO NUMBER" do
     @bulk_mail = bulk_mails(:error_no_number)
     @action_info_params[:current_status] = @bulk_mail.status

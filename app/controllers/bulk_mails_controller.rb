@@ -151,13 +151,14 @@ class BulkMailsController < ApplicationController
 
   def reserve(auto: false, reserved_at: nil)
     reserved_at ||= @action_info.datetime
-    if @bulk_mail.update(status: "reserved", reserved_at: reserved_at)
+    reservation_number = rand(2**31) # 4 bytes signed integer (-2^31..2^31-1)
+    if @bulk_mail.update(status: "reserved", reserved_at: reserved_at, reservation_number: reservation_number)
       if auto
         record_action_log(user: nil, action: "reserve", comment: "auto")
       else
         record_action_log
       end
-      ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail)
+      ReservedDeliveryJob.set(wait_until: @bulk_mail.reserved_at).perform_later(@bulk_mail, reservation_number)
       flash.notice = [*flash.notice, t("mail.done_messages.reserve")]
     else
       flash.alert = [*flash.alert, t_failure_action(@bulk_mail, :reserve)]

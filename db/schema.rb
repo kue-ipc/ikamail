@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_004435) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_005012) do
   create_table "action_logs", charset: "utf8mb4", collation: "utf8mb4_general_ci", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "bulk_mail_id", null: false
     t.bigint "user_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_004435) do
     t.datetime "reserved_at", precision: nil
     t.integer "wrap_col", default: 0, null: false
     t.integer "wrap_rule", default: 0, null: false
+    t.integer "reservation_number"
     t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
     t.index ["mail_template_id"], name: "index_bulk_mails_on_mail_template_id"
     t.index ["status"], name: "index_bulk_mails_on_status"

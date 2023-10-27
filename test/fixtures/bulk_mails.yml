@@ -82,6 +82,7 @@ reserved:
     全ユーザー宛
   reserved_at: 2019-01-02 21:30:00 +09:00
   status: reserved
+  reservation_number: 42
 
 waiting:
   user: user01
@@ -159,6 +160,7 @@ error_no_number:
     全ユーザー宛
   status: error
 
+# numberが設定済みのメール
 numbered:
   user: user01
   mail_template: all
@@ -169,3 +171,16 @@ numbered:
     全ユーザー宛
   number: 6
   status: waiting
+
+# reservation_number無しのメール
+no_reservation_number:
+  user: user01
+  mail_template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  reserved_at: 2019-01-02 21:30:00 +09:00
+  status: reserved
+  reservation_number: nil
