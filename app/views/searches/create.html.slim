@@ -16,7 +16,7 @@ hr
     = dt_dd_for @mail_user, :mail
     - if current_user.admin?
       = dt_dd_for @mail_user, :mail_groups
-    = dt_dd_for @mail_user, :applicable_recipient_lists
+    = dt_dd_for @mail_user, :applicable_recipient_lists, limits: policy_scope(RecipientList).to_a
 
 - else
   p = t("messages.not_found_mail_user")

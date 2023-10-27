@@ -4,10 +4,8 @@ class BulkMailPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.includes(:mail_template)
-          .where(user: user)
-          .or(scope.includes(:mail_template)
-            .where(mail_templates: {user: user}))
+        scope.includes(:mail_template).where(user: user)
+          .or(scope.includes(:mail_template).where(mail_templates: {user: user}))
       end
     end
   end

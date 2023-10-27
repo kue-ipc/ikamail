@@ -15,7 +15,7 @@ class MailGroupsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   private def set_mail_group
-    @mail_group = MailGroup.find(params[:id])
+    @mail_group = policy_scope(MailGroup).find(params[:id])
     authorize @mail_group
   end
 

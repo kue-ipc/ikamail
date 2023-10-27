@@ -26,7 +26,7 @@ class MailTemplatesController < ApplicationController
   # POST /mail_templates
   # POST /mail_templates.json
   def create
-    @mail_template = MailTemplate.new(mail_template_params)
+    @mail_template = policy_scope(MailTemplate).new(mail_template_params)
     @mail_template.user ||= current_user
 
     if @mail_template.save

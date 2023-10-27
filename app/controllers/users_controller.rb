@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 
   private def set_user
     @user = if params[:id]
-      User.find(params[:id])
+      policy_scope(User).find(params[:id])
     else
       current_user
     end

@@ -126,10 +126,12 @@ module ApplicationHelper
     end
   end
 
-  def span_enum_for(value, **opts)
+  def span_enum_for(value, limits: nil, **opts)
     content_tag("ul", class: "list-inline mb-0") do
       list_html = sanitize("")
       value.each do |v|
+        next if limits&.exclude?(v)
+
         list_html += content_tag("li", class: "list-inline-item border border-primary rounded px-1 mb-1") do
           span_value_for(v, **opts)
         end

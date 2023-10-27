@@ -13,9 +13,9 @@ class SearchesController < ApplicationController
     @query = search_params[:query]&.downcase || ""
     @mail_user = if @query.present?
       if @query.include?("@")
-        MailUser.find_by(mail: @query)
+        policy_scope(MailUser).find_by(mail: @query)
       else
-        MailUser.find_by(name: @query)
+        policy_scope(MailUser).find_by(name: @query)
       end
     end
   end

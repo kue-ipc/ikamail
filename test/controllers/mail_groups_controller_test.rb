@@ -35,7 +35,7 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should show mail_group" do
-      assert_raises(Pundit::NotAuthorizedError) do
+      assert_raises(ActiveRecord::RecordNotFound) do
         get mail_group_url(@mail_group)
       end
     end
