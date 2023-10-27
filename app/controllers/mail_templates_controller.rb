@@ -79,10 +79,10 @@ class MailTemplatesController < ApplicationController
       :count, :reserved_time, :description, :enabled,
       user: :username
     )
-    permitted[:user] = if current_user.admin?
-      User.find_by(username: permitted[:user][:username])
+    if current_user.admin?
+      permitted[:user] = User.find_by(username: permitted[:user][:username])
     else
-      current_user
+      permitted.extract!(:recipient_list_id, :user)
     end
     permitted
   end
