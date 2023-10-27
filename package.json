@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "build": "node esbuild.build.mjs",
-    "build:css": "sass ./app/assets/stylesheets/application.sass:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "build:css": "sass ./app/assets/stylesheets/application.sass:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "lint": "coffeelint ./app/javascript/; stylelint ./app/assets/stylesheets/"
   },
   "devDependencies": {
     "@coffeelint/cli": "^5.2.11",
