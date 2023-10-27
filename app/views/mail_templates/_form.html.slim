@@ -11,7 +11,8 @@
   = f.text_field :name
   = f.text_area :description
   = f.check_box :enabled, switch: true
-  = f.collection_select :recipient_list_id, policy_scope(RecipientList).order(:name), :id, :name, {prompt: true}
+  = f.collection_select :recipient_list_id, policy_scope(RecipientList).order(:name), :id,
+                        :name, {prompt: true}, disabled: !current_user.admin?
   = f.text_field :from_name
   = f.email_field :from_mail_address
   = f.text_field :subject_prefix
