@@ -172,8 +172,7 @@ numbered:
   number: 6
   status: waiting
 
-# reservation_number無しのメール
-no_reservation_number:
+reserved_without_reservation_number:
   user: user01
   mail_template: all
   delivery_timing: manual
@@ -184,3 +183,14 @@ no_reservation_number:
   reserved_at: 2019-01-02 21:30:00 +09:00
   status: reserved
   reservation_number: nil
+
+pending_with_reservation_number:
+  user: user01
+  mail_template: all
+  delivery_timing: manual
+  subject: "テスト全ユーザー"
+  body: |+
+    テスト
+    全ユーザー宛
+  status: pending
+  reservation_number: 42

@@ -14,3 +14,10 @@ alone:
   name: "使われていない"
   description: "他から使われていません。"
   mail_groups: admin
+
+all_collected:
+  name: "全ユーザー宛コレクト済み"
+  description: "すべてのユーザーが含まれます。"
+  mail_groups: admin, user
+  collected: true
+
