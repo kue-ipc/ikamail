@@ -5,7 +5,7 @@ class RecipientListsController < ApplicationController
   # GET /recipient_lists
   # GET /recipient_lists.json
   def index
-    @recipient_lists = RecipientList.order(:name).page(params[:page])
+    @recipient_lists = policy_scope(RecipientList).order(:name).page(params[:page])
   end
 
   # GET /recipient_lists/1
@@ -57,7 +57,7 @@ class RecipientListsController < ApplicationController
   end
 
   private def set_recipient_list
-    @recipient_list = RecipientList.find(params[:id])
+    @recipient_list = policy_scope(RecipientList).find(params[:id])
     authorize @recipient_list
   end
 
