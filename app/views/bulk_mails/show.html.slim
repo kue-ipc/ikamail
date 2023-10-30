@@ -16,6 +16,9 @@ dl
   = dt_dd_for @bulk_mail, :mail_template do |mail_template|
     - if policy(mail_template).show?
       = link_to mail_template.name, mail_template
+      - unless mail_template.enabled
+        span<
+          = t("values.disabled")
       br
       =< MailTemplate.human_attribute_name(:recipient_list)
       | :
@@ -31,7 +34,7 @@ dl
       .border.rounded.bg-light
         = span_text_tag(mail_template.description, pre: true)
     - else
-      span.text-muted
+      span
         = mail_template.name
       - unless mail_template.enabled
         span<
@@ -47,13 +50,20 @@ dl
   = dt_dd_for @bulk_mail, :number, blank_alt: ""
   = dt_dd_for @bulk_mail, :user
 
+- unless @bulk_mail.mail_template.enabled
+  - case @bulk_mail.status
+  - when "draft"
+    p = t("messages.cannot_apply_mail_with_disabled_template")
+  - when "pending"
+    p = t("messages.cannot_approve_mail_with_disabled_template")
+
 .mail-operation.d-print-none
   - bulk_mail_policy = policy(@bulk_mail)
 
   - if bulk_mail_policy.edit?
     =<> link_to t("actions.edit"), edit_bulk_mail_path(@bulk_mail), class: "btn btn-primary"
 
-  - if bulk_mail_policy.apply?
+  - if @bulk_mail.mail_template.enabled && bulk_mail_policy.apply?
     = render partial: "action", locals: {action: :apply, url: apply_bulk_mail_path(@bulk_mail),
                                          comment_required: false, level: "primary",
                                          timing: @bulk_mail.delivery_timing,}
@@ -62,7 +72,7 @@ dl
     = render partial: "action", locals: {action: :withdraw, url: withdraw_bulk_mail_path(@bulk_mail),
                                          comment_required: true, level: "warning",}
 
-  - if bulk_mail_policy.approve?
+  - if @bulk_mail.mail_template.enabled && bulk_mail_policy.approve?
     = render partial: "action", locals: {action: :approve, url: approve_bulk_mail_path(@bulk_mail),
                                          comment_required: false, level: "primary",}
 

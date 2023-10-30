@@ -329,6 +329,12 @@ ja:
     can_select_multi_groups: クリックで複数選択することができます。対象となるグループをすべて選択してください。
     not_utf8: "ファイルがUTF-8ではありません。エンコードをUTF-8にしてアップロードし直してください。"
     selected_disabled_template: "無効なテンプレートが選択されています。テンプレートを選択しなおしてください。"
+    cannot_apply_mail_with_disabled_template: |
+      メールのテンプレートが無効なため、申し込みができません。
+      編集から有効なテンプレートに変更してください。
+    cannot_approve_mail_with_disabled_template: |
+      メールのテンプレートが無効なため、受け付けができません。
+      取り下げ、または、拒否を実施して、下書き状態に戻してください。
 
   time:
     formats:
