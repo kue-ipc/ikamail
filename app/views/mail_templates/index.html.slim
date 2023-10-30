@@ -21,7 +21,7 @@ table.table
         td.position-relative
           = link_to mail_template.name, mail_template, class: "stretched-link"
           - unless mail_template.enabled
-            span
+            span<
               = t("values.disabled")
         td.position-relative
           = link_to mail_template.recipient_list.name, mail_template.recipient_list, class: "stretched-link"
