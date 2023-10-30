@@ -1,6 +1,5 @@
 class BulkMailsController < ApplicationController
-  before_action :set_action_info,
-    only: %i[create update apply withdraw approve reject cancel reserve deliver discard]
+  before_action :set_action_info, only: %i[create update apply withdraw approve reject cancel reserve deliver discard]
   before_action :set_bulk_mail,
     only: %i[show edit update destroy apply withdraw approve reject cancel reserve deliver discard]
   before_action :authorize_bulk_mail, only: [:index, :new, :create]
@@ -9,19 +8,7 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails.json
   def index
     @bulk_mails = policy_scope(BulkMail).includes(:user, :mail_template)
-    statuses = %w[
-      draft
-      pending
-      ready
-      reserved
-      waiting
-      delivering
-      delivered
-      waste
-      failed
-      error
-    ]
-    if statuses.include?(params[:status])
+    if BulkMail.statuses.key?(params[:status])
       @status = params[:status]
       @bulk_mails = @bulk_mails.where(status: @status)
     end
@@ -45,6 +32,10 @@ class BulkMailsController < ApplicationController
   # GET /bulk_mails/1/edit
   def edit
     @action_info = ActionInfo.new(current_status: @bulk_mail.status)
+    return if @bulk_mail.mail_template.enabled
+
+    @bulk_mail.mail_template_id = nil
+    flash[:alert] = t("messages.selected_disabled_template")
   end
 
   # POST /bulk_mails
