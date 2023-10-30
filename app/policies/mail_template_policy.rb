@@ -14,7 +14,7 @@ class MailTemplatePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    record.enabled || user.admin? || record.user == user
   end
 
   def update?

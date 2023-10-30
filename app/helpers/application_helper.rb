@@ -101,9 +101,17 @@ module ApplicationHelper
     when Enumerable
       span_enum_for(value, **opts)
     when BulkMail, MailGroup, MailUser, RecipientList, MailTemplate
-      link_to(value.to_s, value)
+      span_model_for(value, **opts)
     else
       content_tag("span", value.to_s, class: "")
+    end
+  end
+
+  def span_model_for(value, **opts)
+    if policy(value).show?
+      link_to(value.to_s, value, **opts)
+    else
+      content_tag("span", value.to_s, **opts)
     end
   end
 

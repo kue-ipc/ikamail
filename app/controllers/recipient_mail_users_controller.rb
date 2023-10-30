@@ -78,7 +78,7 @@ class RecipientMailUsersController < ApplicationController
   end
 
   private def set_recipient_list
-    @recipient_list = RecipientList.find(params[:id])
+    @recipient_list = policy_scope(RecipientList).find(params[:id])
   end
 
   private def set_type
@@ -87,7 +87,7 @@ class RecipientMailUsersController < ApplicationController
   end
 
   private def set_mail_user
-    @mail_user = MailUser.find(params[:mail_user_id])
+    @mail_user = policy_scope(MailUser).find(params[:mail_user_id])
   end
 
   private def names_params
