@@ -18,8 +18,8 @@ p
 table.table
   thead
     tr
-      th テンプレート名
-      th 件数
+      th = MailTemplate.human_attribute_name(:name)
+      th = MailTemplate.human_attribute_name(:count)
   tbody
     - @mail_template_statistics.each_value do |data|
       tr
