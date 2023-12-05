@@ -10,7 +10,7 @@ html
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   body
     header.mb-2
-      nav.navbar.navbar-light.bg-light
+      nav.navbar.navbar-light.bg-light.d-print-none
         .container-fluid
           = link_to t(:bulk_mail_system), "/", class: "navbar-brand"
           - if user_signed_in?

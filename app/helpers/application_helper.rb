@@ -69,8 +69,8 @@ module ApplicationHelper
 
   def dt_dd_tag(term, &block)
     content_tag("div", class: "row border-bottom mb-2 pb-2") do
-      content_tag("dt", term, class: "col-sm-6 col-md-4 col-xl-2") +
-        content_tag("dd", class: "col-sm-6 col-md-8 col-xl-10 mb-0", &block)
+      content_tag("dt", term, class: "col-md-4 col-lg-3 col-xxl-2") +
+        content_tag("dd", class: "col-md-8 col-lg-9 col-xxl-10 mb-0", &block)
     end
   end
 
