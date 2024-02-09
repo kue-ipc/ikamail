@@ -1,6 +1,6 @@
-class CreateMailTemplates < ActiveRecord::Migration[6.0]
+class CreateTemplates < ActiveRecord::Migration[6.0]
   def change
-    create_table :mail_templates do |t|
+    create_table :templates do |t|
       t.string :name, null: false
       t.boolean :enabled, null: false, default: true
 
@@ -23,6 +23,6 @@ class CreateMailTemplates < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :mail_templates, :name, unique: true
+    add_index :templates, :name, unique: true
   end
 end
