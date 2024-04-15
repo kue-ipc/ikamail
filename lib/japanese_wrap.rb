@@ -26,61 +26,61 @@ module JapaneseWrap
   # rubocop: enable Style/PercentLiteralDelimiters
 
   # ハイフン類
-  HYPHENS = %w[‐ 〜 ゠ –].freeze
+  HYPHENS = %w(‐ 〜 ゠ –).freeze
 
   # 区切り約物
-  DIVIDING_PUNCTUATION_MARKS = %w[! ? ‼ ⁇ ⁈ ⁉].freeze
-  DIVIDING_PUNCTUATION_MARKS_FULLWIDTH = %w[！ ？].freeze
+  DIVIDING_PUNCTUATION_MARKS = %w(! ? ‼ ⁇ ⁈ ⁉).freeze
+  DIVIDING_PUNCTUATION_MARKS_FULLWIDTH = %w(！ ？).freeze
 
   # 中点類
-  MIDDLE_DOTS = %w[・ : ;].freeze
-  MIDDLE_DOTS_FULLWIDTH = %w[： ；].freeze
-  MIDDLE_DOTS_HALFWIDTH = %w[･].freeze
+  MIDDLE_DOTS = %w(・ : ;).freeze
+  MIDDLE_DOTS_FULLWIDTH = %w(： ；).freeze
+  MIDDLE_DOTS_HALFWIDTH = %w(･).freeze
 
   # 句点類
-  FULL_STOPS = %w[。 .].freeze
-  FULL_STOPS_FULLWIDTH = %w[．].freeze
-  FULL_STOPS_HALFWIDTH = %w[｡].freeze
+  FULL_STOPS = %w(。 .).freeze
+  FULL_STOPS_FULLWIDTH = %w(．).freeze
+  FULL_STOPS_HALFWIDTH = %w(｡).freeze
 
   # 読点類
-  COMMAS = %w[、 ,].freeze
-  COMMAS_FULLWIDTH = %w[，].freeze
-  COMMAS_HALFWIDTH = %w[､].freeze
+  COMMAS = %w(、 ,).freeze
+  COMMAS_FULLWIDTH = %w(，).freeze
+  COMMAS_HALFWIDTH = %w(､).freeze
 
   # 繰返し記号
-  ITERATION_MARKS = %w[ヽ ヾ ゝ ゞ 々 〻].freeze
+  ITERATION_MARKS = %w(ヽ ヾ ゝ ゞ 々 〻).freeze
 
   # 長音記号
-  PROLONGED_SOUND_MARK = %w[ー].freeze
-  PROLONGED_SOUND_MARK_HALFWIDTH = %w[ｰ].freeze
+  PROLONGED_SOUND_MARK = %w(ー).freeze
+  PROLONGED_SOUND_MARK_HALFWIDTH = %w(ｰ).freeze
 
   # 小書きの仮名
-  SMALL_KANA = %w[
+  SMALL_KANA = %w(
     ぁ ぃ ぅ ぇ ぉ
     ァ ィ ゥ ェ ォ
     っ ゃ ゅ ょ ゎ ゕ ゖ
     ッ ャ ュ ョ ヮ ヵ ヶ ㇰ
     ㇱ ㇲ ㇳ ㇴ ㇵ ㇶ ㇷ ㇸ ㇹ ㇺ
     ㇻ ㇼ ㇽ ㇾ ㇿ
-  ].freeze
-  SMALL_KANA_HALFWIDTH = %w[
+  ).freeze
+  SMALL_KANA_HALFWIDTH = %w(
     ｧ ｨ ｩ ｪ ｫ
     ｯ ｬ ｭ ｮ
-  ].freeze
+  ).freeze
   # ㇷ゚ U+31F7 U+309A
 
   # 濁点・半濁点
-  SOUND_MARKS = (%w[゛ ゜] + ["\u3099", "\u309A"]).freeze
+  SOUND_MARKS = (%w(゛ ゜) + ["\u3099", "\u309A"]).freeze
   SOUND_MARKS_HALFWIDTH = ["\uFF9E", "\uFF9F"].freeze
 
   # 分離禁止文字列
-  INSEPARABLE_STRS = %w[
+  INSEPARABLE_STRS = %w(
     ——
     ……
     ‥‥
     〳〵
     〴〵
-  ].freeze
+  ).freeze
 
   NOT_STARTING_CHARS = Set.new([
     *CLOSING_BRACKETS,
@@ -146,7 +146,8 @@ module JapaneseWrap
   # ambiguous:: Unicodeで幅がAmbiguousとなっている文字(ギリシャ文字)の幅
   # hanging:: 句点等のぶら下げを有効にする。
   # word_break:: 改行できる文字、:normal, :keep_all, :break_all, :ascii, :latin
-  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false, word_break: :normal)
+  def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false,
+    word_break: :normal)
     unless block_given?
       return enum_for(__method__, str, col: col, rule: rule, ambiguous: ambiguous, hanging: hanging,
         word_break: word_break)
@@ -159,7 +160,8 @@ module JapaneseWrap
 
     until remnant.empty?
       min_ptr = calc_ptr(remnant, col, display_with)
-      ptr = search_breakable(remnant, min_ptr, rule: rule, hanging: hanging, word_break: word_break)
+      ptr = search_breakable(remnant, min_ptr, rule: rule, hanging: hanging,
+        word_break: word_break)
 
       if ptr < remnant.size
         yield "#{remnant[0, ptr].rstrip}\n"
@@ -196,14 +198,16 @@ module JapaneseWrap
   end
 
   # 改行可能な場所を探す。
-  def search_breakable(str, ptr, rule: :force, hanging: false, word_break: :normal)
+  def search_breakable(str, ptr, rule: :force, hanging: false,
+    word_break: :normal)
     case rule
     when :none, :force
       ptr
     when :word_wrap
       search_breakable_word_wrap(str, ptr, word_break: word_break)
     when :jisx4051
-      search_breakable_jisx4051(str, ptr, hanging: hanging, word_break: word_break)
+      search_breakable_jisx4051(str, ptr, hanging: hanging,
+        word_break: word_break)
     else
       raise ArgumentError, "unknown rule: #{rule}"
     end
@@ -218,13 +222,15 @@ module JapaneseWrap
     end
 
     # 続きが非単語かつASCIIではない場合は即座に終了
-    return ptr if !check_word_char(str[ptr], word_break: word_break) && str[ptr] !~ /[[:ascii:]]/
+    return ptr if !check_word_char(str[ptr],
+      word_break: word_break) && str[ptr] !~ /[[:ascii:]]/
 
     # 単語区切りを見つける
     cur_ptr = ptr
     while cur_ptr.positive?
       # 非単語で終わっていれば終了
-      return cur_ptr unless check_word_char(str[cur_ptr - 1], word_break: word_break)
+      return cur_ptr unless check_word_char(str[cur_ptr - 1],
+        word_break: word_break)
 
       cur_ptr -= 1
     end
@@ -240,9 +246,10 @@ module JapaneseWrap
     cur_ptr = ptr
     while cur_ptr.positive?
       if str[cur_ptr] != " "
-        cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false, word_break: word_break)
+        cur_ptr = search_breakable_word_wrap(str, cur_ptr, forward: false,
+          word_break: word_break)
         if NOT_STARTING_CHARS.exclude?(str[cur_ptr]) &&
-           NOT_ENDING_CHARS.exclude?(str[cur_ptr - 1])
+            NOT_ENDING_CHARS.exclude?(str[cur_ptr - 1])
           return cur_ptr
         end
       end

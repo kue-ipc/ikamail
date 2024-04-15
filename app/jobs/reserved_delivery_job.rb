@@ -15,7 +15,8 @@ class ReservedDeliveryJob < ApplicationJob
 
     bulk_mail.update!(status: "waiting")
 
-    ActionLog.create(bulk_mail: bulk_mail, action: "deliver", comment: "reserved")
+    ActionLog.create(bulk_mail: bulk_mail, action: "deliver",
+      comment: "reserved")
     BulkMailer.with(bulk_mail: bulk_mail).all.deliver_later
   end
 end

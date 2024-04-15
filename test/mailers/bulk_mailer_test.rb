@@ -6,7 +6,8 @@ class BulkMailerTest < ActionMailer::TestCase
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
     assert_equal ["user01@example.jp", "user03@example.jp"], mail.bcc
     assert_equal ["no-reply@example.jp"], mail.from
-    assert_equal u8tojis("前文\nテスト\n全ユーザー宛\n後文\n".gsub(/\R/, "\r\n")), mail.body.encoded
+    assert_equal u8tojis("前文\nテスト\n全ユーザー宛\n後文\n".gsub(/\R/, "\r\n")),
+      mail.body.encoded
   end
 
   test "delver all" do

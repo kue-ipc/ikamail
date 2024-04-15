@@ -25,10 +25,12 @@ class RecipientListsController < ApplicationController
   # POST /recipient_lists
   # POST /recipient_lists.json
   def create
-    @recipient_list = RecipientList.new({**recipient_list_params, collected: false})
+    @recipient_list = RecipientList.new({**recipient_list_params,
+      collected: false,})
     if @recipient_list.save
       CollectRecipientJob.perform_later(@recipient_list)
-      redirect_to @recipient_list, notice: t_success_action(@recipient_list, :create)
+      redirect_to @recipient_list,
+        notice: t_success_action(@recipient_list, :create)
     else
       render :new
     end
@@ -39,7 +41,8 @@ class RecipientListsController < ApplicationController
   def update
     if @recipient_list.update({**recipient_list_params, collected: false})
       CollectRecipientJob.perform_later(@recipient_list)
-      redirect_to @recipient_list, notice: t_success_action(@recipient_list, :update)
+      redirect_to @recipient_list,
+        notice: t_success_action(@recipient_list, :update)
     else
       render :edit
     end
@@ -49,7 +52,8 @@ class RecipientListsController < ApplicationController
   # DELETE /recipient_lists/1.json
   def destroy
     if @recipient_list.destroy
-      redirect_to recipient_lists_url, notice: t_success_action(@recipient_list, :destroy)
+      redirect_to recipient_lists_url,
+        notice: t_success_action(@recipient_list, :destroy)
     else
       redirect_to @recipient_list, alert: [
         t_failure_action(@recipient_list, :destroy),
@@ -68,6 +72,7 @@ class RecipientListsController < ApplicationController
   end
 
   private def recipient_list_params
-    params.require(:recipient_list).permit(:name, :description, mail_group_ids: [])
+    params.require(:recipient_list).permit(:name, :description,
+      mail_group_ids: [])
   end
 end

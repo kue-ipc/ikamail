@@ -12,15 +12,15 @@ class TranslationsController < ApplicationController
       I18n.t(".", locale: @locale),
       translations_to_hash(@q.result),
       @q,
-      locale: @locale
-    )
+      locale: @locale)
     all.reverse! if @q.sorts.find { |sort| sort.name == "key" }&.dir&.==("asc")
     @translations = Kaminari.paginate_array(all).page(params[:page])
   end
 
   def create
     t_params = translation_params
-    @translation = Translation.find_or_initialize_by(locale: t_params[:locale], key: t_params[:key])
+    @translation = Translation.find_or_initialize_by(locale: t_params[:locale],
+      key: t_params[:key])
     @translation.value = t_params[:value]
     if @translation.save
       I18n.backend.reload!
@@ -45,8 +45,7 @@ class TranslationsController < ApplicationController
       @translation = Translation.new(
         locale: @translation.locale,
         key: @translation.key,
-        value: I18n.t(@translation.key, locale: @translation.locale)
-      )
+        value: I18n.t(@translation.key, locale: @translation.locale))
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
@@ -70,7 +69,8 @@ class TranslationsController < ApplicationController
     list.index_by(&:key)
   end
 
-  private def all_translations(key, value, db, query, locale: I18n.default_locale)
+  private def all_translations(key, value, db, query,
+    locale: I18n.default_locale)
     case value
     when String
       full_key = key.join(".")
@@ -81,12 +81,11 @@ class TranslationsController < ApplicationController
       db[full_key] || Translation.new(
         locale: locale,
         key: full_key,
-        value: value
-      )
+        value: value)
     when Hash
-      value.each_key.sort.map do |c_key|
+      value.each_key.sort.map { |c_key|
         all_translations(key + [c_key], value[c_key], db, query, locale: locale)
-      end.compact.flatten
+      }.compact.flatten
     end
   end
 end

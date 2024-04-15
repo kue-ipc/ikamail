@@ -7,13 +7,18 @@ class MailTemplate < ApplicationRecord
   belongs_to :user
   has_many :bulk_mails, dependent: :restrict_with_error
 
-  validates :from_name, allow_blank: true, length: {maximum: 255}, charcode: true
+  validates :from_name, allow_blank: true, length: {maximum: 255},
+    charcode: true
   validates :from_mail_address, presence: true, length: {maximum: 255}
 
-  validates :subject_prefix, allow_blank: true, length: {maximum: 255}, charcode: true
-  validates :subject_suffix, allow_blank: true, length: {maximum: 255}, charcode: true
-  validates :body_header, allow_blank: true, length: {maximum: 65_536}, charcode: true
-  validates :body_footer, allow_blank: true, length: {maximum: 65_536}, charcode: true
+  validates :subject_prefix, allow_blank: true, length: {maximum: 255},
+    charcode: true
+  validates :subject_suffix, allow_blank: true, length: {maximum: 255},
+    charcode: true
+  validates :body_header, allow_blank: true, length: {maximum: 65_536},
+    charcode: true
+  validates :body_footer, allow_blank: true, length: {maximum: 65_536},
+    charcode: true
 
   validates :reserved_time, presence: true
 
@@ -33,7 +38,8 @@ class MailTemplate < ApplicationRecord
 
   def next_reserved_datetime
     now_datetime = Time.zone.now
-    hm_datetime = now_datetime.change(hour: reserved_time.hour, min: reserved_time.min, zone: reserved_time.zone)
+    hm_datetime = now_datetime.change(hour: reserved_time.hour,
+      min: reserved_time.min, zone: reserved_time.zone)
     if hm_datetime < now_datetime
       hm_datetime.tomorrow
     else
@@ -48,7 +54,11 @@ class MailTemplate < ApplicationRecord
     self.body_header = double_conv_jis(body_header)
     self.body_footer = double_conv_jis(body_footer)
 
-    self.body_header += "\n" if body_header.present? && !body_header.end_with?("\n")
-    self.body_footer += "\n" if body_footer.present? && !body_footer.end_with?("\n")
+    if body_header.present? && !body_header.end_with?("\n")
+      self.body_header += "\n"
+    end
+    if body_footer.present? && !body_footer.end_with?("\n")
+      self.body_footer += "\n"
+    end
   end
 end

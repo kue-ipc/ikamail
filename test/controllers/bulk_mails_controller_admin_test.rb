@@ -86,7 +86,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
       mail_template_id: mail_templates(:users).id,
       action_info: @action_info_params,
     }}
-    assert_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 
@@ -103,7 +104,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -112,7 +114,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -120,7 +123,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should approve DRAFT" do
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
-    put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+    put approve_bulk_mail_url(@bulk_mail),
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -129,7 +133,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -138,7 +143,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -147,7 +153,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -156,7 +163,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -165,7 +173,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -192,7 +201,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
       mail_template_id: mail_templates(:users).id,
       action_info: @action_info_params,
     }}
-    assert_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 
@@ -209,7 +219,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -218,7 +229,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -228,7 +240,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 1 do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
@@ -244,7 +257,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 1 do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
@@ -259,7 +273,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -268,7 +283,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -277,7 +293,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -286,7 +303,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -316,7 +334,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy READY" do
@@ -333,7 +352,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -342,7 +362,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -351,7 +372,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -360,7 +382,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -370,12 +393,13 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 2 do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-                 [@bulk_mail.mail_template.user.email, @bulk_mail.user.email], mail.bcc
+      [@bulk_mail.mail_template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -388,7 +412,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_enqueued_with(job: ReservedDeliveryJob) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
@@ -401,7 +426,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 1 do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
@@ -416,7 +442,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -446,7 +473,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy RESERVED" do
@@ -463,7 +491,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -472,7 +501,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -481,7 +511,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -490,7 +521,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -499,7 +531,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -508,7 +541,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -518,7 +552,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 1 do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
@@ -534,7 +569,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -564,7 +600,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy WAITING" do
@@ -581,7 +618,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -590,7 +628,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -599,7 +638,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -608,7 +648,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -617,7 +658,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -626,7 +668,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -635,7 +678,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -644,7 +688,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -674,7 +719,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy DELIVERING" do
@@ -691,7 +737,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -700,7 +747,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -709,7 +757,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -718,7 +767,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -727,7 +777,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -736,7 +787,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -745,7 +797,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -754,7 +807,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -784,7 +838,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy DELIVERED" do
@@ -801,7 +856,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -810,7 +866,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -819,7 +876,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -828,7 +886,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -837,7 +896,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -846,7 +906,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -855,7 +916,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -864,7 +926,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -894,7 +957,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy FAILED" do
@@ -911,7 +975,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -920,7 +985,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -929,7 +995,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -938,7 +1005,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -948,12 +1016,13 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 2 do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-                 [@bulk_mail.mail_template.user.email, @bulk_mail.user.email], mail.bcc
+      [@bulk_mail.mail_template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -965,7 +1034,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -974,7 +1044,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -982,7 +1053,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should discard FAILED" do
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
-    put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+    put discard_bulk_mail_url(@bulk_mail),
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1012,7 +1084,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy ERROR" do
@@ -1029,7 +1102,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1038,7 +1112,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1047,7 +1122,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1056,7 +1132,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1065,7 +1142,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1074,7 +1152,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1083,7 +1162,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1091,7 +1171,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should discard ERROR" do
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
-    put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+    put discard_bulk_mail_url(@bulk_mail),
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1121,7 +1202,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy WASTE" do
@@ -1138,7 +1220,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1147,7 +1230,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1156,7 +1240,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1165,7 +1250,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1174,7 +1260,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1183,7 +1270,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1192,7 +1280,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1201,7 +1290,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(Pundit::NotAuthorizedError) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1219,7 +1309,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should discard ERROR NO NUMBER" do
     @bulk_mail = bulk_mails(:error_no_number)
     @action_info_params[:current_status] = @bulk_mail.status
-    put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+    put discard_bulk_mail_url(@bulk_mail),
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1243,7 +1334,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
       mail_template_id: mail_templates(:users).id,
       action_info: @action_info_params,
     }}
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
 
@@ -1257,7 +1349,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
   test "should NOT apply DRAFT to DELIVERED" do
     @bulk_mail = bulk_mails(:delivered)
-    put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+    put apply_bulk_mail_url(@bulk_mail),
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1269,7 +1362,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 3 do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries[-3]
@@ -1282,7 +1376,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     mail = ActionMailer::Base.deliveries[-1]
     assert_equal @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-                 [@bulk_mail.mail_template.user.email, @bulk_mail.user.email], mail.bcc
+      [@bulk_mail.mail_template.user.email, @bulk_mail.user.email], mail.bcc
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
 
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
@@ -1296,7 +1390,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     # メールのテストを有効にするとJobのテストができなくなる。
     # assert_emails 1 do
     assert_enqueued_with(job: ReservedDeliveryJob) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     # end
 
@@ -1314,7 +1409,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @action_info_params[:current_status] = @bulk_mail.status
 
     assert_emails 1 do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last

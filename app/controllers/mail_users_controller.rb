@@ -11,7 +11,10 @@ class MailUsersController < ApplicationController
       MailUser
     end
 
-    all_mail_users = all_mail_users.where("name LIKE ?", "#{search_params[:query]}%") if search_params[:query].present?
+    if search_params[:query].present?
+      all_mail_users = all_mail_users.where("name LIKE ?",
+        "#{search_params[:query]}%")
+    end
 
     @mail_users = policy_scope(all_mail_users).order(:name).page(params[:page])
   end

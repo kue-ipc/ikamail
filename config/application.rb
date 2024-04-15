@@ -25,6 +25,7 @@ module Ikamail
 
     # NotAuthorizedErrorは403にする。
     # initializersではだめっぽい。
-    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] =
+      :forbidden
   end
 end

@@ -10,7 +10,11 @@ module Iso2022jp
     html: ->(c) { "&#%d;" % c.encode(Encoding::UTF_8).ord },
     xml: ->(c) { "&#x%X;" % c.encode(Encoding::UTF_8).ord },
     perl: ->(c) { '\\x{%X}' % c.encode(Encoding::UTF_8).ord },
-    java: ->(c) { c.encode(Encoding::UTF_16LE).unpack("v*").map { |n| '\\u%04X' % n }.join },
+    java: lambda { |c|
+            c.encode(Encoding::UTF_16LE).unpack("v*").map { |n|
+              '\\u%04X' % n
+            }.join
+          },
     subchar: ->(_) { "?" },
   }.freeze
 
@@ -26,14 +30,15 @@ module Iso2022jp
     # 結合文字を通常の文字にする
     str.tr!("\u3099\u309A", "\u309B\u309C")
     # 半角全角にある半角記号を全角文字にする
-    str.gsub!(/[\uFFE8-\uFFEE]+/) { |s| s.unicode_normalize(:nfkc) }
+    str.gsub!(/[\uFFE8-\uFFEE]+/) do |s|
+      s.unicode_normalize(:nfkc)
+    end
     # 他の領域にある半角文字を全角文字にする
     str.tr!(
       # ¢£¬‾¦¥₩
       "\u00A2\u00A3\u00AC\u203E\u00A6\u00A5\u20A9",
       # ￠￡￢￣￤￥￦
-      "\uFFE0\uFFE1\uFFE2\uFFE3\uFFE4\uFFE5\uFFE6"
-    )
+      "\uFFE0\uFFE1\uFFE2\uFFE3\uFFE4\uFFE5\uFFE6")
     # ￣ をNFKCしたときの文字を全角文字にする。
     str.gsub!("\u0020\u0304", "\uFFE3")
     # マイナス − を 全角ハイフンマイナス － にする
@@ -47,7 +52,9 @@ module Iso2022jp
     no_amp_str = str.gsub("&", "&amp;")
     conv_str = double_conv_jis(no_amp_str, fallback: :xml, cp932: cp932)
 
-    conv_str.scan(/&\#x(\h{1,6});/).map { |m| m[0].to_i(16).chr(Encoding::UTF_8) }
+    conv_str.scan(/&\#x(\h{1,6});/).map { |m|
+      m[0].to_i(16).chr(Encoding::UTF_8)
+    }
   end
 
   # fallback: 存在しない場合
@@ -63,7 +70,8 @@ module Iso2022jp
       # 半角全角変換はnormalizeで実施済み
       # 半角カタカナを全角カタカナに変換しない
       # mail-iso-2022-jp が使用するエンコードと同じ
-      str.encode(Encoding::CP50221, Encoding::UTF_8, fallback: fb_proc).encode(Encoding::UTF_8)
+      str.encode(Encoding::CP50221, Encoding::UTF_8,
+        fallback: fb_proc).encode(Encoding::UTF_8)
     else
       str.tr!("\uFF0D", "\u2212")
       # 全角ハイフンマイナス － を マイナス − にする
@@ -73,9 +81,9 @@ module Iso2022jp
         # ￠￡￢
         "\uFFE0\uFFE1\uFFE2",
         # ¢£¬
-        "\u00A2\u00A3\u00AC"
-      )
-      normalize(str.encode(Encoding::ISO_2022_JP, Encoding::UTF_8, fallback: fb_proc).encode(Encoding::UTF_8))
+        "\u00A2\u00A3\u00AC")
+      normalize(str.encode(Encoding::ISO_2022_JP, Encoding::UTF_8,
+        fallback: fb_proc).encode(Encoding::UTF_8))
     end
   end
 end

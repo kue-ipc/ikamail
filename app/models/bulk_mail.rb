@@ -46,12 +46,14 @@ class BulkMail < ApplicationRecord
   validates :body, presence: true, length: {maximum: 65_536}, charcode: true
 
   # validates :delivery_datetime
-  validates :number, numericality: {only_integer: true, greater_than: 0}, allow_nil: true
+  validates :number, numericality: {only_integer: true, greater_than: 0},
+    allow_nil: true
   validates :status, presence: true
 
   # validate :subject_can_contert_to_jis, :body_can_contert_to_jis
 
-  validates :wrap_col, numericality: {only_integer: true}, inclusion: {in: [0, 76, 80]}
+  validates :wrap_col, numericality: {only_integer: true},
+    inclusion: {in: [0, 76, 80]}
 
   before_save :adjust_chars
 
@@ -84,8 +86,7 @@ class BulkMail < ApplicationRecord
 
     text_wrap(
       Mustache.render(mail_template.body_header, individual_values),
-      col: wrap_col, rule: wrap_rule.intern
-    )
+      col: wrap_col, rule: wrap_rule.intern)
   end
 
   def body_footer
@@ -93,8 +94,7 @@ class BulkMail < ApplicationRecord
 
     text_wrap(
       Mustache.render(mail_template.body_footer, individual_values),
-      col: wrap_col, rule: wrap_rule.intern
-    )
+      col: wrap_col, rule: wrap_rule.intern)
   end
 
   private def individual_values

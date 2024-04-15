@@ -25,9 +25,9 @@ module ActiveLdap
         #   found_targets[name] || klass.new(name)
         # end
 
-        requested_targets.collect do |name|
+        requested_targets.collect { |name|
           found_targets[name]
-        end.compact
+        }.compact
       end
       # rubocop: enable Lint/UnderscorePrefixedVariableName
     end

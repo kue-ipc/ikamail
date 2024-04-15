@@ -17,7 +17,8 @@ class ReservedDeliveryJobTest < ActiveJob::TestCase
 
   test "NO deliver pending mail with reservation number" do
     assert_emails 0 do
-      ReservedDeliveryJob.perform_now(bulk_mails(:pending_with_reservation_number), 42)
+      ReservedDeliveryJob.perform_now(
+        bulk_mails(:pending_with_reservation_number), 42)
     end
   end
 

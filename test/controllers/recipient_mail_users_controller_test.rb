@@ -18,13 +18,15 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should create recipient_mail_user" do
-      post mail_users_recipient_list_url(@recipient_list, "included"), params: {name: "user04"}
+      post mail_users_recipient_list_url(@recipient_list, "included"),
+        params: {name: "user04"}
 
       assert_redirected_to recipient_list_url(@recipient_list)
     end
 
     test "should destroy recipient_mail_user" do
-      delete mail_user_recipient_list_url(@recipient_list, "included", mail_users(:admin))
+      delete mail_user_recipient_list_url(@recipient_list, "included",
+        mail_users(:admin))
 
       assert_redirected_to recipient_list_url(@recipient_list)
     end
@@ -44,7 +46,8 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
     test "should NOT create recipient_mail_user" do
       assert_no_difference("Recipient.count") do
         assert_raises(Pundit::NotAuthorizedError) do
-          post mail_users_recipient_list_url(@recipient_list, "included"), params: {name: "user04"}
+          post mail_users_recipient_list_url(@recipient_list, "included"),
+            params: {name: "user04"}
         end
       end
     end
@@ -52,7 +55,8 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
     test "should NOT destroy recipient_mail_user" do
       assert_no_difference("Recipient.count") do
         assert_raises(Pundit::NotAuthorizedError) do
-          delete mail_user_recipient_list_url(@recipient_list, "included", mail_users(:admin))
+          delete mail_user_recipient_list_url(@recipient_list, "included",
+            mail_users(:admin))
         end
       end
     end
@@ -66,7 +70,8 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
 
     test "redirect to login INSTEAD OF create recipient_mail_user" do
       assert_no_difference("Recipient.count") do
-        post mail_users_recipient_list_url(@recipient_list, "included"), params: {name: "user04"}
+        post mail_users_recipient_list_url(@recipient_list, "included"),
+          params: {name: "user04"}
       end
 
       assert_redirected_to new_user_session_path
@@ -74,7 +79,8 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
 
     test "redirect to login INSTEAD OF destroy recipient_mail_user" do
       assert_no_difference("Recipient.count") do
-        delete mail_user_recipient_list_url(@recipient_list, "included", mail_users(:admin))
+        delete mail_user_recipient_list_url(@recipient_list, "included",
+          mail_users(:admin))
       end
 
       assert_redirected_to new_user_session_path

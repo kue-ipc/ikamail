@@ -43,10 +43,12 @@ class UsersController < ApplicationController
   def sync
     if LdapUserSyncJob.perform_later
       redirect_to admin_users_path,
-        notice: t("messages.success_action", model: t("actions.ldap_sync"), action: t("actions.start"))
+        notice: t("messages.success_action", model: t("actions.ldap_sync"),
+          action: t("actions.start"))
     else
       redirect_to admin_users_path,
-        alert: t("messages.failure_action", model: t("actions.ldap_sync"), action: t("actions.start"))
+        alert: t("messages.failure_action", model: t("actions.ldap_sync"),
+          action: t("actions.start"))
     end
   end
 

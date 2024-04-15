@@ -89,9 +89,11 @@ module ApplicationHelper
   def span_value_for(value, **opts)
     case value
     when nil
-      content_tag("span", opts[:blank_alt] || t("values.none"), class: "font-italic text-muted")
+      content_tag("span", opts[:blank_alt] || t("values.none"),
+        class: "font-italic text-muted")
     when "", [], {}
-      content_tag("span", opts[:blank_alt] || t("values.empty"), class: "font-italic text-muted")
+      content_tag("span", opts[:blank_alt] || t("values.empty"),
+        class: "font-italic text-muted")
     when String
       span_string_for(value, **opts)
     when Time, Date, DateTime, ActiveSupport::TimeWithZone
@@ -140,16 +142,18 @@ module ApplicationHelper
       value.each do |v|
         next if limits&.exclude?(v)
 
-        list_html += content_tag("li", class: "list-inline-item border border-primary rounded px-1 mb-1") do
+        list_html += content_tag("li",
+          class: "list-inline-item border border-primary rounded px-1 mb-1") {
           span_value_for(v, **opts)
-        end
+        }
       end
       list_html
     end
   end
 
   def mail_body_tag(value, **opts)
-    content_tag("pre", value, class: "border rounded mb-0 mail-body line-76-80") do
+    content_tag("pre", value,
+      class: "border rounded mb-0 mail-body line-76-80") do
       span_text_tag(value, **opts)
     end
   end
@@ -161,7 +165,9 @@ module ApplicationHelper
         content_tag("span", around[1], class: "text-muted")
     elsif pre
       # rubocop: disable Rails/OutputSafety
-      content_tag("span", value.split(/\R/).map { |s| h(s) }.join(tag.br).html_safe)
+      content_tag("span", value.split(/\R/).map { |s|
+                            h(s)
+                          }.join(tag.br).html_safe)
       # rubocop: enable Rails/OutputSafety
     else
       content_tag("span", value)

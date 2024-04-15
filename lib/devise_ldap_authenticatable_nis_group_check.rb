@@ -42,7 +42,9 @@ module Devise
           end
         end
 
-        DeviseLdapAuthenticatable::Logger.send("User #{dn} is not in nis group: #{group_name}") unless in_group
+        unless in_group
+          DeviseLdapAuthenticatable::Logger.send("User #{dn} is not in nis group: #{group_name}")
+        end
 
         in_group
       end
@@ -50,7 +52,7 @@ module Devise
       # overwrite in_group?
       alias _in_group? in_group?
       def in_group?(group_name,
-                    group_attribute = LDAP::DEFAULT_GROUP_UNIQUE_MEMBER_LIST_KEY)
+        group_attribute = LDAP::DEFAULT_GROUP_UNIQUE_MEMBER_LIST_KEY)
         if ::Devise.ldap_nis_group_check
           in_group_nis?(group_name)
         else

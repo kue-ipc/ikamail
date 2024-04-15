@@ -1,5 +1,6 @@
 class MailTemplatesController < ApplicationController
-  before_action :set_mail_template, only: [:show, :edit, :update, :destroy, :count]
+  before_action :set_mail_template,
+    only: [:show, :edit, :update, :destroy, :count]
   before_action :authorize_mail_template, only: [:index, :new, :create]
 
   # GET /mail_templates
@@ -30,7 +31,8 @@ class MailTemplatesController < ApplicationController
     @mail_template.user ||= current_user
 
     if @mail_template.save
-      redirect_to @mail_template, notice: t_success_action(@mail_template, :create)
+      redirect_to @mail_template,
+        notice: t_success_action(@mail_template, :create)
     else
       render :new
     end
@@ -40,7 +42,8 @@ class MailTemplatesController < ApplicationController
   # PATCH/PUT /mail_templates/1.json
   def update
     if @mail_template.update(mail_template_params)
-      redirect_to @mail_template, notice: t_success_action(@mail_template, :update)
+      redirect_to @mail_template,
+        notice: t_success_action(@mail_template, :update)
     else
       render :edit
     end
@@ -50,7 +53,8 @@ class MailTemplatesController < ApplicationController
   # DELETE /mail_templates/1.json
   def destroy
     if @mail_template.destroy
-      redirect_to mail_templates_url, notice: t_success_action(@mail_template, :destroy)
+      redirect_to mail_templates_url,
+        notice: t_success_action(@mail_template, :destroy)
     else
       redirect_to @mail_template, alert: [
         t_failure_action(@mail_template, :destroy),
@@ -61,7 +65,8 @@ class MailTemplatesController < ApplicationController
 
   def count
     if @mail_template.update(count_params)
-      redirect_to @mail_template, notice: t_success_action(@mail_template, :update)
+      redirect_to @mail_template,
+        notice: t_success_action(@mail_template, :update)
     else
       render :edit
     end
@@ -83,8 +88,7 @@ class MailTemplatesController < ApplicationController
       :subject_prefix, :subject_suffix,
       :body_header, :body_footer,
       :count, :reserved_time, :description, :enabled,
-      user: :username
-    )
+      user: :username)
     if current_user.admin?
       permitted[:user] = User.find_by(username: permitted[:user][:username])
     else

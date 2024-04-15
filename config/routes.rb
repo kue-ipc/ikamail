@@ -7,14 +7,16 @@ Rails.application.routes.draw do
     get "statistics"
     # get 'translations'
     # put 'translations', to: '/admin#translations_update'
-    resources :users, only: [:index, :show, :create, :update], controller: "/users" do
+    resources :users, only: [:index, :show, :create, :update],
+      controller: "/users" do
       collection do
         put "sync"
       end
     end
     # # get 'translations', as: 'translations'
     # get 'translations/:id', as: '/translations'
-    resources :translations, only: [:index, :show, :create, :update, :destroy], controller: "/translations"
+    resources :translations, only: [:index, :show, :create, :update, :destroy],
+      controller: "/translations"
   end
 
   resource :user, only: [:show]
@@ -42,7 +44,8 @@ Rails.application.routes.draw do
     member do
       get "mail_users/:type", to: "recipient_mail_users#index", as: "mail_users"
       post "mail_users/:type", to: "recipient_mail_users#create"
-      delete "mail_users/:type/:mail_user_id", to: "recipient_mail_users#destroy", as: "mail_user"
+      delete "mail_users/:type/:mail_user_id",
+        to: "recipient_mail_users#destroy", as: "mail_user"
       delete "mail_users/:type", to: "recipient_mail_users#destroy"
     end
   end

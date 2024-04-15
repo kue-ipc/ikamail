@@ -96,7 +96,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy DRAFT" do
@@ -113,7 +114,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -122,7 +124,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -131,7 +134,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -140,7 +144,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -149,7 +154,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -158,7 +164,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -167,7 +174,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -176,7 +184,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -208,7 +217,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy PENDING" do
@@ -225,7 +235,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -234,7 +245,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -243,7 +255,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -252,7 +265,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -261,7 +275,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -270,7 +285,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -279,7 +295,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -288,7 +305,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -319,7 +337,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy READY" do
@@ -336,7 +355,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -345,7 +365,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -354,7 +375,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -363,7 +385,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -372,7 +395,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -381,7 +405,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -390,7 +415,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -399,7 +425,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -430,7 +457,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy RESERVED" do
@@ -447,7 +475,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -456,7 +485,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -465,7 +495,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -474,7 +505,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -483,7 +515,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -492,7 +525,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -501,7 +535,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -510,7 +545,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -541,7 +577,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy WAITING" do
@@ -558,7 +595,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -567,7 +605,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -576,7 +615,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -585,7 +625,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -594,7 +635,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -603,7 +645,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -612,7 +655,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -621,7 +665,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -652,7 +697,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy DELIVERING" do
@@ -669,7 +715,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -678,7 +725,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -687,7 +735,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -696,7 +745,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -705,7 +755,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -714,7 +765,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -723,7 +775,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -732,7 +785,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -763,7 +817,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy DELIVERED" do
@@ -780,7 +835,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -789,7 +845,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -798,7 +855,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -807,7 +865,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -816,7 +875,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -825,7 +885,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -834,7 +895,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -843,7 +905,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -874,7 +937,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy FAILED" do
@@ -891,7 +955,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -900,7 +965,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -909,7 +975,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -918,7 +985,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -927,7 +995,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -936,7 +1005,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -945,7 +1015,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -954,7 +1025,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -985,7 +1057,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy ERROR" do
@@ -1002,7 +1075,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1011,7 +1085,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1020,7 +1095,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1029,7 +1105,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1038,7 +1115,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1047,7 +1125,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1056,7 +1135,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1065,7 +1145,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1096,7 +1177,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   test "should NOT destroy WASTE" do
@@ -1113,7 +1195,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1122,7 +1205,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put withdraw_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put withdraw_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1131,7 +1215,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1140,7 +1225,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reject_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reject_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1149,7 +1235,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put deliver_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put deliver_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1158,7 +1245,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put reserve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put reserve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1167,7 +1255,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put cancel_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put cancel_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1176,7 +1265,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1196,7 +1286,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error_no_number)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put discard_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put discard_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1223,7 +1314,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
         action_info: @action_info_params,
       }}
     end
-    assert_not_equal mail_templates(:users).id, BulkMail.find(@bulk_mail.id).mail_template_id
+    assert_not_equal mail_templates(:users).id,
+      BulkMail.find(@bulk_mail.id).mail_template_id
   end
 
   # test 'should NOT destroy DRAFT to DELIVERED' do
@@ -1237,7 +1329,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
   test "should NOT apply DRAFT to DELIVERED" do
     @bulk_mail = bulk_mails(:delivered)
     assert_raises(ActiveRecord::RecordNotFound) do
-      put apply_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put apply_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -1248,7 +1341,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending_immediate)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -1257,7 +1351,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending_reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -1266,7 +1361,8 @@ class BulkMailsControllerUserTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending_manual)
     @action_info_params[:current_status] = @bulk_mail.status
     assert_raises(ActiveRecord::RecordNotFound) do
-      put approve_bulk_mail_url(@bulk_mail), params: {bulk_mail: {action_info: @action_info_params}}
+      put approve_bulk_mail_url(@bulk_mail),
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
