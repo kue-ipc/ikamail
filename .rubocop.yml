@@ -13,21 +13,19 @@ AllCops:
     - 'vender/**/*'
 
 # Layout
-Layout/ExtraSpacing:
-  Exclude:
-    - 'db/migrate/*.rb'
-
-Layout/EndOfLine:
-  EnforcedStyle: lf
-
-Layout/LineLength:
-  Max: 120
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/EndAlignment:
   EnforcedStyleAlignWith: start_of_line
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/ExtraSpacing:
+  Exclude:
+    - 'db/migrate/*.rb'
 
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
@@ -37,6 +35,9 @@ Layout/FirstHashElementIndentation:
 
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
+
+Layout/LineLength:
+  Max: 120
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
@@ -90,41 +91,45 @@ Style/AsciiComments:
 Style/Documentation:
   Enabled: false
 
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Style/OneLineConditional:
+  AlwaysCorrectToMultiline: true
+
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_perl_names
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolArray:
+  MinSize: 8
+
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
-Style/EmptyMethod:
-  EnforcedStyle: expanded
-
-Style/SpecialGlobalVars:
-  EnforcedStyle: use_perl_names
-
 Style/WordArray:
   MinSize: 8
 
-Style/FrozenStringLiteralComment:
-  EnforcedStyle: never
-
-Style/SymbolArray:
-  MinSize: 8
-
-Style/FormatString:
-  EnforcedStyle: percent
-
-Style/OneLineConditional:
-  AlwaysCorrectToMultiline: true
-
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
 # Bundler
+# https://docs.rubocop.org/rubocop/cops_bundler.html
+
 Bundler/OrderedGems:
   Enabled: false
 
 # Rails
+# https://docs.rubocop.org/rubocop-rails/cops_rails.html
+
 Rails:
   Enabled: true
 
