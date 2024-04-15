@@ -64,10 +64,10 @@ Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/SpaceInsideArrayLiteralBrackets:
-  EnforcedStyle: no_space
+  EnforcedStyle: space
 
 Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
+  EnforcedStyle: space
 
 # Metrics double
 
@@ -182,10 +182,10 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: no_comma
 
 Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: consistent_comma
+  EnforcedStyleForMultiline: no_comma
 
 Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: consistent_comma
+  EnforcedStyleForMultiline: no_comma
 
 Style/WordArray:
   MinSize: 6
@@ -206,7 +206,7 @@ Rails/BulkChangeTable:
   Enabled: false
 
 Rails/FilePath:
-  EnforcedStyle: arguments
+  EnforcedStyle: slashes
 
 Rails/HasAndBelongsToMany:
   Enabled: false
