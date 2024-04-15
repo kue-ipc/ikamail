@@ -9,7 +9,7 @@ class RecipientMailUsersController < ApplicationController
       return redirect_to @recipient_list, alert: t("messages.not_found_recipient_list_type")
     end
 
-    @attr_name = "#{@type}_mail_users".intern
+    @attr_name = :"#{@type}_mail_users"
     @mail_users = @recipient_list.__send__(@attr_name).order(:name)
     @mail_users = @mail_users.page(params[:page]) if params[:page] != "all"
   end
