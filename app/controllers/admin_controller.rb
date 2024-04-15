@@ -29,7 +29,7 @@ class AdminController < ApplicationController
     @begin_time = Time.zone.local(@year, 4, 1, 0, 0, 0)
     @end_time = @begin_time.since(1.year)
     @mail_template_statistics = policy_scope(MailTemplate).order(:name).to_h { |mail_template|
-      [mail_template.id, {name: mail_template.name, count: 0}]
+      [ mail_template.id, { name: mail_template.name, count: 0 } ]
     }
     BulkMail.where(status: "delivered")
       .where(delivered_at: @begin_time...@end_time)

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     get "statistics"
     # get 'translations'
     # put 'translations', to: '/admin#translations_update'
-    resources :users, only: [:index, :show, :create, :update],
+    resources :users, only: [ :index, :show, :create, :update ],
       controller: "/users" do
       collection do
         put "sync"
@@ -15,11 +15,11 @@ Rails.application.routes.draw do
     end
     # # get 'translations', as: 'translations'
     # get 'translations/:id', as: '/translations'
-    resources :translations, only: [:index, :show, :create, :update, :destroy],
+    resources :translations, only: [ :index, :show, :create, :update, :destroy ],
       controller: "/translations"
   end
 
-  resource :user, only: [:show]
+  resource :user, only: [ :show ]
 
   resources :mail_templates do
     member do
@@ -50,10 +50,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :mail_users, only: [:index, :show]
+  resources :mail_users, only: [ :index, :show ]
 
-  resources :mail_groups, only: [:index, :show] do
-    resources :mail_users, only: [:index]
+  resources :mail_groups, only: [ :index, :show ] do
+    resources :mail_users, only: [ :index ]
   end
 
   devise_for :users
@@ -62,6 +62,6 @@ Rails.application.routes.draw do
     mount DelayedJobWeb, at: "/admin/delayed_job"
   end
 
-  resource :search, only: [:new, :create]
+  resource :search, only: [ :new, :create ]
   get "/search" => redirect("/search/new")
 end

@@ -5,7 +5,7 @@ class BulkMailPolicy < ApplicationPolicy
         scope.all
       else
         scope.includes(:mail_template).where(user: user)
-          .or(scope.includes(:mail_template).where(mail_templates: {user: user}))
+          .or(scope.includes(:mail_template).where(mail_templates: { user: user }))
       end
     end
   end

@@ -4,7 +4,7 @@ Translation = I18n::Backend::ActiveRecord::Translation
 
 # for ransack
 def Translation.ransackable_attributes(_auth_object = nil)
-  ["key", "locale", "value"]
+  [ "key", "locale", "value" ]
 end
 
 begin

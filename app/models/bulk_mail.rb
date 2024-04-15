@@ -16,19 +16,19 @@ class BulkMail < ApplicationRecord
     delivered: 6,
     waste: 7,
     failed: 8,
-    error: 9,
+    error: 9
   }, _prefix: true
 
   enum delivery_timing: {
     reserved: 1,
     immediate: 0,
-    manual: 2,
+    manual: 2
   }, _prefix: true
 
   enum wrap_rule: {
     force: 0,
     word_wrap: 1,
-    jisx4051: 2,
+    jisx4051: 2
   }, _prefix: true
 
   belongs_to :mail_template
@@ -42,18 +42,18 @@ class BulkMail < ApplicationRecord
   # rubocop: enable Rails/RedundantPresenceValidationOnBelongsTo
 
   validates :delivery_timing, presence: true
-  validates :subject, presence: true, length: {maximum: 255}, charcode: true
-  validates :body, presence: true, length: {maximum: 65_536}, charcode: true
+  validates :subject, presence: true, length: { maximum: 255 }, charcode: true
+  validates :body, presence: true, length: { maximum: 65_536 }, charcode: true
 
   # validates :delivery_datetime
-  validates :number, numericality: {only_integer: true, greater_than: 0},
+  validates :number, numericality: { only_integer: true, greater_than: 0 },
     allow_nil: true
   validates :status, presence: true
 
   # validate :subject_can_contert_to_jis, :body_can_contert_to_jis
 
-  validates :wrap_col, numericality: {only_integer: true},
-    inclusion: {in: [0, 76, 80]}
+  validates :wrap_col, numericality: { only_integer: true },
+    inclusion: { in: [ 0, 76, 80 ] }
 
   before_save :adjust_chars
 
@@ -107,7 +107,7 @@ class BulkMail < ApplicationRecord
       name: mail_template.name,
       datetime: I18n.l(datetime, format: :datetime),
       date: I18n.l(datetime, format: :date),
-      time: I18n.l(datetime, format: :time),
+      time: I18n.l(datetime, format: :time)
     }
   end
 

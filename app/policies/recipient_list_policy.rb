@@ -4,8 +4,8 @@ class RecipientListPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.includes(:mail_templates).where(mail_templates: {enabled: true})
-          .or(scope.includes(:mail_templates).where(mail_templates: {user: user}))
+        scope.includes(:mail_templates).where(mail_templates: { enabled: true })
+          .or(scope.includes(:mail_templates).where(mail_templates: { user: user }))
       end
     end
   end

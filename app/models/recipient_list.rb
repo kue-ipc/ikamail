@@ -23,9 +23,9 @@ class RecipientList < ApplicationRecord
     source: :mail_user
   # rubocop: enable Rails/HasManyOrHasOneDependent
 
-  validates :name, presence: true, uniqueness: {case_sensitive: true},
-    length: {maximum: 255}
-  validates :description, length: {maximum: 65_536}
+  validates :name, presence: true, uniqueness: { case_sensitive: true },
+    length: { maximum: 255 }
+  validates :description, length: { maximum: 65_536 }
 
   def to_s
     name

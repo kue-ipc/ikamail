@@ -5,8 +5,8 @@ class AdminMailerTest < ActionMailer::TestCase
     mail = AdminMailer.with(job: "job", job_id: "job_id", time: "time",
       exception: "exception").job_failure
     assert_equal "【一括メールシステム管理通知】ジョブ失敗", mail.subject
-    assert_equal ["admin@example.jp"], mail.to
-    assert_equal ["no-reply@example.jp"], mail.from
+    assert_equal [ "admin@example.jp" ], mail.to
+    assert_equal [ "no-reply@example.jp" ], mail.from
 
     assert_equal <<~MESSAGE.gsub(/\R/, "\r\n"), mail.body.encoded
       一括メールシステムで、下記のジョブが失敗しました。

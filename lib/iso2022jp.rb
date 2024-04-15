@@ -15,7 +15,7 @@ module Iso2022jp
               '\\u%04X' % n
             }.join
           },
-    subchar: ->(_) { "?" },
+    subchar: ->(_) { "?" }
   }.freeze
 
   module_function # rubocop:disable Style/AccessModifierDeclarations

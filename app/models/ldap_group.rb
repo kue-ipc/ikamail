@@ -38,7 +38,7 @@ class LdapGroup < ActiveLdap::Base
   end
 
   def self.find_dn(name)
-    find(:first, filter: {dn_attribute => name})
+    find(:first, filter: { dn_attribute => name })
   end
 end
 # rubocop: enable Rails/HasManyOrHasOneDependent, Rails/InverseOf

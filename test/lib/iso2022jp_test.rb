@@ -28,14 +28,14 @@ class Iso2022jpTest < ActiveSupport::TestCase
     [
       (0x8740..0x875D),
       (0x875F..0x8775),
-      [0x877E],
+      [ 0x877E ],
       (0x8780..0x878F),
       (0x8790..0x879C),
       (0xFA40..0xFA7E),
       (0xFA80..0xFAFC),
       (0xFB40..0xFB7E),
       (0xFB80..0xFBFC),
-      (0xFC40..0xFC4B),
+      (0xFC40..0xFC4B)
     ].flat_map(&:to_a)
       .select { |n| n.chr(Encoding::CP932).encode(Encoding::UTF_8).encode(Encoding::CP932).ord == n }
       .map { |n| n.chr(Encoding::CP932) }.join.encode(Encoding::UTF_8)

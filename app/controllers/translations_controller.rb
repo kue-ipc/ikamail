@@ -1,6 +1,6 @@
 class TranslationsController < ApplicationController
-  before_action :set_translation, only: [:update, :destroy]
-  before_action :authorize_translation, only: [:index, :create]
+  before_action :set_translation, only: [ :update, :destroy ]
+  before_action :authorize_translation, only: [ :index, :create ]
 
   def index
     @q = Translation.ransack(params[:q])
@@ -84,7 +84,8 @@ class TranslationsController < ApplicationController
         value: value)
     when Hash
       value.each_key.sort.map { |c_key|
-        all_translations(key + [c_key], value[c_key], db, query, locale: locale)
+        all_translations(key + [ c_key ], value[c_key], db, query,
+          locale: locale)
       }.compact.flatten
     end
   end

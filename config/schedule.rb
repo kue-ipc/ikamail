@@ -24,7 +24,7 @@ every "0 0 1 4 *" do
   runner "ResetCountTemplateJob.perform_later"
 end
 
-every 1.day, at: ["6:00 am", "6:00 pm"] do
+every 1.day, at: [ "6:00 am", "6:00 pm" ] do
   runner "LdapMailSyncJob.perform_later"
 end
 

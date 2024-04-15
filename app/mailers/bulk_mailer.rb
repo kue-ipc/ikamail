@@ -16,7 +16,7 @@ class BulkMailer < ApplicationMailer
       subject: @bulk_mail.subject_all,
       from: @bulk_mail.mail_template.from,
       bcc: @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-           [@bulk_mail.mail_template.user.email, @bulk_mail.user.email])
+           [ @bulk_mail.mail_template.user.email, @bulk_mail.user.email ])
   end
 
   private def before_deliver_bulk_mail

@@ -24,7 +24,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should create mail_template" do
       assert_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -35,8 +35,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_redirected_to mail_template_url(MailTemplate.last)
@@ -44,7 +44,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should create NOT mail_template with uncovertible JIS from_name" do
       assert_no_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -55,8 +55,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_response :success
@@ -64,7 +64,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should create NOT mail_template with uncovertible JIS subject_prefix" do
       assert_no_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -75,8 +75,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: "#{@mail_template.subject_prefix}😺",
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_response :success
@@ -84,7 +84,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should create NOT mail_template with uncovertible JIS subject_suffix" do
       assert_no_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -95,8 +95,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: "#{@mail_template.subject_suffix}😺",
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_response :success
@@ -104,7 +104,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should create NOT mail_template with uncovertible JIS body_header" do
       assert_no_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: "#{@mail_template.body_header}😺",
           description: @mail_template.description,
@@ -115,8 +115,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_response :success
@@ -124,7 +124,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should create NOT mail_template with uncovertible JIS body_footer" do
       assert_no_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: "#{@mail_template.body_footer}😺",
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -135,8 +135,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_response :success
@@ -153,7 +153,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should update mail_template" do
-      patch mail_template_url(@mail_template), params: {mail_template: {
+      patch mail_template_url(@mail_template), params: { mail_template: {
         body_footer: @mail_template.body_footer,
         body_header: @mail_template.body_header,
         description: @mail_template.description,
@@ -164,8 +164,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
         reserved_time: @mail_template.reserved_time,
         subject_suffix: @mail_template.subject_suffix,
         subject_prefix: @mail_template.subject_prefix,
-        user: {username: @mail_template.user.username},
-      }}
+        user: { username: @mail_template.user.username }
+      } }
       assert_redirected_to mail_template_url(@mail_template)
     end
 
@@ -205,7 +205,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     test "should NOT create mail_template" do
       assert_no_difference("MailTemplate.count") do
         assert_raises(Pundit::NotAuthorizedError) do
-          post mail_templates_url, params: {mail_template: {
+          post mail_templates_url, params: { mail_template: {
             body_footer: @mail_template.body_footer,
             body_header: @mail_template.body_header,
             description: @mail_template.description,
@@ -216,8 +216,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
             reserved_time: @mail_template.reserved_time,
             subject_suffix: @mail_template.subject_suffix,
             subject_prefix: @mail_template.subject_prefix,
-            user: {username: @mail_template.user.username},
-          }}
+            user: { username: @mail_template.user.username }
+          } }
         end
       end
     end
@@ -235,7 +235,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "should NOT update mail_template" do
       assert_raises(Pundit::NotAuthorizedError) do
-        patch mail_template_url(@mail_template), params: {mail_template: {
+        patch mail_template_url(@mail_template), params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -246,8 +246,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
     end
 
@@ -273,7 +273,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
 
     test "redirect to login INSTEAD OF create mail_template" do
       assert_no_difference("MailTemplate.count") do
-        post mail_templates_url, params: {mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -284,8 +284,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           reserved_time: @mail_template.reserved_time,
           subject_suffix: @mail_template.subject_suffix,
           subject_prefix: @mail_template.subject_prefix,
-          user: {username: @mail_template.user.username},
-        }}
+          user: { username: @mail_template.user.username }
+        } }
       end
 
       assert_redirected_to new_user_session_path
@@ -302,7 +302,7 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "redirect to login INSTEAD OF update mail_template" do
-      patch mail_template_url(@mail_template), params: {mail_template: {
+      patch mail_template_url(@mail_template), params: { mail_template: {
         body_footer: @mail_template.body_footer,
         body_header: @mail_template.body_header,
         description: @mail_template.description,
@@ -313,8 +313,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
         reserved_time: @mail_template.reserved_time,
         subject_suffix: @mail_template.subject_suffix,
         subject_prefix: @mail_template.subject_prefix,
-        user: {username: @mail_template.user.username},
-      }}
+        user: { username: @mail_template.user.username }
+      } }
       assert_redirected_to new_user_session_path
     end
 

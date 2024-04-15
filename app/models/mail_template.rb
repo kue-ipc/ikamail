@@ -7,17 +7,17 @@ class MailTemplate < ApplicationRecord
   belongs_to :user
   has_many :bulk_mails, dependent: :restrict_with_error
 
-  validates :from_name, allow_blank: true, length: {maximum: 255},
+  validates :from_name, allow_blank: true, length: { maximum: 255 },
     charcode: true
-  validates :from_mail_address, presence: true, length: {maximum: 255}
+  validates :from_mail_address, presence: true, length: { maximum: 255 }
 
-  validates :subject_prefix, allow_blank: true, length: {maximum: 255},
+  validates :subject_prefix, allow_blank: true, length: { maximum: 255 },
     charcode: true
-  validates :subject_suffix, allow_blank: true, length: {maximum: 255},
+  validates :subject_suffix, allow_blank: true, length: { maximum: 255 },
     charcode: true
-  validates :body_header, allow_blank: true, length: {maximum: 65_536},
+  validates :body_header, allow_blank: true, length: { maximum: 65_536 },
     charcode: true
-  validates :body_footer, allow_blank: true, length: {maximum: 65_536},
+  validates :body_footer, allow_blank: true, length: { maximum: 65_536 },
     charcode: true
 
   validates :reserved_time, presence: true

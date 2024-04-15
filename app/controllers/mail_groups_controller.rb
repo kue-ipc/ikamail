@@ -1,6 +1,6 @@
 class MailGroupsController < ApplicationController
-  before_action :set_mail_group, only: [:show]
-  before_action :authorize_mail_group, only: [:index]
+  before_action :set_mail_group, only: [ :show ]
+  before_action :authorize_mail_group, only: [ :index ]
 
   # GET /mail_groups
   # GET /mail_groups.json
