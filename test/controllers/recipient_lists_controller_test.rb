@@ -106,9 +106,8 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
     test "should NOT show ALONE recipient_list" do
       recipient_list = recipient_lists(:alone)
-      assert_raises(ActiveRecord::RecordNotFound) do
-        get recipient_list_url(recipient_list)
-      end
+      get recipient_list_url(recipient_list)
+      assert_response :not_found
     end
 
     test "should NOT get edit" do
@@ -132,10 +131,9 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     test "should NOT destroy ALONE recipient_list" do
       recipient_list = recipient_lists(:alone)
       assert_no_difference("RecipientList.count") do
-        assert_raises(ActiveRecord::RecordNotFound) do
-          delete recipient_list_url(recipient_list)
-        end
+        delete recipient_list_url(recipient_list)
       end
+      assert_response :not_found
     end
   end
 

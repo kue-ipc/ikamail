@@ -93,15 +93,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT show user" do
-      assert_raises(ActiveRecord::RecordNotFound) do
-        get admin_user_url(@user)
-      end
+      get admin_user_url(@user)
+      assert_response :not_found
     end
 
     test "should NOT update user" do
-      assert_raises(ActiveRecord::RecordNotFound) do
-        patch admin_user_url(@user), params: { user: { role: "admin" } }
-      end
+      patch admin_user_url(@user), params: { user: { role: "admin" } }
+      assert_response :not_found
     end
 
     test "should NOT sync user" do

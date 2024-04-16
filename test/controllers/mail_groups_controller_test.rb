@@ -35,9 +35,8 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should show mail_group" do
-      assert_raises(ActiveRecord::RecordNotFound) do
-        get mail_group_url(@mail_group)
-      end
+      get mail_group_url(@mail_group)
+      assert_response :not_found
     end
   end
 
