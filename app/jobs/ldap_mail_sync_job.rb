@@ -17,7 +17,8 @@ class LdapMailSyncJob < ApplicationJob
     LdapGroup.all.each do |group| # rubocop: disable Rails/FindEach
       name = group.name.downcase
       mail_group_remains.delete(name)
-      MailGroup.find_or_create_by(name: name).update(display_name: group.display_name)
+      MailGroup.find_or_create_by(name: name)
+        .update(display_name: group.display_name)
     end
 
     # delete group out of LDAP
@@ -50,8 +51,10 @@ class LdapMailSyncJob < ApplicationJob
   private def sync_mail_memberships
     MailGroup.find_each do |group|
       ldap_group = LdapGroup.find_dn(group.name)
-      group.primary_users = MailUser.where(name: ldap_group.primary_users.map(&:name).map(&:downcase)).all
-      group.secondary_users = MailUser.where(name: ldap_group.users.map(&:name).map(&:downcase)).all
+      group.primary_users = MailUser
+        .where(name: ldap_group.primary_users.map(&:name).map(&:downcase)).all
+      group.secondary_users = MailUser
+        .where(name: ldap_group.users.map(&:name).map(&:downcase)).all
     end
   end
 end

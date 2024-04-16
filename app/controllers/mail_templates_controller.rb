@@ -6,7 +6,8 @@ class MailTemplatesController < ApplicationController
   # GET /mail_templates
   # GET /mail_templates.json
   def index
-    @mail_templates = policy_scope(MailTemplate).order(:name).page(params[:page])
+    @mail_templates = policy_scope(MailTemplate).order(:name)
+      .page(params[:page])
   end
 
   # GET /mail_templates/1

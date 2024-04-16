@@ -5,7 +5,8 @@ class RecipientListPolicy < ApplicationPolicy
         scope.all
       else
         scope.includes(:mail_templates).where(mail_templates: { enabled: true })
-          .or(scope.includes(:mail_templates).where(mail_templates: { user: user }))
+          .or(scope.includes(:mail_templates)
+            .where(mail_templates: { user: user }))
       end
     end
   end

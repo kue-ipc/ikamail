@@ -17,7 +17,7 @@ class RecipientMailUsersController < ApplicationController
 
   # POST /recipient_lists/1/mail_users/included
   # POST /recipient_lists/1/mail_users/included.json
-  def create
+  def create # rubocop: disable Metrics/MethodLength
     if [ :included, :excluded ].exclude?(@type)
       return redirect_to @recipient_list,
         alert: t("messages.cannot_add_mail_user_to_recipient_list")
@@ -33,9 +33,10 @@ class RecipientMailUsersController < ApplicationController
 
     remaining_names = not_included_names(names, @recipient_list.mail_users)
 
-    alert = (unless remaining_names.empty?
-               "#{t('messages.not_found_mail_user')}: #{remaining_names.join(', ')}"
-    end)
+    alert =
+      if remaining_names.present?
+        "#{t('messages.not_found_mail_user')}: #{remaining_names.join(', ')}"
+      end
 
     notice =
       if count.zero?
@@ -62,7 +63,7 @@ class RecipientMailUsersController < ApplicationController
 
   # DELETE /recipient_lists/1/mail_users/included/1
   # DELETE /recipient_lists/1/mail_users/included/1.json
-  def destroy
+  def destroy # rubocop: disable Metrics/MethodLength
     if [ :included, :excluded ].exclude?(@type)
       redirect_to @recipient_list,
         alert: t("messages.cannot_remove_mail_user_to_recipient_list")
@@ -85,11 +86,13 @@ class RecipientMailUsersController < ApplicationController
       CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list,
         notice: t("messages.success_action",
-          model: t("activerecord.models.mail_user"), action: t("actions.delete"))
+          model: t("activerecord.models.mail_user"),
+          action: t("actions.delete"))
     else
       redirect_to @recipient_list,
         alert: t("messages.failure_action",
-          model: t("activerecord.models.mail_user"), action: t("actions.delete"))
+          model: t("activerecord.models.mail_user"),
+          action: t("actions.delete"))
     end
   end
 
@@ -119,7 +122,8 @@ class RecipientMailUsersController < ApplicationController
   private def create_or_update_for_type(names)
     count = 0
     Recipient.transaction do
-      MailUser.eager_load(:recipients).where(name: names).or(MailUser.where(mail: names)).find_each do |mail_user|
+      MailUser.eager_load(:recipients).where(name: names)
+        .or(MailUser.where(mail: names)).find_each do |mail_user|
         recipient = mail_user.recipients.to_a.find { |r|
           r.recipient_list_id == @recipient_list.id
         }

@@ -1,22 +1,18 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
   root to: "pages#top"
 
   namespace :admin do
     root to: "/admin#top"
     put "ldap_sync"
     get "statistics"
-    # get 'translations'
-    # put 'translations', to: '/admin#translations_update'
-    resources :users, only: [ :index, :show, :create, :update ],
-      controller: "/users" do
+    resources :users, controller: "/users",
+      only: [ :index, :show, :create, :update ] do
       collection do
         put "sync"
       end
     end
-    # # get 'translations', as: 'translations'
-    # get 'translations/:id', as: '/translations'
-    resources :translations, only: [ :index, :show, :create, :update, :destroy ],
-      controller: "/translations"
+    resources :translations, controller: "/translations",
+      only: [ :index, :show, :create, :update, :destroy ]
   end
 
   resource :user, only: [ :show ]

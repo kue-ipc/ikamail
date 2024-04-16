@@ -214,7 +214,8 @@ class BulkMailsController < ApplicationController
 
   private def all_params
     params.require(:bulk_mail)
-      .permit(:mail_template_id, :delivery_timing, :subject, :body, :wrap_col, :wrap_rule, action_info: {})
+      .permit(:mail_template_id, :delivery_timing, :subject, :body, :wrap_col,
+        :wrap_rule, action_info: {})
   end
 
   private def bulk_mail_params

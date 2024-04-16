@@ -5,7 +5,8 @@ class BulkMailPolicy < ApplicationPolicy
         scope.all
       else
         scope.includes(:mail_template).where(user: user)
-          .or(scope.includes(:mail_template).where(mail_templates: { user: user }))
+          .or(scope.includes(:mail_template)
+            .where(mail_templates: { user: user }))
       end
     end
   end
@@ -38,7 +39,8 @@ class BulkMailPolicy < ApplicationPolicy
   end
 
   def withdraw?
-    (record.status_pending? || record.status_ready? || record.status_reserved?) && owned?
+    (record.status_pending? || record.status_ready? ||
+      record.status_reserved?) && owned?
   end
 
   def approve?
