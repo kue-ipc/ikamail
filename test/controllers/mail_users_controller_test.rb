@@ -28,16 +28,14 @@ class MailUsersControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test "should get index" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get mail_users_url
-      end
+    test "should NOT get index" do
+      get mail_users_url
+      assert_response :forbidden
     end
 
-    test "should show mail_user" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get mail_user_url(@mail_user)
-      end
+    test "should NOT show mail_user" do
+      get mail_user_url(@mail_user)
+      assert_response :forbidden
     end
   end
 

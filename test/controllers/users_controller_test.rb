@@ -77,19 +77,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT get index" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get admin_users_url
-      end
+      get admin_users_url
+      assert_response :forbidden
     end
 
     test "should NOT create user" do
       assert_no_difference("User.count") do
-        assert_raises(Pundit::NotAuthorizedError) do
-          post admin_users_url, params: { user: {
-            username: "user04"
-          } }
-        end
+        post admin_users_url, params: { user: {
+          username: "user04"
+        } }
       end
+      assert_response :forbidden
     end
 
     test "should NOT show user" do
@@ -104,10 +102,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     test "should NOT sync user" do
       assert_no_enqueued_jobs do
-        assert_raises(Pundit::NotAuthorizedError) do
-          put sync_admin_users_url
-        end
+        put sync_admin_users_url
       end
+      assert_response :forbidden
     end
 
     test "should get own user" do

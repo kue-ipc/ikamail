@@ -37,28 +37,25 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test "should get index" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get mail_users_recipient_list_url(@recipient_list, "applicable")
-      end
+    test "should NOt get index" do
+      get mail_users_recipient_list_url(@recipient_list, "applicable")
+      assert_response :forbidden
     end
 
     test "should NOT create recipient_mail_user" do
       assert_no_difference("Recipient.count") do
-        assert_raises(Pundit::NotAuthorizedError) do
-          post mail_users_recipient_list_url(@recipient_list, "included"),
-            params: { name: "user04" }
-        end
+        post mail_users_recipient_list_url(@recipient_list, "included"),
+          params: { name: "user04" }
       end
+      assert_response :forbidden
     end
 
     test "should NOT destroy recipient_mail_user" do
       assert_no_difference("Recipient.count") do
-        assert_raises(Pundit::NotAuthorizedError) do
-          delete mail_user_recipient_list_url(@recipient_list, "included",
-            mail_users(:admin))
-        end
+        delete mail_user_recipient_list_url(@recipient_list, "included",
+          mail_users(:admin))
       end
+      assert_response :forbidden
     end
   end
 

@@ -80,23 +80,19 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT get new" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get new_recipient_list_url
-      end
-      # assert_response :forbidden
+      get new_recipient_list_url
+      assert_response :forbidden
     end
 
     test "should NOT create recipient_list" do
       assert_no_difference("RecipientList.count") do
-        assert_raises(Pundit::NotAuthorizedError) do
-          post recipient_lists_url, params: { recipient_list: {
-            name: "#{@recipient_list.name}_alt",
-            description: @recipient_list.description,
-            mail_group_ids: @recipient_list.mail_group_ids
-          } }
-        end
+        post recipient_lists_url, params: { recipient_list: {
+          name: "#{@recipient_list.name}_alt",
+          description: @recipient_list.description,
+          mail_group_ids: @recipient_list.mail_group_ids
+        } }
       end
-      # assert_response :forbidden
+      assert_response :forbidden
     end
 
     test "should show recipient_list" do
@@ -111,21 +107,17 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT get edit" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get edit_recipient_list_url(@recipient_list)
-      end
-      # assert_response :forbidden
+      get edit_recipient_list_url(@recipient_list)
+      assert_response :forbidden
     end
 
     test "should NOT update recipient_list" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        patch recipient_list_url(@recipient_list), params: { recipient_list: {
-          name: "#{@recipient_list.name}_alt",
-          description: @recipient_list.description,
-          mail_group_ids: @recipient_list.mail_group_ids
-        } }
-      end
-      # assert_response :forbidden
+      patch recipient_list_url(@recipient_list), params: { recipient_list: {
+        name: "#{@recipient_list.name}_alt",
+        description: @recipient_list.description,
+        mail_group_ids: @recipient_list.mail_group_ids
+      } }
+      assert_response :forbidden
     end
 
     test "should NOT destroy ALONE recipient_list" do

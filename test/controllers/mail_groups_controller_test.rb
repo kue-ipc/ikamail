@@ -28,13 +28,12 @@ class MailGroupsControllerTest < ActionDispatch::IntegrationTest
       sign_in users(:user01)
     end
 
-    test "should get index" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get mail_groups_url
-      end
+    test "should NOT get index" do
+      get mail_groups_url
+      assert_response :forbidden
     end
 
-    test "should show mail_group" do
+    test "should NOT show mail_group" do
       get mail_group_url(@mail_group)
       assert_response :not_found
     end

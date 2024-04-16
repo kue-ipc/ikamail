@@ -197,45 +197,13 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT get new" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get new_mail_template_url
-      end
+      get new_mail_template_url
+      assert_response :forbidden
     end
 
     test "should NOT create mail_template" do
       assert_no_difference("MailTemplate.count") do
-        assert_raises(Pundit::NotAuthorizedError) do
-          post mail_templates_url, params: { mail_template: {
-            body_footer: @mail_template.body_footer,
-            body_header: @mail_template.body_header,
-            description: @mail_template.description,
-            from_mail_address: @mail_template.from_mail_address,
-            from_name: @mail_template.from_name,
-            name: "#{@mail_template.name}_alt",
-            recipient_list_id: @mail_template.recipient_list_id,
-            reserved_time: @mail_template.reserved_time,
-            subject_suffix: @mail_template.subject_suffix,
-            subject_prefix: @mail_template.subject_prefix,
-            user: { username: @mail_template.user.username }
-          } }
-        end
-      end
-    end
-
-    test "should show mail_template" do
-      get mail_template_url(@mail_template)
-      assert_response :success
-    end
-
-    test "should NOT get edit" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        get edit_mail_template_url(@mail_template)
-      end
-    end
-
-    test "should NOT update mail_template" do
-      assert_raises(Pundit::NotAuthorizedError) do
-        patch mail_template_url(@mail_template), params: { mail_template: {
+        post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
           body_header: @mail_template.body_header,
           description: @mail_template.description,
@@ -249,14 +217,41 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
           user: { username: @mail_template.user.username }
         } }
       end
+      assert_response :forbidden
+    end
+
+    test "should show mail_template" do
+      get mail_template_url(@mail_template)
+      assert_response :success
+    end
+
+    test "should NOT get edit" do
+      get edit_mail_template_url(@mail_template)
+      assert_response :forbidden
+    end
+
+    test "should NOT update mail_template" do
+      patch mail_template_url(@mail_template), params: { mail_template: {
+        body_footer: @mail_template.body_footer,
+        body_header: @mail_template.body_header,
+        description: @mail_template.description,
+        from_mail_address: @mail_template.from_mail_address,
+        from_name: @mail_template.from_name,
+        name: "#{@mail_template.name}_alt",
+        recipient_list_id: @mail_template.recipient_list_id,
+        reserved_time: @mail_template.reserved_time,
+        subject_suffix: @mail_template.subject_suffix,
+        subject_prefix: @mail_template.subject_prefix,
+        user: { username: @mail_template.user.username }
+      } }
+      assert_response :forbidden
     end
 
     test "should NOT destroy mail_template NO used" do
       assert_no_difference("MailTemplate.count") do
-        assert_raises(Pundit::NotAuthorizedError) do
-          delete mail_template_url(mail_templates(:no_used))
-        end
+        delete mail_template_url(mail_templates(:no_used))
       end
+      assert_response :forbidden
     end
   end
 
