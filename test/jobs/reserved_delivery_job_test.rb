@@ -31,7 +31,8 @@ class ReservedDeliveryJobTest < ActiveJob::TestCase
 
   test "deliver reserved mail without reservation number in old job" do
     assert_emails 2 do
-      ReservedDeliveryJob.perform_now(bulk_mails(:reserved_without_reservation_number))
+      ReservedDeliveryJob.perform_now(
+        bulk_mails(:reserved_without_reservation_number))
     end
   end
 

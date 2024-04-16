@@ -378,8 +378,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-      [ @bulk_mail.mail_template.user.email, @bulk_mail.user.email ], mail.bcc
+    assert_equal all_emails_for(@bulk_mail), mail.bcc
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -950,8 +949,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-      [ @bulk_mail.mail_template.user.email, @bulk_mail.user.email ], mail.bcc
+    assert_equal all_emails_for(@bulk_mail), mail.bcc
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
 
     # メールのチェックが終わった時点で配送は完了している。
@@ -1281,8 +1279,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     assert_equal u8tomjis("【一括メールシステム通知】配信完了"), mail.subject
 
     mail = ActionMailer::Base.deliveries[-1]
-    assert_equal @bulk_mail.mail_template.recipient_list.applicable_mail_users.map(&:mail) |
-      [ @bulk_mail.mail_template.user.email, @bulk_mail.user.email ], mail.bcc
+    assert_equal all_emails_for(@bulk_mail), mail.bcc
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject
 
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status

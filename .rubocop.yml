@@ -50,6 +50,8 @@ Layout/IndentationConsistency:
 
 Layout/LineLength:
   Max: 80
+  AllowedPatterns:
+    - '^\s*#'
 
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line

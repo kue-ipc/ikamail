@@ -62,7 +62,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test "should create NOT mail_template with uncovertible JIS subject_prefix" do
+    test "should create NOT mail_template " \
+         "with uncovertible JIS subject_prefix" do
       assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,
@@ -82,7 +83,8 @@ class MailTemplatesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    test "should create NOT mail_template with uncovertible JIS subject_suffix" do
+    test "should create NOT mail_template " \
+         "with uncovertible JIS subject_suffix" do
       assert_no_difference("MailTemplate.count") do
         post mail_templates_url, params: { mail_template: {
           body_footer: @mail_template.body_footer,

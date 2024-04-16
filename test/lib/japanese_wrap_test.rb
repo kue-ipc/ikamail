@@ -151,6 +151,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
   end
 
   test "search breakable jisx4051 Engrish" do
+    # rubocop: disable Layout/LineLength
     text = "君達のソースコードは、全てRuby on Railsがいただいた。"
     assert_equal 6, JapaneseWrap.search_breakable_jisx4051(text, 6)
     assert_equal 6, JapaneseWrap.search_breakable_jisx4051(text, 7)
@@ -177,6 +178,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
     assert_equal 34, JapaneseWrap.search_breakable_jisx4051(text, 34)
 
     assert_equal 80, JapaneseWrap.search_breakable_jisx4051(text, 80)
+    # rubocop: enable Layout/LineLength
   end
 
   test "1倍幅サロゲートペア" do
