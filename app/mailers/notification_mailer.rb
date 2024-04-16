@@ -32,7 +32,7 @@ class NotificationMailer < ApplicationMailer
   end
 
   private def mail_params
-    @to = [ *params[:to] ]
+    @to = [*params[:to]]
     @bulk_mail = params[:bulk_mail]
     @comment = params[:comment]
   end

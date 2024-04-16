@@ -6,16 +6,16 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
     put "ldap_sync"
     get "statistics"
     resources :users, controller: "/users",
-      only: [ :index, :show, :create, :update ] do
+      only: [:index, :show, :create, :update] do
       collection do
         put "sync"
       end
     end
     resources :translations, controller: "/translations",
-      only: [ :index, :show, :create, :update, :destroy ]
+      only: [:index, :show, :create, :update, :destroy]
   end
 
-  resource :user, only: [ :show ]
+  resource :user, only: [:show]
 
   resources :mail_templates do
     member do
@@ -46,10 +46,10 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
     end
   end
 
-  resources :mail_users, only: [ :index, :show ]
+  resources :mail_users, only: [:index, :show]
 
-  resources :mail_groups, only: [ :index, :show ] do
-    resources :mail_users, only: [ :index ]
+  resources :mail_groups, only: [:index, :show] do
+    resources :mail_users, only: [:index]
   end
 
   devise_for :users
@@ -58,6 +58,6 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
     mount DelayedJobWeb, at: "/admin/delayed_job"
   end
 
-  resource :search, only: [ :new, :create ]
+  resource :search, only: [:new, :create]
   get "/search" => redirect("/search/new")
 end

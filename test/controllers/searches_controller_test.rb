@@ -19,7 +19,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should create search" do
-      post search_url, params: { search: { query: "user01" } }
+      post search_url, params: {search: {query: "user01"}}
       assert_response :success
     end
   end
@@ -40,7 +40,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should create search" do
-      post search_url, params: { search: { query: "user01" } }
+      post search_url, params: {search: {query: "user01"}}
       assert_response :success
     end
   end
@@ -57,7 +57,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "redirect to login INSTEAD OF get new" do
-      post search_url, params: { search: { query: "user01" } }
+      post search_url, params: {search: {query: "user01"}}
       assert_redirected_to new_user_session_path
     end
   end

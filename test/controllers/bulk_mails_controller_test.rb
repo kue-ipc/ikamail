@@ -8,7 +8,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
     @action_info_params = {
       comment: "コメント",
       current_status: @bulk_mail.status,
-      datetime: Time.zone.now
+      datetime: Time.zone.now,
     }
   end
 
@@ -30,9 +30,9 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
             mail_template_id: @bulk_mail.mail_template_id,
             subject: @bulk_mail.subject,
             body: @bulk_mail.body,
-            delivery_timing: @bulk_mail.delivery_timing
+            delivery_timing: @bulk_mail.delivery_timing,
           },
-          action_info: @action_info_params
+          action_info: @action_info_params,
         }
       end
 
@@ -54,9 +54,9 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
         bulk_mail: {
           mail_template_id: @bulk_mail.mail_template_id,
           subject: @bulk_mail.subject,
-          body: @bulk_mail.body
+          body: @bulk_mail.body,
         },
-        action_info: @action_info_params
+        action_info: @action_info_params,
       }
       assert_redirected_to new_user_session_path
     end
@@ -71,7 +71,7 @@ class BulkMailsControllerTest < ActionDispatch::IntegrationTest
 
     test "redirect to login INSTEAD OF apply bulk_mail" do
       put apply_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
       assert_equal "draft", BulkMail.find(@bulk_mail.id).status
       assert_redirected_to new_user_session_path
     end

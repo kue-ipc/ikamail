@@ -1,6 +1,6 @@
 class MailUsersController < ApplicationController
-  before_action :set_mail_user, only: [ :show ]
-  before_action :authorize_mail_user, only: [ :index ]
+  before_action :set_mail_user, only: [:show]
+  before_action :authorize_mail_user, only: [:index]
 
   # GET /mail_users
   # GET /mail_users.json

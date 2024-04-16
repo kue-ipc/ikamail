@@ -71,8 +71,8 @@ module JapaneseWrap
   # ㇷ゚ U+31F7 U+309A
 
   # 濁点・半濁点
-  SOUND_MARKS = (%w(゛ ゜) + [ "\u3099", "\u309A" ]).freeze
-  SOUND_MARKS_HALFWIDTH = [ "\uFF9E", "\uFF9F" ].freeze
+  SOUND_MARKS = (%w(゛ ゜) + ["\u3099", "\u309A"]).freeze
+  SOUND_MARKS_HALFWIDTH = ["\uFF9E", "\uFF9F"].freeze
 
   # 分離禁止文字列
   INSEPARABLE_STRS = %w(
@@ -105,13 +105,13 @@ module JapaneseWrap
     *SMALL_KANA,
     *SMALL_KANA_HALFWIDTH,
     *SOUND_MARKS,
-    *SOUND_MARKS_HALFWIDTH
+    *SOUND_MARKS_HALFWIDTH,
   ]).freeze
 
   NOT_ENDING_CHARS = Set.new([
     *OPENING_BRACKETS,
     *OPENING_BRACKETS_FULLWIDTH,
-    *OPENING_BRACKETS_HALFWIDTH
+    *OPENING_BRACKETS_HALFWIDTH,
   ]).freeze
 
   HANGING_CHARS = Set.new([
@@ -120,13 +120,13 @@ module JapaneseWrap
     *FULL_STOPS_HALFWIDTH,
     *COMMAS,
     *COMMAS_FULLWIDTH,
-    *COMMAS_HALFWIDTH
+    *COMMAS_HALFWIDTH,
   ]).freeze
 
   ASCII_CHARS = Set.new("\u0020".."\u007E").freeze
 
-  FULLWIDTH_CHARS = Set.new([ *("\uFF01".."\uFF60"), *("\uFFE0".."\uFFE6") ])
-  HALFWIDTH_CHARS = Set.new([ *("\uFF61".."\uFF9F"), *("\uFFE8".."\uFFEE") ])
+  FULLWIDTH_CHARS = Set.new([*("\uFF01".."\uFF60"), *("\uFFE0".."\uFFE6")])
+  HALFWIDTH_CHARS = Set.new([*("\uFF61".."\uFF9F"), *("\uFFE8".."\uFFEE")])
 
   # 長いテキストを折り返す。
   def text_wrap(str, **opts)

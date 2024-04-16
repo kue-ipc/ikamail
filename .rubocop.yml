@@ -67,10 +67,10 @@ Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/SpaceInsideArrayLiteralBrackets:
-  EnforcedStyle: space
+  EnforcedStyle: no_space
 
 Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: space
+  EnforcedStyle: no_space
 
 # Metrics double
 
@@ -135,7 +135,7 @@ Style/FormatString:
   EnforcedStyle: percent
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  EnforcedStyle: never
 
 Style/GlobalStdStream:
   Enabled: false
@@ -187,10 +187,10 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: no_comma
 
 Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: no_comma
+  EnforcedStyleForMultiline: consistent_comma
 
 Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: no_comma
+  EnforcedStyleForMultiline: consistent_comma
 
 Style/WordArray:
   MinSize: 6

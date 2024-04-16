@@ -5,7 +5,7 @@ class RecipientMailUsersController < ApplicationController
   # GET /recipient_lists/1/mail_users/included
   # GET /recipient_lists/1/mail_users/included.json
   def index
-    unless [ :applicable, :included, :excluded ].include?(@type)
+    unless [:applicable, :included, :excluded].include?(@type)
       return redirect_to @recipient_list,
         alert: t("messages.not_found_recipient_list_type")
     end
@@ -18,7 +18,7 @@ class RecipientMailUsersController < ApplicationController
   # POST /recipient_lists/1/mail_users/included
   # POST /recipient_lists/1/mail_users/included.json
   def create # rubocop: disable Metrics/MethodLength
-    if [ :included, :excluded ].exclude?(@type)
+    if [:included, :excluded].exclude?(@type)
       return redirect_to @recipient_list,
         alert: t("messages.cannot_add_mail_user_to_recipient_list")
     end
@@ -51,20 +51,20 @@ class RecipientMailUsersController < ApplicationController
     redirect_to @recipient_list, alert: [
       t("messages.failure_action", model: t("activerecord.models.mail_user"),
         action: t("actions.add")),
-      e.message
+      e.message,
     ]
   rescue EncodingError
     redirect_to @recipient_list, alert: [
       t("messages.failure_action", model: t("activerecord.models.mail_user"),
         action: t("actions.add")),
-      t("messages.not_utf8")
+      t("messages.not_utf8"),
     ]
   end
 
   # DELETE /recipient_lists/1/mail_users/included/1
   # DELETE /recipient_lists/1/mail_users/included/1.json
   def destroy # rubocop: disable Metrics/MethodLength
-    if [ :included, :excluded ].exclude?(@type)
+    if [:included, :excluded].exclude?(@type)
       redirect_to @recipient_list,
         alert: t("messages.cannot_remove_mail_user_to_recipient_list")
       return
@@ -81,7 +81,7 @@ class RecipientMailUsersController < ApplicationController
       return
     end
 
-    if recipients.update({ @type => false })
+    if recipients.update({@type => false})
       @recipient_list.update(collected: false)
       CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list,
@@ -128,8 +128,8 @@ class RecipientMailUsersController < ApplicationController
           r.recipient_list_id == @recipient_list.id
         }
         if recipient.nil?
-          mail_user.recipients.create!({ recipient_list: @recipient_list,
-@type => true })
+          mail_user.recipients.create!({recipient_list: @recipient_list,
+@type => true,})
           count += 1
         elsif !recipient.__send__(@type)
           recipient.update!(@type => true)

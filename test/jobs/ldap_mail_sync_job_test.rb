@@ -23,8 +23,8 @@ class LdapMailSyncJobTest < ActiveJob::TestCase
       MailGroup.find_by(name: "staff")&.mail_users&.map(&:name)&.sort
     user_users = MailGroup.find_by(name: "user")&.mail_users&.map(&:name)&.sort
 
-    assert_equal [ "admin" ].sort, admin_users
-    assert_equal [ "user01", "user02" ].sort, staff_users
+    assert_equal ["admin"].sort, admin_users
+    assert_equal ["user01", "user02"].sort, staff_users
     assert_equal(%w(user01 user03 user04 user05 user06).sort,
       user_users.reject { |name| name.start_with?("test") })
   end

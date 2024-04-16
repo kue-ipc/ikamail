@@ -24,11 +24,11 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
     test "should create recipient_list" do
       assert_difference("RecipientList.count") do
-        post recipient_lists_url, params: { recipient_list: {
+        post recipient_lists_url, params: {recipient_list: {
           name: "#{@recipient_list.name}_alt",
           description: @recipient_list.description,
-          mail_group_ids: @recipient_list.mail_group_ids
-        } }
+          mail_group_ids: @recipient_list.mail_group_ids,
+        }}
       end
 
       assert_redirected_to recipient_list_url(RecipientList.last)
@@ -45,11 +45,11 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should update recipient_list" do
-      patch recipient_list_url(@recipient_list), params: { recipient_list: {
+      patch recipient_list_url(@recipient_list), params: {recipient_list: {
         name: "#{@recipient_list.name}_alt",
         description: @recipient_list.description,
-        mail_group_ids: @recipient_list.mail_group_ids
-      } }
+        mail_group_ids: @recipient_list.mail_group_ids,
+      }}
       assert_redirected_to recipient_list_url(@recipient_list)
     end
 
@@ -86,11 +86,11 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
     test "should NOT create recipient_list" do
       assert_no_difference("RecipientList.count") do
-        post recipient_lists_url, params: { recipient_list: {
+        post recipient_lists_url, params: {recipient_list: {
           name: "#{@recipient_list.name}_alt",
           description: @recipient_list.description,
-          mail_group_ids: @recipient_list.mail_group_ids
-        } }
+          mail_group_ids: @recipient_list.mail_group_ids,
+        }}
       end
       assert_response :forbidden
     end
@@ -112,11 +112,11 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT update recipient_list" do
-      patch recipient_list_url(@recipient_list), params: { recipient_list: {
+      patch recipient_list_url(@recipient_list), params: {recipient_list: {
         name: "#{@recipient_list.name}_alt",
         description: @recipient_list.description,
-        mail_group_ids: @recipient_list.mail_group_ids
-      } }
+        mail_group_ids: @recipient_list.mail_group_ids,
+      }}
       assert_response :forbidden
     end
 
@@ -142,11 +142,11 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
 
     test "redirect to login INSTEAD OF create recipient_list" do
       assert_no_difference("RecipientList.count") do
-        post recipient_lists_url, params: { recipient_list: {
+        post recipient_lists_url, params: {recipient_list: {
           name: "#{@recipient_list.name}_alt",
           description: @recipient_list.description,
-          mail_group_ids: @recipient_list.mail_group_ids
-        } }
+          mail_group_ids: @recipient_list.mail_group_ids,
+        }}
       end
       assert_redirected_to new_user_session_path
     end
@@ -162,11 +162,11 @@ class RecipientListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "redirect to login INSTEAD OF update recipient_list" do
-      patch recipient_list_url(@recipient_list), params: { recipient_list: {
+      patch recipient_list_url(@recipient_list), params: {recipient_list: {
         name: "#{@recipient_list.name}_alt",
         description: @recipient_list.description,
-        mail_group_ids: @recipient_list.mail_group_ids
-      } }
+        mail_group_ids: @recipient_list.mail_group_ids,
+      }}
       assert_redirected_to new_user_session_path
     end
 

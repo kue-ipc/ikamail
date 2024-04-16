@@ -9,19 +9,19 @@ module ApplicationHelper
 
   # 翻訳系
   def t_model(model = controller_sym, count: 1)
-    t(model, scope: [ :activerecord, :models ], count: count)
+    t(model, scope: [:activerecord, :models], count: count)
   end
 
   def t_title(title, model: controller_sym, count: 1)
-    t(title, scope: [ :titles ], model: t_model(model, count: count))
+    t(title, scope: [:titles], model: t_model(model, count: count))
   end
 
   def t_menu_action(attr, model:, count: 1)
-    t(attr, scope: [ :menu, :actions ], model: t_model(model, count: count))
+    t(attr, scope: [:menu, :actions], model: t_model(model, count: count))
   end
 
   def t_attr(attr, model: controller_sym)
-    t(attr, scope: [ :activerecord, :attributes, model ])
+    t(attr, scope: [:activerecord, :attributes, model])
   end
 
   def menu_list
@@ -31,37 +31,37 @@ module ApplicationHelper
     if current_user.admin?
       list << {
         path: admin_root_path,
-        label: t("menu.paths.admin_root")
+        label: t("menu.paths.admin_root"),
       }
     end
     list << {
       path: new_bulk_mail_path,
-      label: t_menu_action(:new, model: :bulk_mail)
+      label: t_menu_action(:new, model: :bulk_mail),
     }
     list << {
       path: bulk_mails_path,
-      label: t_menu_action(:index, model: :bulk_mail, count: 2)
+      label: t_menu_action(:index, model: :bulk_mail, count: 2),
     }
     list << {
       path: mail_templates_path,
-      label: t_menu_action(:index, model: :mail_template, count: 2)
+      label: t_menu_action(:index, model: :mail_template, count: 2),
     }
     list << {
       path: recipient_lists_path,
-      label: t_menu_action(:index, model: :recipient_list, count: 2)
+      label: t_menu_action(:index, model: :recipient_list, count: 2),
     }
     list << {
       path: new_search_path,
-      label: t_menu_action(:search, model: :mail_user, count: 1)
+      label: t_menu_action(:search, model: :mail_user, count: 1),
     }
     if current_user.admin?
       list << {
         path: mail_users_path,
-        label: t_menu_action(:index, model: :mail_user, count: 2)
+        label: t_menu_action(:index, model: :mail_user, count: 2),
       }
       list << {
         path: mail_groups_path,
-        label: t_menu_action(:index, model: :mail_group, count: 2)
+        label: t_menu_action(:index, model: :mail_group, count: 2),
       }
     end
     list

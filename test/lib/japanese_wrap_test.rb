@@ -193,7 +193,7 @@ class JapaneseWrapTest < ActiveSupport::TestCase
   end
 
   test "ギリシャ文字とキリル文字" do
-    list = [ "α", "д" ]
+    list = ["α", "д"]
     list.each do |char|
       # デフォルト幅 2
       text = -"前文#{char}後文"

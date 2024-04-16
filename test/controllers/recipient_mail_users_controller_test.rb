@@ -19,7 +19,7 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
 
     test "should create recipient_mail_user" do
       post mail_users_recipient_list_url(@recipient_list, "included"),
-        params: { name: "user04" }
+        params: {name: "user04"}
 
       assert_redirected_to recipient_list_url(@recipient_list)
     end
@@ -45,7 +45,7 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
     test "should NOT create recipient_mail_user" do
       assert_no_difference("Recipient.count") do
         post mail_users_recipient_list_url(@recipient_list, "included"),
-          params: { name: "user04" }
+          params: {name: "user04"}
       end
       assert_response :forbidden
     end
@@ -68,7 +68,7 @@ class RecipientMailUsersControllerTest < ActionDispatch::IntegrationTest
     test "redirect to login INSTEAD OF create recipient_mail_user" do
       assert_no_difference("Recipient.count") do
         post mail_users_recipient_list_url(@recipient_list, "included"),
-          params: { name: "user04" }
+          params: {name: "user04"}
       end
 
       assert_redirected_to new_user_session_path

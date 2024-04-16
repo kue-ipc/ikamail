@@ -20,9 +20,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     test "should create user" do
       assert_difference("User.count") do
-        post admin_users_url, params: { user: {
-          username: "user04"
-        } }
+        post admin_users_url, params: {user: {
+          username: "user04",
+        }}
       end
       assert_redirected_to admin_users_url
       assert_equal "ユーザーを登録しました。", flash[:notice]
@@ -30,9 +30,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     test "should NOT create existed user" do
       assert_no_difference("User.count") do
-        post admin_users_url, params: { user: {
-          username: "user01"
-        } }
+        post admin_users_url, params: {user: {
+          username: "user01",
+        }}
       end
       assert_redirected_to admin_users_url
       assert_equal "ユーザーを登録することができません。", flash[:alert]
@@ -44,14 +44,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should update user" do
-      patch admin_user_url(@user), params: { user: { role: "admin" } }
+      patch admin_user_url(@user), params: {user: {role: "admin"}}
       assert User.find(@user.id).admin?
       assert_redirected_to admin_users_url
       assert_equal "ユーザーを更新しました。", flash[:notice]
     end
 
     test "should NOT update own user" do
-      patch admin_user_url(users(:admin)), params: { user: { role: "user" } }
+      patch admin_user_url(users(:admin)), params: {user: {role: "user"}}
       assert User.find(users(:admin).id).admin?
       assert_redirected_to admin_users_url
       assert_equal "自分自身の情報は変更できません。", flash[:alert]
@@ -83,9 +83,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     test "should NOT create user" do
       assert_no_difference("User.count") do
-        post admin_users_url, params: { user: {
-          username: "user04"
-        } }
+        post admin_users_url, params: {user: {
+          username: "user04",
+        }}
       end
       assert_response :forbidden
     end
@@ -96,7 +96,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should NOT update user" do
-      patch admin_user_url(@user), params: { user: { role: "admin" } }
+      patch admin_user_url(@user), params: {user: {role: "admin"}}
       assert_response :not_found
     end
 
@@ -121,9 +121,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     test "redirect to login INSTEAD OF create user" do
       assert_no_difference("User.count") do
-        post admin_users_url, params: { user: {
-          username: "user04"
-        } }
+        post admin_users_url, params: {user: {
+          username: "user04",
+        }}
       end
       assert_redirected_to new_user_session_path
     end
@@ -134,7 +134,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "redirect to login INSTEAD OF update user" do
-      patch admin_user_url(@user), params: { user: { role: "admin" } }
+      patch admin_user_url(@user), params: {user: {role: "admin"}}
       assert_redirected_to new_user_session_path
     end
 

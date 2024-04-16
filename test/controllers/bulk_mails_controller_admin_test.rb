@@ -25,8 +25,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
           subject: @bulk_mail.subject,
           body: @bulk_mail.body,
           delivery_timing: @bulk_mail.delivery_timing,
-          action_info: @action_info_params
-        }
+          action_info: @action_info_params,
+        },
       }
     end
 
@@ -49,8 +49,8 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
         mail_template_id: @bulk_mail.mail_template_id,
         subject: @bulk_mail.subject,
         body: @bulk_mail.body,
-        action_info: @action_info_params
-      }
+        action_info: @action_info_params,
+      },
     }
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -82,10 +82,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should update DRAFT" do
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -104,7 +104,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -113,7 +113,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -122,7 +122,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -131,7 +131,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -140,7 +140,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -149,7 +149,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -158,7 +158,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -167,7 +167,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:draft)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
   end
@@ -190,10 +190,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should update PENDING" do
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -212,7 +212,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -221,7 +221,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -232,11 +232,11 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 1 do
       put approve_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】受付完了"), mail.subject
 
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
@@ -249,11 +249,11 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 1 do
       put reject_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】受付拒否"), mail.subject
 
     assert_equal "draft", BulkMail.find(@bulk_mail.id).status
@@ -264,7 +264,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -273,7 +273,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -282,7 +282,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -291,7 +291,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:pending)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
   end
@@ -314,10 +314,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update READY" do
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -336,7 +336,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -345,7 +345,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -354,7 +354,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -363,7 +363,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -374,7 +374,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 2 do
       put deliver_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
@@ -392,7 +392,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_enqueued_with(job: ReservedDeliveryJob) do
       put reserve_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
@@ -406,11 +406,11 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 1 do
       put cancel_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】配信中止"), mail.subject
 
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
@@ -421,7 +421,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:ready)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status
   end
@@ -444,10 +444,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update RESERVED" do
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -466,7 +466,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -475,7 +475,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -484,7 +484,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -493,7 +493,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -502,7 +502,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -511,7 +511,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -522,11 +522,11 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 1 do
       put cancel_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】配信中止"), mail.subject
 
     assert_equal "pending", BulkMail.find(@bulk_mail.id).status
@@ -538,7 +538,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:reserved)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "reserved", BulkMail.find(@bulk_mail.id).status
   end
@@ -561,10 +561,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update WAITING" do
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -583,7 +583,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -592,7 +592,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -601,7 +601,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -610,7 +610,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -619,7 +619,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -628,7 +628,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -637,7 +637,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -646,7 +646,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waiting)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waiting", BulkMail.find(@bulk_mail.id).status
   end
@@ -669,10 +669,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update DELIVERING" do
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -691,7 +691,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -700,7 +700,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -709,7 +709,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -718,7 +718,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -727,7 +727,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -736,7 +736,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -745,7 +745,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -754,7 +754,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivering)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivering", BulkMail.find(@bulk_mail.id).status
   end
@@ -777,10 +777,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update DELIVERED" do
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -799,7 +799,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -808,7 +808,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -817,7 +817,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -826,7 +826,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -835,7 +835,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -844,7 +844,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -853,7 +853,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -862,7 +862,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:delivered)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
   end
@@ -885,10 +885,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update FAILED" do
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -907,7 +907,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -916,7 +916,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -925,7 +925,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -934,7 +934,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -945,7 +945,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 2 do
       put deliver_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
@@ -961,7 +961,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -970,7 +970,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "failed", BulkMail.find(@bulk_mail.id).status
   end
@@ -979,7 +979,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:failed)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1002,10 +1002,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update ERROR" do
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -1024,7 +1024,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1033,7 +1033,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1042,7 +1042,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1051,7 +1051,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1060,7 +1060,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1069,7 +1069,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1078,7 +1078,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "error", BulkMail.find(@bulk_mail.id).status
   end
@@ -1087,7 +1087,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1110,10 +1110,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT update WASTE" do
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_response :forbidden
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
@@ -1132,7 +1132,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1141,7 +1141,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put withdraw_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1150,7 +1150,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put approve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1159,7 +1159,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put reject_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1168,7 +1168,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put deliver_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1177,7 +1177,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put reserve_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1186,7 +1186,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put cancel_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1195,7 +1195,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:waste)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_response :forbidden
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
   end
@@ -1214,7 +1214,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     @bulk_mail = bulk_mails(:error_no_number)
     @action_info_params[:current_status] = @bulk_mail.status
     put discard_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "waste", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1234,10 +1234,10 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
   test "should NOT update DRAFT to DELIVERED" do
     @bulk_mail = bulk_mails(:delivered)
-    patch bulk_mail_url(@bulk_mail), params: { bulk_mail: {
+    patch bulk_mail_url(@bulk_mail), params: {bulk_mail: {
       mail_template_id: mail_templates(:users).id,
-      action_info: @action_info_params
-    } }
+      action_info: @action_info_params,
+    }}
     assert_not_equal mail_templates(:users).id,
       BulkMail.find(@bulk_mail.id).mail_template_id
     assert_redirected_to bulk_mail_url(@bulk_mail)
@@ -1254,7 +1254,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
   test "should NOT apply DRAFT to DELIVERED" do
     @bulk_mail = bulk_mails(:delivered)
     put apply_bulk_mail_url(@bulk_mail),
-      params: { bulk_mail: { action_info: @action_info_params } }
+      params: {bulk_mail: {action_info: @action_info_params}}
     assert_equal "delivered", BulkMail.find(@bulk_mail.id).status
     assert_redirected_to bulk_mail_url(@bulk_mail)
   end
@@ -1267,15 +1267,15 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 3 do
       put approve_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries[-3]
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】受付完了"), mail.subject
 
     mail = ActionMailer::Base.deliveries[-2]
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】配信完了"), mail.subject
 
     mail = ActionMailer::Base.deliveries[-1]
@@ -1294,7 +1294,7 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
     # assert_emails 1 do
     assert_enqueued_with(job: ReservedDeliveryJob) do
       put approve_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
     # end
 
@@ -1313,11 +1313,11 @@ class BulkMailsControllerAdminTest < BulkMailsControllerTest
 
     assert_emails 1 do
       put approve_bulk_mail_url(@bulk_mail),
-        params: { bulk_mail: { action_info: @action_info_params } }
+        params: {bulk_mail: {action_info: @action_info_params}}
     end
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal [ @bulk_mail.user.email ], mail.to
+    assert_equal [@bulk_mail.user.email], mail.to
     assert_equal u8tomjis("【一括メールシステム通知】受付完了"), mail.subject
 
     assert_equal "ready", BulkMail.find(@bulk_mail.id).status

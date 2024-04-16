@@ -1,6 +1,6 @@
 class RecipientListsController < ApplicationController
-  before_action :set_recipient_list, only: [ :show, :edit, :update, :destroy ]
-  before_action :authorize_recipient_list, only: [ :index, :new, :create ]
+  before_action :set_recipient_list, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_recipient_list, only: [:index, :new, :create]
 
   # GET /recipient_lists
   # GET /recipient_lists.json
@@ -26,8 +26,8 @@ class RecipientListsController < ApplicationController
   # POST /recipient_lists
   # POST /recipient_lists.json
   def create
-    @recipient_list = RecipientList.new({ **recipient_list_params,
-      collected: false })
+    @recipient_list = RecipientList.new({**recipient_list_params,
+      collected: false,})
     if @recipient_list.save
       CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list,
@@ -40,7 +40,7 @@ class RecipientListsController < ApplicationController
   # PATCH/PUT /recipient_lists/1
   # PATCH/PUT /recipient_lists/1.json
   def update
-    if @recipient_list.update({ **recipient_list_params, collected: false })
+    if @recipient_list.update({**recipient_list_params, collected: false})
       CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list,
         notice: t_success_action(@recipient_list, :update)
@@ -58,7 +58,7 @@ class RecipientListsController < ApplicationController
     else
       redirect_to @recipient_list, alert: [
         t_failure_action(@recipient_list, :destroy),
-        *@recipient_list.errors.messages.fetch(:base, [])
+        *@recipient_list.errors.messages.fetch(:base, []),
       ]
     end
   end

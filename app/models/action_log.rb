@@ -15,7 +15,7 @@ class ActionLog < ApplicationRecord
     start: 13,
     finish: 14,
     fail: 15,
-    error: 16
+    error: 16,
   }, _prefix: true
 
   belongs_to :bulk_mail

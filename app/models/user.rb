@@ -6,12 +6,12 @@ class User < ApplicationRecord
   # and :omniauthable, :lockable, :trackable
   devise :ldap_authenticatable, :rememberable, :timeoutable
 
-  enum role: { user: 0, admin: 1 }
+  enum role: {user: 0, admin: 1}
 
-  validates :username, presence: true, uniqueness: { case_sensitive: true },
-    length: { maximum: 255 }
+  validates :username, presence: true, uniqueness: {case_sensitive: true},
+    length: {maximum: 255}
   validates :email, presence: true
-  validates :fullname, allow_blank: true, length: { maximum: 255 }
+  validates :fullname, allow_blank: true, length: {maximum: 255}
 
   has_many :mail_templates, dependent: :restrict_with_exception
   has_many :bulk_mails, dependent: :restrict_with_exception
