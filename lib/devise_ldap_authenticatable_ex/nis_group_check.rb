@@ -1,4 +1,4 @@
-# devise_ldap_authenticatable_ex/nis_group_check.rb v1.0.0 2024-01-30
+# devise_ldap_authenticatable_ex/nis_group_check.rb v1.0.1 2024-04-16
 
 # RFC 2307 LDAP as a NIS
 # setting: config.ldap_nis_group_check
@@ -53,7 +53,7 @@ module DeviseLdapAuthenticatableEx
             group[:gid_number] =
               entry[Devise::LDAP::DEFAULT_GID_NUMBER_KEY][0].to_i
             group[:members] =
-              entry[Devise::LDAP::DEFAULT_MEMBER_UID_KEY]&.to_a || []
+              entry[Devise::LDAP::DEFAULT_MEMBER_UID_KEY].to_a
           end
 
           if group[:gid_number].nil?

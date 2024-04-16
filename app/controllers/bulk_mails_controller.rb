@@ -38,7 +38,7 @@ class BulkMailsController < ApplicationController
     return if @bulk_mail.mail_template.enabled
 
     @bulk_mail.mail_template_id = nil
-    flash[:alert] = t("messages.selected_disabled_template")
+    flash.now[:alert] = t("messages.selected_disabled_template")
   end
 
   # POST /bulk_mails
