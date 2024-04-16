@@ -10,6 +10,7 @@
 
 require "set"
 
+# rubocop: disable Metrics/ModuleLength
 module JapaneseWrap
   module_function # rubocop:disable Style/AccessModifierDeclarations
 
@@ -149,8 +150,8 @@ module JapaneseWrap
   def each_wrap(str, col: 0, rule: :force, ambiguous: 2, hanging: false,
     word_break: :normal)
     unless block_given?
-      return enum_for(__method__, str, col: col, rule: rule, ambiguous: ambiguous, hanging: hanging,
-        word_break: word_break)
+      return enum_for(__method__, str, col: col, rule: rule,
+        ambiguous: ambiguous, hanging: hanging, word_break: word_break)
     end
     return yield str if !col.positive? || rule == :none
     return yield str if str =~ /^$/
@@ -286,3 +287,4 @@ module JapaneseWrap
       end
   end
 end
+# rubocop: enable Metrics/ModuleLength

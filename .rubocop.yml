@@ -79,7 +79,9 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Max: 50 # 25
   AllowedMethods:
-    - class_methods
+    - refine
+    - module_eval
+    - class_eval
   Exclude:
     - 'lib/tasks/*.rake'
 
