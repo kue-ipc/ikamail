@@ -34,7 +34,7 @@ dl
   - if recipient_policy.index?
     - {included: "success", excluded: "danger"}.each do |type, color|
       ruby:
-        attr_name = "#{type}_mail_users".intern
+        attr_name = :"#{type}_mail_users"
         collapse_id = "collapse-#{attr_name.to_s.gsub('_', '-')}"
       = dt_dd_for @recipient_list, attr_name do |mail_users|
         = bootstrap_form_with url: mail_users_recipient_list_path(@recipient_list, type), data: {turbo: false} do |f|
