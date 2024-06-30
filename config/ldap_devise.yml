@@ -15,7 +15,6 @@
 <% end %>
   encryption: <%= Settings.ldap.encryption.to_json %>
   group_base: <%= [Settings.ldap.group.ou, Settings.ldap.base].join(',').to_json %>
-  required_groups: <%= Settings.ldap.required_groups.to_json %>
   required_groups: <%=
     Settings.ldap.restrict.auth.groups.map do |name|
       ["#{Settings.ldap.group.dn}=#{name}", Settings.ldap.group.ou, Settings.ldap.base].join(',')
