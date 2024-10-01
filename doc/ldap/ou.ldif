@@ -3,6 +3,13 @@
 
 version: 1
 
+# dn: dc=example,dc=jp
+# objectClass: dcObject
+# objectClass: organization
+# objectClass: top
+# dc: example
+# o: example
+
 dn: ou=groups,dc=example,dc=jp
 objectClass: organizationalUnit
 objectClass: top
