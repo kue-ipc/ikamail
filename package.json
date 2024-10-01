@@ -3,14 +3,14 @@
   "private": true,
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.4",
+    "@hotwired/turbo-rails": "^8.0.10",
     "@popperjs/core": "^2.11.8",
-    "@primer/octicons": "^19.9.0",
+    "@primer/octicons": "^19.11.0",
     "bootstrap": "^5.3.3",
     "coffeescript": "^2.7.0",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.24.0",
     "esbuild-coffeescript": "^2.2.0",
-    "sass": "^1.75.0"
+    "sass": "^1.79.4"
   },
   "version": "0.1.0",
   "browserslist": [
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@coffeelint/cli": "^5.2.11",
     "postcss-sass": "^0.5.0",
-    "stylelint": "^16.3.1",
-    "stylelint-config-standard": "^36.0.0",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
     "stylelint-config-standard-scss": "^13.1.0"
   }
 }
