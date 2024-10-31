@@ -83,10 +83,10 @@ class TranslationsController < ApplicationController
         key: full_key,
         value: value)
     when Hash
-      value.each_key.sort.map { |c_key|
+      value.each_key.sort.map do |c_key|
         all_translations(key + [c_key], value[c_key], db, query,
           locale: locale)
-      }.compact.flatten
+      end.compact.flatten
     end
   end
 end

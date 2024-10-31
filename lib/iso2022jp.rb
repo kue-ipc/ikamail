@@ -10,10 +10,10 @@ module Iso2022jp
     html: ->(c) { "&#%d;" % c.encode(Encoding::UTF_8).ord },
     xml: ->(c) { "&#x%X;" % c.encode(Encoding::UTF_8).ord },
     perl: ->(c) { '\\x{%X}' % c.encode(Encoding::UTF_8).ord },
-    java: lambda { |c|
-            c.encode(Encoding::UTF_16LE).unpack("v*").map { |n|
+    java: ->(c) {
+            c.encode(Encoding::UTF_16LE).unpack("v*").map do |n|
               '\\u%04X' % n
-            }.join
+            end.join
           },
     subchar: ->(_) { "?" },
   }.freeze
@@ -52,9 +52,9 @@ module Iso2022jp
     no_amp_str = str.gsub("&", "&amp;")
     conv_str = double_conv_jis(no_amp_str, fallback: :xml, cp932: cp932)
 
-    conv_str.scan(/&\#x(\h{1,6});/).map { |m|
+    conv_str.scan(/&\#x(\h{1,6});/).map do |m|
       m[0].to_i(16).chr(Encoding::UTF_8)
-    }
+    end
   end
 
   # fallback: 存在しない場合

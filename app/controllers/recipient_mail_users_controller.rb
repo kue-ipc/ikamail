@@ -116,7 +116,7 @@ class RecipientMailUsersController < ApplicationController
       end
     else
       params[:name] || ""
-    end.split(/[\s,\ufeff]/).map(&:strip).select(&:present?).map(&:downcase)
+    end.split(/[\s,\ufeff]/).map(&:strip).compact_blank.map(&:downcase)
   end
 
   private def create_or_update_for_type(names)
@@ -124,9 +124,9 @@ class RecipientMailUsersController < ApplicationController
     Recipient.transaction do
       MailUser.eager_load(:recipients).where(name: names)
         .or(MailUser.where(mail: names)).find_each do |mail_user|
-        recipient = mail_user.recipients.to_a.find { |r|
+        recipient = mail_user.recipients.to_a.find do |r|
           r.recipient_list_id == @recipient_list.id
-        }
+        end
         if recipient.nil?
           mail_user.recipients.create!({recipient_list: @recipient_list,
 @type => true,})

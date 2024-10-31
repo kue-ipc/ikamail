@@ -16,8 +16,8 @@ class PagesController < ApplicationController
       :waste,
       :failed,
       :error,
-    ].index_with { |status|
+    ].index_with do |status|
       policy_scope(BulkMail).where(status: status).count
-    }
+    end
   end
 end

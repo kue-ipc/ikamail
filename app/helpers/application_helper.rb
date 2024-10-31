@@ -143,9 +143,9 @@ module ApplicationHelper
         next if limits&.exclude?(v)
 
         list_html += content_tag("li",
-          class: "list-inline-item border border-primary rounded px-1 mb-1") {
+          class: "list-inline-item border border-primary rounded px-1 mb-1") do
           span_value_for(v, **opts)
-        }
+        end
       end
       list_html
     end
@@ -165,9 +165,9 @@ module ApplicationHelper
         content_tag("span", around[1], class: "text-muted")
     elsif pre
       # rubocop: disable Rails/OutputSafety
-      content_tag("span", value.split(/\R/).map { |s|
+      content_tag("span", value.split(/\R/).map do |s|
                             h(s)
-                          }.join(tag.br).html_safe)
+                          end.join(tag.br).html_safe)
       # rubocop: enable Rails/OutputSafety
     else
       content_tag("span", value)

@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # and :omniauthable, :lockable, :trackable
   devise :ldap_authenticatable, :rememberable, :timeoutable
 
-  enum role: {user: 0, admin: 1}
+  enum :role, {user: 0, admin: 1}
 
   validates :username, presence: true, uniqueness: {case_sensitive: true},
     length: {maximum: 255}

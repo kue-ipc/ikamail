@@ -1,5 +1,5 @@
 class ActionLog < ApplicationRecord
-  enum action: {
+  enum :action, {
     create: 0,
     edit: 1,
     update: 2,
@@ -16,7 +16,7 @@ class ActionLog < ApplicationRecord
     finish: 14,
     fail: 15,
     error: 16,
-  }, _prefix: true
+  }, prefix: true
 
   belongs_to :bulk_mail
   belongs_to :user, optional: true

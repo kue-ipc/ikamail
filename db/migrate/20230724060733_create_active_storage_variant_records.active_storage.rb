@@ -23,9 +23,9 @@ class CreateActiveStorageVariantRecords < ActiveRecord::Migration[6.0]
 
   private def blobs_primary_key_type
     pkey_name = connection.primary_key(:active_storage_blobs)
-    pkey_column = connection.columns(:active_storage_blobs).find { |c|
+    pkey_column = connection.columns(:active_storage_blobs).find do |c|
       c.name == pkey_name
-    }
+    end
     pkey_column.bigint? ? :bigint : pkey_column.type
   end
 end

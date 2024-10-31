@@ -33,9 +33,9 @@ class AdminController < ApplicationController
     BulkMail.where(status: "delivered")
       .where(delivered_at: @begin_time...@end_time)
       .find_each do |bulk_mail|
-      @mail_template_statistics[bulk_mail.mail_template_id].tap { |data|
+      @mail_template_statistics[bulk_mail.mail_template_id].tap do |data|
         data[:count] += 1
-      }
+      end
     end
   end
 

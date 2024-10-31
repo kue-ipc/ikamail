@@ -6,7 +6,7 @@ class BulkMail < ApplicationRecord
   include Iso2022jp
   include JapaneseWrap
 
-  enum status: {
+  enum :status, {
     draft: 0,
     pending: 1,
     ready: 2,
@@ -17,19 +17,19 @@ class BulkMail < ApplicationRecord
     waste: 7,
     failed: 8,
     error: 9,
-  }, _prefix: true
+  }, prefix: true
 
-  enum delivery_timing: {
+  enum :delivery_timing, {
     reserved: 1,
     immediate: 0,
     manual: 2,
-  }, _prefix: true
+  }, prefix: true
 
-  enum wrap_rule: {
+  enum :wrap_rule, {
     force: 0,
     word_wrap: 1,
     jisx4051: 2,
-  }, _prefix: true
+  }, prefix: true
 
   belongs_to :mail_template
   belongs_to :user
