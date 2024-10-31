@@ -139,6 +139,10 @@ group :development do
   gem "slim_lint"
   gem "guard"
   gem "guard-minitest"
+
+  ## Ruby LSP
+  gem "ruby-lsp", require: false
+  gem "ruby-lsp-rails", require: false
 end
 
 group :test do
