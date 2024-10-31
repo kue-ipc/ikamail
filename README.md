@@ -11,11 +11,8 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 ## 環境
 
 * 言語
-    * Ruby 3.0 以上
-    * Node.js 18 以上 (アセットファイルコンパイル時のみ使用)
-
-* OS
-    * Rocky Linux 9 (他互換ディストリビューション)
+    * Ruby 3.3 以上
+    * Node.js 20 以上 (アセットファイルコンパイル時のみ使用)
 
 * データベース
     * MariaDB 10.5 以上
@@ -25,7 +22,6 @@ ikamail は組織内に一括でメールを送信するためのシステムで
     * Mozilla Firefox
     * Apple Safari
     * Google Chrome
-    ※ Internet Explorer には対応していません。
 
 ## OS設定
 
