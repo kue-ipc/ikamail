@@ -1,10 +1,10 @@
-# https://docs.rubocop.org/rubycop/
+# Omakase Ruby styling for Rails
+inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-require:
-  - rubocop-rails
+# Overwrite or add rules to create your own house style
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.3
   NewCops: enable
   SuggestExtensions: false
   Exclude:
@@ -20,6 +20,9 @@ Layout/ArgumentAlignment:
 
 Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
+
+Layout/CaseIndentation:
+  EnforcedStyle: end
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
@@ -123,7 +126,7 @@ Style/AsciiComments:
   Enabled: false
 
 Style/BlockDelimiters:
-  EnforcedStyle: semantic
+  EnforcedStyle: line_count_based
 
 Style/Documentation:
   Enabled: false
@@ -134,6 +137,9 @@ Style/EmptyMethod:
 Style/FormatString:
   EnforcedStyle: percent
 
+Style/FormatStringToken:
+  MaxUnannotatedPlaceholdersAllowed: 3
+
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
 
@@ -141,6 +147,7 @@ Style/GlobalStdStream:
   Enabled: false
 
 Style/GuardClause:
+  MinBodyLength: 2
   AllowConsecutiveConditionals: true
 
 Style/HashEachMethods:
@@ -155,20 +162,19 @@ Style/HashTransformValues:
 Style/OneLineConditional:
   AlwaysCorrectToMultiline: true
 
+Style/Lambda:
+  EnforcedStyle: literal
+
 Style/MultilineBlockChain:
   Enabled: false
 
 Style/NumericLiterals:
   Enabled: false
 
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%i': '()'
-    '%I': '()'
-    '%w': '()'
-    '%W': '()'
-
 Style/RedundantConstantBase:
+  Enabled: false
+
+Style/RedundantFetchBlock:
   Enabled: false
 
 Style/RedundantLineContinuation:

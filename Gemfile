@@ -121,6 +121,13 @@ gem "csv"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
+
+  # Other gems
+  gem "guard"
+  gem "guard-minitest"
 end
 
 group :development do
@@ -133,16 +140,10 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  # RuboCop / Formatter / Lint
-  gem "rubocop"
-  gem "rubocop-rails"
-  gem "slim_lint"
-  gem "guard"
-  gem "guard-minitest"
-
-  ## Ruby LSP
+  # Other gems
   gem "ruby-lsp", require: false
   gem "ruby-lsp-rails", require: false
+  gem "slim_lint"
 end
 
 group :test do
