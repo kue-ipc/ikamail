@@ -23,12 +23,6 @@ Rails.application.configure do
   # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead.
   config.public_file_server.enabled = false
 
-  # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass
-
-  # Do not fall back to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
-
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
@@ -51,15 +45,21 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
+  # Skip http-to-https redirect for the default health check endpoint.
+  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+
   # Log to STDOUT by default
   if Settings.log_to_stdout
     config.logger = ActiveSupport::Logger.new(STDOUT)
       .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  else
+    # Use default logging formatter so that PID and timestamp are not suppressed.
+    config.log_formatter = Logger::Formatter.new
   end
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  config.log_tags = [ :request_id ]
 
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
@@ -71,8 +71,11 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   config.active_job.queue_adapter = :delayed_job
+  # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "ikamail_production"
 
+  # Disable caching for Action Mailer templates even if Action Controller
+  # caching is enabled.
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -92,6 +95,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Only use :id for inspections in production.
+  config.active_record.attributes_for_inspect = [ :id ]
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
@@ -99,4 +105,7 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Use a different session store in production.
+  config.session_store :cache_store
 end
