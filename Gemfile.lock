@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/kue-ipc/mail-iso-2022-jp.git
+  revision: 2891d876e6df1101a1895ab92799d9ac5003f5f7
+  branch: for_rails72
+  specs:
+    mail-iso-2022-jp (2.0.9)
+      mail (>= 2.2.6, <= 2.8.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -218,8 +226,6 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mail-iso-2022-jp (1.1.5)
-      mail (>= 2.2.5)
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
@@ -488,7 +494,7 @@ DEPENDENCIES
   i18n-active_record
   jsbundling-rails
   kaminari
-  mail-iso-2022-jp
+  mail-iso-2022-jp!
   mustache (~> 1.0)
   mysql2 (~> 0.5)
   net-ldap
