@@ -1,3 +1,6 @@
+require "resque/server"
+require "resque/scheduler/server"
+
 Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
   root to: "pages#top"
 
@@ -52,12 +55,12 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
     resources :mail_users, only: [:index]
   end
 
-  devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  authenticated :user, ->(user) { user.admin? } do
-    mount DelayedJobWeb, at: "/admin/delayed_job"
-  end
-
   resource :search, only: [:new, :create]
   get "/search" => redirect("/search/new")
+
+  devise_for :users
+
+  authenticated :user, ->(user) { user.admin? } do
+    mount Resque::Server, at: "/admin/jobs"
+  end
 end
