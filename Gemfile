@@ -83,10 +83,8 @@ gem "i18n-active_record", require: "i18n/active_record"
 # Mustache
 gem "mustache", "~> 1.0"
 
-# Mail
-# FIXME: rails7.2からmail2.8になったがmail-iso-2022-jpが未対応なのでforkした。
-gem "mail-iso-2022-jp", github: "kue-ipc/mail-iso-2022-jp",
-  branch: "for_rails72"
+# Mail ISO-2022-JP
+gem "mail-iso-2022-jp", "~> 2.1"
 
 # Pagination
 gem "kaminari"
