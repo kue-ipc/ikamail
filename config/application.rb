@@ -7,6 +7,8 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module Ikamail
+  VERSION = "0.8.0"
+
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
