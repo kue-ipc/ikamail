@@ -10,7 +10,7 @@
     "coffeescript": "^2.7.0",
     "esbuild": "^0.24.0",
     "esbuild-coffeescript": "^2.2.0",
-    "sass": "^1.80.5"
+    "sass": "^1.80.6"
   },
   "version": "0.1.0",
   "browserslist": [
