@@ -245,6 +245,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
+    nkf (0.2.0)
     nokogiri (1.18.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -522,6 +523,7 @@ DEPENDENCIES
   mustache (~> 1.0)
   mysql2 (~> 0.5)
   net-ldap
+  nkf
   octicons
   octicons_helper
   propshaft
