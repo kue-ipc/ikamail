@@ -2,6 +2,11 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be
 # available to Rake.
 
+# FIXME: 予めredisをrequireしておかないと、RedisClient::NoScriptErrorの定義がおかしくなって、
+#    Redis::NoScriptErrorが定義されずに、エラーになる場合がある。
+#    バグかどうかはよくわかっていない。
+require "redis"
+
 require "resque/tasks"
 require "resque/scheduler/tasks"
 
