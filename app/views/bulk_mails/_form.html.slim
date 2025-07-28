@@ -32,7 +32,7 @@
     - BulkMail.delivery_timings.each_key do |timing|
       = f.radio_button :delivery_timing, timing, required: true,
         label: "#{t(timing, scope: 'mail.timings')}: #{t(timing, scope: 'descriptions.timings')}"
-  = f.text_field :subject
+  = f.text_field :subject, class: "font-monospace"
   = f.text_area :body, class: "font-monospace scroll-y", rows: 20
   .row.mb-3
     .col-auto

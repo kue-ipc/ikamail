@@ -119,6 +119,8 @@ module ApplicationHelper
 
   def span_string_for(value, **opts)
     case opts[:format]
+    when :mail_subject
+      mail_subject_tag(value, **opts)
     when :mail_body
       mail_body_tag(value, **opts)
     when :translate
@@ -151,9 +153,14 @@ module ApplicationHelper
     end
   end
 
+  def mail_subject_tag(value, **opts)
+    content_tag("div", class: "mb-0 mail-subject") do
+      span_text_tag(value, **opts)
+    end
+  end
+
   def mail_body_tag(value, **opts)
-    content_tag("pre", value,
-      class: "border rounded mb-0 mail-body line-76-80") do
+    content_tag("pre", class: "border rounded mb-0 mail-body line-76-80") do
       span_text_tag(value, **opts)
     end
   end

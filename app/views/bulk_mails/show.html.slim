@@ -11,7 +11,8 @@
         li.list-group-item = message
 
 dl
-  = dt_dd_for @bulk_mail, :subject, around: [@bulk_mail.subject_prefix, @bulk_mail.subject_suffix]
+  = dt_dd_for @bulk_mail, :subject, format: :mail_subject,
+    around: [@bulk_mail.subject_prefix, @bulk_mail.subject_suffix]
   = dt_dd_for @bulk_mail, :status, format: :translate, scope: [:mail, :statuses]
   = dt_dd_for @bulk_mail, :mail_template do |mail_template|
     - if policy(mail_template).show?
