@@ -4,7 +4,7 @@
 
 # FIXME: 予めredisをrequireしておかないと、RedisClient::NoScriptErrorの定義がおかしくなって、
 #    Redis::NoScriptErrorが定義されずに、エラーになる場合がある。
-#    バグかどうかはよくわかっていない。
+#    どうやら"resque/scheduler/tasks"の中で"redis/errors"がrequireされるのが原因みたい。
 require "redis"
 
 require "resque/tasks"
