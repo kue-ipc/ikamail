@@ -46,9 +46,6 @@ gem "thruster", require: false
 
 ## Old gems
 
-# Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
-
 # Use Redis adapter to run Action Cable in production
 gem "redis", ">= 4.0.1"
 

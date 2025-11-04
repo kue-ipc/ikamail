@@ -255,8 +255,6 @@ GEM
     mustache (1.1.1)
     mustermann (3.0.4)
       ruby2_keywords (~> 0.0.1)
-    mysql2 (0.5.7)
-      bigdecimal
     nenv (0.3.0)
     net-imap (0.5.12)
       date
@@ -586,7 +584,6 @@ DEPENDENCIES
   kaminari
   mail-iso-2022-jp (~> 2.1)
   mustache (~> 1.0)
-  mysql2 (~> 0.5)
   net-ldap
   nkf
   octicons
