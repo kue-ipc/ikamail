@@ -4,19 +4,15 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 
 ユーザーのメールアドレス情報をLDAPから取得し、条件に一致するユーザーに対してメールを一括で送信します。
 
-## バージョンアップの注意事項
-
-マイナーバージョンをアップデートする際は、そのマイナーバージョンの最新リビジョンにアップデートしてからアップデートしてください。
-
 ## 環境
 
 * 言語
     * Ruby 3.3 以上
-    * Node.js 20 以上 (アセットファイルコンパイル時のみ使用)
+    * Node.js 22 以上 (アセットファイルコンパイル時のみ使用)
 
 * データベース
     * MariaDB 10.5 以上
-    * Redis 6 以上
+    * Redis 6 以上 7.2 以下 または Valkey 8 以上
 
 * ブラウザ
     * Microsoft Edge
@@ -91,7 +87,7 @@ flush privileges;
 
 データベースの準備ができたら、データベースをマイグレーションしてください。
 
-```
+```sh
 RAILS_ENV=production bundle exec rails db:migrate
 ```
 
@@ -99,7 +95,7 @@ RAILS_ENV=production bundle exec rails db:migrate
 
 定期的な処理はwheneverでクーロン登録ができます。
 
-```
+```sh
 bundle exec whenever --update-crontab
 ```
 
@@ -110,6 +106,20 @@ bundle exec whenever --update-crontab
 テスト用LDAPサーバーは"test/ldap"にあります。slapdとldap-utilsを入れておいてください。`./test/ldap/run-server`でサーバーが起動します。初期データはbase.ldifを投げてください。Ubuntuでslapdサービスを起動している場合は、exmaple.ldifを投げてください。状況に応じて、config/ldap.ymlを書き換えてください。
 
 テストにはヘッドレスなChromiumとWebDriverが必要ですが、現在テストは実装されていません。
+
+## アップデート方法
+
+メジャーバージョンアップデートやマイナーバージョンアップデートでは、言語やデータベースのサポートバージョンが変更される場合があります。アプリのアップデートの前に、言語やデータベースをアップデートしてください。
+
+メジャーバージョンやマイナーバージョンのアップデートは、最新リビジョンからのみサポートします。ブランチを変更する前に、現在のブランチの最新状態にして動作を確かめてください。アップデート後は必ず`rails db:migrate`を実施してください。
+
+```sh
+git pull
+RAILS_ENV=production bundle exec rails db:migrate
+git checkout __next_version_branch__
+git pull
+RAILS_ENV=production bundle exec rails db:migrate
+```
 
 ## 制限事項
 
