@@ -3,14 +3,14 @@
   "private": true,
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.18",
+    "@hotwired/turbo-rails": "^8.0.20",
     "@popperjs/core": "^2.11.8",
-    "@primer/octicons": "^19.19.0",
+    "@primer/octicons": "^19.20.0",
     "bootstrap": "^5.3.8",
     "coffeescript": "^2.7.0",
-    "esbuild": "^0.25.10",
+    "esbuild": "^0.25.12",
     "esbuild-coffeescript": "3.0.1",
-    "sass": "^1.93.2"
+    "sass": "^1.93.3"
   },
   "version": "0.1.0",
   "browserslist": [
