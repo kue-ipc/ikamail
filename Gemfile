@@ -12,7 +12,7 @@ ruby ">= 3.3.0"
 # css: sass
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.2"
+gem "rails", "~> 8.0.4"
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
@@ -76,7 +76,7 @@ gem "activeldap", require: "active_ldap/railtie"
 gem "net-ldap"
 
 # I18n
-gem "rails-i18n", "~> 7.0.0"
+gem "rails-i18n", "~> 8.0.0"
 gem "devise-i18n"
 gem "i18n-active_record", require: "i18n/active_record"
 
