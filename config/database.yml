@@ -1,25 +1,34 @@
-# MySQL. Versions 5.6.4 and up are supported.
-#
-# Install the MySQL driver
-#   gem install trilogy
-#
-# Ensure the MySQL gem is defined in your Gemfile
-#   gem "trilogy"
-#
-# And be sure to use new-style password hashing:
-#   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
-#
+<%
+require "uri"
+
+database_adapter =
+  if ENV["DATABASE_URL"]
+    URI(ENV["DATABASE_URL"]).scheme
+  elsif ENV["IKAMAIL_DATABASE_ADAPTER"]
+    ENV["IKAMAIL_DATABASE_ADAPTER"]
+  else
+    "trilogy"
+  end
+%>
+
 default: &default
-  adapter: trilogy
-  encoding: utf8mb4
+  adapter: <%= database_adapter %>
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+<% case database_adapter
+   in "trilogy" %>
+  encoding: utf8mb4
   username: root
   password:
   host: <%= ENV.fetch("DB_HOST") { "127.0.0.1" } %>
+<% in "postgresql" %>
+  encoding: unicode
+<% in "sqlite3" %>
+  timeout: 5000
+<% end %>
 
 development:
   <<: *default
-  database: ikamail_development
+  database: <% if database_adapter == "sqlite3" then %>storage/development.sqlite3<% else %>ikamail_development<%end%>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,6 +36,7 @@ development:
 test:
   <<: *default
   database: ikamail_test
+  database: <% if database_adapter == "sqlite3" then %>storage/test.sqlite3<% else %>ikamail_test<%end%>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -57,24 +67,25 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: ikamail_production
+    database: <% if database_adapter == "sqlite3" then %>storage/production.sqlite3<% else %>ikamail<%end%>
     username: ikamail
     password: <%= ENV["IKAMAIL_DATABASE_PASSWORD"] %>
 <% if ENV.fetch("RAILS_CACHE_STORE", "solid") == "solid" %>
   cache:
     <<: *primary_production
-    database: ikamail_production_cache
+    database: ikamail_cache
+    database: <% if database_adapter == "sqlite3" then %>storage/production_cache.sqlite3<% else %>ikamail_cache<%end%>
     migrations_paths: db/cache_migrate
 <% end %>
 <% if ENV.fetch("RAILS_QUEUE_ADAPTER", "solid") == "solid" %>
   queue:
     <<: *primary_production
-    database: ikamail_production_queue
+    database: <% if database_adapter == "sqlite3" then %>storage/production_queue.sqlite3<% else %>ikamail_queue<%end%>
     migrations_paths: db/queue_migrate
 <% end %>
 <% if ENV.fetch("RAILS_CABLE_ADAPTER", "solid") == "solid" %>
   cable:
     <<: *primary_production
-    database: ikamail_production_cable
+    database: <% if database_adapter == "sqlite3" then %>storage/production_cable.sqlite3<% else %>ikamail_cable<%end%>
     migrations_paths: db/cable_migrate
 <% end %>
