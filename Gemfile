@@ -6,8 +6,18 @@ ruby ">= 3.3.0"
 gem "rails", "~> 8.1.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
-# Use trilogy as the database for Active Record
-gem "trilogy", "~> 2.7"
+group :mariadb do
+  # Use mariadb-trilogy as the database for Active Record
+  gem "trilogy", "~> 2.7"
+end
+group :postgresql do
+  # Use postgresql as the database for Active Record
+  gem "pg", "~> 1.1"
+end
+group :sqlite3 do
+  # Use sqlite3 as the database for Active Record
+  gem "sqlite3", ">= 2.1"
+end
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
@@ -43,10 +53,6 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
-
-## Old gems
-
-
 
 ## Other gems
 

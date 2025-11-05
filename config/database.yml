@@ -13,9 +13,9 @@ default: &default
   adapter: trilogy
   encoding: utf8mb4
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= (Rails.application.credentials.dig(:database, :username) || Settings.database.username).to_json %>
-  password: <%= (Rails.application.credentials.dig(:database, :password) || Settings.database.password).to_json %>
-  host: <%= Settings.database.host.to_json %>
+  username: root
+  password:
+  host: <%= ENV.fetch("DB_HOST") { "127.0.0.1" } %>
 
 development:
   <<: *default
@@ -59,7 +59,7 @@ production:
     <<: *default
     database: ikamail_production
     username: ikamail
-    password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+    password: <%= ENV["IKAMAIL_DATABASE_PASSWORD"] %>
 <% if ENV.fetch("RAILS_CACHE_STORE", "solid") == "solid" %>
   cache:
     <<: *primary_production
