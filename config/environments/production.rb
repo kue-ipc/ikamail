@@ -50,10 +50,25 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
-  # config.cache_store = :mem_cache_store
+  config.cache_store =
+    case ENV.fetch("RAILS_CACHE_STORE", "solid")
+    in "solid"
+      :solid_cache_store
+    in "redis"
+      :redis_cache_store
+    in "memcached"
+      :mem_cache_store
+    end
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :resque
+  case ENV.fetch("RAILS_QUEUE_ADAPTER", "solid")
+  in "solid"
+    config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.connects_to = {database: {writing: :queue}}
+  in "resque"
+    config.active_job.queue_adapter = :resque
+    # config.active_job.queue_name_prefix = "ikamail_production"
+  end
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

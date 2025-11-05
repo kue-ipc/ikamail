@@ -60,7 +60,9 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
 
   devise_for :users
 
-  authenticated :user, ->(user) { user.admin? } do
-    mount Resque::Server, at: "/admin/jobs"
+  if ENV["RAILS_QUEUE_ADAPTER"] == "resque"
+    authenticated :user, ->(user) { user.admin? } do
+      mount Resque::Server, at: "/admin/jobs"
+    end
   end
 end

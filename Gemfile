@@ -6,7 +6,7 @@ ruby ">= 3.3.0"
 gem "rails", "~> 8.1.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
-# Use mariadb-trilogy as the database for Active Record
+# Use trilogy as the database for Active Record
 gem "trilogy", "~> 2.7"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -46,11 +46,7 @@ gem "thruster", require: false
 
 ## Old gems
 
-# Use Redis adapter to run Action Cable in production
-gem "redis", ">= 4.0.1"
 
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
 
 ## Other gems
 
@@ -102,13 +98,20 @@ gem "octicons_helper"
 # Ransack
 gem "ransack"
 
-# Resque
-gem "resque"
-gem "resque-scheduler"
-
 # Bundled gem
 gem "csv"
 gem "nkf"
+
+group :redis, :resque do
+  # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
+  gem "redis", ">= 4.0.1"
+end
+
+group :resque do
+  # Resque
+  gem "resque"
+  gem "resque-scheduler"
+end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
