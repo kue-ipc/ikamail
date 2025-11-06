@@ -1,14 +1,15 @@
-export default multiselect = (root = document) ->
-  for el in root.getElementsByTagName('select')
-    if el.multiple
-      console.debug "mulit select: #{el.id}"
-      for optEl in el.getElementsByTagName('option')
-        optEl.addEventListener 'mousedown', (e) ->
-          e.preventDefault()
-          pEl = @parentElement
-          scrollTop = pEl.scrollTop
-          @selected = !@selected
-          pEl.focus()
-          setTimeout ->
-            pEl.scrollTop = scrollTop
-          , 0
+export default multiselect := (root: Element | Document = document) ->
+  for each el of root.getElementsByTagName("select") when el?.multiple
+    console.debug `mulit select: ${el.id}`
+    for each optEl of el.getElementsByTagName("option") when optEl?
+      optEl.addEventListener "mousedown", (e) ->
+        e.preventDefault()
+        @selected := !@selected
+        pEl := @parentElement
+        return unless pEl?
+
+        scrollTop := pEl.scrollTop
+        pEl.focus()
+        setTimeout ->
+          pEl.scrollTop = scrollTop
+        , 0

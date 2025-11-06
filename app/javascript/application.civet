@@ -1,16 +1,16 @@
-# Entry point for the build script in your package.json
+// Entry point for the build script in your package.json
 import "@hotwired/turbo-rails"
 import "./controllers"
 
-# Custom modules
-import bootstrapTriger from './src/bootstrap-trigger.coffee'
-import bulkMailTextArea from './src/bulk-mail-textarea.coffee'
-import multiselect from './src/multiselect.coffee'
-import templateInfo from './src/template-info.coffee'
-import translaitonIndex from './src/translation-index.coffee'
-import uploadButton from './src/upload-button.coffee'
+// Custom modules
+import bootstrapTriger from "./src/bootstrap-trigger.civet"
+import bulkMailTextArea from "./src/bulk-mail-textarea.civet"
+import multiselect from "./src/multiselect.civet"
+import templateInfo from "./src/template-info.civet"
+import translaitonIndex from "./src/translation-index.civet"
+import uploadButton from "./src/upload-button.civet"
 
-loadAll = (root = document) ->
+loadAll := (root: Element | Document = document) ->
   bootstrapTriger(root)
   bulkMailTextArea(root)
   multiselect(root)
@@ -18,10 +18,11 @@ loadAll = (root = document) ->
   translaitonIndex(root)
   uploadButton(root)
 
-document.addEventListener 'turbo:load', (e) ->
-  console.debug 'turbo load'
+document.addEventListener "turbo:load", (e) ->
+  console.debug "turbo load"
   loadAll()
 
-document.addEventListener 'turbo:frame-load', (e) ->
-  console.debug "turbo-frame load: #{e.target.id}"
-  loadAll(e.target)
+document.addEventListener "turbo:frame-load", (e) ->
+  if e.target <? Element
+    console.debug `turbo-frame load: ${e.target.id}`
+    loadAll(e.target)

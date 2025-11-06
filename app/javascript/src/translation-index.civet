@@ -1,18 +1,32 @@
 class TranslationForm
-  constructor: (form) ->
+  form: HTMLFormElement
+  key: string?
+  form_id: string
+  method: string
+  value_input: HTMLInputElement
+  initValue: string
+  inputInterval: number
+
+  submit_button: HTMLButtonElement
+  reset_button: HTMLButtonElement
+  delete_button: HTMLButtonElement
+
+  timeout?: number
+
+  @(form: HTMLFormElement)
     @form = form
-    @key = @form.dataset.key.toString()
+    @key = @form.dataset?.key?.toString()
     @form_id = @form.id
-    @method = @form._method?.value ? @form.method
-    @value_input = @form['translation[value]']
+    @method = @form._method?.value ?? @form.method
+    @value_input = @form["translation[value]"]
     @initValue = @value_input.value
-    @inputInterval = 200 # ms
+    @inputInterval = 200 // ms
 
-    @submit_button = document.getElementById("#{@form_id}-submit")
-    @reset_button = document.getElementById("#{@form_id}-reset")
-    @delete_button = document.getElementById("#{@form_id}-delete")
+    @submit_button = @getButton(`${@form_id}-submit`)
+    @reset_button = @getButton(`${@form_id}-reset`)
+    @delete_button = @getButton(`${@form_id}-delete`)
 
-    @value_input.addEventListener 'input', =>
+    @value_input.addEventListener "input", =>
       clearTimeout(@timeout)
 
       @timeout = setTimeout =>
@@ -24,7 +38,7 @@ class TranslationForm
           @enableReset()
       , @inputInterval
 
-    @form.addEventListener 'reset', (e) =>
+    @form.addEventListener "reset", (e) =>
       unless window.confirm(@reset_button.dataset.confirm)
         e.preventDefault()
         return
@@ -36,22 +50,28 @@ class TranslationForm
       @disableSubmit()
       @disableReset()
 
-  enableSubmit: ->
+  getButton(id: string): HTMLButtonElement
+    button := document.getElementById(id)
+    throw new Error("Button not found: " + id) unless button <? HTMLButtonElement
+
+    button
+
+  enableSubmit()
     @submit_button.disabled = false
 
-  disableSubmit: ->
+  disableSubmit()
     setTimeout =>
       @submit_button.disabled = true
     , 0
 
-  enableReset: ->
+  enableReset()
     @reset_button.disabled = false
 
-  disableReset: ->
+  disableReset()
     setTimeout =>
       @reset_button.disabled = true
     , 0
 
-export default translationIndex = (root = document) ->
-  for form in root.getElementsByClassName('form-translation')
+export default translationIndex := (root: Element | Document = document) ->
+  for each form of root.getElementsByClassName("form-translation") when form <? HTMLFormElement
     new TranslationForm(form)
