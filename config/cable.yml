@@ -19,6 +19,6 @@ production:
   message_retention: 1.day
 <% in "redis" %>
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/1") %>
-  channel_prefix: ikamail_production
+  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/0") %>
+  channel_prefix: ikamail:cable
 <% end %>
