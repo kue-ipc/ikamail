@@ -1,12 +1,11 @@
-# 変更点
+# 主な変更点
 
-## 0.8 -> 1.0
+## 0.8 => 1.0
 
 - データベースの設定が変更されました。
     - MariaDBへの接続はmysql2からtrilogyに変更されました。
-    - デフォルトのデーターベース名が`ikamail`から`ikamail_production`に変更されました。
     - データベースはcredentialsやSettingsでは設定できなくなりました。
-- キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。
+- キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更され、Redisが不要になりました。環境変数を指定することで、引き続きRedis(キューはResque)を使用することができます。
 
 ## 0.7 => 0.8
 

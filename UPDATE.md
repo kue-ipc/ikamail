@@ -38,7 +38,7 @@ Ruby、Node.js、データベースのバージョンをアップデートする
 
 メジャーバージョンは一つずつ上げる必要があります。一つ前のバージョンの最新のマイナーバージョンの最新のリビジョンからのアップデートのみサポートします。
 
-アップデート前に、下記に書いてある個別の注意事項を確認してください。
+アップデート前に、下記に書いてある個別の注意事項を確認してください。個別に必要な項目があれば、対応しておいてください。
 
 ```sh
 git pull
@@ -53,11 +53,6 @@ git pull
 bundle install
 bin/rails yarn:install
 RAILS_ENV=production bin/rails assets:precompile
-```
-
-設定変更等が必要な場合はこのときに実施してください。
-
-```sh
 bin/rails db:migrate
 ```
 
@@ -66,20 +61,38 @@ bin/rails db:migrate
 ### 0.x => 1.x
 
 * ジョブの管理に互換性がなくなるため、スケジュールされたジョブは実行されません。予約済みのメールがある場合は、アップデート後に一旦中止し、再度配信を予約してください。
-* デフォルトのデーターベース名が`ikamail`から`ikamail_production`に変更されました。データベース名を変更する、または、下記のように環境変数を設定してください。
+* キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。引き続きRedis(キューはResque)を使用することも可能です。
+    下記のいずれかの対応が必要です。
+    * Solidシリーズを使用する場合は、下記のようにデータベースを作成してから`bin/rails db:migrate`を実行してください。
 
-    ```sh
-    DATABASE_URL=trilogy://ikamail@localhost/ikamail
-    ```
+        ```sql
+        CREATE DATABASE ikamail_cache;
+        CREATE DATABASE ikamail_queue;
+        CREATE DATABASE ikamail_cable;
+        GRANT ALL PRIVILEGES ON ikamail_cache.* TO ikamail@'localhost';
+        GRANT ALL PRIVILEGES ON ikamail_queue.* TO ikamail@'localhost';
+        GRANT ALL PRIVILEGES ON ikamail_cable.* TO ikamail@'localhost';
+        FLUSH PRIVILEGES;
+        ```
 
-* キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。`bin/rails `次のデータベースを作成しておく必要があります。
-    * Solid Cache: `ikamail_production_cache`
-    * Solid Queue: `ikamail_production_queue`
-    * Solid Cable: `ikamail_production_cable`
-    ただし、環境変数で、キャッシュ、Active Jobのキュー、Action CableについてRedis(キューはResque)を使用するように設定した場合は不要です。
-* データベースはcredentialsやSettingsでは設定できなくなりました。データベースの接続情報は環境変数で指定してください。
+    * Redis(キューはResque)を使用する場合は、下記のように環境変数を設定してください。
 
-### 0.7以下 => 0.8
+        ```env
+        RAILS_CACHE_STORE=redis
+        RAILS_QUEUE_ADAPTER=resque
+        RAILS_CABLE_ADAPTER=redis
+        ```
+
+        この場合でも、キャッシュやキューの互換性が保証できないため、Redis内のすべてのデータを削除しておいてください。
+
+        ```sh
+        $ redis-cli
+        127.0.0.1:6379> flushall
+        ```
+
+* データベースはcredentialsやSettingsでは設定できなくなりました。データベースの接続情報は環境変数`IKAMAIL_DATABASE_PASSWORD`等で指定してください。
+
+### 0.7 => 0.8
 
 * ジョブの管理に互換性がなくなるため、スケジュールされたジョブは実行されません。予約済みのメールがある場合は、アップデート後に一旦中止し、再度配信を予約してください。
 * Redisが必須になりました。Redisをインストールし、起動しておいてください。

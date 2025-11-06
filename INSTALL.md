@@ -37,19 +37,19 @@ vim config/ldap_production.yml
 RAILS_ENV=production bin/rails assets:precompile
 ```
 
-データベースに専用のデータベースとユーザーを作成します。データベースのデフォルト接続先はlocalhostのMariaDBで、データベース名はikamail_productionです。環境変数`DATABASE_URL`を使用してください。
+データベースに専用のデータベースとユーザーを作成します。データベースのデフォルト接続先はlocalhostのMariaDBで、データベース名はikamailです。また、キャッシュ、キュー、ケーブル用に、ikamail_cache、ikamail_queue、ikamail_cabelが必要です。変更する場合は、環境変数`DATABASE_URL`、`CACHE_DATHABASE_URL`、`QUEUE_DATABASE_URL`、`CABLE_DATABASE`を設定してください。
 
-```SQL
-create user ikamail@'localhost' identified by 'DBユーザーのパスワード';
-create database ikamail_production;
-create database ikamail_production_cache;
-create database ikamail_production_queue;
-create database ikamail_production_cable;
-grant all privileges on ikamail_production.* to ikamail@'localhost';
-grant all privileges on ikamail_production_cache.* to ikamail@'localhost';
-grant all privileges on ikamail_production_queue.* to ikamail@'localhost';
-grant all privileges on ikamail_production_cable.* to ikamail@'localhost';
-flush privileges;
+```sql
+CREATE USRE ikamail@'localhost' IDENTIFIERD BY 'DBユーザーのパスワード';
+CREATE DATABASE ikamail;
+CREATE DATABASE ikamail_cache;
+CREATE DATABASE ikamail_queue;
+CREATE DATABASE ikamail_cable;
+GRANT ALL PRIVILEGES ON ikamail.* TO ikamail@'localhost';
+GRANT ALL PRIVILEGES ON ikamail_cache.* TO ikamail@'localhost';
+GRANT ALL PRIVILEGES ON ikamail_queue.* TO ikamail@'localhost';
+GRANT ALL PRIVILEGES ON ikamail_cable.* TO ikamail@'localhost';
+FLUSH PRIVILEGES;
 ```
 
 データベースの準備ができたら、データベースをマイグレーションしてください。

@@ -2,10 +2,10 @@
 require "uri"
 
 database_adapter =
-  if ENV["DATABASE_URL"]
+  if ENV.key?("DATABASE_URL")
     URI(ENV["DATABASE_URL"]).scheme
-  elsif ENV["IKAMAIL_DATABASE_ADAPTER"]
-    ENV["IKAMAIL_DATABASE_ADAPTER"]
+  elsif ENV.key?("RAILS_DATABASE_ADAPTER")
+    ENV["RAILS_DATABASE_ADAPTER"]
   else
     "trilogy"
   end
