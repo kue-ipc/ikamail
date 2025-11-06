@@ -12,11 +12,11 @@ group :mariadb do
   # Use mariadb-mysql as the database for Active Record
   # gem "mysql2", "~> 0.5"
 end
-group :postgresql do
+group :postgresql, optional: true do
   # Use postgresql as the database for Active Record
   gem "pg", "~> 1.1"
 end
-group :sqlite3 do
+group :sqlite3, optional: true do
   # Use sqlite3 as the database for Active Record
   gem "sqlite3", ">= 2.1"
 end
@@ -110,12 +110,12 @@ gem "ransack"
 gem "csv"
 gem "nkf"
 
-group :redis, :resque do
+group :redis, :resque, optional: true do
   # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
   gem "redis", ">= 4.0.1"
 end
 
-group :resque do
+group :resque, optional: true do
   # Resque
   gem "resque"
   gem "resque-scheduler"

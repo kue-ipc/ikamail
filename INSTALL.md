@@ -7,7 +7,7 @@ git clone https://github.com/kue-ipc/ikamail.git
 cd ikamail
 bundle config set --local deployment 'true'
 bundle config set --local path 'vendor/bundle'
-bundle config set --local without 'development test postgresql sqlite3 redis resque'
+bundle config set --local without 'development test'
 bundle install
 bundle exec rails yarn:install
 ```

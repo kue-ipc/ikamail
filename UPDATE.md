@@ -83,6 +83,12 @@ bin/rails db:migrate
         RAILS_CABLE_ADAPTER=redis
         ```
 
+        また、redisグループとresqueグループを読み込むようにしてください。
+
+        ```sh
+        bundle config set --local with 'redis resque'
+        ```
+
         この場合でも、キャッシュやキューの互換性が保証できないため、Redis内のすべてのデータを削除しておいてください。
 
         ```sh
