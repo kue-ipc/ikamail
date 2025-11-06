@@ -1,7 +1,7 @@
 export default templateInfo := (root: Element | Document = document)->
   // TODO: turbo-frame対応
   //       離れているtemplate-infoは更新されないから、それを含めて作り直すこと
-  return if root != document
+  return if root is not document
 
   templateInfoEl := document.getElementById("template-info")
   return unless templateInfoEl?

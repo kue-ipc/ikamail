@@ -30,9 +30,9 @@ class TranslationForm
       clearTimeout(@timeout)
 
       @timeout = setTimeout =>
-        if @value_input.value == @initValue
+        if @value_input.value is @initValue
           @disableSubmit()
-          @disableReset() if @method == "post"
+          @disableReset() if @method is "post"
         else
           @enableSubmit()
           @enableReset()
@@ -43,7 +43,7 @@ class TranslationForm
         e.preventDefault()
         return
 
-      if @method == "patch"
+      if @method is "patch"
         e.preventDefault()
         @delete_button.click()
 

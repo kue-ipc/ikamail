@@ -1,7 +1,7 @@
 checkParentChild := (parent: Node, child: Node??) ->
   if !child?
     false
-  else if parent == child
+  else if parent is child
     true
   else
     checkParentChild(parent, child.parentElement)
@@ -11,8 +11,8 @@ export default bulkMailTextArea := (root: Element | Document = document) ->
   bodyEl := document.getElementById(`${idPrefix}body`)
   colEl := document.getElementById(`${idPrefix}wrap_col`)
   ruleEl := document.getElementById(`${idPrefix}wrap_rule`)
-  return unless bodyEl? && colEl? && ruleEl?
-  return if root != document && !checkParentChild(root, bodyEl)
+  return unless bodyEl? and colEl? and ruleEl?
+  return if root is not document and !checkParentChild(root, bodyEl)
 
   unless ruleEl <? HTMLSelectElement
     throw new Error("ruleEl is not HTMLSelectElement")

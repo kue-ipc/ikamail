@@ -10,6 +10,6 @@ bootstrapComponentSelectors := [
 
 export default bootstrapTriger := (root: Element | Document = document) ->
   for {component, selector} of bootstrapComponentSelectors
-    for el in root.querySelectorAll selector
+    for each el of root.querySelectorAll(selector) when el?
       console.debug("bootstrap component: #{component.name}")
       new component(el)
