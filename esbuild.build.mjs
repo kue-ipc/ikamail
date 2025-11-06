@@ -1,6 +1,5 @@
 import process from 'node:process';
 import * as esbuild from 'esbuild';
-import coffeeScriptPlugin from 'esbuild-coffeescript';
 import civetPlugin from '@danielx/civet/esbuild-plugin';
 
 const esbuildOptions = {
@@ -10,7 +9,7 @@ const esbuildOptions = {
   format: 'esm',
   outdir: 'app/assets/builds',
   publicPath: '/assets',
-  plugins: [coffeeScriptPlugin(), civetPlugin()],
+  plugins: [civetPlugin()],
   define: {RAILS_ENV: `"${process.env.RAILS_ENV ?? "development"}"`}
 }
 
