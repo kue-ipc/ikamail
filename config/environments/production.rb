@@ -56,8 +56,6 @@ Rails.application.configure do
       :solid_cache_store
     in "redis"
       :redis_cache_store
-    in "memcached"
-      :mem_cache_store
     end
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
