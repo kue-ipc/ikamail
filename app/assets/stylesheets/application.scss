@@ -1,7 +1,14 @@
-@import "font";
-@import "bootstrap/scss/bootstrap";
-@import "rails_bootstrap_forms";
-@import "@primer/octicons/build/build";
+@use "sass:color";
+@use "font";
+@use "bootstrap/scss/bootstrap" with (
+  // font-family
+  $font-family-sans-serif: font.$font-family-sans-serif,
+  $font-family-monospace: font.$font-family-monospace,
+  $font-family-base: font.$font-family-base,
+  $font-family-code: font.$font-family-code
+);
+@use "rails_bootstrap_forms";
+@use "@primer/octicons/build/build";
 
 // rails
 
@@ -31,7 +38,7 @@ pre.mail-body {
 }
 
 .mail-subject {
-  font-family: $font-family-monospace;
+  font-family: $font.$font-family-monospace;
 }
 
 textarea.form-control.scroll-y {
