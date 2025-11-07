@@ -66,10 +66,10 @@ class UsersController < ApplicationController
   end
 
   private def create_user_params
-    params.require(:user).permit(:username)
+    params.expect(user: [:username])
   end
 
   private def update_user_params
-    params.require(:user).permit(:role)
+    params.expect(user: [:role])
   end
 end

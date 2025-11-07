@@ -62,7 +62,7 @@ class TranslationsController < ApplicationController
   end
 
   private def translation_params
-    params.require(:translation).permit(:locale, :key, :value)
+    params.expect(translation: [:locale, :key, :value])
   end
 
   private def translations_to_hash(list)

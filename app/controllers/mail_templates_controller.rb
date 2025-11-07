@@ -83,13 +83,14 @@ class MailTemplatesController < ApplicationController
   end
 
   private def mail_template_params
-    permitted = params.require(:mail_template).permit(
+    permitted = params.expect(mail_template: [
       :name, :recipient_list_id,
       :from_name, :from_mail_address,
       :subject_prefix, :subject_suffix,
       :body_header, :body_footer,
       :count, :reserved_time, :description, :enabled,
-      user: :username)
+      user: :username,
+    ])
     if current_user.admin?
       permitted[:user] = User.find_by(username: permitted[:user][:username])
     else

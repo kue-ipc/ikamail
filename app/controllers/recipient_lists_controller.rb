@@ -73,7 +73,6 @@ class RecipientListsController < ApplicationController
   end
 
   private def recipient_list_params
-    params.require(:recipient_list).permit(:name, :description,
-      mail_group_ids: [])
+    params.expect(recipient_list: [:name, :description, mail_group_ids: []])
   end
 end

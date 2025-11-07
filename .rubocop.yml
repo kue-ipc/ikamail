@@ -53,9 +53,10 @@ Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
 Layout/LineLength:
+  Enabled: true
   Max: 120
-  AllowedPatterns:
-    - ^\s*#
+  # AllowedPatterns:
+  #   - ^\s*#
 
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line

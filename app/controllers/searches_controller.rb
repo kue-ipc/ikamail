@@ -25,6 +25,6 @@ class SearchesController < ApplicationController
   end
 
   private def search_params
-    params.require(:search).permit(:query)
+    params.expect(search: [:query])
   end
 end
