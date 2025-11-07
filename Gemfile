@@ -97,7 +97,7 @@ gem "unicode-display_width"
 gem "unicode-emoji"
 
 # Bootstrap
-gem "bootstrap_form", "~> 5.3"
+gem "bootstrap_form", "~> 5.5"
 
 # Octicons
 gem "octicons"

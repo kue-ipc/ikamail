@@ -582,7 +582,7 @@ PLATFORMS
 DEPENDENCIES
   activeldap
   bootsnap
-  bootstrap_form (~> 5.3)
+  bootstrap_form (~> 5.5)
   brakeman
   bundler-audit
   capybara
