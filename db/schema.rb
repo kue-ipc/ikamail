@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2024_11_01_073137) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_07_063616) do
   create_table "action_logs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "action", null: false
     t.bigint "bulk_mail_id", null: false
@@ -137,14 +137,18 @@ ActiveRecord::Schema[8.1].define(version: 2024_11_01_073137) do
     t.datetime "created_at", null: false
     t.boolean "deleted", default: false, null: false
     t.string "email", null: false
+    t.integer "failed_attempts", default: 0, null: false
     t.string "fullname"
+    t.datetime "locked_at"
     t.datetime "remember_created_at", precision: nil
     t.string "remember_token"
     t.integer "role", default: 0, null: false
+    t.string "unlock_token"
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

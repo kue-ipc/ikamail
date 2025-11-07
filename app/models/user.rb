@@ -2,9 +2,9 @@ class User < ApplicationRecord
   # Include default devise modules.
   # :database_authenticatable or :ldap_authenticatable
   # Others available are:
-  # :confirmable, :registerable, :recoverable, :validatable
-  # and :omniauthable, :lockable, :trackable
-  devise :ldap_authenticatable, :rememberable, :timeoutable
+  # :confirmable, :trackable and :omniauthable
+  # :registerable, :recoverable, :validatable
+  devise :ldap_authenticatable, :rememberable, :lockable, :timeoutable
 
   enum :role, {user: 0, admin: 1}
 
