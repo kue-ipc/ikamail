@@ -253,6 +253,7 @@ ja:
       action_log:
         comment: コメント
       user:
+        username: ユーザー名
         fullname: フルネーム
         admin?: 管理者権限
       mail_user:
