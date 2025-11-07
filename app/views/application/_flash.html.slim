@@ -1,0 +1,15 @@
+= turbo_frame_tag "flash"
+  - if alert
+    - [*alert].each do |msg|
+      .alert.alert-danger.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
+        = octicon "x-circle-fill", width: 24, fill: "currentColor", class: "flex-shrink-0 me-2", role: "img",
+            "aria-label": "Danger:"
+        = msg
+        button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
+  - if notice
+    - [*notice].each do |msg|
+      .alert.alert-success.d-flex.align-items-center.alert-dismissible.fade.show role="alert"
+        = octicon "check-circle-fill", width: 24, fill: "currentColor", class: "flex-shrink-0 me-2", role: "img",
+            "aria-label": "Success:"
+        = msg
+        button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
