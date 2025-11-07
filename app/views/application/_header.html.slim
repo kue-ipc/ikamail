@@ -9,6 +9,6 @@
               = link_to current_user.name, user_path, class: "nav-link"
             li.nav-item.px-1
               = link_to destroy_user_session_path, class: "nav-link py-1",
-                title: t("devise.sessions.destroy.sign_out"),
+                title: t("actions.sign_out"),
                 data: {"bs-toggle": "tooltip", "bs-placement": "left", turbo_method: :delete} do
                 = octicon "sign-out", height: 24, fill: "currentColor", roll: "img", "aria-label": "Logout"

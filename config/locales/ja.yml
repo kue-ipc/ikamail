@@ -52,6 +52,8 @@ ja:
     collect: 収集
     sync: 同期
     ldap_sync: LDAP同期
+    sign_in: ログイン
+    sign_out: ログアウト
 
   do_actions:
     close: 閉じる

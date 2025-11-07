@@ -8,11 +8,9 @@
       hr
       ul.nav.flex-column
         li.nav-item
-          = link_to t("devise.sessions.destroy.sign_out"), destroy_user_session_path, class: "nav-link py-1",
-            method: :delete, data: {turbo_method: :delete}
+          = link_to t("actions.sign_out"), destroy_user_session_path, class: "nav-link py-1",
+            data: {turbo_method: :delete}
     - else
       ul.nav.flex-column
         li.nav-item
-          = link_to t("devise.sessions.new.sign_in"), new_user_session_path
-
-
+          = link_to t("actions.sign_in"), new_user_session_path, class: "nav-link py-1"
