@@ -23,31 +23,14 @@ html
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
   body
-    header.mb-2
-      nav.navbar.navbar-light.bg-light.d-print-none
-        .container-fluid
-          = link_to t(:bulk_mail_system), "/", class: "navbar-brand"
-          - if user_signed_in?
-            ul.navbar-nav.flex-row
-              li.nav-item.px-1
-                = link_to current_user.name, user_path, class: "nav-link"
-              li.nav-item.px-1
-                = link_to destroy_user_session_path, class: "nav-link py-1",
-                  title: t("devise.sessions.destroy.sign_out"),
-                  data: {"bs-toggle": "tooltip", "bs-placement": "left", turbo_method: :delete} do
-                  = octicon "sign-out", height: 24, fill: "currentColor", roll: "img", "aria-label": "Logout"
+    = render "header"
     .container-fluid
       .row
         .col-12.col-md-3.col-xl-2.d-print-none
-          - if user_signed_in?
-            = render "menu"
-          - else
-            = link_to t("devise.sessions.new.sign_in"), new_user_session_path
+          = render "sidebar"
         .col-12.col-md-9.col-xl-10
           main
             = yield :heading
             = render "alert"
             = yield
-    footer.mt-2
-      hr
-      p.text-center = t(:bulk_mail_system)
+    = render "footer"
