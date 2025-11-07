@@ -1,6 +1,6 @@
 // Entry point for the build script in your package.json
 import "@hotwired/turbo-rails"
-import "./controllers"
+import "./controllers/index.civet"
 
 // Custom modules
 import bootstrapTriger from "./src/bootstrap-trigger.civet"
