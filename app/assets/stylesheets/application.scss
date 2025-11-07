@@ -7,8 +7,9 @@
   $font-family-base: font.$font-family-base,
   $font-family-code: font.$font-family-code
 );
-@use "rails_bootstrap_forms";
+@use "bootstrap-icons/font/bootstrap-icons";
 @use "@primer/octicons/build/build";
+@use "rails_bootstrap_forms";
 
 // rails
 
