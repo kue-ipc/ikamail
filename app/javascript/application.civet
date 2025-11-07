@@ -18,7 +18,7 @@ loadAll := (root: Element | Document = document) ->
   translaitonIndex(root)
   uploadButton(root)
 
-document.addEventListener "turbo:load", (e) ->
+document.addEventListener "turbo:load", (_e) ->
   console.debug "turbo load"
   loadAll()
 
