@@ -156,5 +156,4 @@ group :test do
 
   ## Other gems
   gem "ruby-ldapserver"
-  gem "fakeldap"
 end
