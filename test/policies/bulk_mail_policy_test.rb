@@ -1,6 +1,9 @@
 require "test_helper"
+require "helpers/policy_helper"
 
 class BulkMailPolicyTest < ActiveSupport::TestCase
+  include PolicyHelper
+
   setup do
     @admin = users(:admin)
     @user = users(:user01)

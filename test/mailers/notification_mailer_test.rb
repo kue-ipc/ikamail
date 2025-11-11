@@ -1,6 +1,11 @@
 require "test_helper"
+require "helpers/jis_helper"
+require "helpers/mail_helper"
 
 class NotificationMailerTest < ActionMailer::TestCase
+  include JisHelper
+  include MailHelper
+
   setup do
     @params = {
       to: users(:user01),
