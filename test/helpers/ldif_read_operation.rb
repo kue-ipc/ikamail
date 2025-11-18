@@ -5,15 +5,6 @@ class LdifReadOperation < LDAP::Server::Operation
   def initialize(connection, messageID, *ldifs)
     super(connection, messageID)
 
-    # TODO: no use @opts
-    @opts =
-      if ldifs.last.is_a?(Hash)
-        ldifs.pop
-      else
-        {}
-      end
-
-
     @data = {}
     ldifs.each do |path|
       LdifParser.open(path).each do |entry|
@@ -30,15 +21,9 @@ class LdifReadOperation < LDAP::Server::Operation
       raise LDAP::ResultError::ProtocolError, "version 3 only"
     end
 
-    # TODO: failed anonymous bind
-    if dn.nil?
-      return
-    end
+    return if dn.nil?
 
     # user bind
-    # TODO: support hashed password
-    # TODO: suuport admin bind
-
     entry = @directoy[dn]
     if entry && entry["userPassword"] && entry["userPassword"].include?(password)
       return

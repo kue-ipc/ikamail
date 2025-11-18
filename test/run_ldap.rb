@@ -49,5 +49,6 @@ server = LDAP::Server.new(
   schema: schema,
   namingContexts: ["dc=example,dc=jp"],
 )
+server.logger.level = Logger::DEBUG
 server.run_tcpserver
 server.join
