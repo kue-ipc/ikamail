@@ -226,6 +226,7 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.5)
+    ldif_parser (1.0.1)
     lint_roller (1.1.0)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -600,6 +601,7 @@ DEPENDENCIES
   jsbundling-rails
   kamal
   kaminari
+  ldif_parser
   mail-iso-2022-jp (~> 2.1)
   mustache (~> 1.0)
   net-ldap

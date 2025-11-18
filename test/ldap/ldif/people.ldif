@@ -1,0 +1,158 @@
+# OpenLdap and DS389
+# ldapadd -x -h localhost -p 389 -D "cn=admin,dc=example,dc=jp" -w admin_password -f people.ldif
+
+version: 1
+
+dn: uid=admin,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: admin
+gidNumber: 1
+homeDirectory: /home/admin
+sn: Kanri
+jasn:: 566h55CG
+uid: admin
+uidNumber: 1
+displayName: Kanri Ichiro
+jaDisplayName:: 566h55CG44CA5LiA6YOO
+givenName: Ichiro
+jaGivenName:: 5LiA6YOO
+mail: admin@example.jp
+userPassword:: cGFzcythZG1pbjQy
+
+dn: uid=user01,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: user01
+gidNumber: 100
+homeDirectory: /home/user01
+sn: Yuza
+jasn:: 5rmv5bqn
+uid: user01
+uidNumber: 1001
+displayName: Yuza Taro
+jaDisplayName:: 5rmv5bqn44CA5aSq6YOO
+givenName: Taro
+jaGivenName:: 5aSq6YOO
+mail: user01@example.jp
+userPassword:: cGFzczAwMDE=
+
+dn: uid=user02,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: user02
+gidNumber: 10
+homeDirectory: /home/user02
+sn: Yuza
+jasn:: 5rmv5bqn
+uid: user02
+uidNumber: 1002
+displayName: Yuza Jiro
+jaDisplayName:: 5rmv5bqn44CA5qyh6YOO
+givenName: Jiro
+jaGivenName:: 5qyh6YOO
+mail: user02@example.jp
+userPassword:: cGFzczAwMDI=
+
+dn: uid=user03,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: user03
+gidNumber: 100
+homeDirectory: /home/user03
+sn: Yuza
+jasn:: 5rmv5bqn
+uid: user03
+uidNumber: 1003
+displayName: Yuza Hanako
+jaDisplayName:: 5rmv5bqn44CA6Iqx5a2Q
+givenName: Hanako
+jaGivenName:: 6Iqx5a2Q
+mail: user03@example.jp
+userPassword:: cGFzczAwMDM=
+
+dn: uid=user04,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: user04
+gidNumber: 100
+homeDirectory: /home/user04
+sn: Nanashi
+jasn:: 5ZCN54Sh44GX
+uid: user04
+uidNumber: 1004
+displayName: Nanashi Gonbee
+jaDisplayName:: 5ZCN54Sh44GX44CA5qip5YW16KGb
+givenName: Gonbee
+jaGivenName:: 5qip5YW16KGb
+mail: user04@example.jp
+userPassword:: cGFzczAwMDQ=
+
+dn: uid=user05,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: user05
+gidNumber: 1001
+homeDirectory: /home/user05
+sn: Suzuki
+jasn:: 6Yi05pyo
+uid: user05
+uidNumber: 1005
+displayName: Suzuki Tsuyoshi
+jaDisplayName:: 6Yi05pyo44CA5Ymb
+givenName: Tsuyoshi
+jaGivenName:: 5Ymb
+mail: user05@example.jp
+userPassword:: cGFzczAwMDU=
+
+dn: uid=user06,ou=people,dc=example,dc=jp
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: jaPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: top
+cn: user06
+gidNumber: 100
+homeDirectory: /home/user06
+sn: Szuki
+jasn:: 6Yi05pyo
+uid: user06
+uidNumber: 1006
+displayName: Suzuki Yoko
+jaDisplayName:: 6Yi05pyo44CA6Zm95a2Q
+givenName: Yoko
+jaGivenName:: 6Zm95a2Q
+mail: user06@example.jp
+userPassword:: cGFzczAwMDY=

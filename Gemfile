@@ -156,4 +156,5 @@ group :test do
 
   ## Other gems
   gem "ruby-ldapserver"
+  gem "ldif_parser"
 end
