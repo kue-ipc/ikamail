@@ -14,3 +14,12 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+require "test_ldap_server"
+
+create_test_ldap_server.then do |server|
+  Minitest.after_run do
+    server.stop
+  end
+  server.run_tcpserver
+end
