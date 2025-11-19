@@ -32,6 +32,12 @@ class LdifReadOperation < LDAP::Server::Operation
     raise LDAP::ResultError::InvalidCredentials, "invalid credentials"
   end
 
+  # NOTE: sned_SearchResultEntry is not support '+' attributes
+  def send_SearchResultEntry(dn, avs, opt={})
+    @attributes.delete("+")
+    super
+  end
+
   def search(basedn, scope, deref, filter)
     basedn = basedn.downcase
 
