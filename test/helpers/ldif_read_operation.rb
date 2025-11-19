@@ -10,7 +10,7 @@ class LdifReadOperation < LDAP::Server::Operation
       LdifParser.open(path).each do |entry|
         next if entry.dn.nil?
 
-        @data[entry.dn] = entry.transform_keys(&:to_s).freeze
+        @data[entry.dn] = entry.except(:dn).transform_keys(&:to_s).freeze
       end
     end
     @data.freeze
