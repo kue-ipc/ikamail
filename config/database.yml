@@ -1,6 +1,14 @@
 <%
 require "uri"
 
+def database_path(adapter, env)
+  if adapter == "sqlite3"
+    "storage/#{env}.sqlite3"
+  else
+    "ikamail_#{env}"
+  end
+end
+
 database_adapter =
   if ENV.key?("DATABASE_URL")
     URI(ENV["DATABASE_URL"]).scheme
@@ -28,15 +36,14 @@ default: &default
 
 development:
   <<: *default
-  database: <% if database_adapter == "sqlite3" then %>storage/development.sqlite3<% else %>ikamail_development<%end%>
+  database: <%= database_path(database_adapter, "development") %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: ikamail_test
-  database: <% if database_adapter == "sqlite3" then %>storage/test.sqlite3<% else %>ikamail_test<%end%>
+  database: <%= database_path(database_adapter, "test") %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -67,25 +74,24 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: <% if database_adapter == "sqlite3" then %>storage/production.sqlite3<% else %>ikamail<%end%>
+    database: <%= database_path(database_adapter, "production") %>
     username: ikamail
     password: <%= ENV["IKAMAIL_DATABASE_PASSWORD"] %>
 <% if ENV.fetch("RAILS_CACHE_STORE", "solid") == "solid" %>
   cache:
     <<: *primary_production
-    database: ikamail_cache
-    database: <% if database_adapter == "sqlite3" then %>storage/production_cache.sqlite3<% else %>ikamail_cache<%end%>
+    database: <%= database_path(database_adapter, "production_cache") %>
     migrations_paths: db/cache_migrate
 <% end %>
 <% if ENV.fetch("RAILS_QUEUE_ADAPTER", "solid") == "solid" %>
   queue:
     <<: *primary_production
-    database: <% if database_adapter == "sqlite3" then %>storage/production_queue.sqlite3<% else %>ikamail_queue<%end%>
+    database: <%= database_path(database_adapter, "production_queue") %>
     migrations_paths: db/queue_migrate
 <% end %>
 <% if ENV.fetch("RAILS_CABLE_ADAPTER", "solid") == "solid" %>
   cable:
     <<: *primary_production
-    database: <% if database_adapter == "sqlite3" then %>storage/production_cable.sqlite3<% else %>ikamail_cable<%end%>
+    database: <%= database_path(database_adapter, "production_cable") %>
     migrations_paths: db/cable_migrate
 <% end %>

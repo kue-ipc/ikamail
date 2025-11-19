@@ -61,17 +61,20 @@ bin/rails db:migrate
 ### 0.x => 1.x
 
 * ジョブの管理に互換性がなくなるため、スケジュールされたジョブは実行されません。予約済みのメールがある場合は、アップデート後に一旦中止し、再度配信を予約してください。
+* データベースはcredentialsやSettingsでは設定できなくなりました。データベースの接続情報は環境変数`DATABASE_URL`や`IKAMAIL_DATABASE_PASSWORD`等で指定してください。
+* データベースのアダプターがtrilogyに変更されました。mysql2のgemは読み込まれなくなるため、`DATABASE_URL`でmysql2をしていている場合はエラーになります。trilogyに変更してください。
+* データベースのデフォルトの名前が`ikamail`から`ikamail_production`に変更されました。以前と同じ名前で悪世する場合は、環境変数で`DATABASE_URL=trilogy://localhost/ikamail`と指定してください。
 * キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。引き続きRedis(キューはResque)を使用することも可能です。
     下記のいずれかの対応が必要です。
     * Solidシリーズを使用する場合は、下記のようにデータベースを作成してから`bin/rails db:migrate`を実行してください。
 
         ```sql
-        CREATE DATABASE ikamail_cache;
-        CREATE DATABASE ikamail_queue;
-        CREATE DATABASE ikamail_cable;
-        GRANT ALL PRIVILEGES ON ikamail_cache.* TO ikamail@'localhost';
-        GRANT ALL PRIVILEGES ON ikamail_queue.* TO ikamail@'localhost';
-        GRANT ALL PRIVILEGES ON ikamail_cable.* TO ikamail@'localhost';
+        CREATE DATABASE ikamail_production_cache;
+        CREATE DATABASE ikamail_production_queue;
+        CREATE DATABASE ikamail_production_cable;
+        GRANT ALL PRIVILEGES ON ikamail_production_cache.* TO ikamail@'localhost';
+        GRANT ALL PRIVILEGES ON ikamail_production_queue.* TO ikamail@'localhost';
+        GRANT ALL PRIVILEGES ON ikamail_production_cable.* TO ikamail@'localhost';
         FLUSH PRIVILEGES;
         ```
 
@@ -83,20 +86,18 @@ bin/rails db:migrate
         RAILS_CABLE_ADAPTER=redis
         ```
 
-        また、redisグループとresqueグループを読み込むようにしてください。
+        `bundle install`の前にredisグループとresqueグループを読み込むようにしてください。
 
         ```sh
         bundle config set --local with 'redis resque'
         ```
 
-        この場合でも、キャッシュやキューの互換性が保証できないため、Redis内のすべてのデータを削除しておいてください。
+        この場合でも、キャッシュやキューの互換性が保証できないため、Railsの起動前にRedis内のすべてのデータを削除しておいてください。
 
         ```sh
         $ redis-cli
         127.0.0.1:6379> flushall
         ```
-
-* データベースはcredentialsやSettingsでは設定できなくなりました。データベースの接続情報は環境変数`IKAMAIL_DATABASE_PASSWORD`等で指定してください。
 
 ### 0.7 => 0.8
 
