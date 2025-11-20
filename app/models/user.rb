@@ -48,7 +48,7 @@ class User < ApplicationRecord
     list = ["displayName"]
     list << "displayName;lang-#{I18n.default_locale}"
     list << "jaDisplayName" if I18n.default_locale == :ja
-    list.each do |name|
+    list.reverse.each do |name|
       ldap_param(name).presence&.then { |value| return value }
     end
     nil
