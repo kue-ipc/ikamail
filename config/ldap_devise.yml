@@ -1,26 +1,58 @@
-## devise_ldap_authenticatable
-# Can not use yaml aliases
-<% %w[development test production].each do |env| %>
-<%= env %>:
-  host: <%= Settings.ldap.host.to_json %>
-  port: <%= Settings.ldap.port.to_json %>
+# devise_ldap_authenticatable
+
+## Authorizations
+
+authorizations: &AUTHORIZATIONS
   attribute: <%= Settings.ldap.user.dn.to_json %>
-  base: <%= [Settings.ldap.user.ou, Settings.ldap.base].join(',').to_json %>
-<% if Settings.ldap.auth == 'simple' %>
-  allow_unauthenticated_bind: false
-  admin_user: <%= (Rails.application.credentials.dig(:ldap, :username) || Settings.ldap.username).to_json %>
-  admin_password: <%= (Rails.application.credentials.dig(:ldap, :password) || Settings.ldap.password).to_json %>
-<% else %>
-  allow_unauthenticated_bind: true
-<% end %>
-  encryption: <%= Settings.ldap.encryption.to_json %>
-  group_base: <%= [Settings.ldap.group.ou, Settings.ldap.base].join(',').to_json %>
-  required_groups: <%=
-    Settings.ldap.restrict.auth.groups.map do |name|
-      ["#{Settings.ldap.group.dn}=#{name}", Settings.ldap.group.ou, Settings.ldap.base].join(',')
-    end.to_json %>
+  required_groups: <%= Settings.ldap.restrict.auth.groups.to_json %>
   require_attribute:
     objectClass: <%= Settings.ldap.user.classes.to_json %>
   require_attribute_presence:
     mail: true
-<% end %>
+
+## Environment
+
+development:
+  host: localhost
+  port: 389
+  admin_user: cn=admin,dc=example,dc=jp
+  #admin_password: secret
+  admin_password: admin_password
+  base: <%= "#{Settings.ldap.user.ou},dc=example,dc=jp" %>
+  group_base: <%= "#{Settings.ldap.group.ou},dc=example,dc=jp" %>
+  <<: *AUTHORIZATIONS
+
+test:
+  host: localhost
+  port: 1389
+  allow_unauthenticated_bind: true
+  attribute: <%= Settings.ldap.user.dn.to_json %>
+  base: <%= "#{Settings.ldap.user.ou},dc=example,dc=jp" %>
+  group_base: <%= "#{Settings.ldap.group.ou},dc=example,dc=jp" %>
+  <<: *AUTHORIZATIONS
+
+<%
+require "uri"
+
+ldap_uri = URI(ENV.fetch("LDAP_URL", "ldap://localhost/"))
+# Do not use no encription in production
+encrypiton =
+  case ldap_uri.scheme
+  in "ldap" then :start_tls
+  in "ldaps" then :simple_tls
+  end
+username = ENV.fetch("LDAP_USERNAME", ldap_uri.user.presence&.then { |str| URI.decode_www_form_component(str) })
+password = ENV.fetch("LDAP_PASSWORD", ldap_uri.password.presence&.then { |str| URI.decode_www_form_component(str) })
+%>
+
+production:
+  host: <% ldap_uri.host %>
+  port: <% ldap_uri.port %>
+  encryption: <%= encrypiton.to_s %>
+  allow_unauthenticated_bind: false
+  admin_user: <%= username %>
+  admin_password: <%= password %>
+  attribute: <%= Settings.ldap.user.dn.to_json %>
+  base: <%= "#{Settings.ldap.user.ou},#{ldap_uri.dn}" %>
+  group_base: <%= "#{Settings.ldap.group.ou},#{ldap_uri.dn}" %>
+  <<: *AUTHORIZATIONS

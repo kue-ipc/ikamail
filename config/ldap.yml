@@ -1,21 +1,36 @@
 ## ActiveLdap
 # Can not use yaml aliases
-<% %w[development test production].each do |env| %>
-<%= env %>:
-  host: <%= Settings.ldap.host.to_json %>
-  port: <%= Settings.ldap.port.to_json %>
-  base: <%= Settings.ldap.base.to_json %>
-<% if Settings.ldap.auth == 'simple' %>
+
+development:
+  base: dc=exapmle,dc=jp
   allow_anonymous: false
-  bind_dn: <%= (Rails.application.credentials.dig(:ldap, :username) || Settings.ldap.username).to_json %>
-  password: <%= (Rails.application.credentials.dig(:ldap, :password) || Settings.ldap.password).to_json %>
-<% else %>
-  allow_anonymous: true
-<% end %>
-  method: :<%=
-    case Settings.ldap.encryption
-    when 'simple_tls' then 'ssl'
-    when 'start_tls' then 'tls'
-    else 'plain'
-    end %>
-<% end %>
+  bind_dn: cn=admin,dc=example,dc=jp
+  #password: secret
+  password: admin_password
+
+test:
+  port: 1389
+  base: dc=exapmle,dc=jp
+
+<%
+require "uri"
+
+ldap_uri = URI(ENV.fetch("LDAP_URL", "ldap://localhost/"))
+# Do not use plain method in production
+method =
+  case ldap_uri.scheme
+  in "ldap" then :tls
+  in "ldaps" then :ssl
+  end
+username = ENV.fetch("LDAP_USERNAME", ldap_uri.user.presence&.then { |str| URI.decode_www_form_component(str) })
+password = ENV.fetch("LDAP_PASSWORD", ldap_uri.password.presence&.then { |str| URI.decode_www_form_component(str) })
+%>
+
+production:
+  host: <%= ldap_uri.host %>
+  port: <%= ldap_uri.port %>
+  method: :<%= method.to_s %>
+  base: <%= ldap_uri.dn %>
+  allow_anonymous: false
+  bind_dn: <%= username %>
+  password: <%= password %>

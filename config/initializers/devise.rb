@@ -16,7 +16,13 @@ Devise.setup do |config|
   config.ldap_logger = true
   config.ldap_create_user = true
   config.ldap_update_password = false
-  config.ldap_config = Rails.root.join("config/ldap_devise.yml")
+  # FIXME: devise_ldap_authenticatable use unsafe load without aliases
+  # https://github.com/cschiewek/devise_ldap_authenticatable/issues/275
+  # config.ldap_config = Rails.root.join("config/ldap_devise.yml")
+  config.ldap_config = -> {
+    yaml_content = ERB.new(Rails.root.join("config/ldap_devise.yml").read).result
+    YAML.safe_load(yaml_content, permitted_classes: [Symbol], aliases: true)[Rails.env]
+  }
   config.ldap_check_group_membership = true
   config.ldap_check_group_membership_without_admin = false
   config.ldap_check_attributes = true
