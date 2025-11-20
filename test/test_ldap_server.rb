@@ -7,6 +7,7 @@ def create_test_ldap_server(debug: false)
   ldif_list = %w[base groups people].map do |name|
     File.join(__dir__, "ldap", "ldif", "#{name}.ldif")
   end
+
   schema_list = %w[core cosine inetorgperson nis gakunin].map do |name|
     File.join(__dir__, "ldap", "schema", "#{name}.schema")
   end
@@ -46,7 +47,10 @@ def create_test_ldap_server(debug: false)
     nodelay: true,
     listen: 10,
     operation_class: LdifReadOperation,
-    operation_args: [*ldif_list],
+    operation_args: [
+      *ldif_list,
+      admin: {username: "cn=admin,dc=example,dc=jp", password: "admin_password"},
+    ],
     schema: schema,
     namingContexts: ["dc=example,dc=jp"],
   )

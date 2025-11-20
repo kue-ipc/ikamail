@@ -50,6 +50,7 @@ Layout/FirstMethodParameterLineBreak:
   Enabled: false
 
 Layout/IndentationConsistency:
+  Enabled: true
   EnforcedStyle: indented_internal_methods
 
 Layout/LineLength:

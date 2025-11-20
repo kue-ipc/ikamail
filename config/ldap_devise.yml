@@ -3,6 +3,7 @@
 ## Authorizations
 
 authorizations: &AUTHORIZATIONS
+  allow_unauthenticated_bind: false
   attribute: <%= Settings.ldap.user.dn.to_json %>
   required_groups: <%= Settings.ldap.restrict.auth.groups.to_json %>
   require_attribute:
@@ -16,7 +17,6 @@ development:
   host: localhost
   port: 389
   admin_user: cn=admin,dc=example,dc=jp
-  #admin_password: secret
   admin_password: admin_password
   base: <%= "#{Settings.ldap.user.ou},dc=example,dc=jp" %>
   group_base: <%= "#{Settings.ldap.group.ou},dc=example,dc=jp" %>
@@ -25,8 +25,8 @@ development:
 test:
   host: localhost
   port: 1389
-  allow_unauthenticated_bind: true
-  attribute: <%= Settings.ldap.user.dn.to_json %>
+  admin_user: cn=admin,dc=example,dc=jp
+  admin_password: admin_password
   base: <%= "#{Settings.ldap.user.ou},dc=example,dc=jp" %>
   group_base: <%= "#{Settings.ldap.group.ou},dc=example,dc=jp" %>
   <<: *AUTHORIZATIONS
@@ -49,10 +49,8 @@ production:
   host: <% ldap_uri.host %>
   port: <% ldap_uri.port %>
   encryption: <%= encrypiton.to_s %>
-  allow_unauthenticated_bind: false
   admin_user: <%= username %>
   admin_password: <%= password %>
-  attribute: <%= Settings.ldap.user.dn.to_json %>
   base: <%= "#{Settings.ldap.user.ou},#{ldap_uri.dn}" %>
   group_base: <%= "#{Settings.ldap.group.ou},#{ldap_uri.dn}" %>
   <<: *AUTHORIZATIONS

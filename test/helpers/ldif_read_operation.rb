@@ -5,6 +5,11 @@ class LdifReadOperation < LDAP::Server::Operation
   def initialize(connection, messageID, *ldifs)
     super(connection, messageID)
 
+    @opts = ldifs.last.is_a?(Hash) ? ldifs.pop : {}
+
+
+    @admin = @opts[:admin]
+
     @data = {}
     ldifs.each do |path|
       LdifParser.open(path).each do |entry|
@@ -23,10 +28,13 @@ class LdifReadOperation < LDAP::Server::Operation
 
     return if dn.nil?
 
-    # user bind
-    entry = @directoy[dn]
-    if entry && entry["userPassword"] && entry["userPassword"].include?(password)
-      return
+    if @admin && @admin[:username] == dn
+      # admin bind
+      return if @admin[:password] == password
+    else
+      # user bind
+      entry = @directoy[dn]
+      return if entry && entry["userPassword"] && entry["userPassword"].include?(password)
     end
 
     raise LDAP::ResultError::InvalidCredentials, "invalid credentials"

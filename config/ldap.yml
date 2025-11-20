@@ -2,15 +2,17 @@
 # Can not use yaml aliases
 
 development:
-  base: dc=exapmle,dc=jp
+  base: dc=example,dc=jp
   allow_anonymous: false
   bind_dn: cn=admin,dc=example,dc=jp
-  #password: secret
   password: admin_password
 
 test:
   port: 1389
-  base: dc=exapmle,dc=jp
+  base: dc=example,dc=jp
+  allow_anonymous: false
+  bind_dn: cn=admin,dc=example,dc=jp
+  password: admin_password
 
 <%
 require "uri"

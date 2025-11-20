@@ -1,5 +1,7 @@
 # rubocop: disable Rails/InverseOf
 class LdapUser < ActiveLdap::Base
+  include LdapAttribute
+
   ldap_mapping dn_attribute: Settings.ldap.user.dn,
     prefix: Settings.ldap.user.ou,
     classes: Settings.ldap.user.classes
@@ -17,24 +19,9 @@ class LdapUser < ActiveLdap::Base
   end
 
   def display_name
-    case self["displayName"]
-    when nil then name
-    when String then self["displayName"]
-    when Array
-      lang = "lang-#{I18n.default_locale}"
-      lang_desc = name
-      self["displayName"].each do |desc|
-        if desc.is_a?(String)
-          lang_desc = desc
-        elsif desc[lang].is_a?(String)
-          lang_desc = desc[lang]
-          break
-        end
-      end
-      lang_desc
-    when Hash then self["description"].values.first
-    else self["displayName"].to_s
-    end
+    (I18n.default_locale == :ja && ldap_attribute("jaDisplayName", lang: nil)) ||
+      ldap_attribute("displayName") ||
+      name
   end
 
   def self.find_dn(name)
