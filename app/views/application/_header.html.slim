@@ -1,14 +1,13 @@
-= turbo_frame_tag "header"
-  header.mb-2
-    nav.navbar.navbar-light.bg-light.d-print-none
-      .container-fluid
-        = link_to t(:bulk_mail_system), "/", class: "navbar-brand"
-        - if user_signed_in?
-          ul.navbar-nav.flex-row
-            li.nav-item.px-1
-              = link_to current_user.name, user_path, class: "nav-link"
-            li.nav-item.px-1
-              = link_to destroy_user_session_path, class: "nav-link py-1",
-                title: t("actions.sign_out"),
-                data: {"bs-toggle": "tooltip", "bs-placement": "left", turbo_method: :delete} do
-                = octicon "sign-out", height: 24, fill: "currentColor", roll: "img", "aria-label": "Logout"
+header.mb-2
+  nav.navbar.navbar-light.bg-light.d-print-none
+    .container-fluid
+      = link_to t(:bulk_mail_system), "/", class: "navbar-brand"
+      - if user_signed_in?
+        ul.navbar-nav.flex-row
+          li.nav-item.px-1
+            = link_to current_user.name, user_path, class: "nav-link"
+          li.nav-item.px-1
+            = link_to destroy_user_session_path, class: "nav-link py-1",
+              title: t("actions.sign_out"),
+              data: {"bs-toggle": "tooltip", "bs-placement": "left", turbo_method: :delete} do
+              = octicon "sign-out", height: 24, fill: "currentColor", roll: "img", "aria-label": "Logout"
