@@ -1,5 +1,4 @@
-h2
-  = t(".sign_in")
+h2 = t(".sign_in")
 
 = bootstrap_form_with model: resource, as: resource_name, url: session_path(resource_name), class: "mb-3" do |f|
   fieldset#login-fieldset disabled=true
@@ -9,6 +8,7 @@ h2
       = f.check_box :remember_me
     .actions
       = f.primary t(".sign_in"), id: "login-submit", disabled: true
+
 hr
 = render "devise/shared/links"
 
