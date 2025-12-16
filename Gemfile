@@ -106,6 +106,9 @@ gem "octicons_helper"
 # Ransack
 gem "ransack"
 
+# Mission Control Jobs
+gem "mission_control-jobs"
+
 # Bundled gem
 gem "csv"
 gem "nkf"
