@@ -1,15 +1,16 @@
 aside.sidebar
-  - if user_signed_in?
-    ul.nav.flex-column
-      - menu_list.each do |item|
+  nav#sidevarNav
+    - if user_signed_in?
+      ul.nav.flex-column.nav-pills
+        - menu_list.each do |item|
+          li.nav-item
+            = link_to item[:label], item[:path], class: ["nav-link", current_page?(item[:path]) ? "active" : nil]
+      hr
+      ul.nav.flex-column
         li.nav-item
-          = link_to item[:label], item[:path], class: ["nav-link", current_page?(item[:path]) ? "active" : nil]
-    hr
-    ul.nav.flex-column
-      li.nav-item
-        = link_to t("actions.sign_out"), destroy_user_session_path, class: "nav-link py-1",
-          data: {turbo_method: :delete}
-  - else
-    ul.nav.flex-column
-      li.nav-item
-        = link_to t("actions.sign_in"), new_user_session_path, class: "nav-link py-1"
+          = link_to t("actions.sign_out"), destroy_user_session_path, class: "nav-link py-1",
+            data: {turbo_method: :delete}
+    - else
+      ul.nav.flex-column
+        li.nav-item
+          = link_to t("actions.sign_in"), new_user_session_path, class: "nav-link py-1"
