@@ -1,5 +1,23 @@
 aside.sidebar
-  nav#sidevarNav
+  .d-sm-none
+    nav#sidebarNav.collapse
+      - if user_signed_in?
+        ul.nav.flex-column.nav-pills
+          - menu_list.each do |item|
+            li.nav-item
+              = link_to item[:label], item[:path], class: ["nav-link", current_page?(item[:path]) ? "active" : nil]
+        hr
+        ul.nav.flex-column
+          li.nav-item
+            = link_to t("actions.sign_out"), destroy_user_session_path, class: "nav-link py-1",
+              data: {turbo_method: :delete}
+      - else
+        ul.nav.flex-column.nav-pills
+          li.nav-item
+            = link_to t("actions.sign_in"), new_user_session_path,
+              class: ["nav-link py-1", current_page?(new_user_session_path) ? "active" : nil]
+      hr
+  nav.d-none.d-sm-block
     - if user_signed_in?
       ul.nav.flex-column.nav-pills
         - menu_list.each do |item|
@@ -11,6 +29,7 @@ aside.sidebar
           = link_to t("actions.sign_out"), destroy_user_session_path, class: "nav-link py-1",
             data: {turbo_method: :delete}
     - else
-      ul.nav.flex-column
+      ul.nav.flex-column.nav-pills
         li.nav-item
-          = link_to t("actions.sign_in"), new_user_session_path, class: "nav-link py-1"
+          = link_to t("actions.sign_in"), new_user_session_path,
+            class: ["nav-link py-1", current_page?(new_user_session_path) ? "active" : nil]

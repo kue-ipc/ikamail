@@ -1,10 +1,10 @@
 header.mb-2
   nav.navbar.navbar-light.bg-light.d-print-none
     .container-fluid
-      button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#sidevarNav"
-        aria-controls="sidevarNav" aria-expanded="false" aria-label="Toggle sidebar")
-          span.navbar-toggler-icon
-
+      .d-sm-none
+        button.btn.btn-secondary(type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav"
+          aria-controls="sidebarNav" aria-expanded="false")
+            = octicon("three-bars")
       = link_to t(:bulk_mail_system), "/", class: "navbar-brand"
       - if user_signed_in?
         ul.navbar-nav.flex-row
