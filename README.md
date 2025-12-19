@@ -12,9 +12,9 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 
 * データベース
     * MariaDB 10.5 以上
-    * PostgreSQL 13 以上
-    * SQLite 3 以上
-    * Redis 6 以上 7.2 以下 または Valkey 8 以上 (キャッシュ等で使用する場合のみ)
+    * PostgreSQL 13 以上 (未テスト)
+    * SQLite 3 以上 (未テスト)
+    * Redis 6 以上 7.2 以下 または Valkey 8 以上 (Solidを使わない場合)
 
 * ブラウザ
     * Microsoft Edge

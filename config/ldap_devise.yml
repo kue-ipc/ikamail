@@ -3,7 +3,6 @@
 ## Authorizations
 
 authorizations: &AUTHORIZATIONS
-  allow_unauthenticated_bind: false
   attribute: <%= Settings.ldap.user.dn.to_json %>
   required_groups: <%= Settings.ldap.restrict.auth.groups.to_json %>
   require_attribute:
@@ -16,6 +15,7 @@ authorizations: &AUTHORIZATIONS
 development:
   host: localhost
   port: 389
+  allow_unauthenticated_bind: false
   admin_user: cn=admin,dc=example,dc=jp
   admin_password: admin_password
   base: <%= "#{Settings.ldap.user.ou},dc=example,dc=jp" %>
@@ -25,6 +25,7 @@ development:
 test:
   host: localhost
   port: 1389
+  allow_unauthenticated_bind: false
   admin_user: cn=admin,dc=example,dc=jp
   admin_password: admin_password
   base: <%= "#{Settings.ldap.user.ou},dc=example,dc=jp" %>
@@ -34,23 +35,38 @@ test:
 <%
 require "uri"
 
-ldap_uri = URI(ENV.fetch("LDAP_URL", "ldap://localhost/"))
-# Do not use no encription in production
-encrypiton =
-  case ldap_uri.scheme
-  in "ldap" then :start_tls
-  in "ldaps" then :simple_tls
+ldap_uri = ENV["LDAP_URL"]&.then { |str| URI(str) }
+
+ldap_protocol = ldap_uri&.scheme || Settings.ldap.protocol.presence || "ldap"
+ldap_host = ldap_uri&.host || Settings.ldap.host || "localhost"
+ldap_port = ldap_uri&.port || Settings.ldap.port ||
+  case ldap_protocol
+  in "ldap" then 389
+  in "ldaps" then 636
   end
-username = ENV.fetch("LDAP_USERNAME", ldap_uri.user.presence&.then { |str| URI.decode_www_form_component(str) })
-password = ENV.fetch("LDAP_PASSWORD", ldap_uri.password.presence&.then { |str| URI.decode_www_form_component(str) })
+ldap_base = ldap_uri&.dn.presence&.then { |str| URI.decode_www_form_component(str) } ||
+  Settings.ldap.base
+ldap_username = ldap_uri&.user&.then { |str| URI.decode_www_form_component(str) } ||
+  Rails.application.credentials.dig(:ldap, :username)
+ldap_password = ldap_uri&.password&.then { |str| URI.decode_www_form_component(str) } ||
+  Rails.application.credentials.dig(:ldap, :password)
 %>
 
 production:
-  host: <% ldap_uri.host %>
-  port: <% ldap_uri.port %>
-  encryption: <%= encrypiton.to_s %>
-  admin_user: <%= username %>
-  admin_password: <%= password %>
-  base: <%= "#{Settings.ldap.user.ou},#{ldap_uri.dn}" %>
-  group_base: <%= "#{Settings.ldap.group.ou},#{ldap_uri.dn}" %>
+  host: <% ldap_host %>
+  port: <% ldap_port %>
+<% if ldap_protocol == "ldaps" %>
+  encryption: simple_tls
+<% elsif ldap_host != "localhost" %>
+  encryption: start_tls
+<% end %>
+<% if ldap_username %>
+  allow_unauthenticated_bind: false
+  admin_user: <%= ldap_username.to_json %>
+  admin_password: <%= ldap_password.to_json %>
+<% else %>
+  allow_unauthenticated_bind: true
+<% end %>
+  base: <%= "#{Settings.ldap.user.ou},#{ldap_base}".to_json %>
+  group_base: <%= "#{Settings.ldap.group.ou},#{ldap_base}".to_json %>
   <<: *AUTHORIZATIONS

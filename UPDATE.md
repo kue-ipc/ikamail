@@ -61,11 +61,10 @@ bin/rails db:migrate
 ### 0.x => 1.x
 
 * ジョブの管理に互換性がなくなるため、スケジュールされたジョブは実行されません。予約済みのメールがある場合は、アップデート後に一旦中止し、再度配信を予約してください。
-* データベースはcredentialsやSettingsでは設定できなくなりました。データベースの接続情報は環境変数`DATABASE_URL`や`IKAMAIL_DATABASE_PASSWORD`等で指定してください。
+* データベースとLDAPの接続認証情報(ユーザー名とパスワード)をSettingsで設定できなくなりました。credentials、または、環境変数を使用してください。
 * データベースのアダプターがtrilogyに変更されました。mysql2のgemは読み込まれなくなるため、`DATABASE_URL`でmysql2をしていている場合はエラーになります。trilogyに変更してください。
-* データベースのデフォルトの名前が`ikamail`から`ikamail_production`に変更されました。以前と同じ名前で悪世する場合は、環境変数で`DATABASE_URL=trilogy://localhost/ikamail`と指定してください。
-* キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。引き続きRedis(キューはResque)を使用することも可能です。
-    下記のいずれかの対応が必要です。
+* データベースのデフォルトの名前が`ikamail`から`ikamail_production`に変更されました。以前と同じ名前にしたい場合は、Settingsで`database: {database: "ikamail"}}`と設定してください。
+* キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。引き続きRedis(キューはResque)を使用することも可能です。下記のいずれかを実施してください。
     * Solidシリーズを使用する場合は、下記のようにデータベースを作成してから`bin/rails db:migrate`を実行してください。
 
         ```sql

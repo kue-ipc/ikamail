@@ -1,33 +1,57 @@
 <%
 require "uri"
 
-def database_path(adapter, env)
-  if adapter == "sqlite3"
-    "storage/#{env}.sqlite3"
+def add_suffix(path, suffix)
+  if path.end_with?(".sqlite3")
+    base = path.delete_suffix(".sqlite3")
+    "#{base}_#{suffix}.sqlite3"
   else
-    "ikamail_#{env}"
+    "#{path}_#{suffix}"
   end
 end
 
-database_adapter =
-  if ENV.key?("DATABASE_URL")
-    URI(ENV["DATABASE_URL"]).scheme
-  elsif ENV.key?("RAILS_DATABASE_ADAPTER")
-    ENV["RAILS_DATABASE_ADAPTER"]
+db_url = ENV["DATABASE_URL"]&.then { |str| URI(str) }
+
+db_adapter = db_url&.scheme || ENV["RAILS_DATABASE_ADAPTER"] || "trilogy"
+db_adapter =  ActiveRecord.protocol_adapters[db_adapter] || db_adapter
+
+db_host = ENV["DB_HOST"] || Settings.database&.host || "localhost"
+
+db_development_database =
+  if db_adapter == "sqlite3"
+    "storage/development.sqlite3"
   else
-    "trilogy"
+    "ikamail_development"
   end
-%>
+db_test_database =
+  if db_adapter == "sqlite3"
+    "storage/test.sqlite3"
+  else
+    "ikamail_test"
+  end
+db_production_database = db_url&.path&.sub(%r{^/}, "") || Settings.database&.database ||
+  if db_adapter == "sqlite3"
+    "storage/production.sqlite3"
+  else
+    "ikamail_production"
+  end
+db_cache_database = Settings.database&.cache_database || add_suffix(db_production_database, "cache")
+db_queue_database = Settings.database&.queue_database || add_suffix(db_production_database, "queue")
+db_cable_database = Settings.database&.cable_database || add_suffix(db_production_database, "cable")
+
+# production only
+db_username = Rails.application.credentials.dig(:database, :username) || "ikamail"
+db_password = ENV["IKAMAIL_DATABASE_PASSWORD"].presence || Rails.application.credentials.dig(:database, :password)
 
 default: &default
-  adapter: <%= database_adapter %>
+  adapter: <%= db_adapter %>
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-<% case database_adapter
-   in "trilogy" %>
+<% case db_adapter
+   in "trilogy" | "mysql2" %>
   encoding: utf8mb4
   username: root
   password:
-  host: <%= ENV.fetch("DB_HOST") { "127.0.0.1" } %>
+  host: <%= db_host %>
 <% in "postgresql" %>
   encoding: unicode
 <% in "sqlite3" %>
@@ -36,62 +60,33 @@ default: &default
 
 development:
   <<: *default
-  database: <%= database_path(database_adapter, "development") %>
+  database: <%= db_development_database %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= database_path(database_adapter, "test") %>
+  database: <%= db_test_database %>
 
-# As with config/credentials.yml, you never want to store sensitive information,
-# like your database password, in your source code. If your source code is
-# ever seen by anyone, they now have access to your database.
-#
-# Instead, provide the password or a full connection URL as an environment
-# variable when you boot the app. For example:
-#
-#   DATABASE_URL="trilogy://myuser:mypass@localhost/somedatabase"
-#
-# If the connection URL is provided in the special DATABASE_URL environment
-# variable, Rails will automatically merge its configuration values on top of
-# the values provided in this file. Alternatively, you can specify a connection
-# URL environment variable explicitly:
-#
-#   production:
-#     url: <%= ENV["MY_APP_DATABASE_URL"] %>
-#
-# Connection URLs for non-primary databases can also be configured using
-# environment variables. The variable name is formed by concatenating the
-# connection name with `_DATABASE_URL`. For example:
-#
-#   CACHE_DATABASE_URL="trilogy://cacheuser:cachepass@localhost/cachedatabase"
-#
-# Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
-# for a full overview on how database connection configuration can be specified.
-#
 production:
   primary: &primary_production
     <<: *default
-    database: <%= database_path(database_adapter, "production") %>
-    username: ikamail
-    password: <%= ENV["IKAMAIL_DATABASE_PASSWORD"] %>
+    database: <%= db_production_database %>
+    username: <%= db_username.to_json %>
+    password: <%= db_password.to_json %>
 <% if ENV.fetch("RAILS_CACHE_STORE", "solid") == "solid" %>
   cache:
     <<: *primary_production
-    database: <%= database_path(database_adapter, "production_cache") %>
+    database: <%= db_cache_database %>
     migrations_paths: db/cache_migrate
 <% end %>
 <% if ENV.fetch("RAILS_QUEUE_ADAPTER", "solid") == "solid" %>
   queue:
     <<: *primary_production
-    database: <%= database_path(database_adapter, "production_queue") %>
+    database: <%= db_queue_database %>
     migrations_paths: db/queue_migrate
 <% end %>
 <% if ENV.fetch("RAILS_CABLE_ADAPTER", "solid") == "solid" %>
   cable:
     <<: *primary_production
-    database: <%= database_path(database_adapter, "production_cable") %>
+    database: <%= db_cable_database %>
     migrations_paths: db/cable_migrate
 <% end %>

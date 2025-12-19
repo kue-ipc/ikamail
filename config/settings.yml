@@ -1,3 +1,6 @@
+# database:
+#   adapter: trilogy
+#   host: localhost
 ldap:
   user:
     dn: uid
