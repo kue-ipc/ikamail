@@ -42,6 +42,7 @@ db_cable_database = Settings.database&.cable_database || add_suffix(db_productio
 # production only
 db_username = Rails.application.credentials.dig(:database, :username) || "ikamail"
 db_password = ENV["IKAMAIL_DATABASE_PASSWORD"].presence || Rails.application.credentials.dig(:database, :password)
+%>
 
 default: &default
   adapter: <%= db_adapter %>
