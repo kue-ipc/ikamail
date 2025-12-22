@@ -67,7 +67,7 @@ RAILS_ENV=production bin/rails assets:precompile
 * データベースのアダプターがtrilogyに変更されました。mysql2のgemは読み込まれなくなるため、`DATABASE_URL`でmysql2をしていている場合はエラーになります。trilogyに変更してください。
 * データベースのデフォルトの名前が`ikamail`から`ikamail_production`に変更されました。以前と同じ名前にしたい場合は、Settingsで`database: {database: "ikamail"}}`と設定してください。
 * キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更されました。引き続きRedis(キューはResque)を使用することも可能です。下記のいずれかを実施してください。
-    * Solidシリーズを使用する場合は、下記のようにデータベースを作成してから`bin/rails db:migrate`を実行してください。
+    * Solidシリーズを使用する場合は、下記のようにデータベースを作成してから`bin/rails db:migrate`を実行してください。`ikamail_production`はメインとデータベース名で、そこにサフィックスが付きます。以前と同じ`ikamil`にしている場合は、それぞれ、`ikamail_cache`、`ikamail_queue`、`ikamail_cable`になります。
 
         ```sql
         CREATE DATABASE ikamail_production_cache;
