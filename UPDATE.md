@@ -9,7 +9,9 @@
 ```sh
 git pull
 bundle install
-bin/rails db:migrate
+bin/rails yarn:install
+RAILS_ENV=production bin/rails db:migrate
+RAILS_ENV=production bin/rails assets:precompile
 ```
 
 ### マイナーバージョンアップデート
@@ -28,8 +30,8 @@ git checkout __new_minor_version_branch__
 git pull
 bundle install
 bin/rails yarn:install
+RAILS_ENV=production bin/rails db:migrate
 RAILS_ENV=production bin/rails assets:precompile
-bin/rails db:migrate
 ```
 
 ### メジャーバージョンアップデート
@@ -52,8 +54,8 @@ git checkout __new_major_version_branch__
 git pull
 bundle install
 bin/rails yarn:install
+RAILS_ENV=production bin/rails db:migrate
 RAILS_ENV=production bin/rails assets:precompile
-bin/rails db:migrate
 ```
 
 ## 個別の注意事項
