@@ -53,8 +53,8 @@ ldap_password = ldap_uri&.password&.then { |str| URI.decode_www_form_component(s
 %>
 
 production:
-  host: <% ldap_host %>
-  port: <% ldap_port %>
+  host: <%= ldap_host %>
+  port: <%= ldap_port %>
 <% if ldap_protocol == "ldaps" %>
   encryption: simple_tls
 <% elsif ldap_host != "localhost" %>
