@@ -58,9 +58,8 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
   devise_for :users
 
   mount MissionControl::Jobs::Engine, at: "/admin/jobs"
-
-  patch "/applications/:application_id/recurring_tasks/:id", to: "custom_recurring_tasks#update"
-  put "/applications/:application_id/recurring_tasks/:id", to: "custom_recurring_tasks#update"
+  patch "admin/jobs/applications/:application_id/recurring_tasks/:id", to: "custom_recurring_tasks#update"
+  put "admin/jobs/applications/:application_id/recurring_tasks/:id", to: "custom_recurring_tasks#update"
 
   # if ENV["RAILS_QUEUE_ADAPTER"] == "resque"
   #   require "resque/server"
