@@ -5,7 +5,7 @@ div
   = button_to "LDAP同期", admin_ldap_sync_path, method: :put, class: "btn btn-link"
 
 div
-  = link_to "ジョブ状態", "/admin/jobs", target: "_blank", rel: "noopener", class: "btn btn-link"
+  = link_to "ジョブ状態", mission_control_jobs_path, class: "btn btn-link"
 
 div
   = link_to "ログインユーザー一覧", admin_users_path, class: "btn btn-link"
