@@ -1,9 +1,9 @@
 # database:
 #   database: ikamail_production
 # ldap:
+#   protocol: ldap
 #   host: localhost
 #   port: 389
-#   protocol: ldap
 #   base:
 mailer:
   smtp_settings:
