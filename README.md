@@ -11,10 +11,10 @@ ikamail は組織内に一括でメールを送信するためのシステムで
     * Node.js 22 以上 (アセットファイルコンパイル時のみ使用)
 
 * データベース
-    * MariaDB 10.5 以上
-    * PostgreSQL 13 以上 (未テスト)
+    * MariaDB 10.11 以上
+    * PostgreSQL 16 以上 (未テスト)
     * SQLite 3 以上 (未テスト)
-    * Redis 6 以上 7.2 以下 または Valkey 8 以上 (Solidを使わない場合)
+    * Valkey 8 以上 (Solidを使わない場合、未テスト)
 
 * ブラウザ
     * Microsoft Edge
