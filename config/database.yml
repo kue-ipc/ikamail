@@ -73,19 +73,19 @@ production:
     database: <%= db_production_database %>
     username: <%= db_username.to_json %>
     password: <%= db_password.to_json %>
-<% if ENV.fetch("RAILS_CACHE_STORE", "solid") == "solid" %>
+<% if ENV.fetch("RAILS_CACHE_STORE", Settings.cache&.store) == "solid" %>
   cache:
     <<: *primary_production
     database: <%= db_cache_database %>
     migrations_paths: db/cache_migrate
 <% end %>
-<% if ENV.fetch("RAILS_QUEUE_ADAPTER", "solid") == "solid" %>
+<% if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "solid" %>
   queue:
     <<: *primary_production
     database: <%= db_queue_database %>
     migrations_paths: db/queue_migrate
 <% end %>
-<% if ENV.fetch("RAILS_CABLE_ADAPTER", "solid") == "solid" %>
+<% if ENV.fetch("RAILS_CABLE_ADAPTER", Settings.cable&.adapter) == "solid" %>
   cable:
     <<: *primary_production
     database: <%= db_cable_database %>

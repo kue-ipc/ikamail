@@ -152,7 +152,16 @@ bundle config set --local with 'redis resque'
 bundle install
 ```
 
-次の環境変数を設定することで、Solidシリーズの代わりにRedis(Resque)を使用するようになります。
+次の環境変数またはSettingsを設定(環境変数が優先)することで、Solidシリーズの代わりにRedis(Resque)を使用するようになります。
+
+```settings.local.yml
+cache:
+  store: redis
+queue:
+  adapter: resque
+cable:
+  adapter: redis
+```
 
 ```env
 RAILS_CACHE_STORE=redis

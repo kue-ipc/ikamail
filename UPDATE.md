@@ -81,7 +81,16 @@ RAILS_ENV=production bin/rails assets:precompile
         FLUSH PRIVILEGES;
         ```
 
-    * Redis(キューはResque)を使用する場合は、下記のように環境変数を設定してください。
+    * Redis(キューはResque)を使用する場合は、下記のようにSettingsまたは環境変数を設定してください。
+
+        ```settings.local.yml
+        cache:
+        store: redis
+        queue:
+        adapter: resque
+        cable:
+        adapter: redis
+        ```
 
         ```env
         RAILS_CACHE_STORE=redis

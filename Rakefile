@@ -5,7 +5,7 @@ require_relative "config/application"
 
 Rails.application.load_tasks
 
-if ENV["RAILS_QUEUE_ADAPTER"] == "resque"
+if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "resque"
   # FIXME: 予めredisをrequireしておかないと、RedisClient::NoScriptErrorの定義がおかしくなって、
   #    Redis::NoScriptErrorが定義されずに、エラーになる場合がある。
   #    どうやら"resque/scheduler/tasks"の中で"redis/errors"がrequireされるのが原因みたい。

@@ -1,6 +1,6 @@
 # sinatra
 
-if ENV["RAILS_QUEUE_ADAPTER"] == "resque"
+if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "resque"
   config_file = Rails.root.join("config/resque.yml")
   resque_config = YAML.load(ERB.new(IO.read(config_file)).result)
   Resque.redis = resque_config[rails_env.to_s]
