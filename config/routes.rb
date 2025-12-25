@@ -57,15 +57,17 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
 
   devise_for :users
 
-  case ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter)
-  when "solid"
+  case Rails.application.config.active_job.queue_adapter
+  in :solid_queue
     mount MissionControl::Jobs::Engine, at: "/admin/jobs"
-  when "resque"
+  in :resque
     require "resque/server"
     require "resque/scheduler/server"
 
     authenticated :user, ->(user) { user.admin? } do
       mount Resque::Server, at: "/admin/jobs"
     end
+  else
+    # not mounted
   end
 end

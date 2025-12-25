@@ -1,6 +1,6 @@
 # for resque
 
-if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "resque"
+if Rails.application.config.active_job.queue_adapter == :resque
   require "resque"
 
   yaml_content = ERB.new(Rails.root.join("config/resque.yml").read).result
