@@ -6,20 +6,24 @@ ruby ">= 3.3.0"
 gem "rails", "~> 8.1.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
+
 group :mariadb do
   # Use mariadb-trilogy as the database for Active Record
   gem "trilogy", "~> 2.7"
   # Use mariadb-mysql as the database for Active Record
   # gem "mysql2", "~> 0.5"
 end
+
 group :postgresql, optional: true do
   # Use postgresql as the database for Active Record
   gem "pg", "~> 1.1"
 end
+
 group :sqlite3, optional: true do
   # Use sqlite3 as the database for Active Record
   gem "sqlite3", ">= 2.1"
 end
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
@@ -39,11 +43,14 @@ gem "cssbundling-rails"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 group :solid do
+  # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
   gem "solid_cache"
   gem "solid_queue"
   gem "solid_cable"
+
+  # Mission Control Jobs
+  gem "mission_control-jobs"
 end
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -107,9 +114,6 @@ gem "octicons_helper"
 
 # Ransack
 gem "ransack"
-
-# Mission Control Jobs
-gem "mission_control-jobs"
 
 # Bundled gem
 gem "csv"
