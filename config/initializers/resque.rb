@@ -1,4 +1,4 @@
-# sinatra
+# for resque
 
 if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "resque"
   yaml_content = ERB.new(Rails.root.join("config/resque.yml").read).result

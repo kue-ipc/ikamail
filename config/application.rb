@@ -34,10 +34,6 @@ module Ikamail
     # pundit NotAuthorizedError => forbidden
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
 
-    # mission_control-jobs configuration
-    config.mission_control.jobs.base_controller_class = "AdminController"
-    config.mission_control.jobs.http_basic_auth_enabled = false
-
     # Disable Active Storage variants.
     config.active_storage.variant_processor = :disabled
   end
