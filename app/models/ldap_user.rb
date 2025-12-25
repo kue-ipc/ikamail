@@ -19,8 +19,9 @@ class LdapUser < ActiveLdap::Base
   end
 
   def display_name
-    (I18n.default_locale == :ja && ldap_attribute("jaDisplayName", lang: nil)) ||
-      ldap_attribute("displayName") ||
+    lang = (I18n.locale || I18n.default_locale)&.intern
+    (lang == :ja && ldap_attribute("jaDisplayName", lang: nil)) ||
+      ldap_attribute("displayName", lang:) ||
       name
   end
 

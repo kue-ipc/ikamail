@@ -19,7 +19,8 @@ class LdapGroup < ActiveLdap::Base
   end
 
   def display_name
-    ldap_attribute("description") ||
+    lang = (I18n.locale || I18n.default_locale)&.intern
+    ldap_attribute("description", lang:) ||
     name
   end
 
