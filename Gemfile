@@ -140,6 +140,10 @@ group :development, :test do
   ## Other gems
   gem "guard"
   gem "guard-minitest"
+
+  # TODO: remove when minitest rails supports Minitest 6+
+  # https://github.com/minitest/minitest/issues/1045
+  gem "minitest", "< 6.0"
 end
 
 group :development do
