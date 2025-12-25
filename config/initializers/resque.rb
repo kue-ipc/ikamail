@@ -1,6 +1,8 @@
 # for resque
 
 if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "resque"
+  require "resque"
+
   yaml_content = ERB.new(Rails.root.join("config/resque.yml").read).result
   resque_config = YAML.safe_load(yaml_content, permitted_classes: [Symbol], aliases: true)[Rails.env]
   Resque.redis = resque_config.fetch("url")
