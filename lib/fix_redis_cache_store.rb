@@ -3,13 +3,13 @@ require "active_support/cache/redis_cache_store"
 # TODO: Remove this patch when Rails 8.1.2 or later is required.
 module FixRedisCacheStore
   def self.load
-    unless ActiveSupport::Cache::RedisCacheStore.private_instance_methods.include?(:_initialize)
+    unless ActiveSupport::Cache::RedisCacheStore.instance_methods.include?(:_initialize)
       ActiveSupport::Cache::RedisCacheStore.alias_method :_initialize, :initialize
     end
 
-    # fix initialize to accept ConnectionPool instance
-    # https://github.com/rails/rails/pull/56292
     ActiveSupport::Cache::RedisCacheStore.class_eval do
+      # fix initialize to accept ConnectionPool instance
+      # https://github.com/rails/rails/pull/56292
       def initialize(error_handler: DEFAULT_ERROR_HANDLER, **redis_options)
         universal_options = redis_options.extract!(*UNIVERSAL_OPTIONS)
         redis = redis_options[:redis]
