@@ -11,7 +11,7 @@ module FixRedisCacheStore
       # fix initialize to accept ConnectionPool instance
       # https://github.com/rails/rails/pull/56292
       def initialize(error_handler: ActiveSupport::Cache::RedisCacheStore::DEFAULT_ERROR_HANDLER, **redis_options)
-        universal_options = redis_options.extract!(*ActiveSupport::Cache::RedisCacheStore::UNIVERSAL_OPTIONS)
+        universal_options = redis_options.extract!(*ActiveSupport::Cache::UNIVERSAL_OPTIONS)
         redis = redis_options[:redis]
 
         already_pool = redis.instance_of?(::ConnectionPool) ||
