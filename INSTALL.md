@@ -145,13 +145,6 @@ bundle exec whenever --update-crontab
 
 デフォルトはSolid Cache、Solid Queue、Solid Cableを使用しますが、代わりにRedis(Resque)を使用することもできます。
 
-bundleでredisグループとresqueグループを読み込むようにします。
-
-```sh
-bundle config set --local with 'redis resque'
-bundle install
-```
-
 次の環境変数またはSettingsを設定(環境変数が優先)することで、Solidシリーズの代わりにRedis(Resque)を使用するようになります。
 
 ```settings.local.yml

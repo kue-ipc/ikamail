@@ -7,22 +7,14 @@ gem "rails", "~> 8.1.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 
-group :mariadb do
-  # Use mariadb-trilogy as the database for Active Record
-  gem "trilogy", "~> 2.7"
-  # Use mariadb-mysql as the database for Active Record
-  # gem "mysql2", "~> 0.5"
-end
-
-group :postgresql, optional: true do
-  # Use postgresql as the database for Active Record
-  gem "pg", "~> 1.1"
-end
-
-group :sqlite3, optional: true do
-  # Use sqlite3 as the database for Active Record
-  gem "sqlite3", ">= 2.1"
-end
+# Use mariadb-trilogy as the database for Active Record
+gem "trilogy", "~> 2.7"
+# Use mariadb-mysql as the database for Active Record
+gem "mysql2", "~> 0.5"
+# Use postgresql as the database for Active Record
+gem "pg", "~> 1.1"
+# Use sqlite3 as the database for Active Record
+gem "sqlite3", ">= 2.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -43,15 +35,10 @@ gem "cssbundling-rails"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-group :solid do
-  # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-  gem "solid_cache"
-  gem "solid_queue"
-  gem "solid_cable"
-
-  # Mission Control Jobs
-  gem "mission_control-jobs"
-end
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -115,20 +102,18 @@ gem "octicons_helper"
 # Ransack
 gem "ransack"
 
+# Mission Control Jobs
+gem "mission_control-jobs"
+
+# Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
+gem "redis", ">= 4.0.1"
+# Resque
+gem "resque"
+gem "resque-scheduler"
+
 # Bundled gem
 gem "csv"
 gem "nkf"
-
-group :redis, :resque, optional: true do
-  # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
-  gem "redis", ">= 4.0.1"
-end
-
-group :resque, optional: true do
-  # Resque
-  gem "resque"
-  gem "resque-scheduler"
-end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
