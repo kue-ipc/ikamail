@@ -7,9 +7,10 @@ div
 div
   - case Rails.application.config.active_job.queue_adapter
   - in :solid_queue
-    = link_to "ジョブ状態", mission_control_jobs_path, class: "btn btn-link", role: "button"
+    = link_to "ジョブ状態", mission_control_jobs_path, class: "btn btn-link", role: "button", target: "_blank",
+        rel: "noopener"
   - in :resque
-    = link_to "ジョブ状態", resque_server_path, class: "btn btn-link", role: "button"
+    = link_to "ジョブ状態", resque_server_path, class: "btn btn-link", role: "button", target: "_blank", rel: "noopener"
   - else
     = link_to "ジョブ状態", "#", class: "btn btn-link disabled", role: "button", aria: {disabled: "true"}
 
