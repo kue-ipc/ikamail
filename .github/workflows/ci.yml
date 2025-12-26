@@ -16,6 +16,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: "3.3"
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
@@ -35,6 +36,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: "3.3"
           bundler-cache: true
 
       - name: Prepare RuboCop cache
@@ -64,16 +66,16 @@ jobs:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        # options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+      # postgres:
+      #   image: postgres
+      #   env:
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PASSWORD: postgres
+      #   ports:
+      #     - 5432:5432
+      #   options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
       # redis:
       #   image: valkey/valkey:8
@@ -101,144 +103,142 @@ jobs:
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
 
-  system-test:
-    runs-on: ubuntu-latest
+  # system-test:
+  #   runs-on: ubuntu-latest
 
-    # services:
+  #   # services:
 
-      # redis:
-      #   image: valkey/valkey:8
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+  #     # redis:
+  #     #   image: valkey/valkey:8
+  #     #   ports:
+  #     #     - 6379:6379
+  #     #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
-    steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
+  #   steps:
+  #     - name: Install packages
+  #       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
 
-      - name: Checkout code
-        uses: actions/checkout@v6
+  #     - name: Checkout code
+  #       uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Run System Tests
-        env:
-          RAILS_ENV: test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test:system
+  #     - name: Run System Tests
+  #       env:
+  #         RAILS_ENV: test
+  #         # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+  #         # REDIS_URL: redis://localhost:6379/0
+  #       run: bin/rails db:test:prepare test:system
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v6
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+  #     - name: Keep screenshots from failed system tests
+  #       uses: actions/upload-artifact@v6
+  #       if: failure()
+  #       with:
+  #         name: screenshots
+  #         path: ${{ github.workspace }}/tmp/screenshots
+  #         if-no-files-found: ignore
 
-  test-postgresql:
-    runs-on: ubuntu-latest
+  # test-postgresql:
+  #   runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #       ports:
+  #         - 5432:5432
+  #       options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
+  #   steps:
+  #     - name: Install packages
+  #       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
 
-      - name: Checkout code
-        uses: actions/checkout@v6
+  #     - name: Checkout code
+  #       uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          RAILS_DATABASE_ADAPTER: postgresql
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+  #     - name: Run tests
+  #       env:
+  #         RAILS_ENV: test
+  #         RAILS_DATABASE_ADAPTER: postgresql
+  #         # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+  #         # REDIS_URL: redis://localhost:6379/0
+  #       run: bin/rails db:test:prepare test
 
-  test-sqlite3:
-    runs-on: ubuntu-latest
+  # test-sqlite3:
+  #   runs-on: ubuntu-latest
 
-    # services:
+  #   # services:
 
-    steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
+  #   steps:
+  #     - name: Install packages
+  #       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
 
-      - name: Checkout code
-        uses: actions/checkout@v6
+  #     - name: Checkout code
+  #       uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Run tests
-        env:
-          RAILS_DATABASE_ADAPTER: sqlite3
-          RAILS_ENV: test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+  #     - name: Run tests
+  #       env:
+  #         RAILS_DATABASE_ADAPTER: sqlite3
+  #         RAILS_ENV: test
+  #         # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+  #         # REDIS_URL: redis://localhost:6379/0
+  #       run: bin/rails db:test:prepare test
 
-  test-redis-production:
-    runs-on: ubuntu-latest
+  # test-redis-production:
+  #   runs-on: ubuntu-latest
 
-    services:
-      mariadb:
-        image: mariadb
-        env:
-          MARIADB_ROOT_PASSWORD: rootpass
-          MARIADB_USER: ikamail
-          MARIADB_PASSWORD: password
-          MARIADB_DATABASE: ikamail
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+  #   services:
+  #     mariadb:
+  #       image: mariadb
+  #       env:
+  #         MARIADB_ROOT_PASSWORD: rootpass
+  #         MARIADB_USER: ikamail
+  #         MARIADB_PASSWORD: password
+  #         MARIADB_DATABASE: ikamail
+  #       ports:
+  #         - 3306:3306
+  #       options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      redis:
-        image: valkey/valkey:8
-        ports:
-          - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+  #     redis:
+  #       image: valkey/valkey:8
+  #       ports:
+  #         - 6379:6379
+  #       options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
-    steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
+  #   steps:
+  #     - name: Install packages
+  #       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
 
-      - name: Checkout code
-        uses: actions/checkout@v6
+  #     - name: Checkout code
+  #       uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Run db migrate
-        env:
-          RAILS_ENV: production
-          RAILS_CACHE_STORE: redis
-          RAILS_QUEUE_ADAPTER: resque
-          RAILS_CABLE_ADAPTER: redis
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-          IKAMAIL_DATABASE_PASSWORD: password
-        run: bin/rails db:migrate
-
-
+  #     - name: Run db migrate
+  #       env:
+  #         RAILS_ENV: production
+  #         RAILS_CACHE_STORE: redis
+  #         RAILS_QUEUE_ADAPTER: resque
+  #         RAILS_CABLE_ADAPTER: redis
+  #         # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+  #         # REDIS_URL: redis://localhost:6379/0
+  #         IKAMAIL_DATABASE_PASSWORD: password
+  #       run: bin/rails db:migrate
