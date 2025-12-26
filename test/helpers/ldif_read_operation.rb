@@ -41,7 +41,7 @@ class LdifReadOperation < LDAP::Server::Operation
   end
 
   # NOTE: sned_SearchResultEntry is not support '+' attributes
-  def send_SearchResultEntry(dn, avs, opt={})
+  def send_SearchResultEntry(dn, avs, opt = {})
     @attributes.delete("+")
     super
   end
@@ -77,7 +77,7 @@ class LdifReadOperation < LDAP::Server::Operation
   def compare(entry, attr, val)
     entry = entry.downcase
     if @schema
-      attr  = @schema.find_attrtype(attr ).to_s
+      attr  = @schema.find_attrtype(attr).to_s
     end
 
     entry_data = @data[entry]

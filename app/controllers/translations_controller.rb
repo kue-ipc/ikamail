@@ -26,7 +26,7 @@ class TranslationsController < ApplicationController
       I18n.backend.reload!
       render :show, status: :created
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 
@@ -35,7 +35,7 @@ class TranslationsController < ApplicationController
       I18n.backend.reload!
       render :show, status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 
@@ -48,7 +48,7 @@ class TranslationsController < ApplicationController
         value: I18n.t(@translation.key, locale: @translation.locale))
       render :show, status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 
