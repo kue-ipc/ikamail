@@ -1,6 +1,0 @@
-#!/bin/sh
-
-cd $IKAMAIL
-
-bundle exec rails server
-bundle exec bin/delayed_job -n 2 start

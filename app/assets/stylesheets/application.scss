@@ -1,0 +1,77 @@
+@use "sass:color";
+@use "font";
+@use "bootstrap/scss/bootstrap" with (
+  // font-family
+  $font-family-sans-serif: font.$font-family-sans-serif,
+  $font-family-monospace: font.$font-family-monospace,
+  $font-family-base: font.$font-family-base,
+  $font-family-code: font.$font-family-code
+);
+@use "bootstrap-icons/font/bootstrap-icons";
+@use "@primer/octicons/build/build";
+
+// rails
+
+form.button_to {
+  display: inline-block;
+}
+
+// bootstrap_form
+
+.rails-bootstrap-forms-date-select select,
+.rails-bootstrap-forms-time-select select,
+.rails-bootstrap-forms-datetime-select select {
+  display: inline-block;
+  width: auto;
+}
+
+.rails-bootstrap-forms-error-summary {
+  margin-top: 10px;
+}
+
+// other
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+a,
+.btn-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+pre.mail-body {
+  font-size: 1rem;
+}
+
+.mail-subject {
+  font-family: font.$font-family-monospace;
+}
+
+textarea.form-control.scroll-y {
+  overflow-y: scroll;
+}
+
+pre.line-76-80 {
+  position: relative;
+
+  &::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    margin-left: 38rem;
+    content: "<76 <80";
+    color: bootstrap.$gray-400;
+    border-left: dashed 1px bootstrap.$gray-400;
+    border-right: solid 1px bootstrap.$gray-400;
+    width: 2rem;
+    height: 100%;
+    z-index: 1;
+  }
+}

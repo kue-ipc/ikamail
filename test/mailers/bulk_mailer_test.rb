@@ -1,6 +1,9 @@
 require "test_helper"
+require "helpers/jis_helper"
 
 class BulkMailerTest < ActionMailer::TestCase
+  include JisHelper
+
   test "all" do
     mail = BulkMailer.with(bulk_mail: bulk_mails(:mail)).all
     assert_equal u8tomjis("【全】テスト全ユーザーオール"), mail.subject

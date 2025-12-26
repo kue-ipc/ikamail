@@ -1,0 +1,13 @@
+import { Application } from "@hotwired/stimulus"
+
+declare global
+  var Stimulus: Application
+  var RAILS_ENV: string
+
+application := Application.start()
+
+// Configure Stimulus development experience
+application.debug = RAILS_ENV is not "production"
+window.Stimulus = application
+
+export { application }

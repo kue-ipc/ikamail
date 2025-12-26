@@ -1,6 +1,3 @@
-require "resque/server"
-require "resque/scheduler/server"
-
 Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
   root to: "pages#top"
 
@@ -60,7 +57,17 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
 
   devise_for :users
 
-  authenticated :user, ->(user) { user.admin? } do
-    mount Resque::Server, at: "/admin/jobs"
+  case Rails.application.config.active_job.queue_adapter
+  in :solid_queue
+    mount MissionControl::Jobs::Engine, at: "/admin/jobs"
+  in :resque
+    require "resque/server"
+    require "resque/scheduler/server"
+
+    authenticated :user, ->(user) { user.admin? } do
+      mount Resque::Server, at: "/admin/jobs"
+    end
+  else
+    # not mounted
   end
 end

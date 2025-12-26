@@ -1,4 +1,0 @@
-#!/bin/bash
-
-$IKAMAIL_ROOT/scripts/stop
-$IKAMAIL_ROOT/scripts/start

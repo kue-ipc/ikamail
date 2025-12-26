@@ -1,0 +1,16 @@
+[Unit]
+Description=Ikamail Web App
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/ikamail
+WorkingDirectory=/opt/ikamail
+User=ikamail
+Group=ikamail
+PIDFile=/opt/ikamail/tmp/pids/server.pid
+ExecStart=/opt/ikamail/bin/rails server -e $RAILS_ENV
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

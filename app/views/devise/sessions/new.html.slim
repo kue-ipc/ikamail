@@ -1,16 +1,12 @@
-h2
-  = t(".sign_in")
+h2 = t(".sign_in")
 
-= bootstrap_form_with model: resource, as: resource_name, url: session_path(resource_name), data: {turbo: false} do |f|
-  fieldset#login-fieldset disabled=true
-    = f.text_field :username, autofocus: true, autocomplete: "username"
-    = f.password_field :password, autocomplete: "current-password"
-    - if devise_mapping.rememberable?
-      = f.check_box :remember_me
-    .actions
-      = f.primary t(".sign_in"), id: "login-submit", disabled: true
+= bootstrap_form_with model: resource, as: resource_name, url: session_path(resource_name), class: "mb-3" do |f|
+  = f.text_field :username, autofocus: true, autocomplete: "username"
+  = f.password_field :password, autocomplete: "current-password"
+  - if devise_mapping.rememberable?
+    = f.check_box :remember_me
+  .actions
+    = f.primary t(".sign_in"), id: "login-submit"
+
+hr
 = render "devise/shared/links"
-
-javascript:
-  if (typeof globalThis !== "undefined")
-    ["login-fieldset", "login-submit"].forEach(function(id) {document.getElementById(id).disabled = false;});

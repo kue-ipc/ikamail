@@ -2,9 +2,9 @@ class User < ApplicationRecord
   # Include default devise modules.
   # :database_authenticatable or :ldap_authenticatable
   # Others available are:
-  # :confirmable, :registerable, :recoverable, :validatable
-  # and :omniauthable, :lockable, :trackable
-  devise :ldap_authenticatable, :rememberable, :timeoutable
+  # :confirmable, :trackable and :omniauthable
+  # :registerable, :recoverable, :validatable
+  devise :ldap_authenticatable, :rememberable, :lockable, :timeoutable
 
   enum :role, {user: 0, admin: 1}
 
@@ -25,16 +25,33 @@ class User < ApplicationRecord
   def ldap_entry
     return if deleted
 
-    @ldap_entry ||= Devise::LDAP::Adapter.get_ldap_entry(username)
+    unless @ldap_entry_has
+      @ldap_entry = Devise::LDAP::Adapter.get_ldap_entry(username)
+      @ldap_entry_has = true
+    end
+    @ldap_entry
+  end
+
+  def ldap_param(name, multi: false)
+    if multi
+      ldap_entry&.[](name)
+    else
+      ldap_entry&.first(name)
+    end
   end
 
   def ldap_mail
-    ldap_entry&.[]("mail")&.first&.downcase
+    ldap_param("mail")&.downcase
   end
 
   def ldap_display_name
-    ldap_entry&.[]("displayName;lang-#{I18n.default_locale}")&.first ||
-      ldap_entry&.[]("displayName")&.first
+    list = ["displayName"]
+    list << "displayName;lang-#{I18n.default_locale}"
+    list << "jaDisplayName" if I18n.default_locale == :ja
+    list.reverse.each do |name|
+      ldap_param(name).presence&.then { |value| return value }
+    end
+    nil
   end
 
   def sync_ldap!

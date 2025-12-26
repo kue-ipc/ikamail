@@ -1,32 +1,30 @@
 {
   "name": "ikamail",
   "private": true,
+  "scripts": {
+    "build": "node esbuild.build.mjs",
+    "build:css": "sass ./app/assets/stylesheets/:./app/assets/builds/ --no-source-map --load-path=node_modules --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions --silence-deprecation=if-function",
+    "lint:css": "stylelint ./app/assets/stylesheets/"
+  },
+  "browserslist": [
+    "defaults"
+  ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.20",
     "@popperjs/core": "^2.11.8",
-    "@primer/octicons": "^19.20.0",
+    "@primer/octicons": "^19.21.1",
     "bootstrap": "^5.3.8",
-    "coffeescript": "^2.7.0",
-    "esbuild": "^0.25.12",
-    "esbuild-coffeescript": "3.0.1",
-    "sass": "^1.93.3"
-  },
-  "version": "0.1.0",
-  "browserslist": [
-    "defaults"
-  ],
-  "scripts": {
-    "build": "node esbuild.build.mjs",
-    "build:css": "sass ./app/assets/stylesheets/application.sass:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "lint": "coffeelint ./app/javascript/; stylelint ./app/assets/stylesheets/"
+    "bootstrap-icons": "^1.13.1"
   },
   "devDependencies": {
-    "@coffeelint/cli": "^5.2.11",
-    "postcss-sass": "^0.5.0",
-    "stylelint": "^16.25.0",
+    "@danielx/civet": "^0.11.1",
+    "@types/bootstrap": "^5.2.10",
+    "esbuild": "^0.27.2",
+    "sass": "^1.97.1",
+    "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
-    "stylelint-config-standard-scss": "^16.0.0"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+    "stylelint-config-standard-scss": "^16.0.0",
+    "typescript": "^5.9.3"
+  }
 }

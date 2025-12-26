@@ -1,21 +1,54 @@
 ## ActiveLdap
 # Can not use yaml aliases
-<% %w[development test production].each do |env| %>
-<%= env %>:
-  host: <%= Settings.ldap.host.to_json %>
-  port: <%= Settings.ldap.port.to_json %>
-  base: <%= Settings.ldap.base.to_json %>
-<% if Settings.ldap.auth == 'simple' %>
+
+development:
+  base: dc=example,dc=jp
   allow_anonymous: false
-  bind_dn: <%= (Rails.application.credentials.dig(:ldap, :username) || Settings.ldap.username).to_json %>
-  password: <%= (Rails.application.credentials.dig(:ldap, :password) || Settings.ldap.password).to_json %>
+  bind_dn: cn=admin,dc=example,dc=jp
+  password: admin_password
+
+test:
+  port: 1389
+  base: dc=example,dc=jp
+  allow_anonymous: false
+  bind_dn: cn=admin,dc=example,dc=jp
+  password: admin_password
+
+<%
+require "uri"
+
+ldap_uri = ENV["LDAP_URL"]&.then { |str| URI(str) }
+
+ldap_protocol = ldap_uri&.scheme || Settings.ldap.protocol.presence || "ldap"
+ldap_host = ldap_uri&.host || Settings.ldap.host || "localhost"
+ldap_port = ldap_uri&.port || Settings.ldap.port ||
+  case ldap_protocol
+  in "ldap" then 389
+  in "ldaps" then 636
+  end
+ldap_base = ldap_uri&.dn.presence&.then { |str| URI.decode_www_form_component(str) } ||
+  Settings.ldap.base
+ldap_username = ldap_uri&.user&.then { |str| URI.decode_www_form_component(str) } ||
+  Rails.application.credentials.dig(:ldap, :username)
+ldap_password = ldap_uri&.password&.then { |str| URI.decode_www_form_component(str) } ||
+  Rails.application.credentials.dig(:ldap, :password)
+%>
+
+production:
+  host: <%= ldap_host %>
+  port: <%= ldap_port %>
+<% if ldap_protocol == "ldaps" %>
+  method: :ssl
+<% elsif ldap_host != "localhost" %>
+  method: :tls
+<% else %>
+  method: :plain
+<% end %>
+  base: <%= ldap_base.to_json %>
+<% if ldap_username %>
+  allow_anonymous: false
+  bind_dn: <%= ldap_username.to_json %>
+  password: <%= ldap_password.to_json %>
 <% else %>
   allow_anonymous: true
-<% end %>
-  method: :<%=
-    case Settings.ldap.encryption
-    when 'simple_tls' then 'ssl'
-    when 'start_tls' then 'tls'
-    else 'plain'
-    end %>
 <% end %>

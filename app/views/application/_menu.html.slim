@@ -1,9 +1,0 @@
-aside.sidebar
-  ul.nav.flex-column
-    - menu_list.each do |item|
-      li.nav-item
-        = link_to item[:label], item[:path], class: ["nav-link", current_page?(item[:path]) ? "active" : nil]
-  hr
-  ul.nav.flex-column
-    li.nav-item
-      = button_to t("devise.sessions.destroy.sign_out"), destroy_user_session_path, method: :delete, class: "nav-link"

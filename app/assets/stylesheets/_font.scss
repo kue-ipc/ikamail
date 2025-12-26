@@ -1,0 +1,9 @@
+// Japanese fonts
+$font-family-sans-serif: "BIZ UDPGothic", "Noto Sans CJK JP", "Noto Sans JP", "Noto Sans", "Source Han Sans JP",
+  "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic StdN", "Meiryo", sans-serif;
+$font-family-serif: "BIZ UDPMincho", "Noto Serif CJK JP", "Noto Serif JP", "Noto Serif", "Hiragino Mincho ProN",
+  "Hiragino Mincho StdN", serif;
+$font-family-monospace: "BIZ UDGothic", "Noto Sans Mono", monospace;
+$font-family-base: $font-family-sans-serif;
+$font-family-code: "Cascadia Code", "Fira Code VF", "Fira Code", "Source Code Variable", "Source Code Pro",
+  $font-family-monospace;

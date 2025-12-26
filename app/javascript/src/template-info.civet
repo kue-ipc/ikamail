@@ -1,0 +1,53 @@
+export default templateInfo := (root: Element | Document = document)->
+  // TODO: turbo-frame対応
+  //       離れているtemplate-infoは更新されないから、それを含めて作り直すこと
+  return if root is not document
+
+  templateInfoEl := document.getElementById("template-info")
+  return unless templateInfoEl?
+
+  console.debug `template info`
+
+  descriptionEls := document.getElementsByClassName("template-info-description")
+  nameEls := document.getElementsByClassName("template-info-name")
+  recipientListEls := document.getElementsByClassName("template-info-recipient-list")
+  userEls := document.getElementsByClassName("template-info-user")
+  reservedTimeEls := document.getElementsByClassName("template-info-reserved-time")
+
+  listJson := templateInfoEl.getAttribute("data-list")
+  throw new Error("Template info has no data-list attribute") unless listJson?
+  list := JSON.parse(listJson)
+  targetId := templateInfoEl.getAttribute("data-target")
+  throw new Error("Tempalet info has no data-tanrget") unless targetId?
+
+  targetEl := document.getElementById(targetId)
+  throw new Error("Template info target element not found") unless targetEl <? HTMLOptionElement
+
+  changeSelect := ->
+    selectedId := targetEl.value
+    if /^\d+$/.test(selectedId)
+      selected := list[selectedId]
+      for each el of descriptionEls when el <? HTMLElement
+        el.innerText = selected.description
+      for each el of nameEls when el <? HTMLElement
+        el.textContent = selected.name
+      for each el of recipientListEls when el <? HTMLElement
+        el.textContent = selected.recipient_list
+      for each el of userEls when el <? HTMLElement
+        el.textContent = selected.user
+      for each el of reservedTimeEls when el <? HTMLElement
+        el.textContent = selected.reserved_time
+    else
+      for each el of descriptionEls when el <? HTMLElement
+        el.innerText = ""
+      for each el of nameEls when el <? HTMLElement
+        el.textContent = "-"
+      for each el of recipientListEls when el <? HTMLElement
+        el.textContent = "-"
+      for each el of userEls when el <? HTMLElement
+        el.textContent = "-"
+      for each el of reservedTimeEls when el <? HTMLElement
+        el.textContent = "-"
+
+  targetEl.addEventListener "change", changeSelect
+  changeSelect()

@@ -1,0 +1,9 @@
+development:
+  url: localhost:6379
+  namespace: ikamail:resque
+test:
+  url: localhost:6379
+  namespace: ikamail:resque
+production:
+  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/0") %>
+  namespace: ikamail:resque

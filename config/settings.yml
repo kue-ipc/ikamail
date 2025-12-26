@@ -1,27 +1,7 @@
-database:
-  # credentials
-  username: admin
-  # credentials
-  password: admin_password
-  host: localhost
-  # database: <same database in development and production>
-## Authorizations LDAP
-# Uncomment out the merging for each environment that you'd like to include.
-# You can also just copy and paste the tree (do not include the "authorizations") to each
-# environment if you need something different per environment.
+# database:
+#   adapter: trilogy
+#   host: localhost
 ldap:
-  host: localhost
-  port: 389
-  # auth: anonymous
-  auth: simple
-  # credentials
-  username: cn=admin,dc=example,dc=jp
-  # credentials
-  password: admin_password
-  base: dc=example,dc=jp
-  encryption: null
-  # encryption: simple_tls
-  # encryption: start_tls
   user:
     dn: uid
     ou: ou=people

@@ -1,0 +1,5 @@
+# RAILS
+RAILS_ENV=production
+#SECRET_KEY_BASE=
+#DATABASE_URL=trilogy://user:pass@localhost/ikamail
+#LDAP_URL=ldap://user:pass@host/dc=example,dc=jp

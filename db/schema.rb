@@ -10,34 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_01_073137) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_07_063616) do
   create_table "action_logs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "bulk_mail_id", null: false
-    t.bigint "user_id"
     t.integer "action", null: false
+    t.bigint "bulk_mail_id", null: false
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["action"], name: "index_action_logs_on_action"
     t.index ["bulk_mail_id"], name: "index_action_logs_on_bulk_mail_id"
     t.index ["user_id"], name: "index_action_logs_on_user_id"
   end
 
   create_table "bulk_mails", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "mail_template_id", null: false
-    t.integer "delivery_timing", null: false
-    t.string "subject", null: false
     t.text "body", null: false
-    t.datetime "delivered_at", precision: nil
-    t.integer "number"
-    t.integer "status", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "delivered_at", precision: nil
+    t.integer "delivery_timing", null: false
+    t.bigint "mail_template_id", null: false
+    t.integer "number"
+    t.integer "reservation_number"
     t.datetime "reserved_at", precision: nil
+    t.integer "status", null: false
+    t.string "subject", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.integer "wrap_col", default: 0, null: false
     t.integer "wrap_rule", default: 0, null: false
-    t.integer "reservation_number"
     t.index ["delivery_timing"], name: "index_bulk_mails_on_delivery_timing"
     t.index ["mail_template_id"], name: "index_bulk_mails_on_mail_template_id"
     t.index ["status"], name: "index_bulk_mails_on_status"
@@ -45,9 +45,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_073137) do
   end
 
   create_table "mail_groups", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "display_name"
     t.datetime "created_at", null: false
+    t.string "display_name"
+    t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_mail_groups_on_name", unique: true
   end
@@ -61,10 +61,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_073137) do
   end
 
   create_table "mail_memberships", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "mail_user_id", null: false
-    t.bigint "mail_group_id", null: false
-    t.boolean "primary", null: false
     t.datetime "created_at", null: false
+    t.bigint "mail_group_id", null: false
+    t.bigint "mail_user_id", null: false
+    t.boolean "primary", null: false
     t.datetime "updated_at", null: false
     t.index ["mail_group_id"], name: "index_mail_memberships_on_mail_group_id"
     t.index ["mail_user_id", "mail_group_id"], name: "index_mail_memberships_on_mail_user_id_and_mail_group_id"
@@ -72,51 +72,51 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_073137) do
   end
 
   create_table "mail_templates", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "name", null: false
+    t.text "body_footer"
+    t.text "body_header"
+    t.integer "count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.text "description"
     t.boolean "enabled", default: true, null: false
-    t.bigint "user_id", null: false
-    t.bigint "recipient_list_id", null: false
-    t.string "from_name"
     t.string "from_mail_address", null: false
+    t.string "from_name"
+    t.string "name", null: false
+    t.bigint "recipient_list_id", null: false
+    t.time "reserved_time", null: false
     t.string "subject_prefix"
     t.string "subject_suffix"
-    t.text "body_header"
-    t.text "body_footer"
-    t.integer "count", default: 0, null: false
-    t.time "reserved_time", null: false
-    t.text "description"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["name"], name: "index_mail_templates_on_name", unique: true
     t.index ["recipient_list_id"], name: "index_mail_templates_on_recipient_list_id"
     t.index ["user_id"], name: "index_mail_templates_on_user_id"
   end
 
   create_table "mail_users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "display_name"
     t.string "mail", null: false
     t.string "name", null: false
-    t.string "display_name"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mail"], name: "index_mail_users_on_mail", unique: true
     t.index ["name"], name: "index_mail_users_on_name", unique: true
   end
 
   create_table "recipient_lists", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.boolean "collected", default: false, null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_recipient_lists_on_name", unique: true
   end
 
   create_table "recipients", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "recipient_list_id", null: false
-    t.bigint "mail_user_id", null: false
-    t.boolean "included", default: false, null: false
-    t.boolean "excluded", default: false, null: false
     t.datetime "created_at", null: false
+    t.boolean "excluded", default: false, null: false
+    t.boolean "included", default: false, null: false
+    t.bigint "mail_user_id", null: false
+    t.bigint "recipient_list_id", null: false
     t.datetime "updated_at", null: false
     t.index ["mail_user_id"], name: "index_recipients_on_mail_user_id"
     t.index ["recipient_list_id", "mail_user_id"], name: "index_recipients_on_recipient_list_id_and_mail_user_id", unique: true
@@ -124,27 +124,31 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_073137) do
   end
 
   create_table "translations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "locale"
-    t.string "key"
-    t.text "value"
+    t.datetime "created_at", null: false
     t.text "interpolations"
     t.boolean "is_proc", default: false
-    t.datetime "created_at", null: false
+    t.string "key"
+    t.string "locale"
     t.datetime "updated_at", null: false
+    t.text "value"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "username", null: false
-    t.string "email", null: false
-    t.string "fullname"
-    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
     t.boolean "deleted", default: false, null: false
+    t.string "email", null: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "fullname"
+    t.datetime "locked_at"
     t.datetime "remember_created_at", precision: nil
     t.string "remember_token"
-    t.datetime "created_at", null: false
+    t.integer "role", default: 0, null: false
+    t.string "unlock_token"
     t.datetime "updated_at", null: false
+    t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

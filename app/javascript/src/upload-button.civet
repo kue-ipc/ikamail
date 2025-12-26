@@ -1,0 +1,24 @@
+export default uploadButton := (root: Element | Document = document) ->
+  for each form of root.getElementsByTagName("FORM") when form <? HTMLFormElement
+    uploadButton .= null
+    fileInput .= null
+    for each el of form.elements when el <? HTMLInputElement or el <? HTMLButtonElement
+      if el.name is "upload" and el.tagName.toUpperCase() is "BUTTON"
+        uploadButton = el
+      else if el.name is "file" and el.tagName.toUpperCase() is "INPUT" and el <? HTMLInputElement
+        fileInput = el
+
+    if uploadButton? and fileInput?
+      console.debug `upload button`
+      addUploadEvent(form, uploadButton, fileInput)
+
+addUploadEvent := (form: HTMLFormElement, uploadButton: HTMLInputElement | HTMLButtonElement,
+  fileInput: HTMLInputElement) ->
+  return if form.classList.contains("ready-upload")
+
+  form.classList.add("ready-upload")
+  uploadButton.addEventListener "click", (e) ->
+    e.preventDefault()
+    fileInput.click()
+  fileInput.addEventListener "change", (e) ->
+    form.submit()

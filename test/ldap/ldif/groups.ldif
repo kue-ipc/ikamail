@@ -1,0 +1,34 @@
+# OpenLdap and DS389
+# ldapadd -x -h localhost -p 389 -D "cn=admin,dc=example,dc=jp" -w admin_password -f groups.ldif
+
+version: 1
+
+dn: cn=admin,ou=groups,dc=example,dc=jp
+objectClass: posixGroup
+objectClass: top
+cn: admin
+gidNumber: 1
+description: administrator
+
+dn: cn=staff,ou=groups,dc=example,dc=jp
+objectClass: posixGroup
+objectClass: top
+cn: staff
+gidNumber: 10
+description: staff
+memberUid: user01
+
+dn: cn=user,ou=groups,dc=example,dc=jp
+objectClass: posixGroup
+objectClass: top
+cn: user
+gidNumber: 100
+description: general user
+
+dn: cn=other,ou=groups,dc=example,dc=jp
+objectClass: posixGroup
+objectClass: top
+cn: other
+gidNumber: 1001
+description: other
+memberUid: user04

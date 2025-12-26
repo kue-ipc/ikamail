@@ -7,11 +7,11 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module Ikamail
-  VERSION = "0.8.5"
+  VERSION = "1.0.0-alpha"
 
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.1
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -25,10 +25,13 @@ module Ikamail
     #
     config.time_zone = "Tokyo"
     config.active_record.default_timezone = :local
+
     # config.eager_load_paths << Rails.root.join("extras")
 
     # pundit NotAuthorizedError => forbidden
-    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] =
-      :forbidden
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
+
+    # Disable Active Storage variants.
+    config.active_storage.variant_processor = :disabled
   end
 end

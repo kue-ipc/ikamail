@@ -50,9 +50,10 @@ ja:
     delete_all: 全削除
     download_list: リストのダウンロード
     collect: 収集
-    start: 開始
     sync: 同期
     ldap_sync: LDAP同期
+    sign_in: ログイン
+    sign_out: ログアウト
 
   do_actions:
     close: 閉じる
@@ -253,6 +254,7 @@ ja:
       action_log:
         comment: コメント
       user:
+        username: ユーザー名
         fullname: フルネーム
         admin?: 管理者権限
       mail_user:
@@ -455,3 +457,8 @@ ja:
         宛先リストの対象に含めるメールユーザーのリストです。「対象グループ」の所属に関係なく、このリスト内のユーザーは配信の対象になります。ただし、「除外するユーザー」に記載の場合はそちらが優先されます。
       excluded: |
         宛先リストの対象から除外するメールユーザーのリストです。「対象グループ」の所属や「含めるユーザー」に関係なく、このリストに記載されているユーザーは配信の対象になりません。
+
+  # override devise messages
+  devise:
+    failure:
+      unauthenticated: ログインしてください。

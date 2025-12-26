@@ -1,9 +1,12 @@
-h2
-  = t(".resend_unlock_instructions")
+h2 = t(".resend_unlock_instructions")
 
-= bootstrap_form_with model: resource, as: resource_name, url: unlock_path(resource_name), data: {turbo: false} do |f|
+= bootstrap_form_with model: resource, as: resource_name, url: unlock_path(resource_name), class: "mb-3",
+  html: {method: :post} do |f|
   = render "devise/shared/error_messages", resource: resource
+
   = f.email_field :email, autofocus: true, autocomplete: "email"
   .actions
     = f.primary t(".resend_unlock_instructions")
+
+hr
 = render "devise/shared/links"

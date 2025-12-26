@@ -1,7 +1,11 @@
 require "test_helper"
+require "helpers/jis_helper"
+require "helpers/mail_helper"
 
 class BulkMailsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  include JisHelper
+  include MailHelper
 
   setup do
     @bulk_mail = bulk_mails(:mail)
