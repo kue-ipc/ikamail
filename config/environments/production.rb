@@ -67,7 +67,6 @@ Rails.application.configure do
   # Replace the default in-process and non-durable queuing backend for Active Job.
   case ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter)
   in "solid"
-    Bundler.require(:solid)
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.connects_to = {database: {writing: :queue}}
   in "resque"
