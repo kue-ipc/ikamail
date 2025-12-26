@@ -6,6 +6,10 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# TODO: Remove this patch when Rails 8.1.2 or later is required.
+require "fix_redis_cache_store"
+FixRedisCacheStore.load
+
 module Ikamail
   VERSION = "1.0.0-alpha"
 
