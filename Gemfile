@@ -72,7 +72,7 @@ gem "activeldap", require: "active_ldap/railtie"
 gem "net-ldap"
 
 # I18n
-gem "rails-i18n", "~> 8.0.0"
+gem "rails-i18n", "~> 8.1.0"
 gem "devise-i18n"
 gem "i18n-active_record", require: "i18n/active_record"
 
