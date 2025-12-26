@@ -51,6 +51,10 @@ Rails.application.configure do
   in "solid"
     config.cache_store = :solid_cache_store
   in "redis"
+    # TODO: Remove this patch when Rails 8.1.2 or later is required.
+    require "fix_redis_cache_store"
+    FixRedisCacheStore.load
+
     config.cache_store = :redis_cache_store, {
       url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0"),
       namespace: "ikamail:cache",
