@@ -9,29 +9,19 @@ test:
   adapter: test
 
 production:
-<%
-case ENV.fetch("RAILS_CABLE_ADAPTER", Settings.cable&.adatper)
-in "solid"
-  require "solid_cable"
-%>
+<% case ENV.fetch("RAILS_CABLE_ADAPTER", Settings.cable&.adatper)
+   in "solid" %>
   adapter: solid_cable
   connects_to:
     database:
       writing: cable
   polling_interval: 0.1.seconds
   message_retention: 1.day
-<%
-in "redis"
-  require "redis"
-%>
+<% in "redis" %>
   adapter: redis
   url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/0") %>
   channel_prefix: ikamail:cable
-<%
-else
-  Rails.logger.debug("Using default Action Cable adapter: :async")
-%>
+<% else
+     Rails.logger.debug("Using default Action Cable adapter: :async") %>
   adapter: async
-<%
-end
-%>
+<% end %>
