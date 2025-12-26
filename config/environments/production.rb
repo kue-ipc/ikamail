@@ -68,7 +68,11 @@ Rails.application.configure do
   case ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter)
   in "solid"
     config.active_job.queue_adapter = :solid_queue
+    # solid_queue configuration
     config.solid_queue.connects_to = {database: {writing: :queue}}
+    # mission_control-jobs configuration
+    config.mission_control.jobs.base_controller_class = "AdminController"
+    config.mission_control.jobs.http_basic_auth_enabled = false
   in "resque"
     config.active_job.queue_adapter = :resque
   else
