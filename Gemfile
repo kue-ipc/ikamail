@@ -12,7 +12,7 @@ gem "trilogy", "~> 2.7"
 # Use mariadb-mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.6"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
 
