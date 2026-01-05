@@ -69,7 +69,7 @@ class RecipientMailUsersController < ApplicationController
     in :included
       recipients = recipients.where(included: true)
     in :excluded
-      recipients = recipients..where(excluded: true)
+      recipients = recipients.where(excluded: true)
     else
       redirect_to @recipient_list, alert: t("messages.cannot_remove_mail_user_to_recipient_list")
       return
