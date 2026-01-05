@@ -64,20 +64,23 @@ class RecipientMailUsersController < ApplicationController
   # DELETE /recipient_lists/1/mail_users/included/1
   # DELETE /recipient_lists/1/mail_users/included/1.json
   def destroy # rubocop: disable Metrics/MethodLength
-    if [:included, :excluded].exclude?(@type)
-      redirect_to @recipient_list,
-        alert: t("messages.cannot_remove_mail_user_to_recipient_list")
+    recipients = @recipient_list.recipients
+    case @type
+    in :included
+      recipients = recipients.where(included: true)
+    in :excluded
+      recipients = recipients..where(excluded: true)
+    else
+      redirect_to @recipient_list, alert: t("messages.cannot_remove_mail_user_to_recipient_list")
       return
     end
 
-    recipients = @recipient_list.recipients.where(@type => true)
     if params[:mail_user_id]
       recipients = recipients.where(mail_user_id: params[:mail_user_id])
     end
 
     if recipients.count.zero?
-      redirect_to @recipient_list,
-        notice: t("messages.no_mail_user_in_recipent_list")
+      redirect_to @recipient_list, notice: t("messages.no_mail_user_in_recipent_list")
       return
     end
 
@@ -85,14 +88,10 @@ class RecipientMailUsersController < ApplicationController
       @recipient_list.update(collected: false)
       CollectRecipientJob.perform_later(@recipient_list)
       redirect_to @recipient_list,
-        notice: t("messages.success_action",
-          model: t("activerecord.models.mail_user"),
-          action: t("actions.delete"))
+        notice: t("messages.success_action", model: t("activerecord.models.mail_user"), action: t("actions.delete"))
     else
       redirect_to @recipient_list,
-        alert: t("messages.failure_action",
-          model: t("activerecord.models.mail_user"),
-          action: t("actions.delete"))
+        alert: t("messages.failure_action", model: t("activerecord.models.mail_user"), action: t("actions.delete"))
     end
   end
 
