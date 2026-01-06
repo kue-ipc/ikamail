@@ -59,8 +59,6 @@ Rails.application.routes.draw do # rubocop: disable Metrics/BlockLength
 
   case Rails.application.config.active_job.queue_adapter
   in :solid_queue
-    require "mission_control/jobs"
-
     mount MissionControl::Jobs::Engine, at: "/admin/jobs"
   in :resque
     require "resque/server"

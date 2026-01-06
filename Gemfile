@@ -103,7 +103,7 @@ gem "octicons_helper"
 gem "ransack"
 
 # Mission Control Jobs
-gem "mission_control-jobs", require: false
+gem "mission_control-jobs"
 
 # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
 gem "redis", ">= 4.0.1", require: false
