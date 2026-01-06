@@ -98,6 +98,12 @@ RAILS_ENV=production bin/rails assets:precompile
         RAILS_CABLE_ADAPTER=redis
         ```
 
+        `bundle install`の前にredisグループとresqueグループを読み込むようにしてください。
+
+        ```sh
+        bundle config set --local with 'redis resque'
+        ```
+
         この場合でも、キャッシュやキューの互換性が保証できないため、Railsの起動前にRedis内のすべてのデータを削除しておいてください。
 
         ```sh

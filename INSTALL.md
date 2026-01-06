@@ -145,6 +145,14 @@ bundle exec whenever --update-crontab
 
 デフォルトはSolid Cache、Solid Queue、Solid Cableを使用しますが、代わりにRedis(Resque)を使用することもできます。
 
+bundleでsolidグループを無効化し、redisグループとresqueグループを有効にします。
+
+```sh
+bundle config set --local with 'redis resque'
+bundle config set --local without 'solid development test'
+bundle install
+```
+
 次の環境変数またはSettingsを設定(環境変数が優先)することで、Solidシリーズの代わりにRedis(Resque)を使用するようになります。
 
 ```settings.local.yml
@@ -161,3 +169,5 @@ RAILS_CACHE_STORE=redis
 RAILS_QUEUE_ADAPTER=resque
 RAILS_CABLE_ADAPTER=redis
 ```
+
+solidとredisを混ぜて使う場合の動作は保証しません。
