@@ -49,13 +49,8 @@ Rails.application.configure do
   # Replace the default in-process memory cache store with a durable alternative.
   case ENV.fetch("RAILS_CACHE_STORE", Settings.cache&.store)
   in "solid"
-    require "solid_cache"
     config.cache_store = :solid_cache_store
   in "redis"
-    require "redis"
-    # TODO: Remove this patch when Rails 8.1.2 or later is required.
-    require "fix_redis_cache_store"
-    FixRedisCacheStore.load
     config.cache_store = :redis_cache_store, {
       url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0"),
       namespace: "ikamail:cache",
@@ -68,8 +63,6 @@ Rails.application.configure do
   # Replace the default in-process and non-durable queuing backend for Active Job.
   case ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter)
   in "solid"
-    require "solid_queue"
-
     config.active_job.queue_adapter = :solid_queue
     # solid_queue configuration
     config.solid_queue.connects_to = {database: {writing: :queue}}
@@ -77,8 +70,6 @@ Rails.application.configure do
     config.mission_control.jobs.base_controller_class = "AdminController"
     config.mission_control.jobs.http_basic_auth_enabled = false
   in "resque"
-    require "resque"
-
     config.active_job.queue_adapter = :resque
   else
     Rails.logger.debug("Using default Active Job queue adapter: :async")

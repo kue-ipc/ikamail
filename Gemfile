@@ -7,14 +7,26 @@ gem "rails", "~> 8.1.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 
-# Use mariadb-trilogy as the database for Active Record
-gem "trilogy", "~> 2.7", require: false
-# Use mariadb-mysql as the database for Active Record
-gem "mysql2", "~> 0.5", require: false
-# Use postgresql as the database for Active Record
-gem "pg", "~> 1.6", require: false
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1", require: false
+group :mariadb do
+  # Use mariadb-trilogy as the database for Active Record
+  gem "trilogy", "~> 2.7"
+end
+
+group :mysql, optional: true do
+  # Use mysql as the database for Active Record
+  gem "mysql2", "~> 0.5"
+end
+
+group :postgresql, optional: true do
+  # Use postgresql as the database for Active Record
+  gem "pg", "~> 1.6"
+end
+
+group :sqlite3, optional: true do
+  # Use sqlite3 as the database for Active Record
+  gem "sqlite3", ">= 2.1"
+end
+
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -35,10 +47,15 @@ gem "cssbundling-rails"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache", require: false
-gem "solid_queue", require: false
-gem "solid_cable", require: false
+group :solid do
+  # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+  gem "solid_cache"
+  gem "solid_queue"
+  gem "solid_cable"
+
+  # Mission Control Jobs
+  gem "mission_control-jobs"
+end
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -102,14 +119,16 @@ gem "octicons_helper"
 # Ransack
 gem "ransack"
 
-# Mission Control Jobs
-gem "mission_control-jobs"
+group :redis, :resque, optional: true do
+  # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
+  gem "redis", ">= 4.0.1"
+end
 
-# Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
-gem "redis", ">= 4.0.1", require: false
-# Resque
-gem "resque", require: false
-gem "resque-scheduler", require: false
+group :resque, optional: true do
+  # Resque
+  gem "resque"
+  gem "resque-scheduler"
+end
 
 # Bundled gem
 gem "csv"
