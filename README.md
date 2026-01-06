@@ -49,11 +49,11 @@ Debian系のパッケージで提供される場合は既に設定されてい�
 
 ## デプロイ
 
-<INSTALL.md>
+[INSTALL.md](INSTALL.md)
 
 ## アップデート
 
-<UPDATE.md>
+[UPDATE.md](UPDATE.md)
 
 ## 制限事項
 
