@@ -57,11 +57,21 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ["3.3"]
-
+        ruby-version: ["3.3", "3.4", "4.0"]
+        node-version: ["22"] # "24"
+        mariadb-version: ["10.11"] # "11.4", "11.8", "12.1"
+        include:
+          # other version node
+          - {ruby-version: "3.3", node-version: "24", mariadb-version: "10.11"}
+          # other version mariadb
+          - {ruby-version: "3.3", node-version: "22", mariadb-version: "11.4"}
+          - {ruby-version: "3.3", node-version: "24", mariadb-version: "11.8"}
+          - {ruby-version: "3.3", node-version: "24", mariadb-version: "12.1"}
+          # all latest
+          - {ruby-version: "4.0", node-version: "24", mariadb-version: "12.1"}
     services:
       mariadb:
-        image: mariadb
+        image: mariadb:${{ mariadb-version }}
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
         ports:
@@ -84,8 +94,8 @@ jobs:
       #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
+      # - name: Install packages
+      #   run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
 
       - name: Checkout code
         uses: actions/checkout@v6
@@ -95,6 +105,12 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
 
       - name: Run tests
         env:
