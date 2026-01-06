@@ -36,9 +36,9 @@ gem "cssbundling-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
-gem "solid_queue"
-gem "solid_cable"
+# gem "solid_cache"
+# gem "solid_queue"
+# gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -103,7 +103,7 @@ gem "octicons_helper"
 gem "ransack"
 
 # Mission Control Jobs
-gem "mission_control-jobs"
+# gem "mission_control-jobs"
 
 # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
 gem "redis", ">= 4.0.1"
