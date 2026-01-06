@@ -57,7 +57,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ["3.3", "3.4"] # "4.0"
+        ruby-version: ["3.3", "3.4", "4.0"]
         node-version: ["22"] # "24"
         mariadb-version: ["10.11"] # "11.4", "11.8", "12.1"
         include:
@@ -68,7 +68,7 @@ jobs:
           - {ruby-version: "3.3", node-version: "22", mariadb-version: "11.8"}
           - {ruby-version: "3.3", node-version: "22", mariadb-version: "12.1"}
           # all latest
-          # - {ruby-version: "4.0", node-version: "24", mariadb-version: "12.1"}
+          - {ruby-version: "4.0", node-version: "24", mariadb-version: "12.1"}
     services:
       mariadb:
         image: mariadb:${{ matrix.mariadb-version }}
