@@ -2,10 +2,11 @@
 
 ## 0.8 => 1.0
 
-- データベースの設定が変更されました。
-    - MariaDBへの接続はmysql2からtrilogyに変更されました。
-    - データベースはcredentialsやSettingsでは設定できなくなりました。
-- キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更され、Redisが不要になりました。環境変数を指定することで、引き続きRedis(キューはResque)を使用することができます。
+- Node.js 22 以上が必要になりました。
+- MariaDB 10.11 以上が必要になりました。
+- データベースのデフォルトがmysql2からtrilogyに変更されました。
+- データベースやLDAPの認証情報をSettingsで設定できなくなりました。
+- キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更され、Redisが不要になりました。Settingsや環境変数を指定することで、引き続きRedis(キューはResque)を使用することができます。
 
 ## 0.7 => 0.8
 
