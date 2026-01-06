@@ -71,7 +71,7 @@ jobs:
           - {ruby-version: "4.0", node-version: "24", mariadb-version: "12.1"}
     services:
       mariadb:
-        image: mariadb:${{ mariadb-version }}
+        image: mariadb:${{ matrix.mariadb-version }}
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
         ports:
