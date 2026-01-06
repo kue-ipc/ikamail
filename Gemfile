@@ -8,13 +8,13 @@ gem "rails", "~> 8.1.1"
 gem "propshaft"
 
 # Use mariadb-trilogy as the database for Active Record
-gem "trilogy", "~> 2.7"
+gem "trilogy", "~> 2.7", require: false
 # Use mariadb-mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
+gem "mysql2", "~> 0.5", require: false
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.6"
+gem "pg", "~> 1.6", require: false
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1"
+gem "sqlite3", ">= 2.1", require: false
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -36,9 +36,9 @@ gem "cssbundling-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
-# gem "solid_queue"
-# gem "solid_cable"
+gem "solid_cache", require: false
+gem "solid_queue", require: false
+gem "solid_cable", require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -103,13 +103,13 @@ gem "octicons_helper"
 gem "ransack"
 
 # Mission Control Jobs
-# gem "mission_control-jobs"
+gem "mission_control-jobs", require: false
 
 # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
-gem "redis", ">= 4.0.1"
+gem "redis", ">= 4.0.1", require: false
 # Resque
-gem "resque"
-gem "resque-scheduler"
+gem "resque", require: false
+gem "resque-scheduler", require: false
 
 # Bundled gem
 gem "csv"
