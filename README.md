@@ -13,9 +13,9 @@ ikamail は組織内に一括でメールを送信するためのシステムで
 * データベース
     * RDBMS
         * MariaDB 10.11 以上
-        * PostgreSQL 16 以上 (未テスト)
-        * SQLite 3 以上 (未テスト)
-    * IMDB (Solidを使わない場合のみ)
+        * PostgreSQL 16 以上
+        * SQLite 3 以上
+    * IMDB (デフォルトのSolidを使う場合は不要)
         * Valkey 8 以上
 
 * ブラウザ

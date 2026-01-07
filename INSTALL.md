@@ -137,13 +137,9 @@ bundle exec whenever --update-crontab
 
 ## その他のオプション
 
-### 別のデータベース
+### Redis(Valkey)の使用
 
-データベース設定のアダプターを変更することで、PostgreSQLとSQLite3も使用可能です。ただし、十分なテストは実施していません。不具合がある場合は、Issuesに報告してください。
-
-### Redisの使用
-
-デフォルトはSolid Cache、Solid Queue、Solid Cableを使用しますが、代わりにRedis(Resque)を使用することもできます。
+デフォルトはメインのデータベースを用いるSolid Cache、Solid Queue、Solid Cableを使用しますが、代わりにRedis(Valkey)を用いるRedisCacheStore、Resque、Redisを使用することもできます。
 
 bundleでsolidグループを無効化し、redisグループを有効にします。
 
@@ -153,8 +149,14 @@ bundle config set --local without 'solid development test'
 bundle install
 ```
 
-次の環境変数またはSettingsで"redis"と設定(環境変数が優先)することで、Solidシリーズの代わりにRedis(Resque)を使用するようになります。
+次の環境変数またはSettingsで"redis"と設定(環境変数が優先)することで、Solidシリーズの代わりにRedisを使用するようになります。
 
 |名前                  |デフォルト値|環境変数                |credentials|settings          |
 |----------------------|------------|------------------------|-----------|------------------|
 |インメモリデータベース|solid       |RAILS_DATABASE_IN_MEMORY|           |database.in_memory|
+
+### 別のデータベース
+
+データベース設定のアダプターを変更することで、PostgreSQLとSQLite3も使用可能です。デフォルトではオプショングループになっているため、`bundle config set`でpostgresqlグループやsqlite3グループを追加してください。
+
+ただし、十分なテストは実施していません。不具合がある場合は、Issuesに報告してください。
