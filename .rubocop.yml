@@ -221,8 +221,7 @@ Rails/BulkChangeTable:
 
 Rails/Delegate:
   Exclude:
-    - '**/app/controllers/**/*.rb'
-    - '**/test/mailers/previews/**/*.rb'
+    - test/mailers/previews/**/*.rb
 
 Rails/FilePath:
   EnforcedStyle: slashes
