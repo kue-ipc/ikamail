@@ -136,38 +136,48 @@ jobs:
   #         path: ${{ github.workspace }}/tmp/screenshots
   #         if-no-files-found: ignore
 
-  # test-postgresql:
-  #   runs-on: ubuntu-latest
+  test-postgresql:
+    runs-on: ubuntu-latest
 
-  #   services:
-  #     postgres:
-  #       image: postgres
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASSWORD: postgres
-  #       ports:
-  #         - 5432:5432
-  #       options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+    env:
+      RAILS_DATABASE_ADAPTER: postgresql
+      BUNDLE_WITH: postgresql
+      BUNDLE_WITHOUT: mariadb
 
-  #   steps:
-  #     - name: Install packages
-  #       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y node-gyp
+    strategy:
+      matrix:
+        ruby-version: ["3.3"]
+        node-version: ["22"]
 
-  #     - name: Checkout code
-  #       uses: actions/checkout@v6
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-  #     - name: Set up Ruby
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         bundler-cache: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
 
-  #     - name: Run tests
-  #       env:
-  #         RAILS_ENV: test
-  #         RAILS_DATABASE_ADAPTER: postgresql
-  #         # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-  #         # REDIS_URL: redis://localhost:6379/0
-  #       run: bin/rails db:test:prepare test
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+        run: bin/rails db:test:prepare test
 
   test-sqlite3:
     runs-on: ubuntu-latest
@@ -200,7 +210,6 @@ jobs:
 
       - name: Run tests
         env:
-          RAILS_DATABASE_ADAPTER: sqlite3
           RAILS_ENV: test
         run: bin/rails db:test:prepare test
 
