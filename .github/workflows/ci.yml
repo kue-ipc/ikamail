@@ -76,7 +76,7 @@ jobs:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping -u root" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping -u root -h 127.0.0.1" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
@@ -172,6 +172,11 @@ jobs:
 
   test-sqlite3:
     runs-on: ubuntu-latest
+
+    env:
+      RAILS_DATABASE_ADAPTER: sqlite3
+      BUNDLE_WITH: sqlite3
+      BUNDLE_WITHOUT: mariadb
 
     strategy:
       matrix:
