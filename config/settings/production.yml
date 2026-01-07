@@ -1,5 +1,6 @@
 # database:
 #   database: ikamail_production
+#   in_memory: solid
 # ldap:
 #   protocol: ldap
 #   host: localhost
@@ -10,9 +11,3 @@ mailer:
     address: localhost
     port: 25
     enable_starttls_auto: true
-cache:
-  store: solid
-queue:
-  adapter: solid
-cable:
-  adapter: solid

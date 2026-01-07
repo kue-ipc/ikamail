@@ -6,7 +6,7 @@
 - MariaDB 10.11 以上が必要になりました。
 - データベースのデフォルトがmysql2からtrilogyに変更されました。
 - データベースやLDAPの認証情報をSettingsで設定できなくなりました。
-- キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更され、Redisが不要になりました。Settingsや環境変数を指定することで、引き続きRedis(キューはResque)を使用することができます。
+- キャッシュ、Active Jobのキュー、Action CableのデフォルトがそれぞれSolid Cache、Solid Queue、Solid Cableに変更され、Redisが不要になりました。Settingsや環境変数を指定することで、引き続きRedis(キューはResque)を使用することができます。なお、旧バージョンのRedisでも動作すると思われますが、サポート対象はValkey 8　以上になります。
 
 ## 0.7 => 0.8
 

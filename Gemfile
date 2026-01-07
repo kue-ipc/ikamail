@@ -122,12 +122,9 @@ gem "ransack"
 # for FixRedisCacheStore
 gem "redis", ">= 4.0.1"
 
-group :redis, :resque, optional: true do
+group :redis, optional: true do
   # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
   # gem "redis", ">= 4.0.1"
-end
-
-group :resque, optional: true do
   # Resque
   gem "resque"
   gem "resque-scheduler"

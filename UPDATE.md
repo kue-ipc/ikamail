@@ -84,24 +84,18 @@ RAILS_ENV=production bin/rails assets:precompile
     * Redis(キューはResque)を使用する場合は、下記のようにSettingsまたは環境変数を設定してください。
 
         ```settings.local.yml
-        cache:
-        store: redis
-        queue:
-        adapter: resque
-        cable:
-        adapter: redis
+        database:
+          in_memory: redis
         ```
 
         ```env
-        RAILS_CACHE_STORE=redis
-        RAILS_QUEUE_ADAPTER=resque
-        RAILS_CABLE_ADAPTER=redis
+        RAILS_DATABASE_IN_MEMORY=redis
         ```
 
         `bundle install`の前にredisグループとresqueグループを読み込むようにしてください。
 
         ```sh
-        bundle config set --local with 'redis resque'
+        bundle config set --local with 'redis'
         ```
 
         この場合でも、キャッシュやキューの互換性が保証できないため、Railsの起動前にRedis内のすべてのデータを削除しておいてください。

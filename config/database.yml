@@ -12,7 +12,7 @@ end
 
 db_url = ENV["DATABASE_URL"]&.then { |str| URI(str) }
 
-db_adapter = db_url&.scheme || ENV["RAILS_DATABASE_ADAPTER"] || "trilogy"
+db_adapter = db_url&.scheme || ENV["RAILS_DATABASE_ADAPTER"] || Settings.database&.adapter || "trilogy"
 db_adapter =  ActiveRecord.protocol_adapters[db_adapter] || db_adapter
 
 db_host = ENV["DB_HOST"] || Settings.database&.host || "localhost"
@@ -42,6 +42,7 @@ db_cable_database = Settings.database&.cable_database || add_suffix(db_productio
 # production only
 db_username = Rails.application.credentials.dig(:database, :username) || "ikamail"
 db_password = ENV["IKAMAIL_DATABASE_PASSWORD"].presence || Rails.application.credentials.dig(:database, :password)
+db_in_memory = ENV.fetch("RAILS_DATABESE_IN_MEMORY", Settings.database&.in_memory || "solid")
 %>
 
 default: &default
@@ -67,27 +68,29 @@ test:
   <<: *default
   database: <%= db_test_database %>
 
+<% if db_in_memory == "solid" %>
 production:
   primary: &primary_production
     <<: *default
     database: <%= db_production_database %>
     username: <%= db_username.to_json %>
     password: <%= db_password.to_json %>
-<% if ENV.fetch("RAILS_CACHE_STORE", Settings.cache&.store) == "solid" %>
   cache:
     <<: *primary_production
     database: <%= db_cache_database %>
     migrations_paths: db/cache_migrate
-<% end %>
-<% if ENV.fetch("RAILS_QUEUE_ADAPTER", Settings.queue&.adapter) == "solid" %>
   queue:
     <<: *primary_production
     database: <%= db_queue_database %>
     migrations_paths: db/queue_migrate
-<% end %>
-<% if ENV.fetch("RAILS_CABLE_ADAPTER", Settings.cable&.adapter) == "solid" %>
   cable:
     <<: *primary_production
     database: <%= db_cable_database %>
     migrations_paths: db/cable_migrate
+<% else %>
+production:
+  <<: *default
+  database: <%= db_production_database %>
+  username: <%= db_username.to_json %>
+  password: <%= db_password.to_json %>
 <% end %>

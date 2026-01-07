@@ -9,7 +9,7 @@ test:
   adapter: test
 
 production:
-<% case ENV.fetch("RAILS_CABLE_ADAPTER", Settings.cable&.adatper)
+<% case ENV.fetch("RAILS_DATABESE_IN_MEMORY", Settings.database&.in_memory || "solid")
    in "solid" %>
   adapter: solid_cable
   connects_to:
@@ -21,7 +21,7 @@ production:
   adapter: redis
   url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/0") %>
   channel_prefix: ikamail:cable
-<% else
-     Rails.logger.debug("Using default Action Cable adapter: :async") %>
+<% in "memory"
+     Rails.logger.debug("Using volatile Action Cable adapter: :async") %>
   adapter: async
 <% end %>

@@ -1,6 +1,7 @@
 # database:
 #   adapter: trilogy
 #   host: localhost
+#   in_memory: memory
 ldap:
   user:
     dn: uid
