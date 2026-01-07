@@ -143,6 +143,7 @@ jobs:
       RAILS_DATABASE_ADAPTER: postgresql
       BUNDLE_WITH: postgresql
       BUNDLE_WITHOUT: mariadb
+      DB_HOST: "127.0.0.1"
 
     strategy:
       matrix:
