@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  bulk_mail: one
+created:
+  bulk_mail: mail
   action: create
   user: user01
   comment: 作成しました。
 
-two:
-  bulk_mail: one
+modified:
+  bulk_mail: mail
   action: update
   user: user01
   comment: 編集しました。
