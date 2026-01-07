@@ -52,9 +52,6 @@ group :solid do
   gem "solid_cache"
   gem "solid_queue"
   gem "solid_cable"
-
-  # Mission Control Jobs
-  gem "mission_control-jobs"
 end
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -118,6 +115,9 @@ gem "octicons_helper"
 
 # Ransack
 gem "ransack"
+
+# Mission Control Jobs
+gem "mission_control-jobs"
 
 # for FixRedisCacheStore
 gem "redis", ">= 4.0.1"
