@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # Others available are:
   # :confirmable, :trackable and :omniauthable
   # :registerable, :recoverable, :validatable
-  devise :ldap_authenticatable, :rememberable, :lockable, :timeoutable
+  devise :ldap_authenticatable, :rememberable, :lockable
 
   enum :role, {user: 0, admin: 1}
 
