@@ -54,6 +54,7 @@ Rails.application.configure do
     config.cache_store = :redis_cache_store, {
       url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0"),
       namespace: "ikamail:cache",
+      expires_in: 60.days,
     }
   in "memory"
     Rails.logger.debug("Using volatile cache store: :memory_store")
