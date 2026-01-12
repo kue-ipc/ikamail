@@ -8,7 +8,7 @@ development:
   password: admin_password
 
 test:
-  port: 1389
+  port: 3389
   base: dc=example,dc=jp
   allow_anonymous: false
   bind_dn: cn=admin,dc=example,dc=jp

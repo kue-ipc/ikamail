@@ -24,7 +24,7 @@ development:
 
 test:
   host: localhost
-  port: 1389
+  port: 3389
   allow_unauthenticated_bind: false
   admin_user: cn=admin,dc=example,dc=jp
   admin_password: admin_password

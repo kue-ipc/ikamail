@@ -43,7 +43,7 @@ def create_test_ldap_server(debug: false)
   schema.resolve_oids
 
   server = LDAP::Server.new(
-    port: 1389,
+    port: 3389,
     nodelay: true,
     listen: 10,
     operation_class: LdifReadOperation,
