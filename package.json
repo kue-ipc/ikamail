@@ -21,7 +21,7 @@
     "@danielx/civet": "^0.11.1",
     "@types/bootstrap": "^5.2.10",
     "esbuild": "^0.27.2",
-    "sass": "^1.97.1",
+    "sass": "^1.97.2",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "stylelint-config-standard-scss": "^16.0.0",

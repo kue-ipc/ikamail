@@ -3,13 +3,13 @@ source "https://rubygems.org"
 ruby ">= 3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.1"
+gem "rails", "~> 8.1.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 
 group :mariadb do
   # Use mariadb-trilogy as the database for Active Record
-  gem "trilogy", "~> 2.7"
+  gem "trilogy", "~> 2.10"
 end
 
 group :mysql, optional: true do
@@ -26,7 +26,6 @@ group :sqlite3, optional: true do
   # Use sqlite3 as the database for Active Record
   gem "sqlite3", ">= 2.1"
 end
-
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -119,12 +118,9 @@ gem "ransack"
 # Mission Control Jobs
 gem "mission_control-jobs"
 
-# for FixRedisCacheStore
-gem "redis", ">= 4.0.1"
-
 group :redis, optional: true do
   # Use Redis adapter to run Action Cable, Cache Store, Active Job (resque) in production
-  # gem "redis", ">= 4.0.1"
+  gem "redis", ">= 4.0.1"
   # Resque
   gem "resque"
   gem "resque-scheduler"
@@ -150,10 +146,6 @@ group :development, :test do
   ## Other gems
   gem "guard"
   gem "guard-minitest"
-
-  # TODO: remove when minitest rails supports Minitest 6+
-  # https://github.com/minitest/minitest/issues/1045
-  gem "minitest", "< 6.0"
 end
 
 group :development do

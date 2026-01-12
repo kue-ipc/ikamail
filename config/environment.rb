@@ -6,8 +6,6 @@ in "solid"
   Bundler.require(:solid)
 in "redis"
   Bundler.require(:redis)
-  require "fix_redis_cache_store"
-  FixRedisCacheStore.load
 in "memory"
   Rails.logger.debug("Using volatile database connections")
 end
