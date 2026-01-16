@@ -173,14 +173,13 @@ GEM
       fast_gettext (>= 0.9.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    guard (2.19.1)
+    guard (2.20.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       logger (~> 1.6)
       lumberjack (>= 1.0.12, < 2.0)
       nenv (~> 0.1)
       notiffany (~> 0.0)
-      ostruct (~> 0.6)
       pry (>= 0.13.0)
       shellany (~> 0.0)
       thor (>= 0.18.1)
@@ -230,7 +229,8 @@ GEM
     language_server-protocol (3.17.0.5)
     ldif_parser (1.0.1)
     lint_roller (1.1.0)
-    listen (3.9.0)
+    listen (3.10.0)
+      logger
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     locale (2.1.4)
@@ -712,7 +712,7 @@ CHECKSUMS
   gettext (3.5.1) sha256=03ec7f71ea7e2cf1fdcd5e08682e98b81601922fdbee890b7bc6f63b0e1a512a
   gettext_i18n_rails (2.1.0) sha256=672aa595f2977ad796ec0a0f3ba1adcc606cdeff4840f53efd0c944f57bf0628
   globalid (1.3.0) sha256=05c639ad6eb4594522a0b07983022f04aa7254626ab69445a0e493aa3786ff11
-  guard (2.19.1) sha256=b8bc52694be3d8b26730280de7dcec7fe92ea1cff3414246fe96af3f23580f3d
+  guard (2.20.0) sha256=66829ac0154080f20c6b1d8e6b65c6d5b3f3064ff46f85beb56c82f27b306040
   guard-compat (1.2.1) sha256=3ad21ab0070107f92edfd82610b5cdc2fb8e368851e72362ada9703443d646fe
   guard-minitest (2.4.6) sha256=d89e83d029447c13b191599085d24b6e2fe61e402d275e46491cd3e82f561572
   i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
@@ -730,7 +730,7 @@ CHECKSUMS
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
   ldif_parser (1.0.1) sha256=e8102ec07771db58aad152cf7f7f90010d4e1052c7af4523eeca2a47e9231ae0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
-  listen (3.9.0) sha256=db9e4424e0e5834480385197c139cb6b0ae0ef28cc13310cfd1ca78377d59c67
+  listen (3.10.0) sha256=c6e182db62143aeccc2e1960033bebe7445309c7272061979bb098d03760c9d2
   locale (2.1.4) sha256=522f9973ef3eee64aac9bca06d21db2fba675fa3d2cf61d21f42d1ca18a9f780
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   loofah (2.25.0) sha256=df5ed7ac3bac6a4ec802df3877ee5cc86d027299f8952e6243b3dac446b060e6
