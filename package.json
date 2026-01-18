@@ -11,9 +11,9 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.20",
+    "@hotwired/turbo-rails": "^8.0.21",
     "@popperjs/core": "^2.11.8",
-    "@primer/octicons": "^19.21.1",
+    "@primer/octicons": "^19.21.2",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1"
   },
@@ -22,9 +22,9 @@
     "@types/bootstrap": "^5.2.10",
     "esbuild": "^0.27.2",
     "sass": "^1.97.2",
-    "stylelint": "^16.26.1",
-    "stylelint-config-standard": "^39.0.1",
-    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint": "^17.0.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "^5.9.3"
   }
 }
