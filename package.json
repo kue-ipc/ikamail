@@ -18,10 +18,10 @@
     "bootstrap-icons": "^1.13.1"
   },
   "devDependencies": {
-    "@danielx/civet": "^0.11.1",
+    "@danielx/civet": "^0.11.2",
     "@types/bootstrap": "^5.2.10",
     "esbuild": "^0.27.2",
-    "sass": "^1.97.2",
+    "sass": "^1.97.3",
     "stylelint": "^17.0.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
