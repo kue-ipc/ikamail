@@ -4,6 +4,17 @@
 
 Ruby、Node.jsをインストールします。Node.jsインストール後に、Yarnもインストールします。`ruby`、`node`、`yarn`のコマンドがアプリケーションを実行するユーザーで実行できることを確認します。
 
+各ライブラリのインストールにRubyの開発環境、および、YAMLとFFIの開発モジュールも必要です。RHEL系であれば、次のようにしてインストールしてください。
+
+```sh
+sudo dnf install group "Development Tool"
+sudo dnf install ruby-devel
+sudo dnf --enablerepo=crb install libyaml-devel
+sudo dnf install libffi-devel
+```
+
+RHEL9以降は`libyaml-devel`はCRBレポジトリにあります。
+
 ## アプリインストール
 
 アプリケーションを実行するユーザーでインストールを行います。
