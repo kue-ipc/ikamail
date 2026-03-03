@@ -17,8 +17,8 @@ dl
   = dt_dd_for @mail_template, :recipient_list
   = dt_dd_for @mail_template, :from_name
   = dt_dd_for @mail_template, :from_mail_address
-  = dt_dd_for @mail_template, :subject_prefix
-  = dt_dd_for @mail_template, :subject_suffix
+  = dt_dd_for @mail_template, :subject_prefix, format: :mail_subject
+  = dt_dd_for @mail_template, :subject_suffix, format: :mail_subject
   = dt_dd_for @mail_template, :body_header, format: :mail_body
   = dt_dd_for @mail_template, :body_footer, format: :mail_body
   = dt_dd_for @mail_template, :count do |count|
