@@ -18,7 +18,7 @@
     "bootstrap-icons": "^1.13.1"
   },
   "devDependencies": {
-    "@danielx/civet": "^0.11.3",
+    "@danielx/civet": "^0.11.4",
     "@types/bootstrap": "^5.2.10",
     "esbuild": "^0.27.3",
     "sass": "^1.97.3",
