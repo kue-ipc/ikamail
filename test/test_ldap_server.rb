@@ -49,7 +49,7 @@ def create_test_ldap_server(debug: false)
     operation_class: LdifReadOperation,
     operation_args: [
       *ldif_list,
-      admin: {username: "cn=admin,dc=example,dc=jp", password: "admin_password"},
+      admin: {username: "cn=admin,dc=example,dc=jp", password: "password"},
     ],
     schema: schema,
     namingContexts: ["dc=example,dc=jp"],
