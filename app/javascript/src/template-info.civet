@@ -21,7 +21,7 @@ export default templateInfo := (root: Element | Document = document)->
   throw new Error("Tempalet info has no data-tanrget") unless targetId?
 
   targetEl := document.getElementById(targetId)
-  throw new Error("Template info target element not found") unless targetEl <? HTMLOptionElement
+  throw new Error("Template info target element not found") unless targetEl <? HTMLSelectElement
 
   changeSelect := ->
     selectedId := targetEl.value
