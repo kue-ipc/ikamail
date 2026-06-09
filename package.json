@@ -13,16 +13,16 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
     "@popperjs/core": "^2.11.8",
-    "@primer/octicons": "^19.25.0",
+    "@primer/octicons": "^19.28.1",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1"
   },
   "devDependencies": {
-    "@danielx/civet": "^0.11.7",
-    "@types/bootstrap": "^5.2.10",
+    "@danielx/civet": "^0.11.13",
+    "@types/bootstrap": "^5.2.11",
     "esbuild": "^0.28.0",
-    "sass": "^1.99.0",
-    "stylelint": "^17.11.0",
+    "sass": "^1.100.0",
+    "stylelint": "^17.13.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "^6.0.3"
