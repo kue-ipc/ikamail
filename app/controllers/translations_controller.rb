@@ -53,7 +53,7 @@ class TranslationsController < ApplicationController
   end
 
   private def set_translation
-    @translation = Translation.find(params[:id])
+    @translation = Translation.find(params.expect(:id))
     authorize @translation
   end
 

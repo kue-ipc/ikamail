@@ -26,7 +26,7 @@ class MailUsersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   private def set_mail_user
-    @mail_user = policy_scope(MailUser).find(params[:id])
+    @mail_user = policy_scope(MailUser).find(params.expect(:id))
     authorize @mail_user
   end
 

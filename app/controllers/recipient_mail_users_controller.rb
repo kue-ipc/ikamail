@@ -96,21 +96,21 @@ class RecipientMailUsersController < ApplicationController
   end
 
   private def set_recipient_list
-    @recipient_list = policy_scope(RecipientList).find(params[:id])
+    @recipient_list = policy_scope(RecipientList).find(params.expect(:id))
   end
 
   private def set_type
-    @type = params[:type].intern
+    @type = params.expect(:type).intern
     authorize Recipient
   end
 
   private def set_mail_user
-    @mail_user = policy_scope(MailUser).find(params[:mail_user_id])
+    @mail_user = policy_scope(MailUser).find(params.expect(:mail_user_id))
   end
 
   private def names_params
     if params[:file]
-      params[:file].read.force_encoding(Encoding::UTF_8).tap do |data|
+      params.expect(:file).read.force_encoding(Encoding::UTF_8).tap do |data|
         raise EncodingError, "Invalid encoding" unless data.valid_encoding?
       end
     else

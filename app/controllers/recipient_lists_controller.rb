@@ -64,7 +64,7 @@ class RecipientListsController < ApplicationController
   end
 
   private def set_recipient_list
-    @recipient_list = policy_scope(RecipientList).find(params[:id])
+    @recipient_list = policy_scope(RecipientList).find(params.expect(:id))
     authorize @recipient_list
   end
 

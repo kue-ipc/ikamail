@@ -74,7 +74,7 @@ class MailTemplatesController < ApplicationController
   end
 
   private def set_mail_template
-    @mail_template = policy_scope(MailTemplate).find(params[:id])
+    @mail_template = policy_scope(MailTemplate).find(params.expect(:id))
     authorize @mail_template
   end
 

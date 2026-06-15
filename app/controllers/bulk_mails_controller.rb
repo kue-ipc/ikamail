@@ -194,7 +194,7 @@ class BulkMailsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   private def set_bulk_mail
-    @bulk_mail = policy_scope(BulkMail).find(params[:id])
+    @bulk_mail = policy_scope(BulkMail).find(params.expect(:id))
     if @action_info && @action_info.current_status != @bulk_mail.status
       authorize @bulk_mail, :show?
       redirect_to @bulk_mail, alert: t_failure_action(@bulk_mail, action_name)
