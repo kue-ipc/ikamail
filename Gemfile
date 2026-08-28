@@ -90,7 +90,7 @@ gem "devise-i18n"
 gem "i18n-active_record", require: "i18n/active_record"
 
 # Mustache
-gem "mustache", "~> 1.0"
+gem "mustache", "~> 1.1"
 
 # Mail ISO-2022-JP
 gem "mail-iso-2022-jp", "~> 2.1"
