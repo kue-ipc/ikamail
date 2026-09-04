@@ -427,7 +427,7 @@ GEM
     responders (3.2.0)
       actionpack (>= 7.0)
       railties (>= 7.0)
-    resque (3.0.0)
+    resque (3.0.2)
       base64 (~> 0.1)
       logger
       mono_logger (~> 1)
