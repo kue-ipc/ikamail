@@ -9,7 +9,7 @@ gem "propshaft"
 
 group :mariadb do
   # Use mariadb-trilogy as the database for Active Record
-  gem "trilogy", "~> 2.12"
+  gem "trilogy", "~> 2.13"
 end
 
 group :mysql, optional: true do

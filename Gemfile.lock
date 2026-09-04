@@ -552,7 +552,7 @@ GEM
     thruster (0.1.26-x86_64-linux)
     tilt (2.9.0)
     timeout (0.6.1)
-    trilogy (2.12.6)
+    trilogy (2.13.0)
       bigdecimal
     tsort (0.2.0)
     turbo-rails (2.0.23)
@@ -645,7 +645,7 @@ DEPENDENCIES
   sqlite3 (>= 2.1)
   stimulus-rails
   thruster
-  trilogy (~> 2.12)
+  trilogy (~> 2.13)
   turbo-rails
   tzinfo-data
   unicode-display_width
