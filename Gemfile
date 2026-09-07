@@ -126,6 +126,10 @@ group :redis, optional: true do
   gem "resque-scheduler"
 end
 
+# FIXME: not support 3.0 json gem
+# https://github.com/rails/rails/issues/58685
+gem "json", "< 3"
+
 # Bundled gem
 gem "csv"
 gem "nkf"
