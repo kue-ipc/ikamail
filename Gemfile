@@ -128,7 +128,7 @@ end
 
 # FIXME: not support 3.0 json gem
 # https://github.com/rails/rails/issues/58685
-gem "json", "< 3"
+gem "json", "< 4"
 
 # Bundled gem
 gem "csv"
